@@ -87,15 +87,12 @@ while (1) {
 						break;
 						
 					case 'p':
-						if(isset($packet['elements']['s']))
-						{
+						if(isset($packet['elements']['s'])) {
 							unset($packet['elements']['s']);
 							$hook   = 'onPC'; // onPC($who, $message)
 							$args[] = $Ocean->network->parseID($packet['elements']['u']);
 							$args[] = $packet['elements']['t'];
-						}
-						else
-						{
+						} else {
 							$hook   = 'onPM'; // onPM($who, $message)
 							$args[] = $Ocean->network->parseID($packet['elements']['u']);
 							$args[] = $packet['elements']['t'];
@@ -103,15 +100,16 @@ while (1) {
 						break;
 					
 					case 'u':
-							$hook	= 'onUserJoined'; // onUserJoined($who, $extra)
-							$user   = new xatUser($packet['elements']);
-							$args[] = $user;
+						$hook	= 'onUserJoined'; // onUserJoined($who, $extra)
+						$user   = new xatUser($packet['elements']);
+						$args[] = $user;
 
-							if(isset($packet['elements']['s']))
-								$args[] = $packet['elements']['s'];
+						if(isset($packet['elements']['s'])) {
+							$args[] = $packet['elements']['s'];
+						}
 							
-							$Ocean->users[$user->getID()] = $user;
-							unset($user);
+						$Ocean->users[$user->getID()] = $user;
+						unset($user);
 						break;
 					
 					case 'z':
@@ -175,8 +173,8 @@ function load($data, $type, $name, $url, $callbacks)
 	return $data;
 }
 
-function dispatch($type, $name, $args) {
-
+function dispatch($type, $name, $args) 
+{
 	global $extensionsList;
 
 	if (!isset($extensionsList[$type][$name])) {

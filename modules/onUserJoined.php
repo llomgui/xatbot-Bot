@@ -1,6 +1,6 @@
 <?php
 
-$onUserJoined = function ($who, $washere)
-{
-	return;
+$onUserJoined = function ($who, $washere) {
+	
+	$bot = actionAPI::getBot();
 };

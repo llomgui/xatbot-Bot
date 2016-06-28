@@ -10,5 +10,4 @@ $onTickle = function ($who, $array) {
 			// Doubles/disabled powers etc
 			break;
 	}
-	return;
 };
