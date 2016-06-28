@@ -87,7 +87,7 @@ while (1) {
 						break;
 						
 					case 'p':
-						if(isset($packet['elements']['s'])) {
+						if (isset($packet['elements']['s'])) {
 							unset($packet['elements']['s']);
 							$hook   = 'onPC'; // onPC($who, $message)
 							$args[] = $Ocean->network->parseID($packet['elements']['u']);
@@ -104,7 +104,7 @@ while (1) {
 						$user   = new xatUser($packet['elements']);
 						$args[] = $user;
 
-						if(isset($packet['elements']['s'])) {
+						if (isset($packet['elements']['s'])) {
 							$args[] = $packet['elements']['s'];
 						}
 							
