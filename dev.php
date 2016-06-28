@@ -117,6 +117,28 @@ while (1) {
 						$args[] = $Ocean->network->parseID($packet['elements']['u']);
 						$args[] = $packet['elements'];
 						break;
+						
+					case 'l':
+						$hook   = 'onUserLeave'; // onUserLeave($who)
+						$args[] = $Ocean->network->parseID($packet['elements']['u']);
+						break;
+						
+					case 'a':
+					
+						$hook	= 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message) 
+ 						$args[] = $Ocean->network->parseID($packet['elements']['u']);
+ 						$args[] = $Ocean->network->parseID($packet['elements']['d']);
+ 						$args[] = $packet['elements']['x'];
+ 						$args[] = $packet['elements']['s'];
+ 						$args[] = $packet['elements']['t'];
+ 						break;
+						
+					case 'x':
+						$hook	= 'onApp'; // onApp($who, $app, $elements) 
+ 						$args[] = $Ocean->network->parseID($packet['elements']['u']);
+ 						$args[] = $packet['elements']['i'];
+ 						$args[] = $packet['elements'];
+						break;
 
 					case 'done':
 						$hook   = 'onDone'; // onDone($array)
@@ -126,6 +148,10 @@ while (1) {
 					case 'idle':
 						$hook   = 'onIdle'; // onIdle($array)
 						$args[] = $packet['elements'];
+						break;
+						
+					case 'dup':
+						$hook = 'onDup'; // onDup()
 						break;
 
 					default:
