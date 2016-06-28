@@ -1,10 +1,14 @@
 [
 	"onMessage",
 	"onOldMessage",
-	"onIdle",
-	"onDone",
 	"onUserJoined",
 	"onTickle",
 	"onPC",
-	"onPM"
+	"onPM",
+	"onUserLeave",
+	"onTransfer",
+	"onApp",
+	"onIdle",
+	"onDone",
+	"onDup"
 ]
