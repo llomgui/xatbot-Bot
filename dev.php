@@ -124,7 +124,6 @@ while (1) {
 						break;
 						
 					case 'a':
-					
 						$hook	= 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message) 
  						$args[] = $Ocean->network->parseID($packet['elements']['u']);
  						$args[] = $Ocean->network->parseID($packet['elements']['d']);
