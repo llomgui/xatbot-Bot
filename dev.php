@@ -77,9 +77,45 @@ while (1) {
 								$hook   = 'onMessage'; // onMessage($who, $message)
 								$args[] = $Ocean->network->parseID($packet['elements']['u']);
 								$args[] = $packet['elements']['t'];
+							} else {
+								$hook	= 'onOldMessage'; // onOldMessage($who, $message)
+								$args[] = $Ocean->network->parseID($packet['elements']['u']);
+								$args[] = $packet['elements']['t'];
 							}
 
 						}
+						break;
+						
+					case 'p':
+						if (isset($packet['elements']['s'])) {
+							unset($packet['elements']['s']);
+							$hook   = 'onPC'; // onPC($who, $message)
+							$args[] = $Ocean->network->parseID($packet['elements']['u']);
+							$args[] = $packet['elements']['t'];
+						} else {
+							$hook   = 'onPM'; // onPM($who, $message)
+							$args[] = $Ocean->network->parseID($packet['elements']['u']);
+							$args[] = $packet['elements']['t'];
+						}
+						break;
+					
+					case 'u':
+						$hook	= 'onUserJoined'; // onUserJoined($who, $extra)
+						$user   = new xatUser($packet['elements']);
+						$args[] = $user;
+
+						if (isset($packet['elements']['s'])) {
+							$args[] = $packet['elements']['s'];
+						}
+							
+						$Ocean->users[$user->getID()] = $user;
+						unset($user);
+						break;
+					
+					case 'z':
+						$hook	= 'onTickle'; // onTickle($who, $array) 
+						$args[] = $Ocean->network->parseID($packet['elements']['u']);
+						$args[] = $packet['elements'];
 						break;
 
 					case 'done':
@@ -137,8 +173,8 @@ function load($data, $type, $name, $url, $callbacks)
 	return $data;
 }
 
-function dispatch($type, $name, $args) {
-
+function dispatch($type, $name, $args) 
+{
 	global $extensionsList;
 
 	if (!isset($extensionsList[$type][$name])) {

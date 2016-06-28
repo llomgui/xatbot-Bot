@@ -1,5 +1,10 @@
 [
 	"onMessage",
+	"onOldMessage",
 	"onIdle",
-	"onDone"
+	"onDone",
+	"onUserJoined",
+	"onTickle",
+	"onPC",
+	"onPM"
 ]
