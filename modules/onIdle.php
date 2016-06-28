@@ -1,0 +1,5 @@
+<?php
+
+$onIdle = function ($array) {
+
+};

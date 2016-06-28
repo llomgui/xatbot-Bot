@@ -1,0 +1,16 @@
+{
+	"botaccount": {
+		"regname": "Ocean",
+		"xatid":"10101",
+		"password": ""
+	},
+	"bots": {
+		"1": {
+			"botid": 1,
+			"chatid": 2594913,
+			"name": "Ocean",
+			"avatar": "123",
+			"homepage": "xat.com"
+		}
+	}
+}
