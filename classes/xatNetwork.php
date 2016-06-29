@@ -190,7 +190,7 @@ class Network
 			$j2['dx'] = $this->logininfo['dx'];
 		}
 
-		if (isset($i['dt'])) {
+		if (isset($this->logininfo['dt'])) {
 			$j2['dt'] = $this->logininfo['dt'];
 		}
 
