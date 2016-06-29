@@ -97,16 +97,9 @@ while (1) {
 						break;
 					
 					case 'u':
-						$hook	= 'onUserJoined'; // onUserJoined($who, $extra)
-						$user   = new User($packet['elements']);
-						$args[] = $user;
-
-						if (isset($packet['elements']['s'])) {
-							$args[] = $packet['elements']['s'];
-						}
-							
-						$Ocean->users[$user->getID()] = $user;
-						unset($user);
+						$hook	= 'onUserJoined'; // onUserJoined($array)
+						$args[] = $Ocean->network->parseID($packet['elements']['u']);
+						$args[] = $packet['elements'];
 						break;
 					
 					case 'z':

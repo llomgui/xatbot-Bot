@@ -255,4 +255,22 @@ class Network
 		else if($type == 3)
 			$this->sendPrivateConversation($uid, $message);
 	}
+
+	public function answerTickle($uid)
+	{
+		$this->socket->write('z', [
+			'd' => $uid,
+			'u' => $this->logininfo['i'] . '_0',
+			't' => '/a_NF'
+		]);
+	}
+
+	public function sendTickle($uid)
+	{
+		$this->socket->write('z', [
+			'd' => $uid,
+			'u' => $this->logininfo['i'] . '_0',
+			't' => '/l'
+		]);
+	}
 }

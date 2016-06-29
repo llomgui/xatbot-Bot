@@ -1,6 +1,14 @@
 <?php
 
 $onUserLeave = function ($who) {
-	//TODO remove from user cache once implemented
+	
+	$bot  = actionAPI::getBot();
+
+	if ($who >= 1900000000) {
+		return;
+	}
+
+	unset($bot->users[$who]);
+
 	return;
 };
