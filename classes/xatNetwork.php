@@ -131,7 +131,7 @@ class Network
 
 		$this->socket->write('v', [
 				'n' => xatVariables::getRegname(),
-				'p' => (!empty(xatVariables::getPw()) ? xatVariables::getPw() : $this->passwordToHash(xatVariables::getPassword()))
+				'p' => (xatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
 			]
 		);
 
@@ -203,9 +203,9 @@ class Network
 		$this->socket->write('j2', $j2);
 	}
 
-	private function passwordToHash($password)
+	private function passwordToHash()
 	{
-		$crc = crc32($password);
+		$crc = crc32(xatVariables::getPassword());
 		if ($crc & 0x80000000) {
 			$crc ^= 0xffffffff;
 			$crc += 1;
@@ -213,6 +213,38 @@ class Network
 		}
 		
 		return '$' . $crc;
+	}
+
+	private function getPw()
+	{
+		$POST['k2']          = '0';
+		$POST['UserId']      = '0';
+		$POST['mode']        = '0';
+		$POST['Pin']         = (!empty(xatVariables::getPin()) ? xatVariables::getPin() : '0');
+		$POST['ChangeEmail'] = '0';
+		$POST['cp']          = '';
+		$POST['NameEmail']   = xatVariables::getRegname();
+		$POST['password']    = xatVariables::getPassword();
+		$POST['Login']       = '';
+		$stream = [
+			'http' => [
+				'method' => 'POST',
+				'header' => 'Content-Type: application/x-www-form-urlencoded',
+				'content' => http_build_query($POST)
+			]
+		];
+		$res = file_get_contents('http://xat.com/web_gear/chat/register.php', false, stream_context_create($stream));
+
+		if (strpos($res, 'style="color:#FF0000"><strong>**')) {
+			exit('Bad password or update PIN!');
+			return false;
+		} else {
+			$r = explode('&pw=', $res);
+			if (isset($r[1])) {
+				$r = explode('"', $r[1]);
+				return $r[0];
+			}
+		}
 	}
 
 	public function parseID($uid)

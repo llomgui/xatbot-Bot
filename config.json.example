@@ -3,7 +3,8 @@
 		"regname": "Ocean",
 		"xatid":"10101",
 		"password": "",
-		"pw": ""
+		"pin": "",
+		"forcelogin": true
 	},
 	"bots": {
 		"1": {
