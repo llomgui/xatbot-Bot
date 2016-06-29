@@ -2,7 +2,8 @@
 	"botaccount": {
 		"regname": "Ocean",
 		"xatid":"10101",
-		"password": ""
+		"password": "",
+		"pw": ""
 	},
 	"bots": {
 		"1": {

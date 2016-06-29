@@ -131,7 +131,7 @@ class Network
 
 		$this->socket->write('v', [
 				'n' => xatVariables::getRegname(),
-				'p' => $this->passwordToHash(xatVariables::getPassword())
+				'p' => (!empty(xatVariables::getPw()) ? xatVariables::getPw() : $this->passwordToHash(xatVariables::getPassword()))
 			]
 		);
 

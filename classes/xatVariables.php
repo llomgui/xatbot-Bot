@@ -6,6 +6,7 @@ abstract class xatVariables
 	private static $regname;
 	private static $xatid;
 	private static $password;
+	private static $pw;
 	private static $ip2;
 	private static $powers;
 	private static $update;
@@ -31,6 +32,7 @@ abstract class xatVariables
 		self::$regname  = $data['botaccount']['regname'];
 		self::$xatid    = $data['botaccount']['xatid'];
 		self::$password = $data['botaccount']['password'];
+		self::$pw       = $data['botaccount']['pw'];
 		self::$bots     = $data['bots'];
 	}
 
@@ -1368,6 +1370,11 @@ abstract class xatVariables
 	public static function getPassword()
 	{
 		return self::$password;
+	}
+
+	public static function getPw()
+	{
+		return self::$pw;
 	}
 
 	public static function getBots()
