@@ -227,4 +227,32 @@ class Network
 			'u' => $this->logininfo['i']
 		]);
 	}
+
+	public function sendPrivateMessage($uid, $message)
+	{
+		$this->socket->write('p', [
+			'u' => $uid,
+			't' => $message
+		]);
+	}
+
+	public function sendPrivateConversation($uid, $message)
+	{
+		$this->socket->write('p', [
+			'u' => $uid,
+			't' => $message,
+			's' => 2,
+			'd' => $this->logininfo['i']
+		]);
+	}
+
+	public function sendMessageAutoDetection($uid, $message, $type)
+	{
+		if($type == 1)
+			$this->sendMessage($message);
+		else if($type == 2)
+			$this->sendPrivateMessage($uid, $message);
+		else if($type == 3)
+			$this->sendPrivateConversation($uid, $message);
+	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-$dev = function ($who, $message) {
+$dev = function ($who, $message, $type) {
 
 	if ($who != 1000000000) {
 		return;
@@ -12,7 +12,7 @@ $dev = function ($who, $message) {
 
 		case 'reload':
 			reloadExtensions();
-			$bot->network->sendMessage('Extensions reloaded!');
+			$bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
 			break;
 	}
 

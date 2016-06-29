@@ -88,16 +88,12 @@ while (1) {
 						break;
 						
 					case 'p':
-						if (isset($packet['elements']['s'])) {
-							unset($packet['elements']['s']);
-							$hook   = 'onPC'; // onPC($who, $message)
+						if($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff')
+								continue;
+
+							$hook   = (isset($packet['elements']['s'])) ? 'onPC' : 'onPM';  // onP*($who, $message)
 							$args[] = $Ocean->network->parseID($packet['elements']['u']);
 							$args[] = $packet['elements']['t'];
-						} else {
-							$hook   = 'onPM'; // onPM($who, $message)
-							$args[] = $Ocean->network->parseID($packet['elements']['u']);
-							$args[] = $packet['elements']['t'];
-						}
 						break;
 					
 					case 'u':
@@ -159,10 +155,19 @@ while (1) {
 						break;
 				}
 
-				if (in_array($hook, ['onMessage']) && $args[1][0] == '!') {
+				if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == '!') {
 
 					$args[1] = explode(' ', trim($args[1]));
 					$command = substr($args[1][0], 1);
+
+					if ($hook == 'onMessage') {
+						$args[2] = 1;
+					} elseif ($hook == 'onPM') {
+						$args[2] = 2;
+					} elseif ($hook == 'onPC') {
+						$args[2] = 3;
+					}
+
 					dispatch('commands', $command, $args);
 
 				} else {
