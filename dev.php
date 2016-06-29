@@ -3,6 +3,7 @@
 // classes
 require_once 'classes/xatVariables.php';
 require_once 'classes/xatBot.php';
+require_once 'classes/xatUser.php';
 
 // API
 require_once 'API/dataAPI.php';
@@ -101,7 +102,7 @@ while (1) {
 					
 					case 'u':
 						$hook	= 'onUserJoined'; // onUserJoined($who, $extra)
-						$user   = new xatUser($packet['elements']);
+						$user   = new User($packet['elements']);
 						$args[] = $user;
 
 						if (isset($packet['elements']['s'])) {
