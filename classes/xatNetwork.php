@@ -351,4 +351,13 @@ class Network
 			't' => '/u'
 		]);
 	}
+
+	public function zap($uid, $reason)
+	{
+		$this->socket->write('c', [
+			'p' => $reason.'#rasberry#bump',
+			'u' => $uid,
+			't' => '/k'
+		]);
+	}
 }
