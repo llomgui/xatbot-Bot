@@ -336,11 +336,19 @@ class Network
 		}
 
 		$time *= 3600;
-		
+
 		$this->socket->write('c', [
 			'p' => $reason,
 			'u' => $uid,
 			't' => '/g' . $time
+		]);
+	}
+
+	public function unban($uid)
+	{
+		$this->socket->write('c', [
+			'u' => $uid,
+			't' => '/u'
 		]);
 	}
 }
