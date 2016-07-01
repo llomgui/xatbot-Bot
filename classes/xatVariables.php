@@ -10,6 +10,7 @@ abstract class xatVariables
 	private static $forcelogin;
 	private static $ip2;
 	private static $powers;
+	private static $volunteers;
 	private static $update;
 	private static $bots;
 
@@ -21,6 +22,7 @@ abstract class xatVariables
 
 		self::initBotAccount();
 		self::initIP2();
+		self::initVolunteers();
 		self::initPowers();
 
 		return self::$init = true;
@@ -73,6 +75,27 @@ abstract class xatVariables
 		];
 
 		self::$ip2 = $ip2;
+	}
+
+	private static function initVolunteers()
+	{
+		$volunteers = [
+			['regname' => 'Brandon', 'xatid' => 1010208],
+			['regname' => 'Cupim',   'xatid' => 10000690],
+			['regname' => 'Cyan',    'xatid' => 283021491],
+			['regname' => 'Davide',  'xatid' => 313558511],
+			['regname' => 'Elie',    'xatid' => 79328863],
+			['regname' => 'Ghost',   'xatid' => 220000913],
+			['regname' => 'Guinho',  'xatid' => 2300000],
+			['regname' => 'Jayden',  'xatid' => 121040483],
+			['regname' => 'Mihay',   'xatid' => 1700000],
+			['regname' => 'Muffins', 'xatid' => 209642885],
+			['regname' => 'Nick',    'xatid' => 6960969],
+			['regname' => 'Storm',   'xatid' => 9900000],
+			['regname' => 'Vale',    'xatid' => 32646043]
+		];
+
+		self::$volunteers = $volunteers;
 	}
 
 	private static function initPowers()
@@ -1347,6 +1370,11 @@ abstract class xatVariables
 	public static function getIP2()
 	{
 		return self::$ip2;
+	}
+
+	public static function getVolunteers()
+	{
+		return self::$volunteers;
 	}
 
 	public static function getPowers()
