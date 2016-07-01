@@ -328,4 +328,19 @@ class Network
 			't' => '/k'
 		]);
 	}
+
+	public function ban($uid, $time, $reason)
+	{
+		if ($time < 0) {
+			$time = 1;
+		}
+
+		$time *= 3600;
+		
+		$this->socket->write('c', [
+			'p' => $reason,
+			'u' => $uid,
+			't' => '/g' . $time
+		]);
+	}
 }
