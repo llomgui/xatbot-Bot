@@ -80,7 +80,8 @@ while (1) {
 								$args[] = $packet['elements']['t'];
 							} else {
 								$hook	= 'onOldMessage'; // onOldMessage($who, $message)
-								$args[] = $Ocean->network->parseID($packet['elements']['u']);
+								$uid    = (isset($packet['elements']['d']) ? $packet['elements']['d'] : $packet['elements']['u']);
+								$args[] = $Ocean->network->parseID($uid);
 								$args[] = $packet['elements']['t'];
 							}
 
