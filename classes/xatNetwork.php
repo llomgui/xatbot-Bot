@@ -319,4 +319,13 @@ class Network
 		$node = 'f ' . $ids;
 		$this->socket->write($node);
 	}
+
+	public function kick($uid, $reason)
+	{
+		$this->socket->write('c', [
+			'p' => $reason,
+			'u' => $uid,
+			't' => '/k'
+		]);
+	}
 }
