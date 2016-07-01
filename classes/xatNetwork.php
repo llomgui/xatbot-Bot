@@ -7,13 +7,15 @@ class Network
 {
 	public $socket;
 	public $logininfo;
+	public $botData;
 	public $xFlag     = 0;
 	public $attempt   = 0;
 	public $prevrpool = -1;
 
 	public function __construct($botData)
 	{
-		$this->join($botData);
+		$this->botData = $botData;
+		$this->join();
 	}
 
 	public function getDom($arg1)
@@ -117,7 +119,7 @@ class Network
 		return false;
 	}
 
-	public function join($botData)
+	public function join()
 	{
 		$this->socket = new Socket();
 
@@ -139,12 +141,12 @@ class Network
 
 		$this->socket->disconnect();
 
-		if (!$this->connectToChat($botData['chatid'])) {
+		if (!$this->connectToChat($this->botData['chatid'])) {
 			return false;
 		}
 
 		$this->socket->write('y', [
-				'r' => $botData['chatid'],
+				'r' => $this->botData['chatid'],
 				'v' => '0',
 				'u' => xatVariables::getXatid()
 			]
@@ -168,10 +170,10 @@ class Network
 
 		$j2['z']  = 12;
 		$j2['p']  = '0';
-		$j2['c']  = $botData['chatid'];
-		$j2['r']  = (!empty($botData['chatpass'])) ? $botData['chatpass'] : '';
-		$j2['f']  = (!empty($botData['chatpass'])) ? '6' : '0';
-		$j2['e']  = (!empty($botData['chatpass'])) ? '1' : '';
+		$j2['c']  = $this->botData['chatid'];
+		$j2['r']  = (!empty($this->botData['chatpass'])) ? $this->botData['chatpass'] : '';
+		$j2['f']  = (!empty($this->botData['chatpass'])) ? '6' : '0';
+		$j2['e']  = (!empty($this->botData['chatpass'])) ? '1' : '';
 		$j2['u']  = $this->logininfo['i'];
 		$j2['d0'] = (isset($this->logininfo['d0'])) ? $this->logininfo['d0'] : $this->logininfo['d0'];
 
@@ -195,9 +197,9 @@ class Network
 		}
 
 		$j2['N'] = xatVariables::getRegname();
-		$j2['n'] = $botData['name'];
-		$j2['a'] = $botData['avatar'];
-		$j2['h'] = $botData['homepage'];
+		$j2['n'] = $this->botData['name'];
+		$j2['a'] = $this->botData['avatar'];
+		$j2['h'] = $this->botData['homepage'];
 		$j2['v'] = 'xat Community Project';
 
 		$this->socket->write('j2', $j2);
@@ -245,6 +247,12 @@ class Network
 				return $r[0];
 			}
 		}
+	}
+
+	public function reconnect()
+	{
+		$this->socket->disconnect();
+		$this->join();
 	}
 
 	public function parseID($uid)
