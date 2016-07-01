@@ -6,6 +6,8 @@ abstract class xatVariables
 	private static $regname;
 	private static $xatid;
 	private static $password;
+	private static $pin;
+	private static $forcelogin;
 	private static $ip2;
 	private static $powers;
 	private static $update;
@@ -28,10 +30,12 @@ abstract class xatVariables
 	{
 		$data = json_decode(file_get_contents('./config.json', true), true);
 
-		self::$regname  = $data['botaccount']['regname'];
-		self::$xatid    = $data['botaccount']['xatid'];
-		self::$password = $data['botaccount']['password'];
-		self::$bots     = $data['bots'];
+		self::$regname    = $data['botaccount']['regname'];
+		self::$xatid      = $data['botaccount']['xatid'];
+		self::$password   = $data['botaccount']['password'];
+		self::$pin        = $data['botaccount']['pin'];
+		self::$forcelogin = $data['botaccount']['forcelogin'];
+		self::$bots       = $data['bots'];
 	}
 
 	private static function initIP2()
@@ -1368,6 +1372,16 @@ abstract class xatVariables
 	public static function getPassword()
 	{
 		return self::$password;
+	}
+
+	public static function getPin()
+	{
+		return self::$pin;
+	}
+
+	public static function getForceLogin()
+	{
+		return self::$forcelogin;
 	}
 
 	public static function getBots()

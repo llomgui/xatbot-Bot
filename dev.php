@@ -3,6 +3,7 @@
 // classes
 require_once 'classes/xatVariables.php';
 require_once 'classes/xatBot.php';
+require_once 'classes/xatUser.php';
 
 // API
 require_once 'API/dataAPI.php';
@@ -87,29 +88,18 @@ while (1) {
 						break;
 						
 					case 'p':
-						if (isset($packet['elements']['s'])) {
-							unset($packet['elements']['s']);
-							$hook   = 'onPC'; // onPC($who, $message)
+						if($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff')
+								continue;
+
+							$hook   = (isset($packet['elements']['s'])) ? 'onPC' : 'onPM';  // onP*($who, $message)
 							$args[] = $Ocean->network->parseID($packet['elements']['u']);
 							$args[] = $packet['elements']['t'];
-						} else {
-							$hook   = 'onPM'; // onPM($who, $message)
-							$args[] = $Ocean->network->parseID($packet['elements']['u']);
-							$args[] = $packet['elements']['t'];
-						}
 						break;
 					
 					case 'u':
-						$hook	= 'onUserJoined'; // onUserJoined($who, $extra)
-						$user   = new xatUser($packet['elements']);
-						$args[] = $user;
-
-						if (isset($packet['elements']['s'])) {
-							$args[] = $packet['elements']['s'];
-						}
-							
-						$Ocean->users[$user->getID()] = $user;
-						unset($user);
+						$hook	= 'onUserJoined'; // onUserJoined($array)
+						$args[] = $Ocean->network->parseID($packet['elements']['u']);
+						$args[] = $packet['elements'];
 						break;
 					
 					case 'z':
@@ -158,10 +148,19 @@ while (1) {
 						break;
 				}
 
-				if (in_array($hook, ['onMessage']) && $args[1][0] == '!') {
+				if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == '!') {
 
 					$args[1] = explode(' ', trim($args[1]));
 					$command = substr($args[1][0], 1);
+
+					if ($hook == 'onMessage') {
+						$args[2] = 1;
+					} elseif ($hook == 'onPM') {
+						$args[2] = 2;
+					} elseif ($hook == 'onPC') {
+						$args[2] = 3;
+					}
+
 					dispatch('commands', $command, $args);
 
 				} else {

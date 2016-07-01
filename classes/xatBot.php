@@ -6,6 +6,7 @@ class Bot
 {
 	public $network;
 	public $botData;
+	public $users;
 
 	public function __construct($botData)
 	{

@@ -14,6 +14,7 @@ class User
 	private $bride;
 	private $app;
 	private $gameban;
+	private $wasHere;
 
 	private $flag0;
 	private $aflags;
@@ -23,6 +24,9 @@ class User
 	private $rev;
 
 	private $powers;
+	private $doubles;
+	private $xats;
+	private $days;
 
 	public function __construct($packet)
 	{
@@ -35,6 +39,7 @@ class User
 		$this->bride   = isset($packet['d2']) ? (int)$packet['d2'] : 0;
 		$this->app     = isset($packet['x'])  ? (int)$packet['x']  : 0;
 		$this->gameban = isset($packet['w'])  ? (int)$packet['w']  : 0;
+		$this->wasHere = isset($packet['s'])  ? true               : false;
 
 		$this->flag0   = isset($packet['f'])  ? (int)$packet['f']  : 0;
 		$this->aflags  = isset($packet['d0']) ? (int)$packet['d0'] : 0;
@@ -56,6 +61,21 @@ class User
 		return $this->regname;
 	}
 	
+	public function getDoubles()
+	{
+		return (!empty($this->doubles) ? $this->doubles : null);
+	}
+
+	public function getXats()
+	{
+		return (!empty($this->xats) ? $this-xats : 0);
+	}
+
+	public function getDays()
+	{
+		return (!empty($this->days) ? $this-days : 0);
+	}
+
 	public function isStealth()
 	{
 		return (($this->nick[0] == '$') && ($this->isOwner() || $this->isMain()));
@@ -86,6 +106,11 @@ class User
 	public function getBride()
 	{
 		return $this->bride;
+	}
+
+	public function wasHere()
+	{
+		return $this->wasHere;
 	}
 
 	public function isMarried()
@@ -244,6 +269,21 @@ class User
 		for ($i=0; $i < xatVariables::getMaxPowerIndex(); $i++) {
 			$this->powers[$i] = isset($packet['p' . $i]) ? (int)$packet['p' . $i] : 0;
 		}
+	}
+
+	public function setDoubles($info)
+	{
+		$this->doubles = $info;
+	}
+
+	public function setXats($xats)
+	{
+		$this->xats = (int)$xats;
+	}
+
+	public function setDays($days)
+	{
+		$this->days = (int)$days;
 	}
 	
 	public function hasPower($id)
