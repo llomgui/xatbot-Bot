@@ -6,6 +6,7 @@
 	"onPC",
 	"onPM",
 	"onUserLeave",
+	"onFriendList",
 	"onTransfer",
 	"onApp",
 	"onIdle",

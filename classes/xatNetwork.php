@@ -313,4 +313,10 @@ class Network
 			't' => '/l'
 		]);
 	}
+
+	public function sendFriendList($ids)
+	{
+		$node = 'f ' . $ids;
+		$this->socket->write($node);
+	}
 }

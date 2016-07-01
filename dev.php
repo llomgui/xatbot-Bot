@@ -121,7 +121,12 @@ while (1) {
  						$args[] = $packet['elements']['s'];
  						$args[] = $packet['elements']['t'];
  						break;
-						
+
+ 					case 'f':
+ 						$hook   = 'onFriendList'; // onFriendList($array)
+						$args[] = $packet['elements'];
+						break;
+
 					case 'x':
 						$hook	= 'onApp'; // onApp($who, $app, $elements) 
  						$args[] = $Ocean->network->parseID($packet['elements']['u']);
