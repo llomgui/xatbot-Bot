@@ -21,8 +21,8 @@ $ban = function ($who, $message, $type) {
 		}
 	}
 
-	if(isset($user)) {
-		if(isset($message[3])) {
+	if (isset($user)) {
+		if (isset($message[3])) {
 
 			unset($message[0]);
 			unset($message[1]);
