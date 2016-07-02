@@ -22,21 +22,20 @@ $ban = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
+		$hours = $message[2];
+		$reason = "";
+		
 		if (isset($message[3])) {
 
 			unset($message[0]);
 			unset($message[1]);
-
-			$hours = $message[2];
 			unset($message[2]);
 
 			$reason = implode(' ', $message);
-		} else {
-			$reason = 'No reason';
 		}
 
-		$bot->network->ban($user->getID(), $hours, $reason);
+		$bot->network->ban($user->getID(), 1, $hours, $reason);
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
+		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
 };
