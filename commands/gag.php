@@ -1,11 +1,11 @@
 <?php
 
-$ban = function ($who, $message, $type) {
+$gag = function ($who, $message, $type) {
 
 	$bot = actionAPI::getBot();
 
-	if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
-		return $bot->network->sendMessageAutoDetection($who, 'Usage: !ban [regname/xatid] [time] [reason]', $type);
+	if (!isset($message[1]) || empty($message[1])) {
+		return $bot->network->sendMessageAutoDetection($who, 'Usage: !gag [regname/xatid] [reason]', $type);
 	}
 
 	if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
@@ -22,21 +22,18 @@ $ban = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		
-		$hours = $message[2];
-		
-		if (isset($message[3])) {
+
+		if (isset($message[2])) {
 
 			unset($message[0]);
 			unset($message[1]);
-			unset($message[2]);
 
 			$reason = implode(' ', $message);
 		} else {
 			$reason = 'No reason';
 		}
 
-		$bot->network->ban($user->getID(), $hours, $reason);
+		$bot->network->gag($user->getID(), 1, $reason);
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
 	}

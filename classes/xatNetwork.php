@@ -360,4 +360,19 @@ class Network
 			't' => '/k'
 		]);
 	}
+
+	public function gag($uid, $time = 1, $reason)
+	{
+		if ($time < 0) {
+			$time = 1;
+		}
+
+		$time *= 3600;
+
+		$this->socket->write('c', [
+			'p' => $reason,
+			'u' => $uid,
+			't' => '/gg' . $time
+		]);
+	}
 }
