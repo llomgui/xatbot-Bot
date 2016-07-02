@@ -36,7 +36,6 @@ $gameban = function ($who, $message, $type) {
 			$reason = implode(' ', $message);
 		}
 		
-		echo $type;
 		switch(trim(strtolower($type))){
 			case 'snake':
 			case 'snakeban':
