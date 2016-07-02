@@ -5,5 +5,8 @@
 	"online",
 	"say",
 	"temp",
-	"unban"
+	"unban",
+	"gameban",
+	"gamebanme",
+	"randomuser"
 ]
