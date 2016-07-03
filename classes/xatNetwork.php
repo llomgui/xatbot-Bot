@@ -329,41 +329,20 @@ class Network
 		]);
 	}
 
-	public function ban($uid, $type, $time, $reason)
+	public function ban($uid, $gamebanid='', $time, $reason)
 	{
 		if ($time < 0) {
 			$time = 1;
 		}
 
 		$time *= 3600;
-
-		switch($type){
-			case 2; // snake
-				$w = 134;
-				break;
-			case 3; // space
-				$w = 136;
-				break;
-			case 4; // match
-				$w = 140;
-				break;
-			case 5; // maze
-				$w = 152;
-				break;
-			case 6; // code
-				$w = 162;
-				break;
-			case 7; // slot
-				$w = 236;
-				break;
-		}
 		
-		$this->socket->write('c', [
+		$this->socket->write('c', array_merge([
 			'p' => $reason,
 			'u' => $uid,
 			't' => '/g' . $time,
-			'w' => (isset($w) ? $w : "")
-		]);
+		]), (empty($gamebanid) ? [] : ['w' => $gamebanid])
+		);
 	}
 
 	public function unban($uid)
