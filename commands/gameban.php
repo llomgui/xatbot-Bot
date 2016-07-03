@@ -70,8 +70,8 @@ $gameban = function ($who, $message, $type) {
 			default:
 				return $bot->network->sendMessageAutoDetection($who, "That's not a valid gameban", $type);
 		}
-		$bot->network->ban($user->getID(), $gamebanid, $hours, 'No reason');
+		$bot->network->ban($user->getID(), $gamebanid, $hours, (!isset($reason) ? 'No reason' : $reason));
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
+		$bot->network->sendMessageAutoDetection($who, 'That User is not here', $type);
 	}
 };

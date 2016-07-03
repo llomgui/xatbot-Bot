@@ -29,12 +29,10 @@ $gag = function ($who, $message, $type) {
 			unset($message[1]);
 
 			$reason = implode(' ', $message);
-		} else {
-			$reason = 'No reason';
 		}
 
-		$bot->network->gag($user->getID(), 1, $reason);
+		$bot->network->gag($user->getID(), 1, (!isset($reason) ? 'No reason' : $reason));
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
+		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
 };
