@@ -9,42 +9,42 @@ $gamebanme = function ($who, $message, $type) {
 	}
 
 	$gameban = $message[1];
-	$hours = $message[2];
+	$hours   = $message[2];
 	
-	switch(trim(strtolower($gameban))){
+	switch (strtolower($gameban)) {
 		case 'snake':
 		case 'snakeban':
-			$gameban = 2;
+			$gamebanid = 2;
 			break;
 			
 		case 'space':
 		case 'spaceban':
-			$gameban = 3;
+			$gamebanid = 3;
 			break;
 			
 		case 'match':
 		case 'matchban':
-			$gameban = 4;
+			$gamebanid = 4;
 			break;
 			
 		case 'maze':
 		case 'mazeban':
-			$gameban = 5;
+			$gamebanid = 5;
 			break;
 			
 		case 'code':
 		case 'codeban':
-			$gameban = 6;
+			$gamebanid = 6;
 			break;
 			
 		case 'slot':
 		case 'slotban':
-			$gameban = 7;
+			$gamebanid = 7;
 			break;
 			
 		default:
-			return $bot->network->sendMessageAutoDetection($who, "That's not a valid gameban", $type);
+			return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid gameban', $type);
 			break;
 	}
-	$bot->network->ban($who, $gameban, $hours, "Requested");
+	$bot->network->ban($who, $gamebanid, $hours, 'Requested');
 };

@@ -22,9 +22,9 @@ $gameban = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
+
 		$gameban = $message[2];
-		$hours = $message[3];
-		$reason = "";
+		$hours   = $message[3];
 		
 		if (isset($message[4])) {
 
@@ -36,41 +36,41 @@ $gameban = function ($who, $message, $type) {
 			$reason = implode(' ', $message);
 		}
 		
-		switch(trim(strtolower($gameban))){
+		switch (strtolower($gameban)) {
 			case 'snake':
 			case 'snakeban':
-				$gameban = 2;
+				$gamebanid = 134;
 				break;
 				
 			case 'space':
 			case 'spaceban':
-				$gameban = 3;
+				$gamebanid = 136;
 				break;
 				
 			case 'match':
 			case 'matchban':
-				$gameban = 4;
+				$gamebanid = 140;
 				break;
 				
 			case 'maze':
 			case 'mazeban':
-				$gameban = 5;
+				$gamebanid = 152;
 				break;
 				
 			case 'code':
 			case 'codeban':
-				$gameban = 6;
+				$gamebanid = 162;
 				break;
 				
 			case 'slot':
 			case 'slotban':
-				$gameban = 7;
+				$gamebanid = 236;
 				break;
 				
 			default:
 				return $bot->network->sendMessageAutoDetection($who, "That's not a valid gameban", $type);
 		}
-		$bot->network->ban($user->getID(), $gameban, $hours, $reason);
+		$bot->network->ban($user->getID(), $gamebanid, $hours, 'No reason');
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
 	}

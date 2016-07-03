@@ -1,11 +1,13 @@
 [
 	"ban",
 	"dev",
+	"gag",
 	"kick",
 	"online",
 	"say",
 	"temp",
 	"unban",
+	"zap",
 	"gameban",
 	"gamebanme",
 	"randomuser"
