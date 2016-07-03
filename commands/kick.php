@@ -5,6 +5,11 @@ $kick = function ($who, $message, $type) {
 	$bot = actionAPI::getBot();
 
 	if (empty($message[1]) || !isset($message[1])) {
+
+		if ($type == 1) {
+			$type = 2;
+		}
+
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !kick [regname/xatid] [reason]', $type);
 	}
 

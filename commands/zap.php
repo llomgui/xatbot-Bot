@@ -5,6 +5,11 @@ $zap = function ($who, $message, $type) {
 	$bot = actionAPI::getBot();
 
 	if (empty($message[1]) || !isset($message[1])) {
+
+		if ($type == 1) {
+			$type = 2;
+		}
+
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !zap [regname/xatid] [reason]', $type);
 	}
 
@@ -30,7 +35,7 @@ $zap = function ($who, $message, $type) {
 
 		$bot->network->zap($user->getID(), (!isset($reason) ? 'No reason' : $reason));
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'that ser is not here', $type);
+		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
 
 };
