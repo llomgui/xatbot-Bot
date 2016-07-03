@@ -8,6 +8,10 @@ $temp = function ($who, $message, $type) {
 		empty($message[3]) || !is_numeric($message[3]) ||
 		$message[3] < 0    || $message[3] > 24) {
 
+		if ($type == 1) {
+			$type = 2;
+		}
+
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !temp [mem/mod/own] [xatid/regname] [time(0-24)]', $type);
 	}
 
@@ -47,6 +51,6 @@ $temp = function ($who, $message, $type) {
 		}
 		
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
+		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
 };

@@ -4,6 +4,11 @@ $online = function ($who, $message, $type) {
 	$bot = actionAPI::getBot();
 
 	if (empty($message[1]) || !isset($message[1])) {
+
+		if ($type == 1) {
+			$type = 2;
+		}
+
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !online [regname/xatid/volunteers]', $type);
 	}
 
@@ -12,7 +17,7 @@ $online = function ($who, $message, $type) {
 	}
 
 	if (!is_numeric($message[1]) && $message[1] != 'volunteers') {
-		$ctx = stream_context_create(array('http' => array('timeout' => 1)));
+		$ctx = stream_context_create(['http' => ['timeout' => 1]]);
 		$fgc = file_get_contents('http://xat.me/x?name=' . $message[1], false, $ctx);
 		$res = (!empty($fgc) ? $fgc : 0);
 	}

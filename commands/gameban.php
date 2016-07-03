@@ -5,15 +5,20 @@ $gameban = function ($who, $message, $type) {
 	$bot = actionAPI::getBot();
 
 	if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !isset($message[3]) || empty($message[3]) || !is_numeric($message[3])) {
-		return $bot->network->sendMessageAutoDetection($who, 'Usage: !gameban [ID/Regname] [snake/space/match/maze/code/slot] [hours] [reason]', $type);
+
+		if ($type == 1) {
+			$type = 2;
+		}
+
+		return $bot->network->sendMessageAutoDetection($who, 'Usage: !gameban [snake/space/match/maze/code/slot] [ID/Regname] [hours] [reason]', $type);
 	}
 
-	if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
-		$user = $bot->users[$message[1]];
+	if (is_numeric($message[2]) && isset($bot->users[$message[2]])) {
+		$user = $bot->users[$message[2]];
 	} else {
 		foreach($bot->users as $id => $object) {
 			if (is_object($object)) {
-				if (strtolower($object->getRegname()) == strtolower($message[1])) {
+				if (strtolower($object->getRegname()) == strtolower($message[2])) {
 					$user = $object;
 					break;
 				}
@@ -23,7 +28,7 @@ $gameban = function ($who, $message, $type) {
 
 	if (isset($user)) {
 
-		$gameban = $message[2];
+		$gameban = $message[1];
 		$hours   = $message[3];
 		
 		if (isset($message[4])) {
@@ -68,9 +73,10 @@ $gameban = function ($who, $message, $type) {
 				break;
 				
 			default:
-				return $bot->network->sendMessageAutoDetection($who, "That's not a valid gameban", $type);
+				return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid gameban', $type);
 		}
-		$bot->network->ban($user->getID(), $gamebanid, $hours, (!isset($reason) ? 'No reason' : $reason));
+
+		$bot->network->ban($user->getID(), $hours, (!isset($reason) ? 'No reason' : $reason), $gamebanid);
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That User is not here', $type);
 	}
