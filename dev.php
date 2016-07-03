@@ -155,7 +155,6 @@ while (1) {
 				}
 
 				if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == '!') {
-
 					$args[1] = explode(' ', trim($args[1]));
 					$command = substr($args[1][0], 1);
 
@@ -166,7 +165,6 @@ while (1) {
 					} elseif ($hook == 'onPC') {
 						$args[2] = 3;
 					}
-
 					dispatch('commands', $command, $args);
 
 				} else {
