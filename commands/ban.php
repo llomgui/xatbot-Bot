@@ -22,8 +22,8 @@ $ban = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
+		
 		$hours = $message[2];
-		$reason = "";
 		
 		if (isset($message[3])) {
 
