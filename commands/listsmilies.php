@@ -14,6 +14,7 @@ $listsmilies = function ($who, $message, $type) {
 		$message[1] = end($powers)['name'];
 	}
 	
+	$message[1] = str_replace(array('(',')'), '', $message[1]);
 	foreach ($powers as $id => $array) {
 		if ($array['name'] == strtolower($message[1]) || $id == $message[1]) {
 			$exist = true;

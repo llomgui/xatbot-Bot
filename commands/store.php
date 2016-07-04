@@ -7,7 +7,7 @@ $store = function ($who, $message, $type) {
 	if (!isset($message[1]) || empty($message[1])) {
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !store [allpower/everypower/power]', $type);
 	}
-
+	$message = str_replace(array('(',')'), '', $message);
 	$powers = xatVariables::getPowers();
 	$exist  = false;
 
