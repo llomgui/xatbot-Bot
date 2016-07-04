@@ -15,7 +15,7 @@ $twitch = function ($who, $message, $type) {
 	
 	if (isset($twitch->error)) {
 		return $bot->network->sendMessageAutoDetection($who, $twitch->message, $type, true);
-	} else if ($twitch->stream == null) {
+	} elseif ($twitch->stream == null) {
 		return $bot->network->sendMessageAutoDetection($who, 'Twitch user [' . $message[1] . '] is not streaming.', $type);
 	}
 	$twitchA = [
