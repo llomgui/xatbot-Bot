@@ -286,13 +286,17 @@ class Network
 		]);
 	}
 
-	public function sendMessageAutoDetection($uid, $message, $type)
+	public function sendMessageAutoDetection($uid, $message, $type, $sensitive = false)
 	{
-		if($type == 1)
+		//$sensitive - if type is Main but you dont want to send info to Main
+		if ($sensitive && $type == 1)
+			$type = 2;
+		
+		if ($type == 1)
 			$this->sendMessage($message);
-		else if($type == 2)
+		else if ($type == 2)
 			$this->sendPrivateMessage($uid, $message);
-		else if($type == 3)
+		else if ($type == 3)
 			$this->sendPrivateConversation($uid, $message);
 	}
 
