@@ -15,3 +15,5 @@ To run it: php dev.php
 ## I want to contribute, how to?
 
 Make your tests on your computer, then send a pull request.
+
+This has been tested on Windows PC and dosen't seem to work as intended
