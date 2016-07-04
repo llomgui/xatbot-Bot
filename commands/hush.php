@@ -13,7 +13,7 @@ $hush = function ($who, $message, $type) {
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !hush [guest/member/mod/owner] [seconds] [reason]', $type);
 	}
 
-	$rank = $message[1];
+	$rank    = $message[1];
 	$seconds = $message[2];
 	
 	if (isset($message[3])) {
@@ -41,5 +41,5 @@ $hush = function ($who, $message, $type) {
 		default:
 			return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid rank.', $type);
 	}
-	$bot->network->sendMessage('/h'.$rank.$seconds);
+	$bot->network->sendMessage('/h' . $rank . $seconds . ' ' . $reason);
 };

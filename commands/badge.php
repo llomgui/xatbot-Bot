@@ -27,19 +27,21 @@ $badge = function ($who, $message, $type) {
 	}
 	
 	if (isset($user)) {
-		if($user->isBadged() == true) {
-			$bot->network->sendMessageAutoDetection($who, 'That user is already badged.', $type);
-		} else {
-			if (isset($message[2])) {
-				
-				unset($message[0]);
-				unset($message[1]);
 
-				$reason = implode(' ', $message);
-			}
-
-			$bot->network->sendPrivateConversation($user->getID(), '/nb' . (!isset($reason) ? '' : $reason));
+		if ($user->isBadged()) {
+			return $bot->network->sendMessageAutoDetection($who, 'That user is already badged.', $type);
 		}
+
+		if (isset($message[2])) {
+			
+			unset($message[0]);
+			unset($message[1]);
+
+			$reason = implode(' ', $message);
+		}
+
+		$bot->network->sendPrivateConversation($user->getID(), '/nb' . (!isset($reason) ? '' : $reason));
+
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}

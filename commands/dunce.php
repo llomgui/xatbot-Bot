@@ -27,6 +27,11 @@ $dunce = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
+
+		if ($user->isDunced()) {
+			return $bot->network->sendMessageAutoDetection($who, 'That user is already dunced.', $type);
+		}
+
 		if (isset($message[2])) {
 			
 			unset($message[0]);

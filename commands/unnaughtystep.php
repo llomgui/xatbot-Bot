@@ -27,11 +27,12 @@ $unnaughtystep = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		if($user->isNaughty() != true) {
-			$bot->network->sendMessageAutoDetection($who, 'That user is not naughtstepped.', $type);
-		} else {
-			$bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gn');
+
+		if (!$user->isNaughty()) {
+			return $bot->network->sendMessageAutoDetection($who, 'That user is not naughtstepped.', $type);
 		}
+
+		$bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gn');
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}

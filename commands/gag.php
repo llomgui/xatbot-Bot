@@ -27,16 +27,17 @@ $gag = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		if($user->isGagged() == true) {
-			$bot->network->sendMessageAutoDetection($who, 'That user is already gagged.', $type);
-		} else {
-			if (isset($message[2])) {
 
-				unset($message[0]);
-				unset($message[1]);
+		if ($user->isGagged()) {
+			return $bot->network->sendMessageAutoDetection($who, 'That user is already gagged.', $type);
+		}
 
-				$reason = implode(' ', $message);
-			}
+		if (isset($message[2])) {
+
+			unset($message[0]);
+			unset($message[1]);
+
+			$reason = implode(' ', $message);
 		}
 		$bot->network->ban($user->getID(), 1, (!isset($reason) ? '' : $reason), 'gg');
 	} else {

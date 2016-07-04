@@ -27,22 +27,22 @@ $zipban = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		if($user->isBanned() == true) {
-			$bot->network->sendMessageAutoDetection($who, 'That user is already zipbanned.', $type);
-		} else {
-			$hours   = $message[2];
-			
-			if (isset($message[3])) {
 
-				unset($message[0]);
-				unset($message[1]);
-				unset($message[2]);
-
-				$reason = implode(' ', $message);
-			}
-
-			$bot->network->ban($user->getID(), $hours, (!isset($reason) ? '' : $reason), 'g', 184);
+		if ($user->isZipped()) {
+			return $bot->network->sendMessageAutoDetection($who, 'That user is already zipbanned.', $type);
 		}
+		
+		$hours   = $message[2];
+		if (isset($message[3])) {
+
+			unset($message[0]);
+			unset($message[1]);
+			unset($message[2]);
+
+			$reason = implode(' ', $message);
+		}
+
+		$bot->network->ban($user->getID(), $hours, (!isset($reason) ? '' : $reason), 'g', 184);
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
