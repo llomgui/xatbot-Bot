@@ -25,12 +25,13 @@ $sinbin = function ($who, $message, $type) {
 			}
 		}
 	}
-	
-	if($user->isMod() == false){
-		return $bot->network->sendMessageAutoDetection($who, 'That user is not a moderator.', $type);
-	}
 
 	if (isset($user)) {
+
+		if (!$user->isMod()){
+			return $bot->network->sendMessageAutoDetection($who, 'That user is not a moderator.', $type);
+		}
+	
 		$hours = $message[2];
 		$bot->network->sendPrivateConversation($user->getID(), '/n' . $hours);
 	} else {

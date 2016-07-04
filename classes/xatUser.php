@@ -224,7 +224,7 @@ class User
 		return (($this->flag0 & 1 << 17) != 0);
 	}
 
-	public function isReversed()
+	public function isReverseBanned()
 	{
 		return (($this->flag0 & 1 << 17) != 0);
 	}
