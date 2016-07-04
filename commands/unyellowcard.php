@@ -27,11 +27,12 @@ $unyellowcard = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		if($user->isYellowCarded() != true) {
-			$bot->network->sendMessageAutoDetection($who, 'That user is not yellow carded.', $type);
-		} else {
-			$bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gy');
+
+		if (!$user->isYellowCarded()) {
+			return $bot->network->sendMessageAutoDetection($who, 'That user is not yellow carded.', $type);
 		}
+		
+		$bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gy');
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
