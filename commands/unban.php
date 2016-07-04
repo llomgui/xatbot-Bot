@@ -5,6 +5,11 @@ $unban = function ($who, $message, $type) {
 	$bot = actionAPI::getBot();
 
 	if (!isset($message[1]) || empty($message[1])) {
+
+		if ($type == 1) {
+			$type = 2;
+		}
+		
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !unban [regname/xatid]', $type);
 	}
 
@@ -24,6 +29,6 @@ $unban = function ($who, $message, $type) {
 	if (isset($user)) {
 		$bot->network->unban($user->getID());
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
+		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
 };

@@ -5,6 +5,11 @@ $gamebanme = function ($who, $message, $type) {
 	$bot = actionAPI::getBot();
 
 	if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
+
+		if ($type == 1) {
+			$type = 2;
+		}
+
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !gamebanme [snake/space/match/maze/code/slot] [hours]', $type);
 	}
 
@@ -14,37 +19,37 @@ $gamebanme = function ($who, $message, $type) {
 	switch (strtolower($gameban)) {
 		case 'snake':
 		case 'snakeban':
-			$gamebanid = 2;
+			$gamebanid = 134;
 			break;
 			
 		case 'space':
 		case 'spaceban':
-			$gamebanid = 3;
+			$gamebanid = 136;
 			break;
 			
 		case 'match':
 		case 'matchban':
-			$gamebanid = 4;
+			$gamebanid = 140;
 			break;
 			
 		case 'maze':
 		case 'mazeban':
-			$gamebanid = 5;
+			$gamebanid = 152;
 			break;
 			
 		case 'code':
 		case 'codeban':
-			$gamebanid = 6;
+			$gamebanid = 162;
 			break;
 			
 		case 'slot':
 		case 'slotban':
-			$gamebanid = 7;
+			$gamebanid = 236;
 			break;
 			
 		default:
 			return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid gameban', $type);
 			break;
 	}
-	$bot->network->ban($who, $gamebanid, $hours, 'Requested');
+	$bot->network->ban($who, $hours, 'Requested', $gamebanid);
 };

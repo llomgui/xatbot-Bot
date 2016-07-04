@@ -5,6 +5,11 @@ $gag = function ($who, $message, $type) {
 	$bot = actionAPI::getBot();
 
 	if (!isset($message[1]) || empty($message[1])) {
+
+		if ($type == 1) {
+			$type = 2;
+		}
+
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !gag [regname/xatid] [reason]', $type);
 	}
 
@@ -29,12 +34,10 @@ $gag = function ($who, $message, $type) {
 			unset($message[1]);
 
 			$reason = implode(' ', $message);
-		} else {
-			$reason = 'No reason';
 		}
 
-		$bot->network->gag($user->getID(), 1, $reason);
+		$bot->network->gag($user->getID(), 1, (!isset($reason) ? 'No reason' : $reason));
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'User is not here', $type);
+		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
 };

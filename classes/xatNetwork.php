@@ -329,7 +329,7 @@ class Network
 		]);
 	}
 
-	public function ban($uid, $gamebanid='', $time, $reason)
+	public function ban($uid, $time, $reason, $gamebanid='')
 	{
 		if ($time < 0) {
 			$time = 1;
@@ -338,10 +338,10 @@ class Network
 		$time *= 3600;
 		
 		$this->socket->write('c', array_merge([
-			'p' => $reason,
-			'u' => $uid,
-			't' => '/g' . $time,
-		]), (empty($gamebanid) ? [] : ['w' => $gamebanid])
+				'p' => $reason,
+				'u' => $uid,
+				't' => '/g' . $time,
+			], (empty($gamebanid) ? [] : ['w' => $gamebanid]))
 		);
 	}
 
