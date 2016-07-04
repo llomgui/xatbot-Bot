@@ -289,15 +289,17 @@ class Network
 	public function sendMessageAutoDetection($uid, $message, $type, $sensitive = false)
 	{
 		//$sensitive - if type is Main but you dont want to send info to Main
-		if ($sensitive && $type == 1)
+		if ($sensitive && $type == 1) {
 			$type = 2;
+		}
 		
-		if ($type == 1)
+		if ($type == 1) {
 			$this->sendMessage($message);
-		else if ($type == 2)
+		} elseif ($type == 2) {
 			$this->sendPrivateMessage($uid, $message);
-		else if ($type == 3)
+		} elseif ($type == 3) {
 			$this->sendPrivateConversation($uid, $message);
+	}
 	}
 
 	public function answerTickle($uid)
