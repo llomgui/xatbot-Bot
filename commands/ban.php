@@ -27,19 +27,22 @@ $ban = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		
-		$hours = $message[2];
-		
-		if (isset($message[3])) {
+		if($user->isBanned() == true) {
+			$bot->network->sendMessageAutoDetection($who, 'That user is already banned.', $type);
+		} else {	
+			$hours = $message[2];
+			
+			if (isset($message[3])) {
 
-			unset($message[0]);
-			unset($message[1]);
-			unset($message[2]);
+				unset($message[0]);
+				unset($message[1]);
+				unset($message[2]);
 
-			$reason = implode(' ', $message);
+				$reason = implode(' ', $message);
+			}
+
+			$bot->network->ban($user->getID(), $hours, (!isset($reason) ? '' : $reason));
 		}
-
-		$bot->network->ban($user->getID(), $hours, (!isset($reason) ? 'No reason' : $reason));
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}

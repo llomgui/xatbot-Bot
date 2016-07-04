@@ -27,7 +27,11 @@ $unban = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		$bot->network->unban($user->getID());
+		if($user->isBanned() != true) {
+			$bot->network->sendMessageAutoDetection($who, 'That user is not banned.', $type);
+		} else {
+			$bot->network->unban($user->getID());
+		}
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}

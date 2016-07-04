@@ -27,16 +27,18 @@ $gag = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
+		if($user->isGagged() == true) {
+			$bot->network->sendMessageAutoDetection($who, 'That user is already gagged.', $type);
+		} else {
+			if (isset($message[2])) {
 
-		if (isset($message[2])) {
+				unset($message[0]);
+				unset($message[1]);
 
-			unset($message[0]);
-			unset($message[1]);
-
-			$reason = implode(' ', $message);
+				$reason = implode(' ', $message);
+			}
 		}
-
-		$bot->network->gag($user->getID(), 1, (!isset($reason) ? 'No reason' : $reason));
+		$bot->network->ban($user->getID(), 1, (!isset($reason) ? '' : $reason), 'gg');
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
