@@ -28,7 +28,7 @@ $ban = function ($who, $message, $type) {
 
 	if (isset($user)) {
 
-		if($user->isBanned()) {
+		if ($user->isBanned()) {
 			return $bot->network->sendMessageAutoDetection($who, 'That user is already banned.', $type);
 		}
 
