@@ -4,7 +4,7 @@ $temp = function ($who, $message, $type) {
 
 	$bot = actionAPI::getBot();
 
-	if( empty($message[1]) || empty($message[2])       ||
+	if ( empty($message[1]) || empty($message[2])       ||
 		empty($message[3]) || !is_numeric($message[3]) ||
 		$message[3] < 0    || $message[3] > 24) {
 
@@ -28,7 +28,7 @@ $temp = function ($who, $message, $type) {
 		}
 	}
 
-	if(isset($user)) {
+	if (isset($user)) {
 
 		$message[1] = strtolower($message[1]);
 		switch($message[1]) {

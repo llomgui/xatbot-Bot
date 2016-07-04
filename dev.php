@@ -89,12 +89,13 @@ while (1) {
 						break;
 						
 					case 'p':
-						if($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff')
-								continue;
+						if ($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff') {
+							continue;
+						}
 
-							$hook   = (isset($packet['elements']['s'])) ? 'onPC' : 'onPM';  // onP*($who, $message)
-							$args[] = $Ocean->network->parseID($packet['elements']['u']);
-							$args[] = $packet['elements']['t'];
+						$hook   = (isset($packet['elements']['s'])) ? 'onPC' : 'onPM';  // onP*($who, $message)
+						$args[] = $Ocean->network->parseID($packet['elements']['u']);
+						$args[] = $packet['elements']['t'];
 						break;
 					
 					case 'u':
@@ -227,17 +228,17 @@ function read()
 		while (($file = readdir($dir)) !== false) {
 			$url = '.' . DIRECTORY_SEPARATOR . $extensionsDir . DIRECTORY_SEPARATOR . $file;
 			
-			if(!is_file($url)) {
+			if (!is_file($url)) {
 				continue;
 			}
 			
 			$pos = strrpos($file, '.');
 
-			if($pos === false) {
+			if ($pos === false) {
 				continue;
 			}
 			
-			if(substr($file, $pos + 1) != 'php') {
+			if (substr($file, $pos + 1) != 'php') {
 				continue;
 			}
 			

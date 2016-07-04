@@ -1245,7 +1245,7 @@ abstract class xatVariables
 			$page = file_get_contents('http://xat.com/web_gear/chat/ip2.php?Ocean=' . time(), false, $ctx);
 			$cpt++;
 			usleep(300000);
-		} while(empty($page) && $cpt < 5);
+		} while (empty($page) && $cpt < 5);
 
 		if (!empty($page)) {
 			self::$ip2 = json_decode($page, true);
@@ -1261,7 +1261,7 @@ abstract class xatVariables
 			$page = file_get_contents('http://xat.com/web_gear/chat/pow2.php?Ocean=' . time(), false, $ctx);
 			$cpt++;
 			usleep(300000);
-		} while(empty($page) && $cpt < 5);
+		} while (empty($page) && $cpt < 5);
 
 		if (empty($page)) {
 			return false;
@@ -1306,7 +1306,7 @@ abstract class xatVariables
 			$page = file_get_contents('http://xat.com/json/powers.php?Ocean=' . time(), false, $ctx);
 			$cpt++;
 			usleep(300000);
-		} while(empty($page) && $cpt < 5);
+		} while (empty($page) && $cpt < 5);
 
 		if (empty($page)) {
 			return false;
@@ -1332,7 +1332,7 @@ abstract class xatVariables
 			$page = file_get_contents($url, false, $ctx);
 			$cpt++;
 			usleep(300000);
-		} while(empty($page) && $cpt < 5);
+		} while (empty($page) && $cpt < 5);
 
 		if (empty($page)) {
 			return false;

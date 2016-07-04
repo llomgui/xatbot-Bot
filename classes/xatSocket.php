@@ -46,7 +46,7 @@ class Socket
 			return false;
 		}
 
-		if($force === true) {
+		if ($force === true) {
 			socket_set_block($this->socket);
 		}
 
@@ -59,7 +59,7 @@ class Socket
 
 		$this->buffer .= $packet;
 
-		if($force === true) {
+		if ($force === true) {
 			socket_set_nonblock($this->socket);
 		}
 
@@ -107,8 +107,9 @@ class Socket
 		// Removing < />
 		$string = trim($string);
 
-		if(($string[0] != '<') OR (substr($string, -2) != '/>'))
+		if (($string[0] != '<') OR (substr($string, -2) != '/>')) {
 			throw new Exception('Corrupted packets.');
+		}
 		
 		$string = substr($string, 1, -2);
 		
@@ -118,7 +119,7 @@ class Socket
 
 		$n = preg_match_all('! ([^ =]+(?:="[^"]+")?)!', $string, $matches);
 		
-		for($i = 0; $i < $n; $i++) {
+		for ($i = 0; $i < $n; $i++) {
 			$pos = strpos($matches[1][$i], '=');
 			
 			if ($pos === false) {
