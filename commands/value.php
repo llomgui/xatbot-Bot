@@ -53,7 +53,7 @@ $value = function ($who, $message, $type) {
 					return $bot->network->sendMessageAutoDetection($who, 'You cannot value an account without days!', $type);
 				}
 
-				if(sizeof($xatusers) > 1) {
+				if (sizeof($xatusers) > 1) {
 					$regname .= $user->getRegname() . ', ';
 				} else {
 					$regname .= $user->getRegname();

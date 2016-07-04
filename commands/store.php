@@ -13,8 +13,7 @@ $store = function ($who, $message, $type) {
 
 	if (in_array($message[1], ['allpower', 'allpowers'])) {
 		$storePrice = 0;
-		foreach ($powers as $id => $array)
-		{
+		foreach ($powers as $id => $array) {
 			if ($array['isAllPower']) {
 				$storePrice += $array['storeCost'];
 			}
@@ -24,7 +23,7 @@ $store = function ($who, $message, $type) {
 	} elseif (in_array($message[1], ['everypower', 'everypowers'])) {
 		$storePrice = 0;
 		foreach ($powers as $id => $array)
-			if($id == 95) {
+			if ($id == 95) {
 				continue;
 			} else {
 				$storePrice += $array['storeCost'];
@@ -74,8 +73,5 @@ $store = function ($who, $message, $type) {
 
 			return $bot->network->sendMessageAutoDetection($who, '"'.ucfirst($array['name']).'" ' . $array['storeCost'], $type);
 		}
-
-
-
 	}
 };
