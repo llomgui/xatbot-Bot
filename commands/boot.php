@@ -1,16 +1,16 @@
 <?php
 
-$unyellowcard = function ($who, $message, $type) {
+$boot = function ($who, $message, $type) {
 
 	$bot = actionAPI::getBot();
 
-	if (!isset($message[1]) || empty($message[1])) {
+	if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
 
 		if ($type == 1) {
 			$type = 2;
 		}
 
-		return $bot->network->sendMessageAutoDetection($who, 'Usage: !unyellowcard [regname/xatid]', $type);
+		return $bot->network->sendMessageAutoDetection($who, 'Usage: !boot [regname/xatid] [chat] [reason]', $type);
 	}
 
 	if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
@@ -28,12 +28,18 @@ $unyellowcard = function ($who, $message, $type) {
 
 	if (isset($user)) {
 
-		if (!$user->isYellowCarded()) {
-			return $bot->network->sendMessageAutoDetection($who, 'That user is not yellow carded.', $type);
+		$chat = $message[2];
+		if (isset($message[3])) {
+
+			unset($message[0]);
+			unset($message[1]);
+			unset($message[2]);
+			$reason = implode(' ', $message);
 		}
-		
-		$bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gy');
+
+		$bot->network->kick($user->getID(), (!isset($reason) ? '' : $reason), '#' . $chat);
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
+
 };

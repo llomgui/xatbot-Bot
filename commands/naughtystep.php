@@ -27,19 +27,21 @@ $naughtystep = function ($who, $message, $type) {
 	}
 
 	if (isset($user)) {
-		if($user->isNaughty() == true) {
-			$bot->network->sendMessageAutoDetection($who, 'That user is already naughtystepped.', $type);
-		} else {
-			if (isset($message[2])) {
-				
-				unset($message[0]);
-				unset($message[1]);
 
-				$reason = implode(' ', $message);
-			}
-
-			$bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gn');
+		if ($user->isNaughty()) {
+			return $bot->network->sendMessageAutoDetection($who, 'That user is already naughtystepped.', $type);
 		}
+
+		if (isset($message[2])) {
+			
+			unset($message[0]);
+			unset($message[1]);
+
+			$reason = implode(' ', $message);
+		}
+
+		$bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gn');
+
 	} else {
 		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
 	}
