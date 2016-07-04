@@ -19,7 +19,7 @@ $twitch = function ($who, $message, $type) {
 		return $bot->network->sendMessageAutoDetection($who, 'Twitch user [' . $message[1] . '] is not streaming.', $type);
 	}
 	$twitchA = [
-		'Twitch user [' . $twitch->stream->channel->display_name . '] is currently streaming "' . $twitch->stream->game . '" with ' . $twitch->viewers . ' viewers.',
+		'Twitch user [' . $twitch->stream->channel->display_name . '] is currently streaming "' . $twitch->stream->game . '" with ' . $twitch->stream->viewers . ' viewers.',
 		'Title: ' . $twitch->stream->channel->status,
 		'Followers: ' . $twitch->stream->channel->followers,
 		'Total views: ' . $twitch->stream->channel->views,
