@@ -9,13 +9,14 @@ $twitch = function ($who, $message, $type) {
 	
 	$page = file_get_contents('https://api.twitch.tv/kraken/streams/' . $message[1]);
 	if (!$page) {
-		return $bot->network->sendMessageAutoDetection($who, 'Twitch API is not accessable at this monent, please try again later.', $type);
+		return $bot->network->sendMessageAutoDetection($who, 'Twitch API is not accessable at this monent or unknown username, please try again later.', $type);
 	}
 	$twitch = json_decode($page);
+	
 	if (isset($twitch->error)) {
-		return $bot->network->sendMessageAutoDetection($twitch->message, 0, $user->userid, true);
+		return $bot->network->sendMessageAutoDetection($who, $twitch->message, $type, true);
 	} else if ($twitch->stream == null) {
-		return $bot->network->sendMessageAutoDetection('Twitch user [' . $message[1] . '] is not streaming.', $type);
+		return $bot->network->sendMessageAutoDetection($who, 'Twitch user [' . $message[1] . '] is not streaming.', $type);
 	}
 	$twitchA = [
 		'Twitch user [' . $twitch->stream->channel->display_name . '] is currently streaming "' . $twitch->stream->game . '" with ' . $twitch->viewers . ' viewers.',
