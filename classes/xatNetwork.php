@@ -320,27 +320,27 @@ class Network
 		$this->socket->write($node);
 	}
 
-	public function kick($uid, $reason)
+	public function kick($uid, $reason, $sound='')
 	{
 		$this->socket->write('c', [
-			'p' => $reason,
+			'p' => $reason.$sound,
 			'u' => $uid,
 			't' => '/k'
 		]);
 	}
 
-	public function ban($uid, $time, $reason, $gamebanid='')
+	public function ban($uid, $time, $reason, $tArgument='g', $gamebanid='')
 	{
 		if ($time < 0) {
 			$time = 1;
 		}
-
+		
 		$time *= 3600;
 		
 		$this->socket->write('c', array_merge([
 				'p' => $reason,
 				'u' => $uid,
-				't' => '/g' . $time,
+				't' => '/'. $tArgument . $time,
 			], (empty($gamebanid) ? [] : ['w' => $gamebanid]))
 		);
 	}
@@ -350,30 +350,6 @@ class Network
 		$this->socket->write('c', [
 			'u' => $uid,
 			't' => '/u'
-		]);
-	}
-
-	public function zap($uid, $reason)
-	{
-		$this->socket->write('c', [
-			'p' => $reason.'#rasberry#bump',
-			'u' => $uid,
-			't' => '/k'
-		]);
-	}
-
-	public function gag($uid, $time = 1, $reason)
-	{
-		if ($time < 0) {
-			$time = 1;
-		}
-
-		$time *= 3600;
-
-		$this->socket->write('c', [
-			'p' => $reason,
-			'u' => $uid,
-			't' => '/gg' . $time
 		]);
 	}
 }
