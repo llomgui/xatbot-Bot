@@ -2,6 +2,6 @@
 
 $die = function ($who, $message, $type) {
 
-	$bot = actionAPI::getBot();
-	//TODO kill this bot
+    $bot = actionAPI::getBot();
+    //TODO kill this bot
 };
