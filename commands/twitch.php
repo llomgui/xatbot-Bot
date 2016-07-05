@@ -1,7 +1,7 @@
 <?php
 
 $twitch = function ($who, $message, $type) {
-  
+    
     $bot = actionAPI::getBot();
 	
     if (empty($message[1]) || !isset($message[1])) {
