@@ -2,135 +2,126 @@
 
 $value = function ($who, $message, $type) {
 
-	$bot = actionAPI::getBot();
+    $bot = actionAPI::getBot();
 
-	if (!isset($message[1]) || empty($message[1])) {
-		$xatusers[] = $who;
-	} else {
+    if (!isset($message[1]) || empty($message[1])) {
+        $xatusers[] = $who;
+    } else {
+        unset($message[0]);
+        foreach ($message as $mess) {
+            if (!empty($mess)) {
+                $xatusers[] = $mess;
+            }
+        }
+    }
 
-		unset($message[0]);
-		foreach ($message as $mess) {
-			if (!empty($mess)) {
-				$xatusers[] = $mess;
-			}
-		}
+    $powers = xatVariables::getPowers();
 
-	}
+    if (sizeof($xatusers) > 0) {
+        $regname    = '';
+        $storeprice = 0;
+        $minprice   = 0;
+        $maxprice   = 0;
+        $count      = 0;
+        $cdoubles   = 0;
 
-	$powers = xatVariables::getPowers();
+        foreach ($xatusers as $xatuser) {
+            if (is_numeric($xatuser) && isset($bot->users[$xatuser])) {
+                $user = $bot->users[$xatuser];
+            } else {
+                foreach ($bot->users as $id => $object) {
+                    if (is_object($object)) {
+                        if (strtolower($object->getRegname()) == strtolower($xatuser)) {
+                            $user = $object;
+                            break;
+                        }
+                    }
+                }
+            }
 
-	if (sizeof($xatusers) > 0) {
+            if (isset($user)) {
+                if (!$user->isRegistered()) {
+                    return $bot->network->sendMessageAutoDetection($who, 'You cannot value an unregistered account!', $type);
+                }
 
-		$regname    = '';
-		$storeprice = 0;
-		$minprice   = 0;
-		$maxprice   = 0;
-		$count      = 0;
-		$cdoubles   = 0;
+                if (!$user->hasDays()) {
+                    return $bot->network->sendMessageAutoDetection($who, 'You cannot value an account without days!', $type);
+                }
 
-		foreach ($xatusers as $xatuser) {
+                if (sizeof($xatusers) > 1) {
+                    $regname .= $user->getRegname() . ', ';
+                } else {
+                    $regname .= $user->getRegname();
+                }
 
-			if (is_numeric($xatuser) && isset($bot->users[$xatuser])) {
-				$user = $bot->users[$xatuser];
-			} else {
-				foreach($bot->users as $id => $object) {
-					if (is_object($object)) {
-						if (strtolower($object->getRegname()) == strtolower($xatuser)) {
-							$user = $object;
-							break;
-						}
-					}
-				}
-			}
+                $doubles = $user->getDoubles();
 
-			if (isset($user)) {
+                if (!empty($doubles)) {
+                    $pO = explode('|', $doubles);
 
-				if (!$user->isRegistered()) {
-					return $bot->network->sendMessageAutoDetection($who, 'You cannot value an unregistered account!', $type);
-				}
+                    for ($i = 0; $i < sizeof($pO); $i++) {
+                        $pos = strpos($pO[$i], '=');
+                        if ($pos !== false) {
+                            $id     = (int)substr($pO[$i], 0, $pos);
+                            $amount = (int)substr($pO[$i], $pos + 1);
+                        } else {
+                            $id     = (int)$pO[$i];
+                            $amount = 1;
+                        }
+                        
+                        if ($id == 0) {
+                            continue;
+                        }
+                        
+                        if (isset($powers[$id]['storeCost'])) {
+                            if (!$powers[$id]['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
+                                $storeprice += $powers[$id]['storeCost'] * $amount;
+                            }
+                        }
+                                
+                        $minprice += $powers[$id]['minCost'] * $amount;
+                        $maxprice += $powers[$id]['maxCost'] * $amount;
+                        $count    += $amount;
+                        $cdoubles += $amount;
+                    }
+                }
 
-				if (!$user->hasDays()) {
-					return $bot->network->sendMessageAutoDetection($who, 'You cannot value an account without days!', $type);
-				}
+                foreach ($powers as $id => $array) {
+                    if ($id == 95) {
+                        continue;
+                    }
 
-				if (sizeof($xatusers) > 1) {
-					$regname .= $user->getRegname() . ', ';
-				} else {
-					$regname .= $user->getRegname();
-				}
+                    if ($user->hasPower($id)) {
+                        if (isset($array['storeCost'])) {
+                            if (!$array['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
+                                $storeprice += $array['storeCost'];
+                            }
+                        }
 
-				$doubles = $user->getDoubles();
+                        $minprice += $array['minCost'];
+                        $maxprice += $array['maxCost'];
+                        $count++;
+                    }
+                }
+            } else {
+                /*return $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);*/
+                // TODO if user empty -> get data from userinfo
+            }
+        }
 
-				if (!empty($doubles)) {
-					$pO = explode('|', $doubles);
+        $regname = substr($regname, 0, strlen($regname) - 2);
+        $regname .= '\'s';
 
-					for ($i = 0; $i < sizeof($pO); $i++) {
-						$pos = strpos($pO[$i], '=');
-						if ($pos !== false) {
-							$id     = (int)substr($pO[$i], 0, $pos);
-							$amount = (int)substr($pO[$i], $pos + 1);
-						} else {
-							$id     = (int)$pO[$i];
-							$amount = 1;
-						}
-						
-						if ($id == 0) {
-							continue;
-						}
-						
-						if (isset($powers[$id]['storeCost'])) {
-							if (!$powers[$id]['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
-								$storeprice += $powers[$id]['storeCost'] * $amount;
-							}
-						}
-								
-						$minprice += $powers[$id]['minCost'] * $amount;
-						$maxprice += $powers[$id]['maxCost'] * $amount;
-						$count    += $amount;
-						$cdoubles += $amount;
-					}
-				}
+        $mindays  = round($minprice / 13.5);
+        $maxdays  = round($maxprice / 13.5);
+        $mineuros = round($minprice / 333, 2);
+        $maxeuros = round($maxprice / 333, 2);
+        $minUSD   = round($mineuros * 1.10, 2);
+        $maxUSD   = round($maxeuros * 1.10, 2);
 
-				foreach ($powers as $id => $array) {
+        $message = $regname . ' [' . $count . '] powers are worth ' . number_format($minprice) . ' - ' . number_format($maxprice) . ' xats or ' . number_format($mindays) . ' - ' . number_format($maxdays) . ' days or in cash worth ' . $mineuros . ' - ' . $maxeuros . ' euros or ' . $minUSD . ' - ' . $maxUSD . ' USD. Auction: ' . number_format($storeprice) . ' xats.';
 
-					if ($id == 95) {
-						continue;
-					}
-
-					if ($user->hasPower($id)) {
-						if (isset($array['storeCost'])) {
-							if (!$array['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
-								$storeprice += $array['storeCost'];
-							}
-						}
-
-						$minprice += $array['minCost'];
-						$maxprice += $array['maxCost'];
-						$count++;
-					}
-				}
-
-
-			} else {
-				/*return $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);*/
-				// TODO if user empty -> get data from userinfo
-			}
-
-		}
-
-		$regname = substr($regname, 0, strlen($regname) - 2);
-		$regname .= '\'s';
-
-		$mindays  = round($minprice / 13.5);
-		$maxdays  = round($maxprice / 13.5);
-		$mineuros = round($minprice / 333, 2);
-		$maxeuros = round($maxprice / 333, 2);
-		$minUSD   = round($mineuros * 1.10, 2);
-		$maxUSD   = round($maxeuros * 1.10, 2);
-
-		$message = $regname . ' [' . $count . '] powers are worth ' . number_format($minprice) . ' - ' . number_format($maxprice) . ' xats or ' . number_format($mindays) . ' - ' . number_format($maxdays) . ' days or in cash worth ' . $mineuros . ' - ' . $maxeuros . ' euros or ' . $minUSD . ' - ' . $maxUSD . ' USD. Auction: ' . number_format($storeprice) . ' xats.';
-
-		$bot->network->sendMessageAutoDetection($who, $message, $type);
-	}
+        $bot->network->sendMessageAutoDetection($who, $message, $type);
+    }
 
 };
