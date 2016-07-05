@@ -1,14 +1,14 @@
 <?php
 
 $onUserLeave = function ($who) {
-	
-	$bot  = actionAPI::getBot();
+    
+    $bot  = actionAPI::getBot();
 
-	if ($who >= 1900000000) {
-		return;
-	}
+    if ($who >= 1900000000) {
+        return;
+    }
 
-	unset($bot->users[$who]);
+    unset($bot->users[$who]);
 
-	return;
+    return;
 };

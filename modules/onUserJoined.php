@@ -1,19 +1,19 @@
 <?php
 
 $onUserJoined = function ($who, $array) {
-	
-	$bot = actionAPI::getBot();
+    
+    $bot = actionAPI::getBot();
 
-	if ($who >= 1900000000) {
-		return;
-	}
+    if ($who >= 1900000000) {
+        return;
+    }
 
-	$bot->users[$who] = new User($array);
-	$user = $bot->users[$who];
+    $bot->users[$who] = new User($array);
+    $user = $bot->users[$who];
 
-	if ($user->isRegistered() && !$user->isAway() && !$user->wasHere()) {
-		$bot->network->sendTickle($who);
-	}
+    if ($user->isRegistered() && !$user->isAway() && !$user->wasHere()) {
+        $bot->network->sendTickle($who);
+    }
 
-	return;
+    return;
 };
