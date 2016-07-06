@@ -31,20 +31,28 @@ $temp = function ($who, $message, $type) {
             case 'mem':
             case 'member':
             case 'membre':
+                if (!$bot->botHasPower(61)) {
+                    return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempmem\' power.', $type);
+                }
                 $bot->network->sendPrivateConversation($user->getID(), '/mb' . $message[3]);
                 break;
 
             case 'mod':
             case 'moderator':
             case 'moderateur':
+                if (!$bot->botHasPower(11)) {
+                    return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempmod\' power.', $type);
+                }
                 $bot->network->sendPrivateConversation($user->getID(), '/m' . $message[3]);
                 break;
 
             case 'own':
             case 'owner':
+                if (!$bot->botHasPower(79)) {
+                    return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempown\' power.', $type);
+                }
                 $bot->network->sendPrivateConversation($user->getID(), '/mo' . $message[3]);
                 break;
-
             default:
                 break;
         }

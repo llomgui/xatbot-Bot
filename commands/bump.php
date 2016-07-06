@@ -4,6 +4,10 @@ $bump = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->botHasPower(75)) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'bump\' power.', $type);
+    }
+    
     if (!isset($message[1]) || empty($message[1])) {
         if ($type == 1) {
             $type = 2;
@@ -27,10 +31,7 @@ $bump = function ($who, $message, $type) {
 
     if (isset($user)) {
         if (isset($message[2])) {
-            unset($message[0]);
-            unset($message[1]);
-
-            $message2 = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 2));
         }
 
         $bot->network->sendPrivateConversation($user->getID(), '(bump) ' . (!isset($message2) ? '' : $message2));

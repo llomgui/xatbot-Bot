@@ -3,6 +3,10 @@
 $badge = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
+    
+    if (!$bot->botHasPower(264)) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'badge\' power.', $type);
+    }
 
     if (!isset($message[1]) || empty($message[1])) {
         if ($type == 1) {
@@ -31,10 +35,7 @@ $badge = function ($who, $message, $type) {
         }
 
         if (isset($message[2])) {
-            unset($message[0]);
-            unset($message[1]);
-
-            $reason = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 2));
         }
 
         $bot->network->sendPrivateConversation($user->getID(), '/nb' . (!isset($reason) ? '' : $reason));
