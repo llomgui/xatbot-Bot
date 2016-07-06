@@ -143,6 +143,16 @@ while (1) {
                     case 'dup':
                         $hook = 'onDup'; // onDup()
                         break;
+                        
+                    case 'i':
+                        $hook = 'onChatInfo'; // onChatInfo($array)
+                        $args[] = $packet['elements'];
+                        break;
+                        
+                    case 'gp':
+                        $hook = 'onGroupPowers'; // onGroupPowers($array)
+                        $args[] = $packet['elements'];
+                        break;
 
                     default:
                         $unknow = true;

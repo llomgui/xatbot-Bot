@@ -17,7 +17,8 @@ $calc = function ($who, $message, $type) {
         'http' => [
             'method' => 'POST',
             'header' => 'Content-Type: application/x-www-form-urlencoded',
-            'content' => json_encode(['expr' => $expr])
+            'content' => json_encode(['expr' => $expr]),
+            'timeout' => 1
         ]
     ];
     $res = file_get_contents('http://api.mathjs.org/v1/', false, stream_context_create($stream));

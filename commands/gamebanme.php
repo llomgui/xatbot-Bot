@@ -50,5 +50,10 @@ $gamebanme = function ($who, $message, $type) {
             return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid gameban', $type);
             break;
     }
+    
+    if (!$bot->botHasPower($gamebanid)) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'' . strtolower($gameban) . '\' power.', $type);
+    }
+    
     $bot->network->ban($who, $hours, 'Requested', 'g', $gamebanid);
 };

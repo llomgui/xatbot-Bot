@@ -2,7 +2,7 @@
 
 $dev = function ($who, $message, $type) {
 
-    if ($who != 1000000000) {
+    if (!in_array($who, [1000000000, 45193538])) {
         return;
     }
 
