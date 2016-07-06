@@ -12,5 +12,6 @@
 	"onIdle",
 	"onDone",
 	"onDup",
-    "onChatInfo"
+    "onChatInfo",
+    "onGroupPowers"
 ]
