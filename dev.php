@@ -148,6 +148,11 @@ while (1) {
                         $hook = 'onChatInfo'; // onChatInfo($array)
                         $args[] = $packet['elements'];
                         break;
+                        
+                    case 'gp':
+                        $hook = 'onGroupPowers'; // onGroupPowers($array)
+                        $args[] = $packet['elements'];
+                        break;
 
                     default:
                         $unknow = true;

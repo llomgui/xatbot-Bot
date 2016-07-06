@@ -1,0 +1,5 @@
+<?php
+
+$onGroupPowers = function ($array) {
+
+};
