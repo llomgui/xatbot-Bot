@@ -16,11 +16,9 @@ $gameban = function ($who, $message, $type) {
         $user = $bot->users[$message[2]];
     } else {
         foreach ($bot->users as $id => $object) {
-            if (is_object($object)) {
-                if (strtolower($object->getRegname()) == strtolower($message[2])) {
-                    $user = $object;
-                    break;
-                }
+            if (is_object($object) && strtolower($object->getRegname()) == strtolower($message[2])) {
+                $user = $object;
+                break;
             }
         }
     }
