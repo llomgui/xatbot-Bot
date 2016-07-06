@@ -11,5 +11,6 @@
 	"onApp",
 	"onIdle",
 	"onDone",
-	"onDup"
+	"onDup",
+    "onChat"
 ]

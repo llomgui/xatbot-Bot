@@ -3,7 +3,11 @@
 $naughtystep = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-
+    
+    if (!$bot->botHasPower(284)) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'naughtystep\' power.', $type);
+    }
+    
     if (!isset($message[1]) || empty($message[1])) {
         if ($type == 1) {
             $type = 2;
@@ -31,10 +35,7 @@ $naughtystep = function ($who, $message, $type) {
         }
 
         if (isset($message[2])) {
-            unset($message[0]);
-            unset($message[1]);
-
-            $reason = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 2));
         }
 
         $bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gn');

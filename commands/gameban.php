@@ -30,12 +30,7 @@ $gameban = function ($who, $message, $type) {
         $hours   = $message[3];
         
         if (isset($message[4])) {
-            unset($message[0]);
-            unset($message[1]);
-            unset($message[2]);
-            unset($message[3]);
-
-            $reason = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 4));
         }
         
         switch (strtolower($gameban)) {
@@ -73,6 +68,10 @@ $gameban = function ($who, $message, $type) {
                 return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid gameban', $type);
         }
 
+        if (!$bot->botHasPower($gamebanid)) {
+            return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'' . strtolower($gameban) . '\' power.', $type);
+        }
+        
         $bot->network->ban($user->getID(), $hours, (!isset($reason) ? '' : $reason), 'g', $gamebanid);
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);

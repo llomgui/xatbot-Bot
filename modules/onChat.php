@@ -1,0 +1,5 @@
+<?php
+
+$onChat = function ($array) {
+    
+};
