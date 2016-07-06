@@ -13,7 +13,8 @@ $twitch = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Invalid twitch username', $type);
     }
 	
-    $page = @file_get_contents('https://api.twitch.tv/kraken/streams/' . $message[1]);
+    $stream = stream_context_create(['http'=> ['timeout' => 1]));
+    $page = @file_get_contents('https://api.twitch.tv/kraken/streams/' . $message[1], false, $stream);
 	
     /*
         API sends 404 if user doesnt exist :/
