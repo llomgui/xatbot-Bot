@@ -55,6 +55,7 @@ $value = function ($who, $message, $type) {
                 }
 
                 $doubles = $user->getDoubles();
+                var_dump($doubles);
 
                 if (!empty($doubles)) {
                     $pO = explode('|', $doubles);
@@ -104,12 +105,15 @@ $value = function ($who, $message, $type) {
                     }
                 }
             } else {
-                /*return $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);*/
+                return $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
                 // TODO if user empty -> get data from userinfo
             }
         }
 
-        $regname = substr($regname, 0, strlen($regname) - 2);
+        if (sizeof($xatusers) > 1) {
+        	$regname = substr($regname, 0, strlen($regname) - 2);
+        }
+
         $regname .= '\'s';
 
         $mindays  = round($minprice / 13.5);
