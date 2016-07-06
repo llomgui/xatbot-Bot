@@ -18,11 +18,9 @@ $temp = function ($who, $message, $type) {
         $user = $bot->users[$message[2]];
     } else {
         foreach ($bot->users as $id => $object) {
-            if (is_object($object)) {
-                if (strtolower($object->getRegname()) == strtolower($message[2])) {
-                    $user = $object;
-                    break;
-                }
+            if (is_object($object) && strtolower($object->getRegname()) == strtolower($message[2])) {
+                $user = $object;
+                break;
             }
         }
     }
@@ -37,7 +35,7 @@ $temp = function ($who, $message, $type) {
                     return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempmem\' power.', $type);
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/mb' . $message[3]);
-            break;
+                break;
 
             case 'mod':
             case 'moderator':
@@ -46,7 +44,7 @@ $temp = function ($who, $message, $type) {
                     return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempmod\' power.', $type);
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/m' . $message[3]);
-            break;
+                break;
 
             case 'own':
             case 'owner':
@@ -54,7 +52,7 @@ $temp = function ($who, $message, $type) {
                     return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempown\' power.', $type);
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/mo' . $message[3]);
-            break;
+                break;
         }
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
