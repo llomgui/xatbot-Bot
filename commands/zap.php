@@ -34,7 +34,7 @@ $zap = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 2));
         }
 
-        $bot->network->kick($user->getID(), (!isset($reason) ? '' : $reason), '#rasberry#bump');
+        $bot->network->kick($user->getID(), $reason ?? '', '#rasberry#bump');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

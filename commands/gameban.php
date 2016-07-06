@@ -70,7 +70,7 @@ $gameban = function ($who, $message, $type) {
             return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', strtolower($gameban)), $type);
         }
         
-        $bot->network->ban($user->getID(), $hours, (!isset($reason) ? '' : $reason), 'g', $gamebanid);
+        $bot->network->ban($user->getID(), $hours, $reason ?? '', 'g', $gamebanid);
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

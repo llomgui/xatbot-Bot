@@ -35,7 +35,7 @@ $boot = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 3));
         }
 
-        $bot->network->kick($user->getID(), (!isset($reason) ? '' : $reason), '#' . $chat);
+        $bot->network->kick($user->getID(), $reason ?? '', '#' . $chat);
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

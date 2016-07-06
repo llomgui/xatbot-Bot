@@ -36,7 +36,7 @@ $dunce = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 2));
         }
 
-        $bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gd');
+        $bot->network->ban($user->getID(), 0, $reason ?? '', 'gd');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

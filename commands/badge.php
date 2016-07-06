@@ -38,7 +38,7 @@ $badge = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 2));
         }
 
-        $bot->network->sendPrivateConversation($user->getID(), '/nb' . (!isset($reason) ? '' : $reason));
+        $bot->network->sendPrivateConversation($user->getID(), '/nb' . ($reason ?? ''));
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

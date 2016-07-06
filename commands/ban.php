@@ -36,7 +36,7 @@ $ban = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 3));
         }
 
-        $bot->network->ban($user->getID(), $hours, (!isset($reason) ? '' : $reason));
+        $bot->network->ban($user->getID(), $hours, $reason ?? '');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

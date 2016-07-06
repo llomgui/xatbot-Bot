@@ -38,7 +38,7 @@ $yellowcard = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 1));
         }
 
-        $bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gy');
+        $bot->network->ban($user->getID(), 0, $reason ?? '', 'gy');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }
