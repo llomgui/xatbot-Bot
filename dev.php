@@ -145,7 +145,7 @@ while (1) {
                         break;
                         
                     case 'i':
-                        $hook = 'onChat'; // onChat($array)
+                        $hook = 'onChatInfo'; // onChatInfo($array)
                         $args[] = $packet['elements'];
                         break;
 
