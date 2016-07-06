@@ -5,7 +5,7 @@ $boot = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
     
     if (!$bot->botHasPower(25)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'boot\' power.', $type);
+        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'boot'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
@@ -35,7 +35,7 @@ $boot = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 3));
         }
 
-        $bot->network->kick($user->getID(), (!isset($reason) ? '' : $reason), '#' . $chat);
+        $bot->network->kick($user->getID(), $reason ?? '', '#' . $chat);
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

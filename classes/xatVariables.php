@@ -1321,7 +1321,7 @@ abstract class xatVariables
 
             self::$powers[$id]['isLimited']  = isset($power['r']) ? true : false;
             self::$powers[$id]['isAllPower'] = (isset($power['f']) && ($power['f'] == 1 || $power['f'] == 3)) ? true : false;
-            self::$powers[$id]['storeCost']  = isset($power['x']) ? $power['x'] : $power['d'] * 13.5;
+            self::$powers[$id]['storeCost']  = $power['x'] ?? $power['d'] * 13.5;
         }
 
         $url = 'https://docs.google.com/spreadsheet/pub?key=1W0C7D4wZ_JLL8uoAUph3wTaEzFKqhTC_WTgrs37ilVI&output=csv';

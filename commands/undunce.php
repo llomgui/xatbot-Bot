@@ -30,7 +30,7 @@ $undunce = function ($who, $message, $type) {
             return $bot->network->sendMessageAutoDetection($who, 'That user is not dunced.', $type);
         }
 
-        $bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gd');
+        $bot->network->ban($user->getID(), 0, $reason ?? '', 'gd');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

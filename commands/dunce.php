@@ -5,7 +5,7 @@ $dunce = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
     
     if (!$bot->botHasPower(158)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'dunce\' power.', $type);
+        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'dunce'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
@@ -36,7 +36,7 @@ $dunce = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 2));
         }
 
-        $bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gd');
+        $bot->network->ban($user->getID(), 0, $reason ?? '', 'gd');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

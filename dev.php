@@ -74,8 +74,8 @@ while (1) {
                                 $args[] = $Ocean->network->parseID($packet['elements']['u']);
                                 $args[] = $packet['elements']['t'];
                             } else {
-                                $hook    = 'onOldMessage'; // onOldMessage($who, $message)
-                                $uid    = (isset($packet['elements']['d']) ? $packet['elements']['d'] : $packet['elements']['u']);
+                                $hook   = 'onOldMessage'; // onOldMessage($who, $message)
+                                $uid    = $packet['elements']['d'] ?? $packet['elements']['u'];
                                 $args[] = $Ocean->network->parseID($uid);
                                 $args[] = $packet['elements']['t'];
                             }
@@ -93,13 +93,13 @@ while (1) {
                         break;
                     
                     case 'u':
-                        $hook    = 'onUserJoined'; // onUserJoined($array)
+                        $hook   = 'onUserJoined'; // onUserJoined($array)
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $packet['elements'];
                         break;
                     
                     case 'z':
-                        $hook    = 'onTickle'; // onTickle($who, $array) 
+                        $hook   = 'onTickle'; // onTickle($who, $array) 
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $packet['elements'];
                         break;
@@ -110,7 +110,7 @@ while (1) {
                         break;
                         
                     case 'a':
-                        $hook    = 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message) 
+                        $hook   = 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message) 
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $Ocean->network->parseID($packet['elements']['d']);
                         $args[] = $packet['elements']['x'];
@@ -124,7 +124,7 @@ while (1) {
                         break;
 
                     case 'x':
-                        $hook    = 'onApp'; // onApp($who, $app, $elements) 
+                        $hook   = 'onApp'; // onApp($who, $app, $elements) 
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $packet['elements']['i'];
                         $args[] = $packet['elements'];
@@ -141,19 +141,28 @@ while (1) {
                         break;
                         
                     case 'dup':
-                        $hook = 'onDup'; // onDup()
+                        $hook   = 'onDup'; // onDup()
                         break;
                         
                     case 'i':
-                        $hook = 'onChatInfo'; // onChatInfo($array)
+                        $hook   = 'onChatInfo'; // onChatInfo($array)
                         $args[] = $packet['elements'];
                         break;
                         
                     case 'gp':
-                        $hook = 'onGroupPowers'; // onGroupPowers($array)
+                        $hook   = 'onGroupPowers'; // onGroupPowers($array)
                         $args[] = $packet['elements'];
                         break;
-
+                        
+                    case 'c':
+                        $hook   = 'onControlMessage'; // onControlMessage($array)
+                        $args[] = $packet['elements'];
+                        break;
+                        
+                    case 'o':
+                        // Old User
+                        break;
+                        
                     default:
                         $unknow = true;
                         break;
