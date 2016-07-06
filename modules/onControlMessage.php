@@ -1,0 +1,5 @@
+<?php
+
+$onControlMessage = function ($array) {
+
+};
