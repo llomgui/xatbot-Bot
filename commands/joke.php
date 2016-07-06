@@ -1,6 +1,6 @@
 <?php
 
-$joke = function ($who, $message, $type) {
+$joke = function ($who, $type) {
     
     $bot = actionAPI::getBot();
 	
