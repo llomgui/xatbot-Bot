@@ -15,5 +15,5 @@ $onChatInfo = function ($array) {
 
     
     $rankA = [0 => 'Guest', 1 => 'Main', 2 => 'Moderator', 3 => 'Member', 4 => 'Owner', 5 => 'Guest'];
-    $bot->chatInfo['rank'] = isset($array['r']) && isset($rankA[$array['r']) ? $rankA[$array['r']] : 'Guest';
+    $bot->chatInfo['rank'] = isset($array['r']) && isset($rankA[$array['r']]) ? $rankA[$array['r']] : 'Guest';
 };
