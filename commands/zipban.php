@@ -39,7 +39,7 @@ $zipban = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 3));
         }
 
-        $bot->network->ban($user->getID(), $hours, (!isset($reason) ? '' : $reason), 'g', 184);
+        $bot->network->ban($user->getID(), $hours, $reason ?? '', 'g', 184);
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

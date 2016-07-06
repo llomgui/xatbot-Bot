@@ -38,7 +38,7 @@ $naughtystep = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 2));
         }
 
-        $bot->network->ban($user->getID(), 0, (!isset($reason) ? '' : $reason), 'gn');
+        $bot->network->ban($user->getID(), 0, $reason ?? '', 'gn');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

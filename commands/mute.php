@@ -34,7 +34,7 @@ $mute = function ($who, $message, $type) {
             $reason = implode(' ', array_slice($message, 2));
         }
 
-        $bot->network->ban($user->getID(), 1, (!isset($reason) ? '' : $reason), 'gm');
+        $bot->network->ban($user->getID(), 1, $reason ?? '', 'gm');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }

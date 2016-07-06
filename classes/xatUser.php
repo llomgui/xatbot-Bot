@@ -29,23 +29,23 @@ class User
 
     public function __construct($packet)
     {
-        $this->id      = isset($packet['u'])  ? (int)$packet['u']  : 0;
-        $this->regname = isset($packet['N'])  ?      $packet['N']  : null;
+        $this->id      = $packet['u']  ?? 0;
+        $this->regname = $packet['N']  ?? null;
 
-        $this->nick    = isset($packet['n'])  ?      $packet['n']  : null;
-        $this->avatar  = isset($packet['a'])  ?      $packet['a']  : null;
-        $this->home    = isset($packet['h'])  ?      $packet['h']  : null;
-        $this->bride   = isset($packet['d2']) ? (int)$packet['d2'] : 0;
-        $this->app     = isset($packet['x'])  ? (int)$packet['x']  : 0;
-        $this->gameban = isset($packet['w'])  ? (int)$packet['w']  : 0;
+        $this->nick    = $packet['n']  ?? null;
+        $this->avatar  = $packet['a']  ?? null;
+        $this->home    = $packet['h']  ?? null;
+        $this->bride   = $packet['d2'] ?? 0;
+        $this->app     = $packet['x']  ?? 0;
+        $this->gameban = $packet['w']  ?? 0;
         $this->wasHere = isset($packet['s']);
 
-        $this->flag0   = isset($packet['f'])  ? (int)$packet['f']  : 0;
-        $this->aflags  = isset($packet['d0']) ? (int)$packet['d0'] : 0;
-        $this->qflags  = isset($packet['q'])  ? (int)$packet['q']  : 0;
+        $this->flag0   = $packet['f']  ?? 0;
+        $this->aflags  = $packet['d0'] ?? 0;
+        $this->qflags  = $packet['q']  ?? 0;
 
-        $this->login   = isset($packet['cb']) ? (int)$packet['cb'] : 0;
-        $this->rev     = isset($packet['v'])  ? (int)$packet['v']  : 0;
+        $this->login   = $packet['cb'] ?? 0;
+        $this->rev     = $packet['v']  ?? 0;
 
         $this->setPowers($packet);
     }
@@ -265,7 +265,7 @@ class User
     public function setPowers($packet)
     {
         for ($i=0; $i < xatVariables::getMaxPowerIndex(); $i++) {
-            $this->powers[$i] = isset($packet['p' . $i]) ? (int)$packet['p' . $i] : 0;
+            $this->powers[$i] = $packet['p' . $i] ?? 0;
         }
     }
 

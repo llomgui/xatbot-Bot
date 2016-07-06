@@ -35,7 +35,7 @@ $gag = function ($who, $message, $type) {
         if (isset($message[2])) {
             $reason = implode(' ', array_slice($message, 2));
         }
-        $bot->network->ban($user->getID(), 1, (!isset($reason) ? '' : $reason), 'gg');
+        $bot->network->ban($user->getID(), 1, $reason ?? '', 'gg');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
     }
