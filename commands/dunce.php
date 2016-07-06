@@ -20,11 +20,9 @@ $dunce = function ($who, $message, $type) {
         $user = $bot->users[$message[1]];
     } else {
         foreach ($bot->users as $id => $object) {
-            if (is_object($object)) {
-                if (strtolower($object->getRegname()) == strtolower($message[1])) {
-                    $user = $object;
-                    break;
-                }
+            if (is_object($object) && strtolower($object->getRegname()) == strtolower($message[1])) {
+                $user = $object;
+                break;
             }
         }
     }
