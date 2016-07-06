@@ -53,6 +53,8 @@ $temp = function ($who, $message, $type) {
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/mo' . $message[3]);
                 break;
+            default:
+                break;
         }
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);

@@ -107,7 +107,7 @@ class Socket
         // Removing < />
         $string = trim($string);
 
-        if (($string[0] != '<') or (substr($string, -2) != '/>')) {
+        if (($string[0] != '<') || (substr($string, -2) != '/>')) {
             throw new Exception('Corrupted packets.');
         }
         
