@@ -25,9 +25,7 @@ $kick = function ($who, $message, $type) {
 
     if (isset($user)) {
         if (isset($message[2])) {
-            unset($message[0]);
-            unset($message[1]);
-            $reason = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 2));
         }
 
         $bot->network->kick($user->getID(), (!isset($reason) ? 'No reason' : $reason));
