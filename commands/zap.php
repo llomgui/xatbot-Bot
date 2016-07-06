@@ -3,7 +3,11 @@
 $zap = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-
+    
+    if (!$bot->botHasPower(121)) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'zap\' power.', $type);
+    }
+    
     if (empty($message[1]) || !isset($message[1])) {
         if ($type == 1) {
             $type = 2;
@@ -27,9 +31,7 @@ $zap = function ($who, $message, $type) {
 
     if (isset($user)) {
         if (isset($message[2])) {
-            unset($message[0]);
-            unset($message[1]);
-            $reason = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 2));
         }
 
         $bot->network->kick($user->getID(), (!isset($reason) ? '' : $reason), '#rasberry#bump');

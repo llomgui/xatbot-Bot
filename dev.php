@@ -143,6 +143,11 @@ while (1) {
                     case 'dup':
                         $hook = 'onDup'; // onDup()
                         break;
+                        
+                    case 'i':
+                        $hook = 'onChat'; // onChat($array)
+                        $args[] = $packet['elements'];
+                        break;
 
                     default:
                         $unknow = true;

@@ -3,6 +3,10 @@
 $gag = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
+    
+    if (!$bot->botHasPower(41)) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'gag\' power.', $type);
+    }
 
     if (!isset($message[1]) || empty($message[1])) {
         if ($type == 1) {
@@ -31,10 +35,7 @@ $gag = function ($who, $message, $type) {
         }
 
         if (isset($message[2])) {
-            unset($message[0]);
-            unset($message[1]);
-
-            $reason = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 2));
         }
         $bot->network->ban($user->getID(), 1, (!isset($reason) ? '' : $reason), 'gg');
     } else {

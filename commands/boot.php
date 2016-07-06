@@ -3,6 +3,10 @@
 $boot = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
+    
+    if (!$bot->botHasPower(25)) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'boot\' power.', $type);
+    }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
         if ($type == 1) {
@@ -28,10 +32,7 @@ $boot = function ($who, $message, $type) {
     if (isset($user)) {
         $chat = $message[2];
         if (isset($message[3])) {
-            unset($message[0]);
-            unset($message[1]);
-            unset($message[2]);
-            $reason = implode(' ', $message);
+            $reason = implode(' ', array_slice($message, 3));
         }
 
         $bot->network->kick($user->getID(), (!isset($reason) ? '' : $reason), '#' . $chat);
