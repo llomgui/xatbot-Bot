@@ -5,7 +5,7 @@ $mute = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
     
     if (!$bot->botHasPower(46)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'mute\' power.', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry, but i don\'t have the power \'mute\'.', $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
