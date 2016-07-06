@@ -32,7 +32,7 @@ $temp = function ($who, $message, $type) {
             case 'member':
             case 'membre':
                 if (!$bot->botHasPower(61)) {
-                    return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempmem\' power.', $type);
+                    return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempmem'), $type);
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/mb' . $message[3]);
                 break;
@@ -41,7 +41,7 @@ $temp = function ($who, $message, $type) {
             case 'moderator':
             case 'moderateur':
                 if (!$bot->botHasPower(11)) {
-                    return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempmod\' power.', $type);
+                    return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempmod'), $type);
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/m' . $message[3]);
                 break;
@@ -49,7 +49,7 @@ $temp = function ($who, $message, $type) {
             case 'own':
             case 'owner':
                 if (!$bot->botHasPower(79)) {
-                    return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'tempown\' power.', $type);
+                    return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempown'), $type);
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/mo' . $message[3]);
                 break;

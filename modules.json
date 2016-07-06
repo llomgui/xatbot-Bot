@@ -13,5 +13,6 @@
 	"onDone",
 	"onDup",
     "onChatInfo",
-    "onGroupPowers"
+    "onGroupPowers",
+    "onControlMessage"
 ]

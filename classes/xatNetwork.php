@@ -172,7 +172,7 @@ class Network
         $j2['f']  = (!empty($this->botData['chatpass'])) ? '6' : '0';
         $j2['e']  = (!empty($this->botData['chatpass'])) ? '1' : '';
         $j2['u']  = $this->logininfo['i'];
-        $j2['d0'] = (isset($this->logininfo['d0'])) ? $this->logininfo['d0'] : $this->logininfo['d0'];
+        $j2['d0'] = $this->logininfo['d0'] ?? $this->logininfo['d0'];
 
         $maxPowerIndex = xatVariables::getMaxPowerIndex() + 3;
         for ($i = 2; $i <= $maxPowerIndex; $i++) {
