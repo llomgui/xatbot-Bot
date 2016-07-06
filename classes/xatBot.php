@@ -16,4 +16,12 @@ class Bot
 
         $this->network = new Network($this->botData);
     }
+
+    public function botHasPower($id) {
+    	$id    = (int)$id;
+        $index = (int)($id / 32) + 4;
+        $bit   = (int)($id % 32);
+
+        return (isset($this->network->logininfo['d' . $index]) && ($this->network->logininfo['d' . $index] & (1 << $bit)));
+    }
 }
