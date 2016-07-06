@@ -5,7 +5,7 @@ $zap = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
     
     if (!$bot->botHasPower(121)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'zap\' power.', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry, but i don\'t have the power \'zap\'.', $type);
     }
     
     if (empty($message[1]) || !isset($message[1])) {
