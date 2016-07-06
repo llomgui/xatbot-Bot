@@ -5,10 +5,9 @@ $slots = function ($who, $message, $type) {
     
     $smilies = ['(smile#)','(biggrin#)','(wink#)','(eek#)','(tongue#)','(cool#)','(mad#)','(confused#)','(redface#)','(frown#)','(crying#)'];
     
-    /*
-        if snakeban enabled switch smilie array
+    if ($bot->botHasPower(236)) {
         $smilies = ['(slotban#)','(slotbar#)','(cherries#)','(orange2#)','(plum2#)','(seven#)'];
-    */
+    }
     
     $smilieCount = 3;
     if (isset($message[1]) && !empty($message[1])) {
@@ -30,8 +29,8 @@ $slots = function ($who, $message, $type) {
     $bot->network->sendMessageAutoDetection($who, 'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')), $type);
     usleep(800001);//prevert "Limit" (possible better way to do this?)
     if (count(array_unique($spun)) == 1) {
-        $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and Won (clap#)', $type);
+        $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and won (clap#)', $type);
     } else {
-        $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and Lost :P', $type);
+        $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and lost :P', $type);
     }
 };
