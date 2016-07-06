@@ -1,6 +1,6 @@
 <?php
 
-$onIdle = function ($array) {
+$onIdle = function () {
     $bot = actionAPI::getBot();
 
     $bot->network->reconnect();
