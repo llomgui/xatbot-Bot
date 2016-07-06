@@ -153,7 +153,16 @@ while (1) {
                         $hook = 'onGroupPowers'; // onGroupPowers($array)
                         $args[] = $packet['elements'];
                         break;
-
+                        
+                    case 'c':
+                        $hook = 'onControlMessage'; // onControlMessage($array)
+                        $args[] = $packet['elements'];
+                        break;
+                        
+                    case 'o':
+                        // Old User
+                        break;
+                        
                     default:
                         $unknow = true;
                         break;
