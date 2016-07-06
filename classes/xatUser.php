@@ -10,7 +10,6 @@ class User
     private $nick;
     private $avatar;
     private $home;
-    private $social;
     private $bride;
     private $app;
     private $gameban;
@@ -39,7 +38,7 @@ class User
         $this->bride   = isset($packet['d2']) ? (int)$packet['d2'] : 0;
         $this->app     = isset($packet['x'])  ? (int)$packet['x']  : 0;
         $this->gameban = isset($packet['w'])  ? (int)$packet['w']  : 0;
-        $this->wasHere = isset($packet['s'])  ? true               : false;
+        $this->wasHere = isset($packet['s']);
 
         $this->flag0   = isset($packet['f'])  ? (int)$packet['f']  : 0;
         $this->aflags  = isset($packet['d0']) ? (int)$packet['d0'] : 0;
@@ -171,7 +170,6 @@ class User
     public function isRegistered()
     {
         return !empty($this->regname);
-        return (($this->flag0 & 1 << 7) != 0);
     }
 
     public function isGagged()

@@ -17,10 +17,10 @@ $dev = function ($who, $message, $type) {
 
         case 'memory':
             $memory = [
-                'Bits'      =>round(memory_get_usage(true) * 8),
-                'Bytes'     =>memory_get_usage(true),
-                'Kilobytes' =>round(memory_get_usage(true) / 1024),
-                'Megabytes' =>round(memory_get_usage(true) / 1024 / 1024)
+                'Bits'      => round(memory_get_usage(true) * 8),
+                'Bytes'     => memory_get_usage(true),
+                'Kilobytes' => round(memory_get_usage(true) / 1024),
+                'Megabytes' => round(memory_get_usage(true) / 1024 / 1024)
             ];
 
             $temp = [];
@@ -29,6 +29,9 @@ $dev = function ($who, $message, $type) {
             }
 
             $bot->network->sendMessageAutoDetection($who, implode(' | ', $temp), $type);
+            break;
+
+        default:
             break;
     }
 
