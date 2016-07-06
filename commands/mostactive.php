@@ -14,7 +14,7 @@ $mostactive = function ($who, $message, $type) {
 
         $userTime = $now - dataAPI::get($who . '_active');
         
-        if($userTime > $most['time']) {
+        if($userTime > $most['time']) { // Maybe implement a way to show more then 1 user if activetime is equal?
             $most = ['user' => $user, 'time' => $userTime];
         }
     }
