@@ -52,7 +52,7 @@ $gamebanme = function ($who, $message, $type) {
     }
     
     if (!$bot->botHasPower($gamebanid)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry i don\'t have \'' . strtolower($gameban) . '\' power.', $type);
+        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', strtolower($gameban)), $type);
     }
     
     $bot->network->ban($who, $hours, 'Requested', 'g', $gamebanid);

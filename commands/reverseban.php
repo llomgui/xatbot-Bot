@@ -5,7 +5,7 @@ $reverseban = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
     
     if (!$bot->botHasPower(176)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry, but i don\'t have the power \'reverse\'.', $type);
+        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'reverse'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
