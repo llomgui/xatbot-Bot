@@ -5,7 +5,7 @@ $dunce = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
     
     if (!$bot->botHasPower(158)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry, but i don\'t have the power \'dunce\'.', $type);
+        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'dunce'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
