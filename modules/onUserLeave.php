@@ -20,10 +20,10 @@ $onUserLeave = function ($who) {
             if (dataAPI::set($who . '_left') + 300 < time()) {
                 dataAPI::un_set($who . '_left');
                 if (dataAPI::is_set($who . '_active')) {
-                    dataAPI::un_set($who . '_active');  
+                    dataAPI::un_set($who . '_active');
                 }
             }
-        } 
+        }
     }
 
     return;
