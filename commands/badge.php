@@ -3,7 +3,7 @@
 $badge = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-    
+
     if (!$bot->botHasPower(264)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'badge'), $type);
     }
@@ -28,7 +28,7 @@ $badge = function ($who, $message, $type) {
             }
         }
     }
-    
+
     if (isset($user)) {
         if ($user->isBadged()) {
             return $bot->network->sendMessageAutoDetection($who, 'That user is already badged.', $type);

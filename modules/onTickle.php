@@ -25,7 +25,7 @@ $onTickle = function ($who, $array) {
             }
 
             break;
-            
+
         case '/a':
 
             if (!isset($bot->users[$who])) {

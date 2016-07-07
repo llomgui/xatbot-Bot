@@ -31,7 +31,7 @@ $ban = function ($who, $message, $type) {
         }
 
         $hours = $message[2];
-        
+
         if (isset($message[3])) {
             $reason = implode(' ', array_slice($message, 3));
         }

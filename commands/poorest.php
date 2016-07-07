@@ -32,23 +32,23 @@ $poorest = function ($who, $message, $type) {
                     $id      = (int)$pO[$i];
                     $ammount = 1;
                 }
-                
+
                 if ($id == 0) {
                     continue;
                 }
-                
+
                 if (isset($powers[$id]['storeCost'])) {
                     if (!$powers[$id]['isLimited']) {
                         $storeprice += $powers[$id]['storeCost'] * $ammount;
                     }
                 }
-                        
+
                 $minprice   += $powers[$id]['minCost'] * $ammount;
                 $maxprice   += $powers[$id]['maxCost'] * $ammount;
                 $count      += $ammount;
             }
         }
-        
+
         foreach ($powers as $id => $array) {
             if ($id == 95) {
                 continue;
@@ -74,7 +74,7 @@ $poorest = function ($who, $message, $type) {
     if (empty($res)) {
         return $bot->network->sendMessageAutoDetection($who, 'There is no user with days in this chat :(.', $type);
     }
-    
+
     $bot->network->sendMessageAutoDetection($who, 'The poorest user in this room is ' . $res[0]['user']->getRegname().'('.$res[0]['user']->getID().').', $type);
 
 };

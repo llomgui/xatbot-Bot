@@ -210,7 +210,7 @@ class Network
             $crc += 1;
             $crc = -$crc;
         }
-        
+
         return '$' . $crc;
     }
 
@@ -289,7 +289,7 @@ class Network
         if ($sensitive && $type == 1) {
             $type = 2;
         }
-        
+
         if ($type == 1) {
             $this->sendMessage($message);
         } elseif ($type == 2) {
@@ -337,9 +337,9 @@ class Network
         if ($time < 0) {
             $time = 1;
         }
-        
+
         $time *= 3600;
-        
+
         $this->socket->write('c', array_merge([
                 'p' => $reason,
                 'u' => $uid,

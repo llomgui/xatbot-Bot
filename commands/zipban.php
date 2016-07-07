@@ -3,7 +3,7 @@
 $zipban = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-    
+
     if (!$bot->botHasPower(184)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'zip'), $type);
     }
@@ -33,7 +33,7 @@ $zipban = function ($who, $message, $type) {
         if ($user->isZipped()) {
             return $bot->network->sendMessageAutoDetection($who, 'That user is already zipbanned.', $type);
         }
-        
+
         $hours   = $message[2];
         if (isset($message[3])) {
             $reason = implode(' ', array_slice($message, 3));

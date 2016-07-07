@@ -3,11 +3,11 @@
 $zap = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-    
+
     if (!$bot->botHasPower(121)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'zap'), $type);
     }
-    
+
     if (empty($message[1]) || !isset($message[1])) {
         if ($type == 1) {
             $type = 2;

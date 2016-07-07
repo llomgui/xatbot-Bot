@@ -75,17 +75,17 @@ $value = function ($who, $message, $type) {
                             $id     = (int)$pO[$i];
                             $amount = 1;
                         }
-                        
+
                         if ($id == 0) {
                             continue;
                         }
-                        
+
                         if (isset($powers[$id]['storeCost'])) {
                             if (!$powers[$id]['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
                                 $storeprice += $powers[$id]['storeCost'] * $amount;
                             }
                         }
-                                
+
                         $minprice += $powers[$id]['minCost'] * $amount;
                         $maxprice += $powers[$id]['maxCost'] * $amount;
                         $count    += $amount;

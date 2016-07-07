@@ -7,7 +7,7 @@ abstract class API
     private static $bot        = 0;
     private static $moduleName = null;
 
-    
+
     final public static function init()
     {
         if (self::$init) {
@@ -32,7 +32,7 @@ abstract class API
 
         return self::$botID;
     }
-    
+
     final public static function getBot()
     {
         if (!self::$init) {
