@@ -90,12 +90,12 @@ class Socket
         if ($pos === false) {
             return;
         }
-        
+
         $packet       = substr($this->buffer, 0, $pos);
         $this->buffer = substr($this->buffer, $pos + 1);
-        
+
         echo '<-- ' . $packet . PHP_EOL;
-        
+
         return $this->parsePacket($packet);
     }
 
@@ -103,25 +103,25 @@ class Socket
     {
         $node     = null;
         $elements = [];
-        
+
         // Removing < />
         $string = trim($string);
 
         if (($string[0] != '<') || (substr($string, -2) != '/>')) {
             throw new Exception('Corrupted packets.');
         }
-        
+
         $string = substr($string, 1, -2);
-        
+
         // Getting the node
         $pos    = strpos($string, ' ');
         $node   = ($pos === false) ? $string : substr($string, 0, $pos);
 
         $n = preg_match_all('! ([^ =]+(?:="[^"]+")?)!', $string, $matches);
-        
+
         for ($i = 0; $i < $n; $i++) {
             $pos = strpos($matches[1][$i], '=');
-            
+
             if ($pos === false) {
                 $elements[] = $matches[1][$i];
             } else {
@@ -137,7 +137,7 @@ class Socket
     {
         $counter = 0;
         $packet  = '<' . $node . ' ';
-        
+
         foreach ($elements as $name => $value) {
             if (is_int($name) && ($name == $counter)) {
                 $packet .= $value;
@@ -146,7 +146,7 @@ class Socket
                 $packet .= $name . '=';
                 $packet .= '"' . $this->sanitize($value) . '"';
             }
-            
+
             $packet .= ' ';
         }
 
@@ -167,7 +167,7 @@ class Socket
 
         return $str;
     }
-    
+
     public function unsanitize($str)
     {
         $str = str_replace(chr(0xCB).chr(0x83), '>', $str);

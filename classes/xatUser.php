@@ -59,7 +59,7 @@ class User
     {
         return $this->regname;
     }
-    
+
     public function getDoubles()
     {
         return (!empty($this->doubles) ? $this->doubles : null);
@@ -231,17 +231,17 @@ class User
     {
         return (($this->flag0 & 1 << 18) != 0);
     }
-    
+
     public function isNaughty()
     {
         return (($this->flag0 & 1 << 19) != 0);
     }
-    
+
     public function isYellowCarded()
     {
         return (($this->flag0 & 1 << 20) != 0);
     }
-    
+
     public function isBFF()
     {
         return (($this->aflags & 1) != 0);
@@ -283,7 +283,7 @@ class User
     {
         $this->days = (int)$days;
     }
-    
+
     public function hasPower($id)
     {
         if (!$this->hasDays()) {

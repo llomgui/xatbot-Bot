@@ -24,12 +24,12 @@ $unbadge = function ($who, $message, $type) {
             }
         }
     }
-    
+
     if (isset($user)) {
         if (!$user->isBadged()) {
             return $bot->network->sendMessageAutoDetection($who, 'That user is not badged.', $type);
         }
-        
+
         $bot->network->sendPrivateConversation($user->getID(), '/nb');
     } else {
         $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);

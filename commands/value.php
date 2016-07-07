@@ -49,9 +49,9 @@ $value = function ($who, $message, $type) {
                 }
 
                 if (!isset($users[$user->getId()])) {
-                	$users[$user->getId()] = $user;
+                    $users[$user->getId()] = $user;
                 } else {
-                	continue;
+                    continue;
                 }
 
                 if (sizeof($xatusers) > 1) {
@@ -75,17 +75,17 @@ $value = function ($who, $message, $type) {
                             $id     = (int)$pO[$i];
                             $amount = 1;
                         }
-                        
+
                         if ($id == 0) {
                             continue;
                         }
-                        
+
                         if (isset($powers[$id]['storeCost'])) {
                             if (!$powers[$id]['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
                                 $storeprice += $powers[$id]['storeCost'] * $amount;
                             }
                         }
-                                
+
                         $minprice += $powers[$id]['minCost'] * $amount;
                         $maxprice += $powers[$id]['maxCost'] * $amount;
                         $count    += $amount;
@@ -117,7 +117,7 @@ $value = function ($who, $message, $type) {
         }
 
         if (sizeof($xatusers) > 1) {
-        	$regname = substr($regname, 0, strlen($regname) - 2);
+            $regname = substr($regname, 0, strlen($regname) - 2);
         }
 
         $regname .= '\'s';

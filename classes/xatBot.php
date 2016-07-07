@@ -18,8 +18,9 @@ class Bot
         $this->network = new Network($this->botData);
     }
 
-    public function botHasPower($id) {
-    	$id    = (int)$id;
+    public function botHasPower($id)
+    {
+        $id    = (int)$id;
         $index = (int)($id / 32) + 4;
         $bit   = (int)($id % 32);
 
