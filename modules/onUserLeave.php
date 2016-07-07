@@ -17,7 +17,7 @@ $onUserLeave = function ($who) {
     
     foreach ($bot->users as $id => $object) {
         if (dataAPI::is_set($id . '_left')) {
-            if (dataAPI::set($who . '_left') + 300 < time()) {
+            if (dataAPI::get($who . '_left') + 300 < time()) {
                 dataAPI::un_set($who . '_left');
                 if (dataAPI::is_set($who . '_active')) {
                     dataAPI::un_set($who . '_active');  
