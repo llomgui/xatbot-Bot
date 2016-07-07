@@ -1,21 +1,21 @@
 <?php
 
 $twitch = function ($who, $message, $type) {
-    
+
     $bot = actionAPI::getBot();
-	
+
     if (empty($message[1]) || !isset($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !twitch [username]', $type);
     }
     $message[1] = preg_replace("/[^a-zA-Z0-9_]/", "", $message[1]);
-	
+
     if (empty($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Invalid twitch username', $type);
     }
-	
+
     $stream = stream_context_create(['http'=> ['timeout' => 1]]);
     $page = file_get_contents('https://api.twitch.tv/kraken/streams/' . $message[1], false, $stream);
-	
+
     /*
         API sends 404 if user doesnt exist :/
     if (!$page) {
@@ -23,7 +23,7 @@ $twitch = function ($who, $message, $type) {
     }
     */
     $twitch = json_decode($page);
-	
+
     if (isset($twitch->error)) {
         return $bot->network->sendMessageAutoDetection($who, $twitch->message, $type, true);
     } elseif (!$page) {

@@ -3,7 +3,7 @@
 $gag = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-    
+
     if (!$bot->botHasPower(41)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'gag'), $type);
     }
