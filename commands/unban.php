@@ -8,7 +8,7 @@ $unban = function ($who, $message, $type) {
         if ($type == 1) {
             $type = 2;
         }
-        
+
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !unban [regname/xatid]', $type);
     }
 
