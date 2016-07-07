@@ -31,7 +31,7 @@ $listsmilies = function ($who, $message, $type) {
                 $implode .= implode(' ', array_slice($topsh, 10));
             } else {
                 $implode = $bot->botHasPower($id) ? '(' . implode('#)(', $topsh) . '#)' : implode(' ', $topsh);
-            }    
+            }
             
             $bot->network->sendMessageAutoDetection($who, ucfirst($array['name']) . '\'s ' . count($topsh) . ' smilies: ' . $implode . '.', $type);
         } else {

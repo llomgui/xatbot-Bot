@@ -49,9 +49,9 @@ $value = function ($who, $message, $type) {
                 }
 
                 if (!isset($users[$user->getId()])) {
-                	$users[$user->getId()] = $user;
+                    $users[$user->getId()] = $user;
                 } else {
-                	continue;
+                    continue;
                 }
 
                 if (sizeof($xatusers) > 1) {
@@ -117,7 +117,7 @@ $value = function ($who, $message, $type) {
         }
 
         if (sizeof($xatusers) > 1) {
-        	$regname = substr($regname, 0, strlen($regname) - 2);
+            $regname = substr($regname, 0, strlen($regname) - 2);
         }
 
         $regname .= '\'s';
