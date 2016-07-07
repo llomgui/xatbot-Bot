@@ -81,7 +81,7 @@ while (1) {
                             }
                         }
                         break;
-                        
+
                     case 'p':
                         if ($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff') {
                             continue;
@@ -91,26 +91,26 @@ while (1) {
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $packet['elements']['t'];
                         break;
-                    
+
                     case 'u':
                         $hook   = 'onUserJoined'; // onUserJoined($array)
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $packet['elements'];
                         break;
-                    
+
                     case 'z':
-                        $hook   = 'onTickle'; // onTickle($who, $array) 
+                        $hook   = 'onTickle'; // onTickle($who, $array)
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $packet['elements'];
                         break;
-                        
+
                     case 'l':
                         $hook   = 'onUserLeave'; // onUserLeave($who)
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         break;
-                        
+
                     case 'a':
-                        $hook   = 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message) 
+                        $hook   = 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message)
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $Ocean->network->parseID($packet['elements']['d']);
                         $args[] = $packet['elements']['x'];
@@ -124,7 +124,7 @@ while (1) {
                         break;
 
                     case 'x':
-                        $hook   = 'onApp'; // onApp($who, $app, $elements) 
+                        $hook   = 'onApp'; // onApp($who, $app, $elements)
                         $args[] = $Ocean->network->parseID($packet['elements']['u']);
                         $args[] = $packet['elements']['i'];
                         $args[] = $packet['elements'];
@@ -139,30 +139,30 @@ while (1) {
                         $hook   = 'onIdle'; // onIdle($array)
                         $args[] = $packet['elements'];
                         break;
-                        
+
                     case 'dup':
                         $hook   = 'onDup'; // onDup()
                         break;
-                        
+
                     case 'i':
                         $hook   = 'onChatInfo'; // onChatInfo($array)
                         $args[] = $packet['elements'];
                         break;
-                        
+
                     case 'gp':
                         $hook   = 'onGroupPowers'; // onGroupPowers($array)
                         $args[] = $packet['elements'];
                         break;
-                        
+
                     case 'c':
                         $hook   = 'onControlMessage'; // onControlMessage($array)
                         $args[] = $packet['elements'];
                         break;
-                        
+
                     case 'o':
                         // Old User
                         break;
-                        
+
                     default:
                         $unknow = true;
                         break;
@@ -206,7 +206,7 @@ function load($data, $type, $name, $url, $callbacks)
             unset($data[$type][$callbacks[$i]][$name]);
         }
     }
-    
+
     return $data;
 }
 
@@ -235,21 +235,21 @@ function read()
 
         while (($file = readdir($dir)) !== false) {
             $url = '.' . DIRECTORY_SEPARATOR . $extensionsDir . DIRECTORY_SEPARATOR . $file;
-            
+
             if (!is_file($url)) {
                 continue;
             }
-            
+
             $pos = strrpos($file, '.');
 
             if ($pos === false) {
                 continue;
             }
-            
+
             if (substr($file, $pos + 1) != 'php') {
                 continue;
             }
-            
+
             $extensionsList = load($extensionsList, $extensionsDir, substr($file, 0, $pos), $url, $callbacks);
         }
     }

@@ -3,7 +3,7 @@
 $sinbin = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-    
+
     if (!$bot->botHasPower(33)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'sinbin'), $type);
     }
@@ -33,7 +33,7 @@ $sinbin = function ($who, $message, $type) {
         if (!$user->isMod()) {
             return $bot->network->sendMessageAutoDetection($who, 'That user is not a moderator.', $type);
         }
-    
+
         $hours = $message[2];
         $bot->network->sendPrivateConversation($user->getID(), '/n' . $hours);
     } else {

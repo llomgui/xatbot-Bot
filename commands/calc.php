@@ -6,13 +6,13 @@ $calc = function ($who, $message, $type) {
 
     unset($message[0]);
     $message = implode('', $message);
-    
+
     if (empty($message)) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !calc [equation]', $type);
     }
 
     $expr = explode('|', $message);
-    
+
     $stream = [
         'http' => [
             'method' => 'POST',

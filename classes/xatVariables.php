@@ -1256,7 +1256,7 @@ abstract class xatVariables
     {
         $ctx = stream_context_create(['http' => ['timeout' => 1]]);
         $cpt = 0;
-        
+
         do {
             $page = file_get_contents('http://xat.com/web_gear/chat/pow2.php?Ocean=' . time(), false, $ctx);
             $cpt++;
@@ -1301,7 +1301,7 @@ abstract class xatVariables
         self::$powers = $powers + self::$powers;
 
         $cpt = 0;
-        
+
         do {
             $page = file_get_contents('http://xat.com/json/powers.php?Ocean=' . time(), false, $ctx);
             $cpt++;
@@ -1327,7 +1327,7 @@ abstract class xatVariables
         $url = 'https://docs.google.com/spreadsheet/pub?key=1W0C7D4wZ_JLL8uoAUph3wTaEzFKqhTC_WTgrs37ilVI&output=csv';
 
         $cpt = 0;
-        
+
         do {
             $page = file_get_contents($url, false, $ctx);
             $cpt++;
@@ -1344,11 +1344,11 @@ abstract class xatVariables
                 $power      = explode(',',  $lines[$i]);
                 $id         = $power[0];
                 $isAllPower = $power[1];
-                
+
                 if (!isset(self::$powers[$id])) {
                     continue;
                 }
-                
+
                 self::$powers[$id]['isAllPower'] = $isAllPower;
                 self::$powers[$id]['isGroup']    = @$power[11];
                 self::$powers[$id]['isEpic']     = @$power[13];
@@ -1361,7 +1361,7 @@ abstract class xatVariables
                     self::$powers[$id]['maxCost'] = $power[7];
                 }
             }
-            
+
             ksort(self::$powers);
         }
     }

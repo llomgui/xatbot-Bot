@@ -3,7 +3,7 @@
 $reverseban = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-    
+
     if (!$bot->botHasPower(176)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'reverse'), $type);
     }
@@ -35,7 +35,7 @@ $reverseban = function ($who, $message, $type) {
         }
 
         $hours   = $message[2];
-        
+
         if (isset($message[3])) {
             $reason = implode(' ', array_slice($message, 3));
         }

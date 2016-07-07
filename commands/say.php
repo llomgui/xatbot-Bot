@@ -2,10 +2,10 @@
 
 $say = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
-    
+
     unset($message[0]);
     $message = implode(' ', $message);
-    
+
     if (empty($message)) {
         return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type);
     } else {

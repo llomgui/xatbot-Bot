@@ -3,7 +3,7 @@
 $hush = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
-    
+
     if (!$bot->botHasPower(51)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'hush'), $type);
     }
@@ -18,11 +18,11 @@ $hush = function ($who, $message, $type) {
 
     $rank    = $message[1];
     $seconds = $message[2];
-    
+
     if (isset($message[3])) {
         $reason = implode(' ', array_slice($message, 3));
     }
-    
+
     switch ($rank) {
         case 'guest':
             $rank = 'g';
@@ -39,6 +39,6 @@ $hush = function ($who, $message, $type) {
         default:
             return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid rank.', $type);
     }
-    
+
     $bot->network->sendMessage('/h' . $rank . $seconds . ' ' . $reason);
 };
