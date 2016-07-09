@@ -1,44 +1,44 @@
 <?php
 abstract class API
 {
-	private static $init       = false;
+    private static $init       = false;
 
-	private static $botID      = 0;
-	private static $bot        = 0;
-	private static $moduleName = null;
+    private static $botID      = 0;
+    private static $bot        = 0;
+    private static $moduleName = null;
 
-	
-	public final static function init()
-	{
-		if (self::$init) {
-			throw new Exception('API already initialized.');
-		}
 
-		self::$init           = true;
+    final public static function init()
+    {
+        if (self::$init) {
+            throw new Exception('API already initialized.');
+        }
 
-		$return               = array();
-		$return['botID']      = &self::$botID;
-		$return['bot']        = &self::$bot;
-		$return['moduleName'] = &self::$moduleName;
+        self::$init           = true;
 
-		return $return;
-	}
+        $return               = [];
+        $return['botID']      = &self::$botID;
+        $return['bot']        = &self::$bot;
+        $return['moduleName'] = &self::$moduleName;
 
-	public final static function getBotID()
-	{
-		if (!self::$init) {
-			throw new Exception('API not initalized.');
-		}
+        return $return;
+    }
 
-		return self::$botID;
-	}
-	
-	public final static function getBot()
-	{
-		if (!self::$init) {
-			throw new Exception('API not initalized.');
-		}
+    final public static function getBotID()
+    {
+        if (!self::$init) {
+            throw new Exception('API not initalized.');
+        }
 
-		return self::$bot;
-	}
+        return self::$botID;
+    }
+
+    final public static function getBot()
+    {
+        if (!self::$init) {
+            throw new Exception('API not initalized.');
+        }
+
+        return self::$bot;
+    }
 }
