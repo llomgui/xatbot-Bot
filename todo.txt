@@ -8,7 +8,6 @@ twitter,
 youtube,
 clear,
 countdown,
-dx, xd
 scramble,
 hangman,
 google,
