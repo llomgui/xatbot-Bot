@@ -8,7 +8,7 @@ $latestpower = function ($who, $message, $type) {
 	$powers = json_decode(file_get_contents('http://xat.com/json/powers.php'), true);
 	
 	if (!$pow2) {
-		return $bot->network->sendMessageAutoDetection($who, 'Could not access pow2.', $type);
+		return $bot->network->sendMessageAutoDetection($who, 'Could not access pow2 at this moment.', $type);
 	}
 	
 	$latestID = $pow2[0][1]['id'];
