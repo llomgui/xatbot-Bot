@@ -11,5 +11,8 @@
 	"onApp",
 	"onIdle",
 	"onDone",
-	"onDup"
+	"onDup",
+    "onChatInfo",
+    "onGroupPowers",
+    "onControlMessage"
 ]

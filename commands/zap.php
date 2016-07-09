@@ -2,40 +2,41 @@
 
 $zap = function ($who, $message, $type) {
 
-	$bot = actionAPI::getBot();
+    $bot = actionAPI::getBot();
 
-	if (empty($message[1]) || !isset($message[1])) {
+    if (!$bot->botHasPower(121)) {
+        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'zap'), $type);
+    }
 
-		if ($type == 1) {
-			$type = 2;
-		}
+    if (empty($message[1]) || !isset($message[1])) {
+        if ($type == 1) {
+            $type = 2;
+        }
 
-		return $bot->network->sendMessageAutoDetection($who, 'Usage: !zap [regname/xatid] [reason]', $type);
-	}
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !zap [regname/xatid] [reason]', $type);
+    }
 
-	if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
-		$user = $bot->users[$message[1]];
-	} else {
-		foreach($bot->users as $id => $object) {
-			if (is_object($object)) {
-				if (strtolower($object->getRegname()) == strtolower($message[1])) {
-					$user = $object;
-					break;
-				}
-			}
-		}
-	}
+    if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
+        $user = $bot->users[$message[1]];
+    } else {
+        foreach ($bot->users as $id => $object) {
+            if (is_object($object)) {
+                if (strtolower($object->getRegname()) == strtolower($message[1])) {
+                    $user = $object;
+                    break;
+                }
+            }
+        }
+    }
 
-	if (isset($user)) {
-		if (isset($message[2])) {
-			unset($message[0]);
-			unset($message[1]);
-			$reason = implode(' ', $message);
-		}
+    if (isset($user)) {
+        if (isset($message[2])) {
+            $reason = implode(' ', array_slice($message, 2));
+        }
 
-		$bot->network->kick($user->getID(), (!isset($reason) ? '' : $reason), '#rasberry#bump');
-	} else {
-		$bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
-	}
+        $bot->network->kick($user->getID(), $reason ?? '', '#rasberry#bump');
+    } else {
+        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+    }
 
 };
