@@ -5,11 +5,7 @@ $gameban = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !isset($message[3]) || empty($message[3]) || !is_numeric($message[3])) {
-        if ($type == 1) {
-            $type = 2;
-        }
-
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !gameban [snake/space/match/maze/code/slot] [ID/Regname] [hours] [reason]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !gameban [snake/space/match/maze/code/slot] [ID/Regname] [hours] [reason]', $type, true);
     }
 
     if (is_numeric($message[2]) && isset($bot->users[$message[2]])) {
