@@ -1,7 +1,8 @@
+
+fun_fact_lemona_eats_her_own_boogers_and_pretends_she_has_a_dick_what_a_whore_
+
 TODO list (commands only):
- 
-price,
-8ball,
+
 allmissing,
 everymissing,
 twitter,
@@ -20,7 +21,6 @@ love,
 power [enable/disable/clear/list]
 powersearch
 search
-shortname
 edit
 staff
 users
