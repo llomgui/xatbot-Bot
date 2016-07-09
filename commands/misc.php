@@ -122,30 +122,6 @@ $misc = function ($who, $message, $type) {
 			
 			$bot->network->sendMessageAutoDetection($who, '[' . $count . '] promoted ' . $language . ' ' . ($count > 1 ? 'chats' : 'chat') . ':' . rtrim($promoMessage, ','), $type);
 			break;
+			//TODO hug, kiss, slap
 	}
-	/*
-    if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
-        $user = $bot->users[$message[1]];
-    } else {
-        foreach ($bot->users as $id => $object) {
-            if (is_object($object) && strtolower($object->getRegname()) == strtolower($message[1])) {
-                $user = $object;
-                break;
-            }
-        }
-    }
-
-    if (isset($user)) {
-        if ($user->isGagged()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is already gagged.', $type);
-        }
-
-        if (isset($message[2])) {
-            $reason = implode(' ', array_slice($message, 2));
-        }
-        $bot->network->ban($user->getID(), 1, $reason ?? '', 'gg');
-    } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
-    }
-	*/
 };
