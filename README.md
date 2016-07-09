@@ -3,7 +3,7 @@
 ## What do i need to run it?
 
 - PHP7
-- An xat account to use it as bot
+- A xat account to use it as bot
 
 ## How does it work?
 
@@ -12,7 +12,7 @@ If you want to add modules or commands, don't forget to update modules.json or c
 
 To run it: php dev.php
 
-## I want to contribute, how to?
+## I want to contribute, how do I?
 
 Make your tests on your computer, then send a pull request.
 
