@@ -9,11 +9,7 @@ $badge = function ($who, $message, $type) {
     }
 
     if (!isset($message[1]) || empty($message[1])) {
-        if ($type == 1) {
-            $type = 2;
-        }
-
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !badge [regname/xatid] [reason]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !badge [regname/xatid] [reason]', $type, true);
     }
 
     if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
