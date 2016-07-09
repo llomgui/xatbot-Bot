@@ -7,7 +7,7 @@ $wikipedia = function ($who, $message, $type) {
     $message = implode(' ', $message);
 
     if (empty($message)) {
-        return $bot->network->sendMessageAutoDetection($who, 'You\'re not searching for anything (confused#)', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'You didn\'t give me anything to search.', $type);
     }
     $stream = stream_context_create(['http'=> ['timeout' => 1]]);
     $page = file_get_contents('http://en.wikipedia.org/w/api.php?action=opensearch&search=' . urlencode($message) . '&format=xml&limit=1', false, $stream);

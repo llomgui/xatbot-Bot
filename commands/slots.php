@@ -27,7 +27,7 @@ $slots = function ($who, $message, $type) {
     $response = isset($user) ? ($user->isRegistered() ? $user->getRegname() : $user->getID()) . " has spun: " : $who . " has spun: ";
 
     $bot->network->sendMessageAutoDetection($who, 'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')), $type);
-    usleep(800001);//prevert "Limit" (possible better way to do this?)
+    usleep(800001);//prevent "Limit" (possible better way to do this?)
     if (count(array_unique($spun)) == 1) {
         $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and won (clap#)', $type);
     } else {
