@@ -1,5 +1,11 @@
 TODO list (commands only):
+<<<<<<< HEAD
 
+=======
+ 
+price,
+8ball,
+>>>>>>> 6cadaaaa16e6f2c57d4acb4401df6a5811276bde
 allmissing,
 everymissing,
 twitter,
@@ -19,6 +25,10 @@ love,
 power [enable/disable/clear/list]
 powersearch
 search
+<<<<<<< HEAD
+=======
+shortname
+>>>>>>> 6cadaaaa16e6f2c57d4acb4401df6a5811276bde
 edit
 staff
 users
@@ -29,6 +39,10 @@ rank
 game
 rankme
 started
+<<<<<<< HEAD
+=======
+active
+>>>>>>> 6cadaaaa16e6f2c57d4acb4401df6a5811276bde
 pool
 history
 getmain
