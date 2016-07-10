@@ -23,7 +23,6 @@ powersearch
 search
 edit
 staff
-users
 kickall
 chatinfos
 dice
