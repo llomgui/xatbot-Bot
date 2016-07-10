@@ -21,7 +21,6 @@ love,
 power [enable/disable/clear/list]
 powersearch
 search
-shortname
 edit
 staff
 users
@@ -32,7 +31,6 @@ rank
 game
 rankme
 started
-active
 pool
 history
 getmain
