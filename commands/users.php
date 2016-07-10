@@ -9,6 +9,6 @@ $users = function ($who, $message, $type) {
 	if ($ucount <= 0) {
 		$bot->network->sendMessageAutoDetection($who, 'Why is there nobody here?', $type);
 	} else {
-		$bot->network->sendMessageAutoDetection($who, 'There are ' . $ucount . ' user' . ($ucount > 1 ? 's' : '') . ' online in this chatroom', $type);
+		$bot->network->sendMessageAutoDetection($who, 'There is ' . $ucount . ' user' . ($ucount > 1 ? 's' : '') . ' online in this chatroom', $type);
 	}
 };
