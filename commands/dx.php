@@ -5,11 +5,7 @@ $dx = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1]) || !is_numeric($message[1])) {
-        if ($type == 1) {
-            $type = 2;
-        }
-
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !dx [days]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !dx [days]', $type, true);
     }
 	
 	$days = round($message[1]);

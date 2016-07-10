@@ -5,8 +5,9 @@ $store = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !store [allpower/everypower/power]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !store [allpower/everypower/power]', $type, true);
     }
+	
     $message = str_replace(['(', ')'], '', $message);
     $powers = xatVariables::getPowers();
     $exist  = false;

@@ -1,7 +1,5 @@
 TODO list (commands only):
- 
-price,
-8ball,
+
 allmissing,
 everymissing,
 twitter,
@@ -14,14 +12,12 @@ google,
 hasmost,
 userinfo,
 horoscope,
-lastpower,
 lastseen,
 weather,
 love,
 power [enable/disable/clear/list]
 powersearch
 search
-shortname
 edit
 staff
 users
