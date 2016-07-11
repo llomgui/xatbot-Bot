@@ -8,7 +8,7 @@ $listsmilies = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !listsmilies [power/latest]', $type, true);
     }
 
-    $powers = xatVariables::getPowers();
+    $powers = Variables::getPowers();
 
     if (strtolower($message[1]) == 'latest') {
         $message[1] = end($powers)['name'];

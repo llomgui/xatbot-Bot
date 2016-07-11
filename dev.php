@@ -1,17 +1,14 @@
 <?php
 
-// classes
-require_once 'classes/xatVariables.php';
-require_once 'classes/xatBot.php';
-require_once 'classes/xatUser.php';
+require_once 'vendor/autoload.php';
 
 // API
 require_once 'API/dataAPI.php';
-require_once 'API/ActionAPI.php';
+require_once 'API/actionAPI.php';
 
 echo 'Loading variables...' . PHP_EOL;
-xatVariables::init();
-xatVariables::update();
+Variables::init();
+Variables::update();
 
 echo 'Loading API...' . PHP_EOL;
 $params     = API::init();
@@ -20,7 +17,7 @@ $bot        = &$params['bot'];
 
 echo 'Loading bots...' . PHP_EOL;
 $xatBots = [];
-foreach (xatVariables::getBots() as $botid => $bot) {
+foreach (Variables::getBots() as $botid => $bot) {
     $xatBots[$botid] = new Bot($bot);
 }
 

@@ -8,7 +8,7 @@ $price = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, "Usage: !price [power]", $type, true);
     }
 
-    $powers = xatVariables::getPowers();
+    $powers = Variables::getPowers();
 
     if (!is_numeric($message[1])) {
         foreach ($powers as $powerID => $powerValues) {

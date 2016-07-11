@@ -11,7 +11,7 @@ $onFriendList = function ($array) {
     $list = explode(',', $array['v']);
     $ctx  = stream_context_create(['http' => ['timeout' => 1]]);
 
-    $volunteers = xatVariables::getVolunteers();
+    $volunteers = Variables::getVolunteers();
 
     $volids = [];
     for ($i = 0; $i < sizeof($volunteers); $i++) {

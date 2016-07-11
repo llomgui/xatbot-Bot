@@ -2,7 +2,7 @@
 
 namespace Ocean\Bot;
 
-abstract class xatVariables
+abstract class Variables
 {
     private static $init;
     private static $regname;

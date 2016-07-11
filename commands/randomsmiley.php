@@ -11,7 +11,7 @@ $randomsmiley = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Must be 1 - 25.', $type, true);
     }
 
-    $powers = xatVariables::getPowers();
+    $powers = Variables::getPowers();
     $exist  = false;
 
     $rand = [];

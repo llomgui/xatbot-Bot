@@ -264,7 +264,7 @@ class User
 
     public function setPowers($packet)
     {
-        for ($i=0; $i < xatVariables::getMaxPowerIndex(); $i++) {
+        for ($i=0; $i < Variables::getMaxPowerIndex(); $i++) {
             $this->powers[$i] = $packet['p' . $i] ?? 0;
         }
     }

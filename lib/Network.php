@@ -45,8 +45,8 @@ class Network
 
     public function pickIP($chatid)
     {
-        $this->xFlag = xatVariables::getIP2()['xFlag'];
-        $ip2         = xatVariables::getIP2();
+        $this->xFlag = Variables::getIP2()['xFlag'];
+        $ip2         = Variables::getIP2();
 
         if ($this->attempt >= sizeof($ip2['order'])) {
             $return = [0, 0, 0];
@@ -123,13 +123,13 @@ class Network
             return false;
         }
 
-        $this->socket->write('y', ['r' => 8, 'v' => '0', 'u' => xatVariables::getXatid()]);
+        $this->socket->write('y', ['r' => 8, 'v' => '0', 'u' => Variables::getXatid()]);
 
         $packetY = $this->socket->read(true);
 
         $this->socket->write('v', [
-                'n' => xatVariables::getRegname(),
-                'p' => (xatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
+                'n' => Variables::getRegname(),
+                'p' => (Variables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
             ]);
 
         $this->logininfo = $this->socket->read(true)['elements'];
@@ -143,7 +143,7 @@ class Network
         $this->socket->write('y', [
                 'r' => $this->botData['chatid'],
                 'v' => '0',
-                'u' => xatVariables::getXatid()
+                'u' => Variables::getXatid()
             ]);
 
         $packetY = $this->socket->read(true);
@@ -171,7 +171,7 @@ class Network
         $j2['u']  = $this->logininfo['i'];
         $j2['d0'] = $this->logininfo['d0'] ?? $this->logininfo['d0'];
 
-        $maxPowerIndex = xatVariables::getMaxPowerIndex() + 3;
+        $maxPowerIndex = Variables::getMaxPowerIndex() + 3;
         for ($i = 2; $i <= $maxPowerIndex; $i++) {
             if (isset($this->logininfo['d' . $i])) {
                 $j2['d' . $i] = $this->logininfo['d' . $i];
@@ -190,7 +190,7 @@ class Network
             $j2['dt'] = $this->logininfo['dt'];
         }
 
-        $j2['N'] = xatVariables::getRegname();
+        $j2['N'] = Variables::getRegname();
         $j2['n'] = $this->botData['name'];
         $j2['a'] = $this->botData['avatar'];
         $j2['h'] = $this->botData['homepage'];
@@ -201,7 +201,7 @@ class Network
 
     private function passwordToHash()
     {
-        $crc = crc32(xatVariables::getPassword());
+        $crc = crc32(Variables::getPassword());
         if ($crc & 0x80000000) {
             $crc ^= 0xffffffff;
             $crc += 1;
@@ -216,11 +216,11 @@ class Network
         $POST['k2']          = '0';
         $POST['UserId']      = '0';
         $POST['mode']        = '0';
-        $POST['Pin']         = (!empty(xatVariables::getPin()) ? xatVariables::getPin() : '0');
+        $POST['Pin']         = (!empty(Variables::getPin()) ? Variables::getPin() : '0');
         $POST['ChangeEmail'] = '0';
         $POST['cp']          = '';
-        $POST['NameEmail']   = xatVariables::getRegname();
-        $POST['password']    = xatVariables::getPassword();
+        $POST['NameEmail']   = Variables::getRegname();
+        $POST['password']    = Variables::getPassword();
         $POST['Login']       = '';
         $stream = [
             'http' => [

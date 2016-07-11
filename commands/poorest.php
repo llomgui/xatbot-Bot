@@ -3,7 +3,7 @@
 $poorest = function ($who, $message, $type) {
 
     $bot    = ActionAPI::getBot();
-    $powers = xatVariables::getPowers();
+    $powers = Variables::getPowers();
 
     foreach ($bot->users as $user) {
         if (!is_object($user)) {

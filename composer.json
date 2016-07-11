@@ -5,7 +5,6 @@
         "symfony/var-dumper": "^3.1"
     },
     "autoload": {
-        "classmap": ["lib/"],
         "psr-4": {
             "Ocean\\Bot\\": "lib/"
         }

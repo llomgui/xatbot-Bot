@@ -9,7 +9,7 @@ $store = function ($who, $message, $type) {
     }
 
     $message = str_replace(['(', ')'], '', $message);
-    $powers = xatVariables::getPowers();
+    $powers = Variables::getPowers();
     $exist  = false;
 
     if (in_array($message[1], ['allpower', 'allpowers'])) {

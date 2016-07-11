@@ -8,7 +8,7 @@ $whatis = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !whatis [smiley]', $type, true);
     }
 
-    $powers = xatVariables::getPowers();
+    $powers = Variables::getPowers();
 
     foreach ($powers as $power) {
         if ($power['name'] == strtolower($message[1])) {

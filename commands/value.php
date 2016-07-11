@@ -15,7 +15,7 @@ $value = function ($who, $message, $type) {
         }
     }
 
-    $powers = xatVariables::getPowers();
+    $powers = Variables::getPowers();
 
     if (sizeof($xatusers) > 0) {
         $regname    = '';

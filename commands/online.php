@@ -23,7 +23,7 @@ $online = function ($who, $message, $type) {
         return;
     } elseif (!isset($res)) {
         if ($message[1] == 'volunteers') {
-            $volunteers = xatVariables::getVolunteers();
+            $volunteers = Variables::getVolunteers();
 
             $ids = [];
             for ($i = 0; $i < sizeof($volunteers); $i++) {
