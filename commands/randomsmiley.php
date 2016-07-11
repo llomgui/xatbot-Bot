@@ -4,11 +4,11 @@ $randomsmiley = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
     if (empty($message[1]) || !isset($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !randomsmiley [1 - 20] [optional power]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !randomsmiley [1 - 20] [optional power]', $type, true);
     }
 
     if (!is_numeric($message[1]) || $message[1] > 25 || $message[1] < 1) {
-        return $bot->network->sendMessageAutoDetection($who, 'Must be 1 - 25.', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Must be 1 - 25.', $type, true);
     }
 
     $powers = xatVariables::getPowers();
