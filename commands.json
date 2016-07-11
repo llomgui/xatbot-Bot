@@ -43,10 +43,6 @@
 	"dx",
 	"xd",
 	"active",
-<<<<<<< HEAD
-	"shortname",
-	"users"
-=======
 	"latestpower",
 	"price",
 	"eightball",
@@ -55,6 +51,6 @@
 	"whatis",
 	"dice",
 	"rankme",
-	"started"
->>>>>>> refs/remotes/llomgui/master
+	"started",
+	"users"
 ]
