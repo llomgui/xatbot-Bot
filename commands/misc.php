@@ -115,12 +115,20 @@ $misc = function ($who, $message, $type) {
 			$promoMessage = "";
 			$count = 0;
 			
-			foreach($lang as $group){
-				$promoMessage .= ' ' . $group->n . ' [' . (isset($group->t) ? gmdate("H:i:s", ($group->t - time())) . ' left' : "Auto promoted") . '], ';
+			foreach ($lang as $group) {
+				
+				if (isset($group->t)) {
+					$timeLeft = $group->t - time();
+					$hours = floor($timeLeft / 3600);
+					$minutes = floor(($timeLeft / 60) % 60);
+					$seconds = $timeLeft % 60;
+				}
+				
+				$promoMessage .= ' ' . $group->n . ' [' . (isset($group->t) ? sprintf("%02d hours, %02d minutes and %02d seconds", $hours, $minutes, $seconds) . ' left' : "Auto promoted") . '], ';
 				$count++;
 			}
 			
-			$bot->network->sendMessageAutoDetection($who, '[' . $count . '] promoted ' . $language . ' ' . ($count > 1 ? 'chats' : 'chat') . ':' . rtrim($promoMessage, ','), $type);
+			$bot->network->sendMessageAutoDetection($who, '[' . $count . '] promoted ' . $language . ' ' . ($count > 1 ? 'chats' : 'chat') . ':' . rtrim($promoMessage, ', '), $type);
 			break;
 			//TODO hug, kiss, slap
 	}

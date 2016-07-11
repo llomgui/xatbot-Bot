@@ -9,11 +9,7 @@ $hush = function ($who, $message, $type) {
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
-        if ($type == 1) {
-            $type = 2;
-        }
-
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !hush [guest/member/mod/owner] [seconds] [reason]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !hush [guest/member/mod/owner] [seconds] [reason]', $type, true);
     }
 
     $rank    = $message[1];

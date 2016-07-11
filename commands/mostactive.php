@@ -19,9 +19,10 @@ $mostactive = function ($who, $message, $type) {
     }
 
     $displayName = $most['user']->isRegistered() ? $most['user']->getRegname() . '(' . $most['user']->getID() . ')'  : $most['user']->getID();
-    $bot->network->sendMessageAutoDetection($who, 'The current most active user is ' . $displayName, $type);
-    /*
-        TODO
-        convert seconds to dhms
-    */
+	
+	$hours = floor($most['time'] / 3600);
+	$minutes = floor(($most['time'] / 60) % 60);
+	$seconds = $most['time'] % 60;
+	
+	$bot->network->sendMessageAutoDetection($who, 'The current most active user is ' . $displayName . ' with a time of ' . sprintf("%02d hours, %02d minutes and %02d seconds", $hours, $minutes, $seconds), $type);
 };
