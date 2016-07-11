@@ -32,3 +32,4 @@ getmain
 Alias'
 Responses
 Minranks
+combine "ban/unban" commands with alias
