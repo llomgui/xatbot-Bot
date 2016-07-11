@@ -1,5 +1,9 @@
 <?php
 
+use Ocean\Bot\API\ActionAPI;
+use Ocean\Bot\API\DataAPI;
+use Ocean\Bot\Variables;
+
 $onFriendList = function ($array) {
 
     if (!isset($array['v'])) {

@@ -1,5 +1,8 @@
 <?php
-abstract class API
+
+namespace Ocean\Bot\API;
+
+abstract class BaseAPI
 {
     private static $init       = false;
 

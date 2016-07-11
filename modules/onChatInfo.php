@@ -1,5 +1,7 @@
 <?php
 
+use Ocean\Bot\API\ActionAPI;
+
 $onChatInfo = function ($array) {
 
     $bot = ActionAPI::getBot();

@@ -1,7 +1,8 @@
 <?php
-require_once 'base.php';
 
-class ActionAPI extends API
+namespace Ocean\Bot\API;
+
+class ActionAPI extends BaseAPI
 {
     public static function __callStatic($function, $arguments)
     {

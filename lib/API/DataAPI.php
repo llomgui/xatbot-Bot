@@ -1,7 +1,8 @@
 <?php
-require_once 'base.php';
 
-class DataAPI extends API
+namespace Ocean\Bot\API;
+
+class DataAPI extends BaseAPI
 {
     private static $data;
 

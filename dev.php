@@ -2,16 +2,16 @@
 
 require_once 'vendor/autoload.php';
 
-// API
-require_once 'API/dataAPI.php';
-require_once 'API/actionAPI.php';
+use Ocean\Bot\Variables;
+use Ocean\Bot\API;
+use Ocean\Bot\Bot;
 
 echo 'Loading variables...' . PHP_EOL;
 Variables::init();
 Variables::update();
 
 echo 'Loading API...' . PHP_EOL;
-$params     = API::init();
+$params     = API\BaseAPI::init();
 $currentBot = &$params['botID'];
 $bot        = &$params['bot'];
 

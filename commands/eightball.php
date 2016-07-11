@@ -1,5 +1,7 @@
 <?php
 
+use Ocean\Bot\API\ActionAPI;
+
 $eightball = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();

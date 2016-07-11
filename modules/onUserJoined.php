@@ -1,5 +1,8 @@
 <?php
 
+use Ocean\Bot\API\ActionAPI;
+use Ocean\Bot\API\DataAPI;
+
 $onUserJoined = function ($who, $array) {
 
     $bot = ActionAPI::getBot();

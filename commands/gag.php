@@ -1,5 +1,7 @@
 <?php
 
+use Ocean\Bot\API\ActionAPI;
+
 $gag = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();
