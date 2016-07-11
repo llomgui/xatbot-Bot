@@ -2,6 +2,7 @@
 
 use Ocean\Xat\API\ActionAPI;
 use Ocean\Xat\API\DataAPI;
+use Ocean\Xat\User;
 
 $onUserJoined = function ($who, $array) {
 
