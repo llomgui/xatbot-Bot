@@ -8,5 +8,5 @@ $started = function ($who, $message, $type) {
 
     $started = time() - $bot->started;
 
-	$bot->network->sendMessageAutoDetection($who, 'I was started ' . $bot->secondsToTime($started) . ' ago.', $type);
+    $bot->network->sendMessageAutoDetection($who, 'I was started ' . $bot->secondsToTime($started) . ' ago.', $type);
 };

@@ -9,7 +9,7 @@ $mostactive = function ($who, $message, $type) {
     $most = ['user' => null, 'time' => 0];
 
     foreach ($bot->users as $user) {
-        if (!is_object($user) || !DataAPI::isSet($who . '_active')) {
+        if (!is_object($user) || !DataAPI::isSetVariable($who . '_active')) {
             continue;
         }
 

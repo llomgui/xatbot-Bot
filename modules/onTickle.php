@@ -14,7 +14,7 @@ $onTickle = function ($who, $array) {
     switch (substr($array['t'], 0, 2)) {
         case '/l':
             $key = 'tickle_' . $array['u'];
-            if (!DataAPI::isSet($key)) {
+            if (!DataAPI::isSetVariable($key)) {
                 DataAPI::set($key, 0);
             }
 

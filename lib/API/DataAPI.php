@@ -25,12 +25,12 @@ class DataAPI extends BaseAPI
         return self::$data[self::getBotID()][$name];
     }
 
-    public static function isSet($name)
+    public static function isSetVariable($name)
     {
         return (isset(self::$data[self::getBotID()][$name]));
     }
 
-    public static function unSet($name)
+    public static function unSetVariable($name)
     {
         unset(self::$data[self::getBotID()][$name]);
     }

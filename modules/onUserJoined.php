@@ -18,18 +18,18 @@ $onUserJoined = function ($who, $array) {
         $bot->network->sendTickle($who);
     }
 
-    if (!DataAPI::isSet($who . '_joined')) {
+    if (!DataAPI::isSetVariable($who . '_joined')) {
         DataAPI::set($who . '_joined', false);
     }
 
-    if (!DataAPI::isSet($who . '_active')) {
+    if (!DataAPI::isSetVariable($who . '_active')) {
         DataAPI::set($who . '_active', time());
     }
 
-    if (DataAPI::isSet($who . '_left')) {
+    if (DataAPI::isSetVariable($who . '_left')) {
         if (DataAPI::get($who . '_left') - 300 > DataAPI::get($who . '_active')) {
             DataAPI::set($who . '_active', time());
-            DataAPI::unSet($who . '_left', time());
+            DataAPI::unSetVariable($who . '_left', time());
         }
     }
 

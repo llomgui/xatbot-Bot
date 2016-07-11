@@ -85,5 +85,5 @@ $onFriendList = function ($array) {
         $bot->network->sendMessageAutoDetection(DataAPI::get('online_command')['who'], 'Offline', DataAPI::get('online_command')['type']);
     }
 
-    DataAPI::unSet('online_command');
+    DataAPI::unSetVariable('online_command');
 };
