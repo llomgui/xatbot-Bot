@@ -7,7 +7,6 @@ $temp = function ($who, $message, $type) {
     if (empty($message[1]) || empty($message[2])       ||
         empty($message[3]) || !is_numeric($message[3]) ||
         $message[3] < 0    || $message[3] > 24) {
-
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !temp [mem/mod/own] [xatid/regname] [time(0-24)]', $type, true);
     }
 
