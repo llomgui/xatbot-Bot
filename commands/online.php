@@ -4,7 +4,7 @@ $online = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
     if (empty($message[1]) || !isset($message[1])) {
-		return $bot->network->sendMessageAutoDetection($who, 'Usage: !online [regname/xatid/volunteers]', $type, true);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !online [regname/xatid/volunteers]', $type, true);
     }
 
     if ($message[1] == 'xat' || $message[1] == '42') {

@@ -7,7 +7,7 @@ $unnaughtystep = function ($who, $message, $type) {
 	if (!$bot->botHasPower(284)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'naughtystep'), $type);
     }
-	
+
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !unnaughtystep [regname/xatid]', $type, true);
     }
