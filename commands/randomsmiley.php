@@ -1,7 +1,7 @@
 <?php
 
 $randomsmiley = function ($who, $message, $type) {
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (empty($message[1]) || !isset($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !randomsmiley [1 - 20] [optional power]', $type, true);

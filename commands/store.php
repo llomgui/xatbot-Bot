@@ -2,7 +2,7 @@
 
 $store = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !store [allpower/everypower/power]', $type, true);

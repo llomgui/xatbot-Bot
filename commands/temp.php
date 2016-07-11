@@ -2,7 +2,7 @@
 
 $temp = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (empty($message[1]) || empty($message[2])       ||
         empty($message[3]) || !is_numeric($message[3]) ||

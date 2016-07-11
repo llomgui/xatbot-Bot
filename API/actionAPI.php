@@ -1,7 +1,7 @@
 <?php
 require_once 'base.php';
 
-class actionAPI extends API
+class ActionAPI extends API
 {
     public static function __callStatic($function, $arguments)
     {

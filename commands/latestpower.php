@@ -2,7 +2,7 @@
 
 $latestpower = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     $pow2 = json_decode(file_get_contents('http://xat.com/web_gear/chat/pow2.php'), true);
     $powers = json_decode(file_get_contents('http://xat.com/json/powers.php'), true);

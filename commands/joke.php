@@ -2,7 +2,7 @@
 
 $joke = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     $stream = stream_context_create(['http'=> ['timeout' => 1]]);
     $page = file_get_contents('http://www.jokesclean.com/OneLiner/Random/', false, $stream);

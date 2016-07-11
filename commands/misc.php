@@ -1,7 +1,7 @@
 <?php
 $misc = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc [reserve/chatid/chatname/xatid/regname/hug/kiss/slap/promo] [info]', $type, true);

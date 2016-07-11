@@ -2,7 +2,7 @@
 
 $onUserJoined = function ($who, $array) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if ($who >= 1900000000) {
         return;
@@ -15,23 +15,23 @@ $onUserJoined = function ($who, $array) {
         $bot->network->sendTickle($who);
     }
 
-    if (!dataAPI::is_set($who . '_joined')) {
-        dataAPI::set($who . '_joined', false);
+    if (!DataAPI::isSet($who . '_joined')) {
+        DataAPI::set($who . '_joined', false);
     }
 
-    if (!dataAPI::is_set($who . '_active')) {
-        dataAPI::set($who . '_active', time());
+    if (!DataAPI::isSet($who . '_active')) {
+        DataAPI::set($who . '_active', time());
     }
 
-    if (dataAPI::is_set($who . '_left')) {
-        if (dataAPI::get($who . '_left') - 300 > dataAPI::get($who . '_active')) {
-            dataAPI::set($who . '_active', time());
-            dataAPI::un_set($who . '_left', time());
+    if (DataAPI::isSet($who . '_left')) {
+        if (DataAPI::get($who . '_left') - 300 > DataAPI::get($who . '_active')) {
+            DataAPI::set($who . '_active', time());
+            DataAPI::unSet($who . '_left', time());
         }
     }
 
-    if ($user->isAway() or dataAPI::get('away_' . $user->getID())) {
-        dataAPI::set('away_' . $user->getID(), $user->isAway());
+    if ($user->isAway() or DataAPI::get('away_' . $user->getID())) {
+        DataAPI::set('away_' . $user->getID(), $user->isAway());
         return;
     }
 

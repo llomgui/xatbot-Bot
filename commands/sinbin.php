@@ -2,7 +2,7 @@
 
 $sinbin = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (!$bot->botHasPower(33)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'sinbin'), $type);

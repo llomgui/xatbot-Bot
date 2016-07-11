@@ -1,7 +1,7 @@
 <?php
 $slots = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     $smilies = ['(smile#)','(biggrin#)','(wink#)','(eek#)','(tongue#)','(cool#)','(mad#)','(confused#)','(redface#)','(frown#)','(crying#)'];
 

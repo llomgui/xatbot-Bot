@@ -1,7 +1,7 @@
 <?php
 
 $online = function ($who, $message, $type) {
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (empty($message[1]) || !isset($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !online [regname/xatid/volunteers]', $type, true);
@@ -19,7 +19,7 @@ $online = function ($who, $message, $type) {
 
     if (isset($res) && $res != 0) {
         $bot->network->sendFriendList('10101 ' . $res);
-        dataAPI::set('online_command', ['who' => $who, 'type' => $type]);
+        DataAPI::set('online_command', ['who' => $who, 'type' => $type]);
         return;
     } elseif (!isset($res)) {
         if ($message[1] == 'volunteers') {
@@ -32,11 +32,11 @@ $online = function ($who, $message, $type) {
 
             $string = implode(' ', $ids);
             $bot->network->sendFriendList('10101 ' . $string);
-            dataAPI::set('online_command', ['who' => $who, 'type' => $type]);
+            DataAPI::set('online_command', ['who' => $who, 'type' => $type]);
             return;
         } else {
             $bot->network->sendFriendList('10101 ' . $message[1]);
-            dataAPI::set('online_command', ['who' => $who, 'type' => $type]);
+            DataAPI::set('online_command', ['who' => $who, 'type' => $type]);
             return;
         }
     }

@@ -7,7 +7,7 @@ $onFriendList = function ($array) {
         return;
     }
 
-    $bot  = actionAPI::getBot();
+    $bot  = ActionAPI::getBot();
     $list = explode(',', $array['v']);
     $ctx  = stream_context_create(['http' => ['timeout' => 1]]);
 
@@ -75,11 +75,11 @@ $onFriendList = function ($array) {
                 $string .= 'is online!';
             }
 
-            $bot->network->sendMessageAutoDetection(dataAPI::get('online_command')['who'], $string, dataAPI::get('online_command')['type']);
+            $bot->network->sendMessageAutoDetection(DataAPI::get('online_command')['who'], $string, DataAPI::get('online_command')['type']);
         }
     } else {
-        $bot->network->sendMessageAutoDetection(dataAPI::get('online_command')['who'], 'Offline', dataAPI::get('online_command')['type']);
+        $bot->network->sendMessageAutoDetection(DataAPI::get('online_command')['who'], 'Offline', DataAPI::get('online_command')['type']);
     }
 
-    dataAPI::un_set('online_command');
+    DataAPI::unSet('online_command');
 };

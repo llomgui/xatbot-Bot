@@ -7,7 +7,7 @@ require_once 'classes/xatUser.php';
 
 // API
 require_once 'API/dataAPI.php';
-require_once 'API/actionAPI.php';
+require_once 'API/ActionAPI.php';
 
 echo 'Loading variables...' . PHP_EOL;
 xatVariables::init();

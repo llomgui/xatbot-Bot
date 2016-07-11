@@ -2,7 +2,7 @@
 
 $value = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1])) {
         $xatusers[] = $who;

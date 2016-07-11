@@ -2,9 +2,9 @@
 
 $active = function ($who, $message, $type) {
 
-    $bot  = actionAPI::getBot();
+    $bot  = ActionAPI::getBot();
     $now  = time();
-    $userTime = $now - dataAPI::get($who . '_active');
+    $userTime = $now - DataAPI::get($who . '_active');
     $displayName = $bot->users[$who]->isRegistered() ? $bot->users[$who]->getRegname() . '(' . $bot->users[$who]->getID() . ')'  : $bot->users[$who]->getID();
 
     $hours = floor($userTime / 3600);

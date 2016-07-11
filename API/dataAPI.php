@@ -1,7 +1,7 @@
 <?php
 require_once 'base.php';
 
-class dataAPI extends API
+class DataAPI extends API
 {
     private static $data;
 
@@ -24,12 +24,12 @@ class dataAPI extends API
         return self::$data[self::getBotID()][$name];
     }
 
-    public static function is_set($name)
+    public static function isSet($name)
     {
         return (isset(self::$data[self::getBotID()][$name]));
     }
 
-    public static function un_set($name)
+    public static function unSet($name)
     {
         unset(self::$data[self::getBotID()][$name]);
     }

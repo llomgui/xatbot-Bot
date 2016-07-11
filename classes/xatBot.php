@@ -13,7 +13,7 @@ class Bot
     public function __construct($botData)
     {
         $this->started = time();
-		
+
         foreach ($botData as $key => $val) {
             $this->botData[$key] = htmlspecialchars_decode($val);
         }

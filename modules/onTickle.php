@@ -2,7 +2,7 @@
 
 $onTickle = function ($who, $array) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (!isset($array['t'])) {
         return;
@@ -11,13 +11,13 @@ $onTickle = function ($who, $array) {
     switch (substr($array['t'], 0, 2)) {
         case '/l':
             $key = 'tickle_' . $array['u'];
-            if (!dataAPI::is_set($key)) {
-                dataAPI::set($key, 0);
+            if (!DataAPI::isSet($key)) {
+                DataAPI::set($key, 0);
             }
 
             // Answer to tickle every 5 seconds
-            if (time() - dataAPI::get($key) >= 5) {
-                dataAPI::set($key, time());
+            if (time() - DataAPI::get($key) >= 5) {
+                DataAPI::set($key, time());
                 $bot->network->answerTickle($who);
             } else {
                 return;

@@ -2,7 +2,7 @@
 
 $xd = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1]) || !is_numeric($message[1]) || $message[1] == 0) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !xd [xats]', $type, true);

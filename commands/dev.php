@@ -6,7 +6,7 @@ $dev = function ($who, $message, $type) {
         return;
     }
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     switch ($message[1]) {
         case 'reload':

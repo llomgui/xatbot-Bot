@@ -2,7 +2,7 @@
 
 $gamebanme = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !gamebanme [snake/space/match/maze/code/slot] [hours]', $type, true);

@@ -2,7 +2,7 @@
 
 $calc = function ($who, $message, $type) {
 
-    $bot = actionAPI::getBot();
+    $bot = ActionAPI::getBot();
 
     unset($message[0]);
     $message = implode('', $message);
