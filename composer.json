@@ -1,0 +1,13 @@
+{
+    "name": "ocean/bot",
+    "description": "Ocean Project Bot",
+    "require": {
+        "symfony/var-dumper": "^3.1"
+    },
+    "autoload": {
+        "classmap": ["lib/"],
+        "psr-4": {
+            "Ocean\\Bot\\": "lib/"
+        }
+    }
+}

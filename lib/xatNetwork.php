@@ -1,7 +1,6 @@
 <?php
 
-require_once 'xatSocket.php';
-require_once 'xatVariables.php';
+namespace Ocean\Bot;
 
 class Network
 {

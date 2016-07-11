@@ -1,6 +1,6 @@
 <?php
 
-require_once 'xatVariables.php';
+namespace Ocean\Bot;
 
 class User
 {

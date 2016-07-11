@@ -1,6 +1,6 @@
 <?php
 
-require_once 'xatNetwork.php';
+namespace Ocean\Bot;
 
 class Bot
 {

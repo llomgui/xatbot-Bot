@@ -1,5 +1,7 @@
 <?php
 
+namespace Ocean\Bot;
+
 abstract class xatVariables
 {
     private static $init;

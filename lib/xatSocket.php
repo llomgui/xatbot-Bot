@@ -1,5 +1,7 @@
 <?php
 
+namespace Ocean\Bot;
+
 class Socket
 {
     private $socket;
