@@ -17,7 +17,7 @@ $shortname = function ($who, $message, $type) {
 	}
 	
 	if (is_numeric($message[1][0])) {
-		return $bot->network->sendMessageAutoDetection($who, "Shortnames can\'t start with a letter.", $type);
+		return $bot->network->sendMessageAutoDetection($who, "Shortnames can\'t start with a number.", $type);
 	}
 	
 	$POST['GroupName'] = $message[1];
