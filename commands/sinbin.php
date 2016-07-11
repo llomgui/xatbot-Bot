@@ -9,11 +9,7 @@ $sinbin = function ($who, $message, $type) {
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
-        if ($type == 1) {
-            $type = 2;
-        }
-
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !sinbin [regname/xatid] [hours]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !sinbin [regname/xatid] [hours]', $type, true);
     }
 
     if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {

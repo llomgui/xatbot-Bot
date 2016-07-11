@@ -4,12 +4,12 @@ $undunce = function ($who, $message, $type) {
 
     $bot = actionAPI::getBot();
 
-    if (!isset($message[1]) || empty($message[1])) {
-        if ($type == 1) {
-            $type = 2;
-        }
+	if (!$bot->botHasPower(158)) {
+        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'dunce'), $type);
+    }
 
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !undunce [regname/xatid]', $type);
+    if (!isset($message[1]) || empty($message[1])) {
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !undunce [regname/xatid]', $type, true);
     }
 
     if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {

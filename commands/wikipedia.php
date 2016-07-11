@@ -7,17 +7,17 @@ $wikipedia = function ($who, $message, $type) {
     $message = implode(' ', $message);
 
     if (empty($message)) {
-        return $bot->network->sendMessageAutoDetection($who, 'You\'re not searching for anything (confused#)', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'You didn\'t give me anything to search.', $type);
     }
     $stream = stream_context_create(['http'=> ['timeout' => 1]]);
-    $page = file_get_contents('http://en.wikipedia.org/w/api.php?action=opensearch&search=' . urlencode($message) . '&format=xml&limit=1', false, $stream);
+    $page = file_get_contents('http://en.wikipedia.org/w/api.php?action=opensearch&search=' . urlencode($message) . '&format=json&limit=1', false, $stream);
     if (!$page) {
         return $bot->network->sendMessageAutoDetection($who, 'I can\'t reach wikipedia.org at this monent, please try again later.', $type);
     }
 
-    $xml = simplexml_load_string($page);
-    if ((string)$xml->Section->Item->Description) {
-        $wiki = "Wikipedia page: http://en.wikipedia.org/wiki/" . (string)$xml->Section->Item->Text;
+    $json = json_decode($page);
+    if (!empty($json[1])) {
+        $wiki = "Wikipedia page: http://en.wikipedia.org/wiki/" . $json[1][0];
     } else {
         $wiki = "Wikipedia page could not be found.";
     }

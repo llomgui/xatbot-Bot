@@ -8,7 +8,7 @@ $calc = function ($who, $message, $type) {
     $message = implode('', $message);
 
     if (empty($message)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !calc [equation]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !calc [equation]', $type, true);
     }
 
     $expr = explode('|', $message);
