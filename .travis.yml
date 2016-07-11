@@ -10,6 +10,7 @@ sudo: false
 
 before_script:
     - pear install PHP_CodeSniffer
+    - phpenv rehash
 
 script:
     - /usr/bin/phpcs . --standard=psr2
