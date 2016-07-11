@@ -5,7 +5,7 @@ ${'8ball'} = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
 	if (!isset($message[1]) || empty($message[1])) {
-		return $bot->network->sendMessageAutoDetection($who, 'Usage: !8ball [question]', $type);
+		return $bot->network->sendMessageAutoDetection($who, 'Usage: !8ball [question]', $type, true);
 	}
 	
 	$response = [
