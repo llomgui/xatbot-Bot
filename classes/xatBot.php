@@ -8,9 +8,12 @@ class Bot
     public $botData;
     public $chatInfo;
     public $users;
+    public $started;
 
     public function __construct($botData)
     {
+        $this->started = time();
+		
         foreach ($botData as $key => $val) {
             $this->botData[$key] = htmlspecialchars_decode($val);
         }

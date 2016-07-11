@@ -4,7 +4,6 @@
 allmissing,
 everymissing
 twitter
-youtube
 clear
 countdown
 scramble
@@ -17,18 +16,14 @@ lastseen
 weather
 love
 power [enable/disable/clear/list]
-powersearch
 search
 edit
 staff
 users
 kickall
 chatinfos
-dice
 rank
 game
-rankme
-started
 pool
 history
 getmain
@@ -36,3 +31,4 @@ getmain
 ##Features (pending database connection)
 Alias'
 Responses
+Minranks
