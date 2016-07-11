@@ -14,9 +14,10 @@ $latestpower = function ($who, $message, $type) {
 	*/	
 	
     $bot = actionAPI::getBot();
-
-    $pow2 = json_decode(file_get_contents('http://xat.com/web_gear/chat/pow2.php'), true);
-    $powers = json_decode(file_get_contents('http://xat.com/json/powers.php'), true);
+	
+	$stream = stream_context_create(['http'=> ['timeout' => 1]]);
+    $pow2 = json_decode(file_get_contents('http://xat.com/web_gear/chat/pow2.php?' . time(), false, $stream), true);
+    $powers = json_decode(file_get_contents('http://xat.com/json/powers.php?' . time(), false, $stream), true);
 
     if (!$pow2) {
         return $bot->network->sendMessageAutoDetection($who, 'Could not access pow2 at this moment.', $type);
