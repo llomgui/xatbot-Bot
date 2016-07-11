@@ -41,5 +41,10 @@
 	"mostactive",
 	"misc",
 	"dx",
-	"xd"
+	"xd",
+	"active",
+	"latestpower",
+	"price",
+	"eightball",
+	"shortname"
 ]

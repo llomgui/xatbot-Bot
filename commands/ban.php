@@ -5,11 +5,7 @@ $ban = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
-        if ($type == 1) {
-            $type = 2;
-        }
-
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !ban [regname/xatid] [time] [reason]', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !ban [regname/xatid] [time] [reason]', $type, true);
     }
 
     if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
