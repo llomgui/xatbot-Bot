@@ -24,7 +24,11 @@ $latestpower = function ($who, $message, $type) {
     }
 	
 	$latestID = $pow2[0][1]['id'];
-	if (isset($message[1])) { // if message[1] isset that means check everywhere for new id
+	if (isset($message[1])) { 
+		/* 
+		if message[1] isset that means check everywhere for new id
+		comes in handy when they havent changed "last"
+		*/
 		$latestID = end($pow2[6][1]) >= $pow2[0][1]['id'] ? end($pow2[6][1]):$pow2[0][1]['id'];
 		$latestID = $latestID >= key($powers) ? $latestID:key($powers);
 	}
