@@ -7,9 +7,9 @@ $latestpower = function ($who, $message, $type) {
 		1 = backs
 		2 = actions
 		3 = hugs
-		4 = topsh
+		4 = topsh aka smilies
 		5 = isgrp
-		6 = pssa
+		6 = pssa aka powers
 		7 = pawns
 	*/	
 	
