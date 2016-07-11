@@ -45,11 +45,12 @@
 	"active",
 	"latestpower",
 	"price",
-	"eightball",
 	"shortname",
 	"youtube",
 	"whatis",
 	"dice",
 	"rankme",
-	"started"
+	"started",
+	"users",
+	"8ball"
 ]
