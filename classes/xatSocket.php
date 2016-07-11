@@ -159,10 +159,10 @@ class Socket
     {
         $str = trim($str);
 
-        $str = str_replace('&', '&amp;',    $str);
-        $str = str_replace('"', '&quot;',   $str);
-        $str = str_replace("'", '&apos;',   $str);
-        $str = str_replace('<', '&lt;',     $str);
+        $str = str_replace('&', '&amp;', $str);
+        $str = str_replace('"', '&quot;', $str);
+        $str = str_replace("'", '&apos;', $str);
+        $str = str_replace('<', '&lt;', $str);
         $str = str_replace('>', "\xCB\x83", $str);
 
         return $str;
@@ -171,10 +171,10 @@ class Socket
     public function unsanitize($str)
     {
         $str = str_replace(chr(0xCB).chr(0x83), '>', $str);
-        $str = str_replace('&lt;',   '<', $str);
+        $str = str_replace('&lt;', '<', $str);
         $str = str_replace('&apos;', "'", $str);
         $str = str_replace('&quot;', '"', $str);
-        $str = str_replace('&amp;',  '&', $str);
+        $str = str_replace('&amp;', '&', $str);
 
         return $str;
     }

@@ -66,7 +66,6 @@ while (1) {
                 $unknow = false;
 
                 switch ($packet['node']) {
-
                     case 'm':
                         if (!isset($packet['elements']['s'])) {
                             if (!isset($packet['elements']['p']) && isset($packet['elements']['i'])) {

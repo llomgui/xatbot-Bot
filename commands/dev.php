@@ -9,7 +9,6 @@ $dev = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
     switch ($message[1]) {
-
         case 'reload':
             reloadExtensions();
             $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);

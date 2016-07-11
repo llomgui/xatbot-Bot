@@ -131,8 +131,7 @@ class Network
         $this->socket->write('v', [
                 'n' => xatVariables::getRegname(),
                 'p' => (xatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
-            ]
-        );
+            ]);
 
         $this->logininfo = $this->socket->read(true)['elements'];
 
@@ -146,8 +145,7 @@ class Network
                 'r' => $this->botData['chatid'],
                 'v' => '0',
                 'u' => xatVariables::getXatid()
-            ]
-        );
+            ]);
 
         $packetY = $this->socket->read(true);
 
@@ -323,7 +321,7 @@ class Network
         $this->socket->write($node);
     }
 
-    public function kick($uid, $reason, $sound='')
+    public function kick($uid, $reason, $sound = '')
     {
         $this->socket->write('c', [
             'p' => $reason.$sound,
@@ -332,7 +330,7 @@ class Network
         ]);
     }
 
-    public function ban($uid, $time, $reason, $tArgument='g', $gamebanid='')
+    public function ban($uid, $time, $reason, $tArgument = 'g', $gamebanid = '')
     {
         if ($time < 0) {
             $time = 1;
@@ -344,8 +342,7 @@ class Network
                 'p' => $reason,
                 'u' => $uid,
                 't' => '/'. $tArgument . $time,
-            ], (empty($gamebanid) ? [] : ['w' => $gamebanid]))
-        );
+            ], (empty($gamebanid) ? [] : ['w' => $gamebanid])));
     }
 
     public function unban($uid)

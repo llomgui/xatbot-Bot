@@ -83,33 +83,33 @@ $misc = function ($who, $message, $type) {
                 case "en":
                     $lang = $promo->en;
                     $language = "English";
-                break;
+                    break;
 
                 case "spanish":
                 case "es":
                     $lang = $promo->es;
                     $language = "Spanish";
-                break;
+                    break;
 
                 case "italian":
                 case "it":
                     $lang = $promo->it;
                     $language = "Italian";
-                break;
+                    break;
                 case "arabic":
                 case "ar":
                     $lang = $promo->ar;
                     $language = "Arabic";
-                break;
+                    break;
                 case "french":
                 case "fr":
                     $lang = $promo->fr;
                     $language = "French";
-                break;
+                    break;
                 default:
                     $lang = $promo->en;
                     $language = "English";
-                break;
+                    break;
             }
 
             $promoMessage = "";

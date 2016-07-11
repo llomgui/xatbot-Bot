@@ -10,7 +10,6 @@ $onTickle = function ($who, $array) {
 
     switch (substr($array['t'], 0, 2)) {
         case '/l':
-
             $key = 'tickle_' . $array['u'];
             if (!dataAPI::is_set($key)) {
                 dataAPI::set($key, 0);
@@ -27,7 +26,6 @@ $onTickle = function ($who, $array) {
             break;
 
         case '/a':
-
             if (!isset($bot->users[$who])) {
                 return;
             }
@@ -47,7 +45,6 @@ $onTickle = function ($who, $array) {
             $bot->users[$who]->setPowers($array);
 
             break;
-
     }
 
     return;

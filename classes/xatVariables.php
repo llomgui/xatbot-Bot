@@ -1341,7 +1341,7 @@ abstract class xatVariables
             $header = explode(',', $lines[0]);
 
             for ($i = 1; $i < sizeof($lines); $i++) {
-                $power      = explode(',',  $lines[$i]);
+                $power      = explode(',', $lines[$i]);
                 $id         = $power[0];
                 $isAllPower = $power[1];
 
