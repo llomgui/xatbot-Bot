@@ -1,0 +1,15 @@
+language: php
+
+php:
+    - 7.0
+
+matrix:
+    fast_finish: true
+
+sudo: false
+
+before_script:
+    - pear install PHP_CodeSniffer-2.5.1
+
+script:
+    - phpcs src --standard=psr2
