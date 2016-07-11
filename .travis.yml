@@ -9,7 +9,7 @@ matrix:
 sudo: false
 
 before_script:
-    - pear install PHP_CodeSniffer-2.5.1
+    - pear install PHP_CodeSniffer
 
 script:
-    - phpcs src --standard=psr2
+    - /usr/bin/phpcs . --standard=psr2
