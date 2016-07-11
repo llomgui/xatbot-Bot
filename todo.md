@@ -1,0 +1,38 @@
+#TODO list
+##Commands
+8ball
+allmissing,
+everymissing
+twitter
+youtube
+clear
+countdown
+scramble
+hangman
+google
+hasmost
+userinfo
+horoscope
+lastseen
+weather
+love
+power [enable/disable/clear/list]
+powersearch
+search
+edit
+staff
+users
+kickall
+chatinfos
+dice
+rank
+game
+rankme
+started
+pool
+history
+getmain
+
+##Features (pending database connection)
+Alias'
+Responses
