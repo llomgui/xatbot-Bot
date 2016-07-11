@@ -13,5 +13,9 @@ $dx = function ($who, $message, $type) {
     $days = round($message[1]);
     $xats = round($message[1] * 13);
 
-    $bot->network->sendMessageAutoDetection($who, $days . ' ' . ($days > 1 ? 'days' : 'day') . ' equals ' . $xats . ' xats', $type);
+    $bot->network->sendMessageAutoDetection(
+        $who,
+        $days . ' ' . ($days > 1 ? 'days' : 'day') . ' equals ' . $xats . ' xats',
+        $type
+    );
 };

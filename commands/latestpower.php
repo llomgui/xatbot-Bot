@@ -69,7 +69,8 @@ $latestpower = function ($who, $message, $type) {
             $status = $powers[$latestID]['f'] & 0x2000 ? "LIMITED":$status;
         }
 
-        $storePrice = isset($powers[$latestID]['x']) ? $powers[$latestID]['x'].  ' xats' : $powers[$latestID]['d'] . ' days';
+        $storePrice = isset($powers[$latestID]['x']) ? $powers[$latestID]['x'].  ' xats' :
+                                                       $powers[$latestID]['d'] . ' days';
     }
 
     $implode = [
@@ -82,5 +83,4 @@ $latestpower = function ($who, $message, $type) {
 
     $bot->network->sendMessageAutoDetection($who, implode(' | ', $implode), $type);
 
-   // $bot->network->sendMessageAutoDetection($who, ucfirst($latestName) . ' (ID: '. $latestID . ') ' . rtrim($pawns, ', ') . ' ' . rtrim($smilies, ', ') . ' | Store price: ' . (isset($storePrice) ? $storePrice : "Unknown"), $type);
 };

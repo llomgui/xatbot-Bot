@@ -6,8 +6,20 @@ $gameban = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();
 
-    if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !isset($message[3]) || empty($message[3]) || !is_numeric($message[3])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !gameban [snake/space/match/maze/code/slot] [ID/Regname] [hours] [reason]', $type, true);
+    if (!isset($message[1]) ||
+        empty($message[1]) ||
+        !isset($message[2]) ||
+        empty($message[2]) ||
+        !isset($message[3]) ||
+        empty($message[3]) ||
+        !is_numeric($message[3])
+    ) {
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !gameban [snake/space/match/maze/code/slot] [ID/Regname] [hours] [reason]',
+            $type,
+            true
+        );
     }
 
     if (is_numeric($message[2]) && isset($bot->users[$message[2]])) {
@@ -65,7 +77,11 @@ $gameban = function ($who, $message, $type) {
         }
 
         if (!$bot->botHasPower($gamebanid)) {
-            return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', strtolower($gameban)), $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                sprintf('Sorry, but i don\'t have the power \'%s\'.', strtolower($gameban)),
+                $type
+            );
         }
 
         $bot->network->ban($user->getID(), $hours, $reason ?? '', 'g', $gamebanid);

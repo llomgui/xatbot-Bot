@@ -27,7 +27,9 @@ class Bot
         $index = (int)($id / 32) + 4;
         $bit   = (int)($id % 32);
 
-        return (isset($this->network->logininfo['d' . $index]) && ($this->network->logininfo['d' . $index] & (1 << $bit)));
+        return (isset($this->network->logininfo['d' . $index]) &&
+            ($this->network->logininfo['d' . $index] & (1 << $bit))
+        );
     }
 
     public function secondsToTime($seconds)

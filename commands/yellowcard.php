@@ -7,11 +7,20 @@ $yellowcard = function ($who, $message, $type) {
     $bot = ActionAPI::getBot();
 
     if (!$bot->botHasPower(292)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'yellowcard'), $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            sprintf('Sorry, but i don\'t have the power \'%s\'.', 'yellowcard'),
+            $type
+        );
     }
 
     if (!isset($message[1]) || empty($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !yellowcard [regname/xatid] [reason]', $type, true);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !yellowcard [regname/xatid] [reason]',
+            $type,
+            true
+        );
     }
 
     if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {

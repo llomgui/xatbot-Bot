@@ -54,7 +54,10 @@ class Socket
 
         $packet = socket_read($this->socket, 1460);
 
-        if ($packet === false && (socket_last_error($this->socket) !== 0) && (socket_last_error($this->socket) !== 11)) {
+        if ($packet === false &&
+            (socket_last_error($this->socket) !== 0) &&
+            (socket_last_error($this->socket) !== 11)
+        ) {
             $this->disconnect();
             return false;
         }

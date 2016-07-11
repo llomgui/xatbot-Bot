@@ -1,3 +1,4 @@
+
 <?php
 
 use Ocean\Xat\API\ActionAPI;
@@ -44,11 +45,19 @@ $value = function ($who, $message, $type) {
 
             if (isset($user)) {
                 if (!$user->isRegistered()) {
-                    return $bot->network->sendMessageAutoDetection($who, 'You cannot value an unregistered account!', $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'You cannot value an unregistered account!',
+                        $type
+                    );
                 }
 
                 if (!$user->hasDays()) {
-                    return $bot->network->sendMessageAutoDetection($who, 'You cannot value an account without days!', $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'You cannot value an account without days!',
+                        $type
+                    );
                 }
 
                 if (!isset($users[$user->getId()])) {
@@ -132,7 +141,28 @@ $value = function ($who, $message, $type) {
         $minUSD   = round($mineuros * 1.10, 2);
         $maxUSD   = round($maxeuros * 1.10, 2);
 
-        $message = $regname . ' [' . $count . '] powers are worth ' . number_format($minprice) . ' - ' . number_format($maxprice) . ' xats or ' . number_format($mindays) . ' - ' . number_format($maxdays) . ' days or in cash worth ' . $mineuros . ' - ' . $maxeuros . ' euros or ' . $minUSD . ' - ' . $maxUSD . ' USD. Auction: ' . number_format($storeprice) . ' xats.';
+        $message = $regname
+        . ' ['
+        . $count
+        . '] powers are worth '
+        . number_format($minprice)
+        . ' - '
+        . number_format($maxprice)
+        . ' xats or '
+        . number_format($mindays)
+        . ' - '
+        . number_format($maxdays)
+        . ' days or in cash worth '
+        . $mineuros
+        . ' - '
+        . $maxeuros
+        . ' euros or '
+        . $minUSD
+        . ' - '
+        . $maxUSD
+        . ' USD. Auction: '
+        . number_format($storeprice)
+        . ' xats.';
 
         $bot->network->sendMessageAutoDetection($who, $message, $type);
     }

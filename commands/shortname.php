@@ -40,14 +40,26 @@ $shortname = function ($who, $message, $type) {
 
 
     if (strpos($res, 'Name is not allowed.') !== false) {
-        return $bot->network->sendMessageAutoDetection($who, 'The shortname ' . $message[1] . ' is not allowed.', $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'The shortname ' . $message[1] . ' is not allowed.',
+            $type
+        );
     }
 
     if (strpos($res, 'Sorry, name already taken') !== false) {
         if (strpos($res, '(1)' !== false)) {
-            return $bot->network->sendMessageAutoDetection($who, 'The shortname ' . $message[1] . ' is taken but can be released via ticket.', $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                'The shortname ' . $message[1] . ' is taken but can be released via ticket.',
+                $type
+            );
         } else {
-            return $bot->network->sendMessageAutoDetection($who, 'The shortname ' . $message[1] . ' is taken and cannot be released via ticket.', $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                'The shortname ' . $message[1] . ' is taken and cannot be released via ticket.',
+                $type
+            );
         }
     }
 

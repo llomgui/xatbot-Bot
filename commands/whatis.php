@@ -15,11 +15,19 @@ $whatis = function ($who, $message, $type) {
 
     foreach ($powers as $power) {
         if ($power['name'] == strtolower($message[1])) {
-            return $bot->network->sendMessageAutoDetection($who, ucfirst($power['name']) . ' is a power, not a smiley.', $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                ucfirst($power['name']) . ' is a power, not a smiley.',
+                $type
+            );
         }
         foreach ($power['smilies'] as $smiley) {
             if ($smiley == strtolower($message[1])) {
-                return $bot->network->sendMessageAutoDetection($who, '('. $smiley . ') is from the power (' . $power['name'] . ')', $type);
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    '('. $smiley . ') is from the power (' . $power['name'] . ')',
+                    $type
+                );
             }
         }
     }

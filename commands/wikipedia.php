@@ -12,9 +12,20 @@ $wikipedia = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, 'You didn\'t give me anything to search.', $type);
     }
     $stream = stream_context_create(['http'=> ['timeout' => 1]]);
-    $page = file_get_contents('http://en.wikipedia.org/w/api.php?action=opensearch&search=' . urlencode($message) . '&format=json&limit=1', false, $stream);
+    $page = file_get_contents(
+        'http://en.wikipedia.org/w/api.php?action=opensearch&search='
+        . urlencode($message)
+        . '&format=json&limit=1',
+        false,
+        $stream
+    );
+
     if (!$page) {
-        return $bot->network->sendMessageAutoDetection($who, 'I can\'t reach wikipedia.org at this monent, please try again later.', $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'I can\'t reach wikipedia.org at this monent, please try again later.',
+            $type
+        );
     }
 
     $json = json_decode($page);

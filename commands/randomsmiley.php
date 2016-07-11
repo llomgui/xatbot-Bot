@@ -7,7 +7,12 @@ $randomsmiley = function ($who, $message, $type) {
     $bot = ActionAPI::getBot();
 
     if (empty($message[1]) || !isset($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !randomsmiley [1 - 20] [optional power]', $type, true);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !randomsmiley [1 - 20] [optional power]',
+            $type,
+            true
+        );
     }
 
     if (!is_numeric($message[1]) || $message[1] > 25 || $message[1] < 1) {

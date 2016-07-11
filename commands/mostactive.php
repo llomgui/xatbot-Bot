@@ -15,12 +15,18 @@ $mostactive = function ($who, $message, $type) {
 
         $userTime = $now - DataAPI::get($who . '_active');
 
-        if ($userTime > $most['time']) { // Maybe implement a way to show more then 1 user if activetime is equal?
+        // Maybe implement a way to show more then 1 user if activetime is equal?
+        if ($userTime > $most['time']) {
             $most = ['user' => $user, 'time' => $userTime];
         }
     }
 
-    $displayName = $most['user']->isRegistered() ? $most['user']->getRegname() . '(' . $most['user']->getID() . ')'  : $most['user']->getID();
+    $displayName = $most['user']->isRegistered() ? $most['user']->getRegname() . '(' . $most['user']->getID() . ')'  :
+                                                   $most['user']->getID();
 
-    $bot->network->sendMessageAutoDetection($who, 'The current most active user is ' . $displayName . ' with a time of ' . $bot->secondsToTime($userTime), $type);
+    $bot->network->sendMessageAutoDetection(
+        $who,
+        'The current most active user is ' . $displayName . ' with a time of ' . $bot->secondsToTime($userTime),
+        $type
+    );
 };

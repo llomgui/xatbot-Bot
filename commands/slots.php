@@ -6,7 +6,19 @@ $slots = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();
 
-    $smilies = ['(smile#)','(biggrin#)','(wink#)','(eek#)','(tongue#)','(cool#)','(mad#)','(confused#)','(redface#)','(frown#)','(crying#)'];
+    $smilies = [
+        '(smile#)',
+        '(biggrin#)',
+        '(wink#)',
+        '(eek#)',
+        '(tongue#)',
+        '(cool#)',
+        '(mad#)',
+        '(confused#)',
+        '(redface#)',
+        '(frown#)',
+        '(crying#)'
+    ];
 
     if ($bot->botHasPower(236)) {
         $smilies = ['(slotban#)','(slotbar#)','(cherries#)','(orange2#)','(plum2#)','(seven#)'];
@@ -27,9 +39,14 @@ $slots = function ($who, $message, $type) {
     }
 
     $user = $bot->users[$who];
-    $response = isset($user) ? ($user->isRegistered() ? $user->getRegname() : $user->getID()) . " has spun: " : $who . " has spun: ";
+    $userIsRegistered = $user->isRegistered() ? $user->getRegname() : $user->getID();
+    $response = isset($user) ? $userIsRegistered . " has spun: " : $who . " has spun: ";
 
-    $bot->network->sendMessageAutoDetection($who, 'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')), $type);
+    $bot->network->sendMessageAutoDetection(
+        $who,
+        'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')),
+        $type
+    );
 
     //prevent "Limit" (possible better way to do this?)
     usleep(800001);

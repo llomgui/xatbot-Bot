@@ -9,7 +9,12 @@ $temp = function ($who, $message, $type) {
     if (empty($message[1]) || empty($message[2])       ||
         empty($message[3]) || !is_numeric($message[3]) ||
         $message[3] < 0    || $message[3] > 24) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !temp [mem/mod/own] [xatid/regname] [time(0-24)]', $type, true);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !temp [mem/mod/own] [xatid/regname] [time(0-24)]',
+            $type,
+            true
+        );
     }
 
     if (is_numeric($message[2]) && isset($bot->users[$message[2]])) {
@@ -30,7 +35,11 @@ $temp = function ($who, $message, $type) {
             case 'member':
             case 'membre':
                 if (!$bot->botHasPower(61)) {
-                    return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempmem'), $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempmem'),
+                        $type
+                    );
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/mb' . $message[3]);
                 break;
@@ -39,7 +48,11 @@ $temp = function ($who, $message, $type) {
             case 'moderator':
             case 'moderateur':
                 if (!$bot->botHasPower(11)) {
-                    return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempmod'), $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempmod'),
+                        $type
+                    );
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/m' . $message[3]);
                 break;
@@ -47,7 +60,11 @@ $temp = function ($who, $message, $type) {
             case 'own':
             case 'owner':
                 if (!$bot->botHasPower(79)) {
-                    return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempown'), $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        sprintf('Sorry, but i don\'t have the power \'%s\'.', 'tempown'),
+                        $type
+                    );
                 }
                 $bot->network->sendPrivateConversation($user->getID(), '/mo' . $message[3]);
                 break;

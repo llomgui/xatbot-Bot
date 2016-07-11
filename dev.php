@@ -23,7 +23,7 @@ foreach (Variables::getBots() as $botid => $bot) {
 
 echo 'Loading extensions...' . PHP_EOL;
 $extensionsList = [];
-read();
+// read();
 
 echo 'Server is ready!' . PHP_EOL;
 
