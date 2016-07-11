@@ -24,7 +24,7 @@ $shortname = function ($who, $message, $type) {
             'method' => 'POST',
             'header' => 'Content-Type: application/x-www-form-urlencoded',
             'content' => 'GroupName=' . $message[1] . '&Quote=Get+cost&YourEmail=&agree=ON&l_dt=&l_k2=&password=',
-			'timeout' => 1
+            'timeout' => 1
         ]
     ];
     $res = file_get_contents('http://xat.com/web_gear/chat/BuyShortName.php', false, stream_context_create($stream));
