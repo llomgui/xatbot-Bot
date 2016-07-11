@@ -1,5 +1,11 @@
 <?php
 
+use Ocean\Xat\API\ActionAPI;
+use Ocean\Xat\API\DataAPI;
+use Ocean\Xat\Variables;
+use Ocean\Xat\API;
+use Ocean\Xat\Bot;
+
 $online = function ($who, $message, $type) {
     $bot = ActionAPI::getBot();
 

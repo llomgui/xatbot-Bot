@@ -1,5 +1,8 @@
 <?php
 
+use Ocean\Xat\API\ActionAPI;
+use Ocean\Xat\Variables;
+
 $poorest = function ($who, $message, $type) {
 
     $bot    = ActionAPI::getBot();

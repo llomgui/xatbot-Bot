@@ -1,5 +1,7 @@
 <?php
 
+use Ocean\Xat\API\ActionAPI;
+
 $wikipedia = function ($who, $message, $type) {
     $bot = ActionAPI::getBot();
 

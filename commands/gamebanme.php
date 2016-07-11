@@ -1,6 +1,6 @@
 <?php
 
-use Ocean\Bot\API\ActionAPI;
+use Ocean\Xat\API\ActionAPI;
 
 $gamebanme = function ($who, $message, $type) {
 

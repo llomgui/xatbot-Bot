@@ -1,7 +1,7 @@
 <?php
 
-use Ocean\Bot\API\ActionAPI;
-use Ocean\Bot\API\DataAPI;
+use Ocean\Xat\API\ActionAPI;
+use Ocean\Xat\API\DataAPI;
 
 $onTickle = function ($who, $array) {
 

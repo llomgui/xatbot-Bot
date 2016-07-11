@@ -1,5 +1,8 @@
 <?php
 
+use Ocean\Xat\API\ActionAPI;
+use Ocean\Xat\Variables;
+
 $value = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();

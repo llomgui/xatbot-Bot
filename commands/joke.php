@@ -1,4 +1,5 @@
 <?php
+use Ocean\Xat\API\ActionAPI;
 
 $joke = function ($who, $message, $type) {
 

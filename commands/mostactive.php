@@ -1,5 +1,7 @@
 <?php
 
+use Ocean\Xat\API\ActionAPI;
+
 $mostactive = function ($who, $message, $type) {
 
     $bot  = ActionAPI::getBot();

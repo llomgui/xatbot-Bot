@@ -1,5 +1,7 @@
 <?php
 
+use Ocean\Xat\API\ActionAPI;
+
 $hush = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();

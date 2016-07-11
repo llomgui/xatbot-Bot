@@ -1,8 +1,8 @@
 <?php
 
-use Ocean\Bot\API\ActionAPI;
-use Ocean\Bot\API\DataAPI;
-use Ocean\Bot\Variables;
+use Ocean\Xat\API\ActionAPI;
+use Ocean\Xat\API\DataAPI;
+use Ocean\Xat\Variables;
 
 $onFriendList = function ($array) {
 

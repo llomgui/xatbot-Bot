@@ -1,6 +1,7 @@
 <?php
 
-use Ocean\Bot\API\ActionAPI;
+use Ocean\Xat\API\ActionAPI;
+
 $calc = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();

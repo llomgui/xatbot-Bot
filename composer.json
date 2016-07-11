@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ocean\\Bot\\": "lib/"
+            "Ocean\\Xat\\": "lib/"
         }
     }
 }

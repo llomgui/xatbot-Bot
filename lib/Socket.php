@@ -1,6 +1,6 @@
 <?php
 
-namespace Ocean\Bot;
+namespace Ocean\Xat;
 
 class Socket
 {

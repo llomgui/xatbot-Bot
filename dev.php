@@ -2,9 +2,9 @@
 
 require_once 'vendor/autoload.php';
 
-use Ocean\Bot\Variables;
-use Ocean\Bot\API;
-use Ocean\Bot\Bot;
+use Ocean\Xat\Variables;
+use Ocean\Xat\API;
+use Ocean\Xat\Bot;
 
 echo 'Loading variables...' . PHP_EOL;
 Variables::init();

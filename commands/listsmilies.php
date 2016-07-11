@@ -1,4 +1,5 @@
 <?php
+use Ocean\Xat\API\ActionAPI;
 
 $listsmilies = function ($who, $message, $type) {
 

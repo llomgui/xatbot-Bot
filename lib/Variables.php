@@ -1,6 +1,6 @@
 <?php
 
-namespace Ocean\Bot;
+namespace Ocean\Xat;
 
 abstract class Variables
 {

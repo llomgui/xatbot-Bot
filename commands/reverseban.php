@@ -1,5 +1,7 @@
 <?php
 
+use Ocean\Xat\API\ActionAPI;
+
 $reverseban = function ($who, $message, $type) {
 
     $bot = ActionAPI::getBot();
@@ -30,7 +32,7 @@ $reverseban = function ($who, $message, $type) {
             return $bot->network->sendMessageAutoDetection($who, 'That user is already reverse banned.', $type);
         }
 
-        $hours   = $message[2];
+        $hours = $message[2];
 
         if (isset($message[3])) {
             $reason = implode(' ', array_slice($message, 3));
