@@ -13,4 +13,4 @@ before_script:
     - phpenv rehash
 
 script:
-    - /usr/bin/phpcs . --standard=psr2
+    - phpcs . --standard=psr2
