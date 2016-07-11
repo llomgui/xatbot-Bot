@@ -1,6 +1,5 @@
 #TODO list
 ##Commands
-8ball
 allmissing,
 everymissing
 twitter
@@ -19,7 +18,6 @@ power [enable/disable/clear/list]
 search
 edit
 staff
-users
 kickall
 chatinfos
 rank
@@ -32,3 +30,4 @@ getmain
 Alias'
 Responses
 Minranks
+combine "ban/unban" commands with alias

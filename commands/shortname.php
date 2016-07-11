@@ -22,18 +22,12 @@ $shortname = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, "Shortnames can\'t start with a number.", $type);
     }
 
-    $POST['GroupName'] = $message[1];
-    $POST['Quote']     = 'Get+cost';
-    $POST['YourEmail'] = $bot->network->logininfo['n'];
-    $POST['agree']     = 'ON';
-    $POST['l_dt']      = $bot->network->logininfo['dt'];
-    $POST['l_k2']      = $bot->network->logininfo['k2'];
-    $POST['password']  = Variables::getPassword();
     $stream = [
         'http' => [
             'method' => 'POST',
             'header' => 'Content-Type: application/x-www-form-urlencoded',
-            'content' => http_build_query($POST)
+            'content' => 'GroupName=' . $message[1] . '&Quote=Get+cost&YourEmail=&agree=ON&l_dt=&l_k2=&password=',
+            'timeout' => 1
         ]
     ];
     $res = file_get_contents('http://xat.com/web_gear/chat/BuyShortName.php', false, stream_context_create($stream));
