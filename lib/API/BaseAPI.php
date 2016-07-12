@@ -14,7 +14,7 @@ abstract class BaseAPI
     final public static function init()
     {
         if (self::$init) {
-            throw new Exception('API already initialized.');
+            throw new \Exception('API already initialized.');
         }
 
         self::$init           = true;
@@ -30,7 +30,7 @@ abstract class BaseAPI
     final public static function getBotID()
     {
         if (!self::$init) {
-            throw new Exception('API not initalized.');
+            throw new \Exception('API not initalized.');
         }
 
         return self::$botID;
@@ -39,9 +39,8 @@ abstract class BaseAPI
     final public static function getBot()
     {
         if (!self::$init) {
-            throw new Exception('API not initalized.');
+            throw new \Exception('API not initalized.');
         }
-
         return self::$bot;
     }
 }

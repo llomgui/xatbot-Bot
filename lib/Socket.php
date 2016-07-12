@@ -113,7 +113,7 @@ class Socket
         $string = trim($string);
 
         if (($string[0] != '<') || (substr($string, -2) != '/>')) {
-            throw new Exception('Corrupted packets.');
+            throw new \Exception('Corrupted packets.');
         }
 
         $string = substr($string, 1, -2);
