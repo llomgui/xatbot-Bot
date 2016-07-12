@@ -4,7 +4,7 @@ namespace Ocean\Xat\Modules;
 
 use Ocean\Xat\API\ActionAPI;
 
-class OnApp
+class OnGroupPowers
 {
     public function __invoke($array)
     {
