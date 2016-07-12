@@ -4,7 +4,8 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Say {
+class Say
+{
     public function __invoke($who, $message, $type)
     {
         $bot = ActionAPI::getBot();
