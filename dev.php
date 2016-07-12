@@ -44,7 +44,7 @@ while (1) {
         try {
             while (1) {
                 if (!$Ocean->network->socket->isConnected()) {
-                    echo 'Socket not connected!' . PHP_EOL;
+                    $log->critical('Socket not connected!');
                     exit('You have an error in your code or socket died.');
                     break;
                 }
@@ -52,7 +52,7 @@ while (1) {
                 $packet = $Ocean->network->socket->read();
 
                 if ($packet === false) {
-                    echo 'ERROR packet false!' . PHP_EOL;
+                    $log->critical('ERROR packet false!');
                     exit('You have an error in your code or socket died.');
                     break;
                 }
@@ -62,7 +62,9 @@ while (1) {
                 }
 
                 if (!isset($packet['node'])) {
-                    var_dump($packet);
+                    $log->warning('Missing Node', [
+                        'packet' => $packet
+                    ]);
                     break;
                 }
 
@@ -188,13 +190,15 @@ while (1) {
                     if (!$unknow && !empty($hook)) {
                         call_user_func_array($container['modules'][$hook], $args);
                     } elseif ($unknow) {
-                        echo 'Unknow node ['.$packet['node'].'] on chat FIXME' . PHP_EOL;
+                        $log->error('Unknow node ['.$packet['node'].'] on chat FIXME');
                     }
                 }
             }
         } catch (Exception $e) {
-            var_dump($e->getMessage());
-            echo 'Error botid: ' . $botid . PHP_EOL;
+            $log->critical('Error botid: ', [
+                    'botid' => $botid
+                    'error' => $e->getMessage()
+            ]);
         }
     }
 }

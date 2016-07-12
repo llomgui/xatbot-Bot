@@ -73,6 +73,8 @@ class Socket
 
     public function write($node = null, $elements = [])
     {
+        global $log;
+
         if (!$this->isConnected()) {
             $this->disconnect();
             return false;
@@ -84,13 +86,15 @@ class Socket
             $this->disconnect();
             return false;
         } else {
-            echo '--> ' . $packet . PHP_EOL;
+            $log->debug('--> ' . $packet);
             return true;
         }
     }
 
     private function getPacket()
     {
+        global $log;
+
         $pos = strpos($this->buffer, chr(0x00));
         if ($pos === false) {
             return;
@@ -99,7 +103,7 @@ class Socket
         $packet       = substr($this->buffer, 0, $pos);
         $this->buffer = substr($this->buffer, $pos + 1);
 
-        echo '<-- ' . $packet . PHP_EOL;
+        $log->debug('<-- ' . $packet);
 
         return $this->parsePacket($packet);
     }
