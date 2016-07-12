@@ -196,7 +196,7 @@ while (1) {
             }
         } catch (Exception $e) {
             $log->critical('Error botid: ', [
-                    'botid' => $botid
+                    'botid' => $botid,
                     'error' => $e->getMessage()
             ]);
         }
