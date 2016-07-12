@@ -4,7 +4,6 @@ namespace Ocean\Xat;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Ocean\Xat\API\ActionAPI;
 
 class Commands implements ServiceProviderInterface
 {
