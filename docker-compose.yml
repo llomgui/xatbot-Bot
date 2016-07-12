@@ -1,0 +1,7 @@
+version: '2'
+services:
+  php:
+    image: php:7-alpine
+    volumes:
+      - .:/scripts:ro
+    command: php /scripts/dev.php

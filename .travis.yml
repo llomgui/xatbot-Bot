@@ -1,0 +1,16 @@
+language: php
+
+php:
+    - 7.0
+
+matrix:
+    fast_finish: true
+
+sudo: false
+
+before_script:
+    - pear install PHP_CodeSniffer
+    - phpenv rehash
+
+script:
+    - phpcs . --standard=psr2 --ignore=vendor

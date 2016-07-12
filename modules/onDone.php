@@ -1,5 +1,0 @@
-<?php
-
-$onDone = function ($array) {
-
-};

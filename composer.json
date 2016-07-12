@@ -1,0 +1,14 @@
+{
+    "name": "ocean/bot",
+    "description": "Ocean Project Bot",
+    "require": {
+        "symfony/var-dumper": "^3.1",
+        "pimple/pimple": "~3.0",
+        "monolog/monolog": "^1.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ocean\\Xat\\": "lib/"
+        }
+    }
+}
