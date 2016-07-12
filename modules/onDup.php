@@ -1,5 +1,0 @@
-<?php
-
-$onDup = function () {
-    die();
-};
