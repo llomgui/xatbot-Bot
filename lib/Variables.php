@@ -32,7 +32,7 @@ abstract class Variables
 
     private static function initBotAccount()
     {
-        $data = json_decode(file_get_contents('./config.json', true), true);
+        $data = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '../config.json', true), true);
 
         self::$regname    = $data['botaccount']['regname'];
         self::$xatid      = $data['botaccount']['xatid'];
@@ -44,19 +44,19 @@ abstract class Variables
 
     private static function initIP2()
     {
-        $json      = file_get_contents('./config/ip.json');
+        $json      = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '../config/ip.json');
         self::$ip2 = json_decode($json, true);
     }
 
     private static function initVolunteers()
     {
-        $json             = file_get_contents('./config/volunteers.json');
+        $json             = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '../config/volunteers.json');
         self::$volunteers = json_decode($json, true);
     }
 
     private static function initPowers()
     {
-        $json         = file_get_contents('./config/power.json');
+        $json         = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '../config/power.json');
         self::$powers = json_decode($json, true);
     }
 
