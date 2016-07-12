@@ -12,6 +12,12 @@ If you want to add modules or commands, don't forget to update modules.json or c
 
 To run it: php dev.php
 
+Or better :
+docker run -it --rm -v $(pwd):/scripts php:7-alpine sh
+cd scripts
+docker-php-ext-install sockets
+php dev.php
+
 ## I want to contribute, how do I?
 
 Make your tests on your computer, then send a pull request.
