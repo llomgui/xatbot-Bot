@@ -44,7 +44,7 @@ class Commands implements ServiceProviderInterface
                 return new Commands\Dice();
             };
             $commands["die"] = function () use ($container) {
-                return new Commands\die();
+                return new Commands\ToDie();
             };
             $commands["dunce"] = function () use ($container) {
                 return new Commands\Dunce();
