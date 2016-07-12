@@ -4,7 +4,7 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Listsmilies
+class ListSmilies
 {
     public function __invoke($who, $message, $type)
     {

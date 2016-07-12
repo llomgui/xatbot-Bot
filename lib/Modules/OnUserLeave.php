@@ -5,7 +5,7 @@ namespace Ocean\Xat\Modules;
 use Ocean\Xat\API\ActionAPI;
 use Ocean\Xat\API\DataAPI;
 
-class OnUserLeaver
+class OnUserLeave
 {
     public function __invoke($who)
     {

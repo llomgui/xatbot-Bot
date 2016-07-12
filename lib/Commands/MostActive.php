@@ -4,7 +4,7 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Mostactive
+class MostActive
 {
     public function __invoke($who, $message, $type)
     {
@@ -25,8 +25,9 @@ class Mostactive
             }
         }
 
-        $displayName = $most['user']->isRegistered() ? $most['user']->getRegname() . '(' . $most['user']->getID() . ')'  :
-                                                       $most['user']->getID();
+        $displayName = $most['user']->isRegistered() ?
+                            $most['user']->getRegname() . '(' . $most['user']->getID() . ')' :
+                            $most['user']->getID();
 
         $bot->network->sendMessageAutoDetection(
             $who,

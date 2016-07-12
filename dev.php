@@ -2,36 +2,44 @@
 
 require_once 'vendor/autoload.php';
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 use Ocean\Xat\Variables;
 use Ocean\Xat\API;
 use Ocean\Xat\Bot;
+use Ocean\Xat\Commands;
+use Ocean\Xat\Modules;
+use Pimple\Container;
 
-echo 'Loading variables...' . PHP_EOL;
+$log = new Logger('bot');
+$log->pushHandler(new StreamHandler('logs/logs.log', Logger::ERROR));
+$log->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
+
+$container = new Container();
+$container->register(new Commands());
+$container->register(new Modules());
+
+$log->info('Loading variables...');
 Variables::init();
 Variables::update();
 
-echo 'Loading API...' . PHP_EOL;
+$log->info('Loading API...');
 $params     = API\BaseAPI::init();
 $currentBot = &$params['botID'];
 $bot        = &$params['bot'];
 
-echo 'Loading bots...' . PHP_EOL;
+$log->info('Loading bots...');
 $xatBots = [];
 foreach (Variables::getBots() as $botid => $bot) {
     $xatBots[$botid] = new Bot($bot);
 }
 
-echo 'Loading extensions...' . PHP_EOL;
-$extensionsList = [];
-// read();
-
-echo 'Server is ready!' . PHP_EOL;
-
+$log->info('Server is ready!');
 while (1) {
     foreach ($xatBots as $botid => $Ocean) {
         $currentBot = $botid;
         $bot        = $Ocean;
-
         usleep(5000);
         try {
             while (1) {
@@ -175,10 +183,10 @@ while (1) {
                     } elseif ($hook == 'onPC') {
                         $args[2] = 3;
                     }
-                    dispatch('commands', $command, $args);
+                    call_user_func_array($container['commands'][$command], $args);
                 } else {
                     if (!$unknow && !empty($hook)) {
-                        dispatch('modules', $hook, $args);
+                        call_user_func_array($container['modules'][$hook], $args);
                     } elseif ($unknow) {
                         echo 'Unknow node ['.$packet['node'].'] on chat FIXME' . PHP_EOL;
                     }
@@ -189,69 +197,4 @@ while (1) {
             echo 'Error botid: ' . $botid . PHP_EOL;
         }
     }
-}
-
-function load($data, $type, $name, $url, $callbacks)
-{
-    require($url);
-
-    for ($i = 0; $i < sizeof($callbacks); $i++) {
-        if (isset(${$callbacks[$i]})) {
-            $data[$type][$callbacks[$i]][$name] = ${$callbacks[$i]};
-        } else {
-            unset($data[$type][$callbacks[$i]][$name]);
-        }
-    }
-
-    return $data;
-}
-
-function dispatch($type, $name, $args)
-{
-    global $extensionsList;
-
-    if (!isset($extensionsList[$type][$name])) {
-        return false;
-    }
-
-    foreach ($extensionsList[$type][$name] as $extensionName => $function) {
-        call_user_func_array($function, $args);
-    }
-}
-
-function read()
-{
-    global $extensionsList;
-    $extensionsDirectories = ['modules', 'commands'];
-
-    foreach ($extensionsDirectories as $extensionsDir) {
-        $callbacks = json_decode(file_get_contents($extensionsDir . '.json', true), true);
-
-        $dir = opendir($extensionsDir);
-
-        while (($file = readdir($dir)) !== false) {
-            $url = '.' . DIRECTORY_SEPARATOR . $extensionsDir . DIRECTORY_SEPARATOR . $file;
-
-            if (!is_file($url)) {
-                continue;
-            }
-
-            $pos = strrpos($file, '.');
-
-            if ($pos === false) {
-                continue;
-            }
-
-            if (substr($file, $pos + 1) != 'php') {
-                continue;
-            }
-
-            $extensionsList = load($extensionsList, $extensionsDir, substr($file, 0, $pos), $url, $callbacks);
-        }
-    }
-}
-
-function reloadExtensions()
-{
-    read();
 }

@@ -15,15 +15,27 @@ class Shortname
         }
 
         if (strlen($message[1]) < 4) {
-            return $bot->network->sendMessageAutoDetection($who, "Too short for a shortname. Minimum 4 letters.", $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                "Too short for a shortname. Minimum 4 letters.",
+                $type
+            );
         }
 
         if (strlen($message[1]) > 9) {
-            return $bot->network->sendMessageAutoDetection($who, "Too long for a shortname. Maximum 9 letters.", $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                "Too long for a shortname. Maximum 9 letters.",
+                $type
+            );
         }
 
         if (is_numeric($message[1][0])) {
-            return $bot->network->sendMessageAutoDetection($who, "Shortnames can\'t start with a number.", $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                "Shortnames can\'t start with a number.",
+                $type
+            );
         }
 
         $stream = [
@@ -34,7 +46,11 @@ class Shortname
                 'timeout' => 1
             ]
         ];
-        $res = file_get_contents('http://xat.com/web_gear/chat/BuyShortName.php', false, stream_context_create($stream));
+        $res = file_get_contents(
+            'http://xat.com/web_gear/chat/BuyShortName.php',
+            false,
+            stream_context_create($stream)
+        );
 
         if (!$res) {
             return $bot->network->sendMessageAutoDetection($who, 'Cannot access page right now.', $type);
@@ -68,7 +84,11 @@ class Shortname
         }
 
         if (preg_match('<input type="hidden" name="Xats" value="(.*?)">', $res, $matches)) {
-            return $bot->network->sendMessageAutoDetection($who, $message[1] . ' costs ' . $matches[1] .' xats.', $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                $message[1] . ' costs ' . $matches[1] .' xats.',
+                $type
+            );
         }
 
         $bot->network->sendMessageAutoDetection($who, 'Unknown error.', $type);

@@ -4,7 +4,7 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Reverseban
+class ReverseBan
 {
     public function __invoke($who, $message, $type)
     {

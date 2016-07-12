@@ -4,7 +4,7 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Unnaughtystep
+class NaughtyStep
 {
     public function __invoke($who, $message, $type)
     {
@@ -21,7 +21,7 @@ class Unnaughtystep
         if (!isset($message[1]) || empty($message[1])) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'Usage: !unnaughtystep [regname/xatid]',
+                'Usage: !naughtystep [regname/xatid] [reason]',
                 $type,
                 true
             );
@@ -41,8 +41,12 @@ class Unnaughtystep
         }
 
         if (isset($user)) {
-            if (!$user->isNaughty()) {
-                return $bot->network->sendMessageAutoDetection($who, 'That user is not naughtstepped.', $type);
+            if ($user->isNaughty()) {
+                return $bot->network->sendMessageAutoDetection($who, 'That user is already naughtystepped.', $type);
+            }
+
+            if (isset($message[2])) {
+                $reason = implode(' ', array_slice($message, 2));
             }
 
             $bot->network->ban($user->getID(), 0, $reason ?? '', 'gn');

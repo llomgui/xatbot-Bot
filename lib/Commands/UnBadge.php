@@ -4,7 +4,7 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Unbadge
+class UnBadge
 {
     public function __invoke($who, $message, $type)
     {

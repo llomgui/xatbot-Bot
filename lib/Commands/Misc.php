@@ -39,10 +39,17 @@ class Misc
 
             case 'chatid':
                 if (!isset($message[2]) || empty($message[2])) {
-                    return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc chatid [chat name]', $type, true);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Usage: !misc chatid [chat name]',
+                        $type,
+                        true
+                    );
                 }
 
-                $json = json_decode(file_get_contents('http://xat.com/web_gear/chat/roomid.php?d=' . $message[2].'&v2'));
+                $json = json_decode(
+                    file_get_contents('http://xat.com/web_gear/chat/roomid.php?d=' . $message[2].'&v2')
+                );
 
                 if (!$json) {
                     return $bot->network->sendMessageAutoDetection($who, 'That chat doesn\'t exist.', $type);
@@ -53,10 +60,17 @@ class Misc
 
             case 'chatname':
                 if (!isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
-                    return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc chatname [chat id]', $type, true);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Usage: !misc chatname [chat id]',
+                        $type,
+                        true
+                    );
                 }
 
-                $json = json_decode(file_get_contents('http://xat.com/web_gear/chat/roomid.php?i=' . $message[2].'&v2'));
+                $json = json_decode(
+                    file_get_contents('http://xat.com/web_gear/chat/roomid.php?i=' . $message[2].'&v2')
+                );
 
                 if (!$json) {
                     return $bot->network->sendMessageAutoDetection($who, 'That chat doesn\'t exist.', $type);
@@ -66,8 +80,17 @@ class Misc
                 break;
 
             case 'xatid':
-                if (!isset($message[2]) || empty($message[2]) || is_numeric($message[2]) || is_numeric($message[2][0])) {
-                    return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc xatid [regname]', $type, true);
+                if (!isset($message[2]) ||
+                    empty($message[2]) ||
+                    is_numeric($message[2]) ||
+                    is_numeric($message[2][0])
+                ) {
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Usage: !misc xatid [regname]',
+                        $type,
+                        true
+                    );
                 }
 
                 $id = file_get_contents('http://xat.me/x?name=' . $message[2]);
@@ -76,7 +99,11 @@ class Misc
                     return $bot->network->sendMessageAutoDetection($who, 'That user doesn\'t exist.', $type);
                 }
 
-                $bot->network->sendMessageAutoDetection($who, 'ID for user ' . ucfirst($message[2]) . ' is ' . $id, $type);
+                $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'ID for user ' . ucfirst($message[2]) . ' is ' . $id,
+                    $type
+                );
                 break;
 
             case 'regname':
@@ -90,7 +117,11 @@ class Misc
                     return $bot->network->sendMessageAutoDetection($who, 'That user doesn\'t exist.', $type);
                 }
 
-                $bot->network->sendMessageAutoDetection($who, 'Regname for user ' . $message[2] . ' is ' . $reg, $type);
+                $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'Regname for user ' . $message[2] . ' is ' . $reg,
+                    $type
+                );
                 break;
 
             case 'promo':
@@ -142,7 +173,12 @@ class Misc
                     }
 
                     $promoMessage .= ' ' . $group->n . ' ['
-                    . (isset($group->t) ? sprintf("%02d hours, %02d minutes and %02d seconds", $hours, $minutes, $seconds)
+                    . (isset($group->t) ? sprintf(
+                        "%02d hours, %02d minutes and %02d seconds",
+                        $hours,
+                        $minutes,
+                        $seconds
+                    )
                     . ' left' : "Auto promoted") . '], ';
                     $count++;
                 }

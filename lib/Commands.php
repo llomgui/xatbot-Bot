@@ -55,13 +55,13 @@ class Commands implements ServiceProviderInterface
                 return new Commands\Gag();
             };
             $commands["gamebanme"] = function () use ($container) {
-                return new Commands\Gamebanme();
+                return new Commands\GameBanMe();
             };
             $commands["gameban"] = function () use ($container) {
-                return new Commands\Gameban();
+                return new Commands\GameBan();
             };
             $commands["guestself"] = function () use ($container) {
-                return new Commands\Guestself();
+                return new Commands\GuestSelf();
             };
             $commands["hush"] = function () use ($container) {
                 return new Commands\Hush();
@@ -73,22 +73,22 @@ class Commands implements ServiceProviderInterface
                 return new Commands\Kick();
             };
             $commands["latestpower"] = function () use ($container) {
-                return new Commands\Latestpower();
+                return new Commands\LatestPower();
             };
             $commands["listsmilies"] = function () use ($container) {
-                return new Commands\Listsmilies();
+                return new Commands\ListSmilies();
             };
             $commands["misc"] = function () use ($container) {
                 return new Commands\Misc();
             };
             $commands["mostactive"] = function () use ($container) {
-                return new Commands\Mostactive();
+                return new Commands\MostActive();
             };
             $commands["mute"] = function () use ($container) {
                 return new Commands\Mute();
             };
             $commands["naughtystep"] = function () use ($container) {
-                return new Commands\Naughtystep();
+                return new Commands\NaughtyStep();
             };
             $commands["online"] = function () use ($container) {
                 return new Commands\Online();
@@ -100,16 +100,16 @@ class Commands implements ServiceProviderInterface
                 return new Commands\Price();
             };
             $commands["randomsmiley"] = function () use ($container) {
-                return new Commands\Randomsmiley();
+                return new Commands\RandomSmiley();
             };
             $commands["randomuser"] = function () use ($container) {
-                return new Commands\Randomuser();
+                return new Commands\RandomUser();
             };
             $commands["rankme"] = function () use ($container) {
                 return new Commands\Rankme();
             };
             $commands["reverseban"] = function () use ($container) {
-                return new Commands\Reverseban();
+                return new Commands\ReverseBan();
             };
             $commands["say"] = function () use ($container) {
                 return new Commands\Say();
@@ -136,19 +136,19 @@ class Commands implements ServiceProviderInterface
                 return new Commands\Twitch();
             };
             $commands["unbadge"] = function () use ($container) {
-                return new Commands\Unbadge();
+                return new Commands\UnBadge();
             };
             $commands["unban"] = function () use ($container) {
-                return new Commands\Unban();
+                return new Commands\UnBan();
             };
             $commands["undunce"] = function () use ($container) {
-                return new Commands\Undunce();
+                return new Commands\UnDunce();
             };
             $commands["unnaughtystep"] = function () use ($container) {
-                return new Commands\Unnaughtystep();
+                return new Commands\UnNaughtyStep();
             };
             $commands["unyellowcard"] = function () use ($container) {
-                return new Commands\Unyellowcard();
+                return new Commands\UnYellowCard();
             };
             $commands["users"] = function () use ($container) {
                 return new Commands\Users();
@@ -166,7 +166,7 @@ class Commands implements ServiceProviderInterface
                 return new Commands\Xd();
             };
             $commands["yellowcard"] = function () use ($container) {
-                return new Commands\Yellowcard();
+                return new Commands\YellowCard();
             };
             $commands["youtube"] = function () use ($container) {
                 return new Commands\Youtube();

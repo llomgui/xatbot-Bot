@@ -5,7 +5,7 @@ namespace Ocean\Xat\Commands;
 use Ocean\Xat\API\ActionAPI;
 use Ocean\Xat\Variables;
 
-class Randomsmiley
+class RandomSmiley
 {
     public function __invoke($who, $message, $type)
     {
@@ -52,6 +52,10 @@ class Randomsmiley
         }
 
         shuffle($rand);
-        $bot->network->sendMessageAutoDetection($who, 'Randomly generated Smiley: (' . implode('#', $rand) . ')', $type);
+        $bot->network->sendMessageAutoDetection(
+            $who,
+            'Randomly generated Smiley: (' . implode('#', $rand) . ')',
+            $type
+        );
     }
 }

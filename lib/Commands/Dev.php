@@ -16,8 +16,9 @@ class Dev
 
         switch ($message[1]) {
             case 'reload':
-                reloadExtensions();
-                $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
+                // TODO
+                // reloadExtensions();
+                // $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
                 break;
 
             case 'memory':

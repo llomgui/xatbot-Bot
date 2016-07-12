@@ -9,6 +9,9 @@ class OnApp
         switch ($app) {
             case 10000:
                 break;
+
+            default:
+                break;
         }
     }
-};
+}

@@ -81,7 +81,8 @@ class Ball
             "My Magic 8-Ball shows the letters...'Y, e, and s'",
             "My Magic 8-Ball shows the letters...'N and o'",
             "My Magic 8-Ball shows a Lamah Screaming 'Noooo!'",
-            "The Magic 8-Ball shows a picture of a little fairy, trying to teach a little kid how to fly and the little"
+            "The Magic 8-Ball shows a picture of a little fairy, "
+            . "trying to teach a little kid how to fly and the little"
             . " kid doesn't want to lear.....oops wrong story! NO!",
             "This one will have to go to the judges...and...I'm sorry..The judges have ruled No to that question",
             "This one will have to go to the judges...and.....The judges have gave me a thumbs up to that question!",
@@ -156,4 +157,4 @@ class Ball
         ];
         $bot->network->sendMessageAutoDetection($who, $response[array_rand($response, 1)], $type);
     }
-};
+}

@@ -14,7 +14,12 @@ class Rankme
 
         $bot = ActionAPI::getBot();
         if (empty($message[1]) || !isset($message[1])) {
-            return $bot->network->sendMessageAutoDetection($who, 'Usage: !rankme [guest/member/mod/owner]', $type, true);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                'Usage: !rankme [guest/member/mod/owner]',
+                $type,
+                true
+            );
         }
 
         switch (strtolower($message[1])) {

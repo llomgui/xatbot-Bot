@@ -27,7 +27,11 @@ class Twitch
         if (isset($twitch->error)) {
             return $bot->network->sendMessageAutoDetection($who, $twitch->message, $type, true);
         } elseif (!$page) {
-            return $bot->network->sendMessageAutoDetection($who, 'Channel \'' . $message[1] . '\' does not exist.', $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                'Channel \'' . $message[1] . '\' does not exist.',
+                $type
+            );
         } elseif ($twitch->stream == null) {
             return $bot->network->sendMessageAutoDetection(
                 $who,

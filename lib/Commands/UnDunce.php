@@ -4,27 +4,22 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Naughtystep
+class UnDunce
 {
     public function __invoke($who, $message, $type)
     {
         $bot = ActionAPI::getBot();
 
-        if (!$bot->botHasPower(284)) {
+        if (!$bot->botHasPower(158)) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                sprintf('Sorry, but i don\'t have the power \'%s\'.', 'naughtystep'),
+                sprintf('Sorry, but i don\'t have the power \'%s\'.', 'dunce'),
                 $type
             );
         }
 
         if (!isset($message[1]) || empty($message[1])) {
-            return $bot->network->sendMessageAutoDetection(
-                $who,
-                'Usage: !naughtystep [regname/xatid] [reason]',
-                $type,
-                true
-            );
+            return $bot->network->sendMessageAutoDetection($who, 'Usage: !undunce [regname/xatid]', $type, true);
         }
 
         if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
@@ -41,15 +36,11 @@ class Naughtystep
         }
 
         if (isset($user)) {
-            if ($user->isNaughty()) {
-                return $bot->network->sendMessageAutoDetection($who, 'That user is already naughtystepped.', $type);
+            if (!$user->isDunced()) {
+                return $bot->network->sendMessageAutoDetection($who, 'That user is not dunced.', $type);
             }
 
-            if (isset($message[2])) {
-                $reason = implode(' ', array_slice($message, 2));
-            }
-
-            $bot->network->ban($user->getID(), 0, $reason ?? '', 'gn');
+            $bot->network->ban($user->getID(), 0, $reason ?? '', 'gd');
         } else {
             $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
         }

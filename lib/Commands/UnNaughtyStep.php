@@ -4,16 +4,16 @@ namespace Ocean\Xat\Commands;
 
 use Ocean\Xat\API\ActionAPI;
 
-class Yellowcard
+class UnNaughtyStep
 {
     public function __invoke($who, $message, $type)
     {
         $bot = ActionAPI::getBot();
 
-        if (!$bot->botHasPower(292)) {
+        if (!$bot->botHasPower(284)) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                sprintf('Sorry, but i don\'t have the power \'%s\'.', 'yellowcard'),
+                sprintf('Sorry, but i don\'t have the power \'%s\'.', 'naughtystep'),
                 $type
             );
         }
@@ -21,7 +21,7 @@ class Yellowcard
         if (!isset($message[1]) || empty($message[1])) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'Usage: !yellowcard [regname/xatid] [reason]',
+                'Usage: !unnaughtystep [regname/xatid]',
                 $type,
                 true
             );
@@ -41,15 +41,11 @@ class Yellowcard
         }
 
         if (isset($user)) {
-            if ($user->isYellowCarded()) {
-                return $bot->network->sendMessageAutoDetection($who, 'That user is already yellowcarded.', $type);
+            if (!$user->isNaughty()) {
+                return $bot->network->sendMessageAutoDetection($who, 'That user is not naughtstepped.', $type);
             }
 
-            if (isset($message[2])) {
-                $reason = implode(' ', array_slice($message, 1));
-            }
-
-            $bot->network->ban($user->getID(), 0, $reason ?? '', 'gy');
+            $bot->network->ban($user->getID(), 0, $reason ?? '', 'gn');
         } else {
             $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
         }
