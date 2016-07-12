@@ -19,6 +19,8 @@ Or better :
 - docker-php-ext-install sockets
 - php dev.php
 
+Or install docker-compose
+
 ## I want to contribute, how do I?
 
 Make your tests on your computer, then send a pull request.
