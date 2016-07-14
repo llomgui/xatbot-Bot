@@ -118,7 +118,10 @@ class Network
 
     public function join()
     {
-        actionAPI::getBot()->done = false;
+        /*
+            TODO
+               set done to false
+        */
         
         $this->socket = new Socket();
 
