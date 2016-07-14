@@ -64,93 +64,27 @@ while (1) {
                 $hook   = null;
                 $args   = [];
                 $unknow = false;
+                
+                $parseElements = ['u', 'd'];
+                foreach($parseElements as $parse) {
+                    if (isset($packet['elements'][$parse])) {
+                        $packet['elements'][$parse] = $Ocean->network->parseID($packet['elements'][$parse]);
+                    }
+                }
 
                 switch ($packet['node']) {
 
-                    case 'm':
-                        if (!isset($packet['elements']['s'])) {
-                            if (!isset($packet['elements']['p']) && isset($packet['elements']['i'])) {
-                                $hook   = 'onMessage'; // onMessage($who, $message)
-                                $args[] = $Ocean->network->parseID($packet['elements']['u']);
-                                $args[] = $packet['elements']['t'];
-                            } else {
-                                $hook   = 'onOldMessage'; // onOldMessage($who, $message)
-                                $uid    = $packet['elements']['d'] ?? $packet['elements']['u'];
-                                $args[] = $Ocean->network->parseID($uid);
-                                $args[] = $packet['elements']['t'];
-                            }
-                        }
-                        break;
-
-                    case 'p':
-                        if ($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff') {
-                            continue;
-                        }
-
-                        $hook   = (isset($packet['elements']['s'])) ? 'onPC' : 'onPM';  // onP*($who, $message)
-                        $args[] = $Ocean->network->parseID($packet['elements']['u']);
-                        $args[] = $packet['elements']['t'];
-                        break;
-
-                    case 'u':
-                        $hook   = 'onUserJoined'; // onUserJoined($array)
-                        $args[] = $Ocean->network->parseID($packet['elements']['u']);
-                        $args[] = $packet['elements'];
-                        break;
-
-                    case 'z':
-                        $hook   = 'onTickle'; // onTickle($who, $array)
-                        $args[] = $Ocean->network->parseID($packet['elements']['u']);
-                        $args[] = $packet['elements'];
-                        break;
-
-                    case 'l':
-                        $hook   = 'onUserLeave'; // onUserLeave($who)
-                        $args[] = $Ocean->network->parseID($packet['elements']['u']);
-                        break;
-
                     case 'a':
                         $hook   = 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message)
-                        $args[] = $Ocean->network->parseID($packet['elements']['u']);
-                        $args[] = $Ocean->network->parseID($packet['elements']['d']);
+                        $args[] = $packet['elements']['u'];
+                        $args[] = $packet['elements']['d'];
                         $args[] = $packet['elements']['x'];
                         $args[] = $packet['elements']['s'];
                         $args[] = $packet['elements']['t'];
                         break;
 
-                    case 'f':
-                        $hook   = 'onFriendList'; // onFriendList($array)
-                        $args[] = $packet['elements'];
-                        break;
-
-                    case 'x':
-                        $hook   = 'onApp'; // onApp($who, $app, $elements)
-                        $args[] = $Ocean->network->parseID($packet['elements']['u']);
-                        $args[] = $packet['elements']['i'];
-                        $args[] = $packet['elements'];
-                        break;
-
-                    case 'done':
-                        $hook   = 'onDone'; // onDone($array)
-                        $args[] = $packet['elements'];
-                        break;
-
-                    case 'idle':
-                        $hook   = 'onIdle'; // onIdle($array)
-                        $args[] = $packet['elements'];
-                        break;
-
-                    case 'dup':
-                        $hook   = 'onDup'; // onDup()
-                        break;
-
-                    case 'i':
-                        $hook   = 'onChatInfo'; // onChatInfo($array)
-                        $args[] = $packet['elements'];
-                        break;
-
-                    case 'gp':
-                        $hook   = 'onGroupPowers'; // onGroupPowers($array)
+                    case 'bl':
+                        $hook   = 'onBlast'; // onBlast($array)
                         $args[] = $packet['elements'];
                         break;
 
@@ -159,8 +93,111 @@ while (1) {
                         $args[] = $packet['elements'];
                         break;
 
+                    case 'done':
+                        $hook   = 'onDone'; // onDone($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'dup':
+                        $hook   = 'onDup'; // onDup()
+                        break;
+
+                    case 'f':
+                        $hook   = 'onFriendList'; // onFriendList($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'g':
+                        $hook   = 'onOpenApp'; // onOpenApp($who, $app)
+                        $args[] = $packet['elements']['u'];
+                        $args[] = $packet['elements']['x'];
+                        break;   
+
+                    case 'gp':
+                        $hook   = 'onGroupPowers'; // onGroupPowers($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'i':
+                        $hook   = 'onChatInfo'; // onChatInfo($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'idle':
+                        $hook   = 'onIdle'; // onIdle($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'l':
+                        $hook   = 'onUserLeave'; // onUserLeave($who)
+                        $args[] = $packet['elements']['u'];
+                        break;
+                        
+                    case 'logout':
+                        $hook   = 'onLogout'; // onLogout($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'm':
+                        if (!isset($packet['elements']['s'])) {
+                            if (!isset($packet['elements']['p']) && isset($packet['elements']['i'])) {
+                                $hook   = 'onMessage'; // onMessage($who, $message)
+                                $args[] = $packet['elements']['u'];
+                                $args[] = $packet['elements']['t'];
+                            } else {
+                                $hook   = 'onOldMessage'; // onOldMessage($who, $message)
+                                $uid    = $packet['elements']['d'] ?? $packet['elements']['u'];
+                                $args[] = $uid;
+                                $args[] = $packet['elements']['t'];
+                            }
+                        }
+                        break;
+
                     case 'o':
                         // Old User
+                        break;
+
+                    case 'p':
+                        if ($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff') {
+                            continue;
+                        }
+
+                        $hook   = (isset($packet['elements']['s'])) ? 'onPC' : 'onPM';  // onP*($who, $message)
+                        $args[] = $packet['elements']['u'];
+                        $args[] = $packet['elements']['t'];
+                        break;
+
+                    case 'q':
+                        $hook   = 'onRedirect'; // onRedirect($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'u':
+                        $hook   = 'onUserJoined'; // onUserJoined($array)
+                        $args[] = $packet['elements']['u'];
+                        $args[] = $packet['elements'];
+                        break;
+                        
+                    case 'v':
+                        $hook   = 'onLoginInfo'; // onLoginInfo($array)
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'w':
+                        $hook   = 'onPools'; // onPools($array)
+                        $args[] = $packet['elements'];
+
+                    case 'x':
+                        $hook   = 'onApp'; // onApp($who, $app, $elements)
+                        $args[] = $packet['elements']['u'];
+                        $args[] = $packet['elements']['i'];
+                        $args[] = $packet['elements'];
+                        break;
+
+                    case 'z':
+                        $hook   = 'onTickle'; // onTickle($who, $array)
+                        $args[] = $packet['elements']['u'];
+                        $args[] = $packet['elements'];
                         break;
 
                     default:

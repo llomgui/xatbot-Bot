@@ -25,6 +25,13 @@ $price = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, "Power not found.", $type);
     }
 
+    if ($powerID == 95) {
+        foreach ($powers as $id => $array) {
+            $powers[$powerID]['minCost'] += $array['minCost'];
+            $powers[$powerID]['maxCost'] += $array['maxCost'];
+        }
+    }
+    
     if ($powers[$powerID]['minCost'] == 0 || $powers[$powerID]['maxCost'] == 0) {
         return $bot->network->sendMessageAutoDetection($who, "Power has not been priced yet.", $type);
     }

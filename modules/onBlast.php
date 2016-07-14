@@ -1,0 +1,5 @@
+<?php
+
+$onBlast = function ($array) {
+
+};

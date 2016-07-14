@@ -11,9 +11,9 @@ $store = function ($who, $message, $type) {
     $message = str_replace(['(', ')'], '', $message);
     $powers = xatVariables::getPowers();
     $exist  = false;
+    $storePrice = 0;
 
     if (in_array($message[1], ['allpower', 'allpowers'])) {
-        $storePrice = 0;
         foreach ($powers as $id => $array) {
             if ($array['isAllPower']) {
                 $storePrice += $array['storeCost'];
@@ -22,7 +22,6 @@ $store = function ($who, $message, $type) {
 
         $bot->network->sendMessageAutoDetection($who, '"Allpowers" cost ' . number_format($storePrice) . ' xats in store.', $type);
     } elseif (in_array($message[1], ['everypower', 'everypowers'])) {
-        $storePrice = 0;
         foreach ($powers as $id => $array) {
             if ($id == 95) {
                 continue;
@@ -35,7 +34,6 @@ $store = function ($who, $message, $type) {
     } else {
         if (isset($message[2]) && !empty($message[2])) {
             unset($message[0]);
-            $storePrice = 0;
             foreach ($message as $mess) {
                 if (!empty($mess)) {
                     foreach ($powers as $id => $array) {
