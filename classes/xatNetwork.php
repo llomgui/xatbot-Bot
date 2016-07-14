@@ -118,6 +118,8 @@ class Network
 
     public function join()
     {
+        actionAPI::getBot()->done = false;
+        
         $this->socket = new Socket();
 
         if (!$this->connectToChat(8)) {

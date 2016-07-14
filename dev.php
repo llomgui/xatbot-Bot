@@ -186,7 +186,8 @@ while (1) {
                     case 'w':
                         $hook   = 'onPools'; // onPools($array)
                         $args[] = $packet['elements'];
-
+                        break;
+                        
                     case 'x':
                         $hook   = 'onApp'; // onApp($who, $app, $elements)
                         $args[] = $packet['elements']['u'];
