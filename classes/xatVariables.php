@@ -1291,6 +1291,9 @@ abstract class xatVariables
             $powers[$id]['maxCost']    = 0;
             $powers[$id]['isLimited']  = false;
             $powers[$id]['isAllPower'] = false;
+            $powers[$id]['isEpic']     = false;
+            $powers[$id]['isGroup']    = false;
+            $powers[$id]['isGame']     = false;
             $powers[$id]['smilies']    = [$power];
         }
 
@@ -1319,8 +1322,11 @@ abstract class xatVariables
                 continue;
             }
 
-            self::$powers[$id]['isLimited']  = isset($power['r']) ? true : false;
-            self::$powers[$id]['isAllPower'] = (isset($power['f']) && ($power['f'] == 1 || $power['f'] == 3)) ? true : false;
+            self::$powers[$id]['isLimited']  = isset($power['f']) && $power['f'] & 0x2000 ? true : false;
+            self::$powers[$id]['isEpic']  = isset($power['f']) && $power['f'] & 8 ? true : false;
+            self::$powers[$id]['isGame']  = isset($power['f']) && $power['f'] & 0x80 ? true : false;
+            self::$powers[$id]['isGroup']  = isset($power['f']) && $power['f'] & 0x800 ? true : false;
+            self::$powers[$id]['isAllPower'] = isset($power['f']) && $power['f'] & 0x401 ? true : false;
             self::$powers[$id]['storeCost']  = $power['x'] ?? $power['d'] * 13.5;
         }
 
@@ -1343,16 +1349,10 @@ abstract class xatVariables
             for ($i = 1; $i < sizeof($lines); $i++) {
                 $power      = explode(',',  $lines[$i]);
                 $id         = $power[0];
-                $isAllPower = $power[1];
 
                 if (!isset(self::$powers[$id])) {
                     continue;
                 }
-
-                self::$powers[$id]['isAllPower'] = $isAllPower;
-                self::$powers[$id]['isGroup']    = @$power[11];
-                self::$powers[$id]['isEpic']     = @$power[13];
-
                 if (empty($power[6]) || empty($power[7])) {
                     self::$powers[$id]['minCost'] = 0;
                     self::$powers[$id]['maxCost'] = 0;
