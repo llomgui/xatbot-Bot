@@ -21,5 +21,6 @@
 	"onLoginInfo",
 	"onOpenApp",
 	"onPools",
-	"onRedirect"
+	"onRedirect",
+	"onKick"
 ]

@@ -128,6 +128,11 @@ while (1) {
                         $args[] = $packet['elements'];
                         break;
 
+                    case 'k':
+                        $hook   = 'onKick'; // onKick($array)
+                        $args[] = $packet['elements'];
+                        break;
+
                     case 'l':
                         $hook   = 'onUserLeave'; // onUserLeave($who)
                         $args[] = $packet['elements']['u'];
