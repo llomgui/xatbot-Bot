@@ -118,13 +118,24 @@ class Network
 
     public function join()
     {
+        /*
+            TODO
+               set done to false
+        */
+        
         $this->socket = new Socket();
 
         if (!$this->connectToChat(8)) {
             return false;
         }
 
-        $this->socket->write('y', ['r' => 8, 'v' => '0', 'u' => xatVariables::getXatid()]);
+        $this->socket->write('y', [
+                'r' => 8, 
+                'v' => '0', 
+                'u' => xatVariables::getXatid(), 
+                'z' => '8335799305056508195'
+            ]
+        );
 
         $packetY = $this->socket->read(true);
 
@@ -145,7 +156,8 @@ class Network
         $this->socket->write('y', [
                 'r' => $this->botData['chatid'],
                 'v' => '0',
-                'u' => xatVariables::getXatid()
+                'u' => xatVariables::getXatid(),
+                'z' => '8335799305056508195'
             ]
         );
 

@@ -1,0 +1,5 @@
+<?php
+
+$onLogout = function ($array) {
+
+};

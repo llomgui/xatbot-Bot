@@ -14,5 +14,13 @@
 	"onDup",
     "onChatInfo",
     "onGroupPowers",
-    "onControlMessage"
+    "onControlMessage",
+	"onBlast",
+	"onAbort",
+	"onLogout",
+	"onLoginInfo",
+	"onOpenApp",
+	"onPools",
+	"onRedirect",
+	"onKick"
 ]
