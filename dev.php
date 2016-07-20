@@ -4,6 +4,7 @@
 require_once 'classes/xatVariables.php';
 require_once 'classes/xatBot.php';
 require_once 'classes/xatUser.php';
+require_once 'classes/xatConnect4.php';
 
 // API
 require_once 'API/dataAPI.php';
