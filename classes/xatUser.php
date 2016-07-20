@@ -75,6 +75,11 @@ class User
         return (!empty($this->days) ? $this-days : 0);
     }
 
+    public function getPowers()
+    {
+        return $this->powers;
+    }
+    
     public function isStealth()
     {
         return (($this->nick[0] == '$') && ($this->isOwner() || $this->isMain()));
