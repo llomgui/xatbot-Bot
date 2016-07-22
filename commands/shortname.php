@@ -23,7 +23,7 @@ $shortname = function ($who, $message, $type) {
         'http' => [
             'method' => 'POST',
             'header' => 'Content-Type: application/x-www-form-urlencoded',
-            'content' => 'GroupName=' . $message[1] . '&Quote=Get+cost&YourEmail=&agree=ON&l_dt=&l_k2=&password=',
+            'content' => 'GroupName=' . $message[1] . '&Quote=&agree=ON',
             'timeout' => 1
         ]
     ];
