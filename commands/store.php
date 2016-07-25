@@ -64,7 +64,7 @@ $store = function ($who, $message, $type) {
                 $powers[$powerID]['storeCost'] = 'costs '.number_format($powers[$powerID]['storeCost']).' xats in store.';
             }
             $dym = $match[1] === false ? 'Did you mean "' . $powers[$powerID]['name'] . '"? ' : '';
-            return $bot->network->sendMessageAutoDetection($who, $dym . '"'.ucfirst($powers[$powerID]).'" ' . $powers[$powerID]['storeCost'], $type);
+            return $bot->network->sendMessageAutoDetection($who, $dym . '"'.ucfirst($powers[$powerID]['name']).'" ' . $powers[$powerID]['storeCost'], $type);
         }
     }
 };
