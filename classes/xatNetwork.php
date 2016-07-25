@@ -367,4 +367,34 @@ class Network
             't' => '/u'
         ]);
     }
+
+    public function findPowerMatch($string) {
+        $powers = xatVariables::getPowers();
+
+        if (is_numeric($string)) {
+            if (isset($powers[$string])) {
+                return [$string, true];
+            }
+            return false;
+        }
+        $distance = -1;
+        $closest = false;
+
+        foreach ($powers as $id => $info) {
+            $lev = levenshtein($string, $info['name']);
+            if ($lev == 0) {
+                return [$id, true];
+            }    
+            if ($lev <= $distance || $distance < 0 ) {
+                $closest = $id;
+                $distance = $lev;
+            }
+        }
+
+        if($closest) {
+            return [$closest, false];
+        }
+
+        return false;
+    }
 }
