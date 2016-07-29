@@ -268,7 +268,7 @@ abstract class xatVariables
         $powers[35]['name']    = 'purple';
         $powers[35]['minCost'] = 0;
         $powers[35]['maxCost'] = 0;
-        $powers[35]['smilies'] = ['purple'];
+        $powers[35]['smilies'] = ['purple', 'putears', 'puspray', 'pusleep', 'pushim', 'pufit', 'pueyes', 'pueyes2', 'pudizzy', 'pucry', 'pucheer'];
 
         $powers[36]['name']    = 'ttth';
         $powers[36]['minCost'] = 0;
