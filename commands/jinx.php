@@ -67,7 +67,7 @@ $jinx = function ($who, $message, $type) {
         case "reverse":
             $i = 0;
             while ($i < count($message)) {
-                $message[$i] = implode("", array_reverse(explode("", $message[$i])));
+                $message[$i] = implode("", array_reverse(str_split($message[$i])));
                 $i++;
             }
             break;
@@ -87,7 +87,7 @@ $jinx = function ($who, $message, $type) {
                 $message2 = str_split($message[$i]);
                 $messageTmp = $message2[0];
                 $message2[0] = $message2[count($message2) - 1];
-                $message2[count($_local_4) - 1] = $messageTmp;
+                $message2[count($message2) - 1] = $messageTmp;
                 $message[$i] = implode("", $message2);
                 $i++;
             }
