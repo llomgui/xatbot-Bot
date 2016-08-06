@@ -14,13 +14,11 @@ $jinx = function ($who, $message, $type) {
     
     $ChkSum = function($string) {
         $res = 0;
-        $i = 0;
-        while ($i < strlen($string)) {
+        for($i = 0; $i < strlen($string); $i++) {
             $charcode = ord($string[$i]);
-            if ($charcode != 32){
+            if ($charcode != 32) {
                 $res += $charcode;
             }
-            $i++;
         }
         return $res;  
     };
@@ -31,72 +29,63 @@ $jinx = function ($who, $message, $type) {
         };
         return (1);
     };
-    
-    $uRShift = function($a, $b) { 
-        $z = hexdec(80000000); 
-        if ($z & $a) 
-        { 
-            $a = ($a >> 1); 
-            $a &= (~$z); 
-            $a |= 0x40000000; 
-            $a = ($a >> ($b - 1)); 
-        } else { 
-            $a = ($a >> $b); 
-        } 
-        return $a; 
-    };
-    
+
     $seed = $Rand = $ChkSum($message . $who);
     $seed = ($seed ^ ($seed << 21));
-    $seed = ($seed ^ ($uRShift($seed, 35)));
+    
+    $a = $seed;
+    $b = 35;
+    $z = hexdec(80000000); 
+    if ($z & $a) { 
+        $a = ($a >> 1); 
+        $a &= (~$z); 
+        $a |= 0x40000000; 
+        $a = ($a >> ($b - 1)); 
+    } else { 
+        $a = ($a >> $b); 
+    } 
+    
+    $seed = ($seed ^ ($a));
     $seed = ($seed ^ ($seed << 4));
     $Arg = 100 * (4 / 50);
     
     $message = explode(' ', $message);
     $_local_9 = [];
-    $i = 0;
-    while ($i < count($message)) {
+
+    for($i = 0; $i < count($message); $i++) {
         if ($message[$i][0] == "(" && $message[$i][count($message[$i]) - 1] == ")"){
             $_local_9[] = $message[$i];
             $message[$i] = ">";
         };
-        $i++;
     };
     
     switch (strtolower($jinxType)) {//JinxIt
         case "reverse":
-            $i = 0;
-            while ($i < count($message)) {
+            for($i = 0; $i < count($message); $i++) {
                 $message[$i] = implode("", array_reverse(str_split($message[$i])));
-                $i++;
             }
             break;
         case "mix":
         default:
-            $i = 0;
-            while ($i < count($message)) {
-                $message[$i] = implode("", sort(str_split($message[$i]), $randomSort($seed)));
-                $i++;
+            for($i = 0; $i < count($message); $i++) {
+                $message[$i] = implode("", sort((array)str_split($message[$i]), $randomSort($seed)));
             }
             break;
         case "ends":
-            $i = 0;
             $message2 = [];
             $messageTmp = "";
-            while ($i < count($message)) {
+            for($i = 0; $i < count($message); $i++) {
                 $message2 = str_split($message[$i]);
                 $messageTmp = $message2[0];
                 $message2[0] = $message2[count($message2) - 1];
                 $message2[count($message2) - 1] = $messageTmp;
                 $message[$i] = implode("", $message2);
-                $i++;
             }
             break;
         case "middle":
-            $i = 0;
             $message2 = $message3 = [];
             $messageTmp = $messageTmp2 = "";
-            while ($i < count($message)) {
+            for($i = 0; $i < count($message); $i++) {
                 $message2 = str_split($message[$i]);
                 if (count($message2) > 3) {
                     $messageTmp = $message2[0];
@@ -104,10 +93,9 @@ $jinx = function ($who, $message, $type) {
                     $message3 = array_slice($message2, 1, count($message2) - 1);
                     $message3 = sort($message3, $randomSort($seed));
                     $message3 = array_unshift($message3, $messageTmp);
-                    array_push($message3, $messageTmp2);
+                    $message3[] = $messageTmp2;
                     $message[$i] = implode("", $message3);
                 }
-                $i++;
             }
             break;
         case "hang":
@@ -117,10 +105,9 @@ $jinx = function ($who, $message, $type) {
             if ($Arg > count($message2)){
                 $Arg = count($message2);
             }
-            $i = 0;
-            while ($i < $Arg) {
+            
+            for($i = 0; $i < $Arg; $i++) {
                 $messageTmp = implode("_", explode($message2[$seed % count($message2)], $messageTmp));
-                $i++;
             }
             $message = implode(" ", $messageTmp);
             break;
@@ -141,12 +128,10 @@ $jinx = function ($who, $message, $type) {
             break;
     }
     
-    $i = 0;
-    while ($i < count($message)) {
+    for($i = 0; $i < count($message); $i++) {
         if ($message[$i] == ">"){
             $message[$i] = array_pop($_local_9);
         }
-        $i++;
     }
     $message = implode(" ", $message);
 
