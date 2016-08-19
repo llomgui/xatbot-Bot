@@ -67,12 +67,12 @@ class User
 
     public function getXats()
     {
-        return (!empty($this->xats) ? $this-xats : 0);
+        return (!empty($this->xats) ? $this->xats : 0);
     }
 
     public function getDays()
     {
-        return (!empty($this->days) ? $this-days : 0);
+        return (!empty($this->days) ? $this->days : 0);
     }
 
     public function getPowers()
