@@ -15,6 +15,7 @@ $onRankMessage = function ($who, $message, $reason, $array) {
                     $hours   = $reason[2];
                     $powers  = xatVariables::getPowers();
                     
+                    //$bot->network->sendMessage($who . ' finished a ' . $hours . ' hour ' . $powers[$game]['name'] . ' in ' . $seconds . ' seconds.');
                     /* 
                         TODO
                         Save highscores to database
