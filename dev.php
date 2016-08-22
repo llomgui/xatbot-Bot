@@ -159,8 +159,7 @@ while (1) {
                             }
                         } else if ($packet['elements']['s'] & 1) {
                             $hook   = 'onOldMessage'; // onOldMessage($who, $message)
-                            $uid    = $packet['elements']['d'] ?? $packet['elements']['u'];
-                            $args[] = $uid;
+                            $args[] = $packet['elements']['d'] ?? $packet['elements']['u'];
                             $args[] = $packet['elements']['t'];
                         }
                         break;
