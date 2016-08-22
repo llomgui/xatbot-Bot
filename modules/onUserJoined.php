@@ -34,7 +34,30 @@ $onUserJoined = function ($who, $array) {
         dataAPI::set('away_' . $user->getID(), $user->isAway());
         return;
     }
-
-
+    
+    /*
+        TODO
+        add autounban variable
+        check if autounban enabled
+    */
+    $isGamebanned = in_array($user->getGameban(), [134, 136, 140, 152, 162, 236]);//zip and reverse show up in w attribute :'(
+    if (dataAPI::is_set($who . '_gamebanrelog') && !$isGamebanned) {
+        dataAPI::un_set($who . '_gamebanrelog');
+    }
+        
+    if ($isGamebanned) {
+        if (!dataAPI::is_set($who . '_gamebanrelog')) {
+            dataAPI::set($who . '_gamebanrelog', 0);
+        } else {
+            dataAPI::set($who . '_gamebanrelog', dataAPI::get($who . '_gamebanrelog') + 1);
+        }
+        if (dataAPI::get($who . '_gamebanrelog') >= 2) {
+            dataAPI::un_set($who . '_gamebanrelog');
+            $powers = xatVariables::getPowers();
+            $bot->network->unban($who);
+            $bot->network->sendMessage("{$user->getRegname()} signed out and in twice to get unbanned from the gameban '{$powers[$array['w']]['name']}'.");
+        }
+    }
+    
     return;
 };
