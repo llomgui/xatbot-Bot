@@ -124,7 +124,12 @@ class User
 
     public function isGamebanned()
     {
-        return ($this->gameban != 0);
+        return (!in_array($this->gameban, [176, 184, 0]));
+    }
+    
+    public function getGameban()
+    {
+        return $this->gameban;
     }
 
     public function getRank()

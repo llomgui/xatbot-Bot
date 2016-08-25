@@ -20,7 +20,16 @@ $onTickle = function ($who, $array) {
             if (time() - dataAPI::get($key) >= 5) {
                 dataAPI::set($key, time());
                 $bot->network->answerTickle($who);
-            } else {
+            } else if (time() - dataAPI::get($key) <= 5) {
+                if ($bot->botData['gameban_unban'] == 1) {
+                    if (isset($bot->users[$who]) 
+                    && is_object($bot->users[$who]))
+                    && $bot->users[$who]->isGamebanned()) {
+                        $powers = xatVariables::getPowers();
+                        $bot->network->unban($who);
+                        $bot->network->sendMessage("{$bot->users[$who]->getRegname()} rapid tickled me to get unbanned from the gameban '{$powers[$bot->users[$who]->getGameban()]['name']}'.");
+                    }
+                }
                 return;
             }
 

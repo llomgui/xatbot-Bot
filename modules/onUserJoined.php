@@ -35,17 +35,12 @@ $onUserJoined = function ($who, $array) {
         return;
     }
     
-    /*
-        TODO
-        add autounban variable
-        check if autounban enabled
-    */
-    $isGamebanned = isset($array['w']) && !in_array($array['w'], [176, 184]);//zip and reverse show up in w attribute :'(
-    if (dataAPI::is_set($who . '_gamebanrelog') && !$isGamebanned) {
+
+    if (dataAPI::is_set($who . '_gamebanrelog') && !$user->isGamebanned()) {
         dataAPI::un_set($who . '_gamebanrelog');
     }
         
-    if ($isGamebanned) {
+    if ($user->isGamebanned() && $bot->botData['gameban_unban'] == 2) {
         if (!dataAPI::is_set($who . '_gamebanrelog')) {
             dataAPI::set($who . '_gamebanrelog', 0);
         } else {
