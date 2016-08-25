@@ -126,11 +126,6 @@ class User
     {
         return ($this->gameban != 0);
     }
-    
-    public function getGameban()
-    {
-        return $this->gameban;
-    }
 
     public function getRank()
     {

@@ -40,7 +40,7 @@ $onUserJoined = function ($who, $array) {
         add autounban variable
         check if autounban enabled
     */
-    $isGamebanned = in_array($user->getGameban(), [134, 136, 140, 152, 162, 236]);//zip and reverse show up in w attribute :'(
+    $isGamebanned = isset($array['w']) && !in_array($array['w'], [176, 184]);//zip and reverse show up in w attribute :'(
     if (dataAPI::is_set($who . '_gamebanrelog') && !$isGamebanned) {
         dataAPI::un_set($who . '_gamebanrelog');
     }
