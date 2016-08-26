@@ -268,7 +268,7 @@ abstract class xatVariables
         $powers[35]['name']    = 'purple';
         $powers[35]['minCost'] = 0;
         $powers[35]['maxCost'] = 0;
-        $powers[35]['smilies'] = ['purple'];
+        $powers[35]['smilies'] = ['purple', 'putears', 'puspray', 'pusleep', 'pushim', 'pufit', 'pueyes', 'pueyes2', 'pudizzy', 'pucry', 'pucheer'];
 
         $powers[36]['name']    = 'ttth';
         $powers[36]['minCost'] = 0;
@@ -1294,6 +1294,7 @@ abstract class xatVariables
             $powers[$id]['isEpic']     = false;
             $powers[$id]['isGroup']    = false;
             $powers[$id]['isGame']     = false;
+            $powers[$id]['isNew']      = false;
             $powers[$id]['smilies']    = [$power];
         }
 
@@ -1322,10 +1323,11 @@ abstract class xatVariables
                 continue;
             }
 
+            self::$powers[$id]['isNew']      = isset($power['f']) && $power['f'] & 0x1000 ? true : false;
             self::$powers[$id]['isLimited']  = isset($power['f']) && $power['f'] & 0x2000 ? true : false;
-            self::$powers[$id]['isEpic']  = isset($power['f']) && $power['f'] & 8 ? true : false;
-            self::$powers[$id]['isGame']  = isset($power['f']) && $power['f'] & 0x80 ? true : false;
-            self::$powers[$id]['isGroup']  = isset($power['f']) && $power['f'] & 0x800 ? true : false;
+            self::$powers[$id]['isEpic']     = isset($power['f']) && $power['f'] & 8 ? true : false;
+            self::$powers[$id]['isGame']     = isset($power['f']) && $power['f'] & 0x80 ? true : false;
+            self::$powers[$id]['isGroup']    = isset($power['f']) && $power['f'] & 0x800 ? true : false;
             self::$powers[$id]['isAllPower'] = isset($power['f']) && $power['f'] & 0x401 ? true : false;
             self::$powers[$id]['storeCost']  = $power['x'] ?? $power['d'] * 13.5;
         }

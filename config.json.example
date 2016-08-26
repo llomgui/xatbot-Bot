@@ -12,7 +12,8 @@
 			"chatid": 2594913,
 			"name": "Ocean",
 			"avatar": "123",
-			"homepage": "xat.com"
+			"homepage": "xat.com",
+			"gameban_unban" : 1
 		}
 	}
 }

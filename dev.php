@@ -150,12 +150,17 @@ while (1) {
                                 $hook   = 'onMessage'; // onMessage($who, $message)
                                 $args[] = $packet['elements']['u'];
                                 $args[] = $packet['elements']['t'];
-                            } else {
-                                $hook   = 'onOldMessage'; // onOldMessage($who, $message)
-                                $uid    = $packet['elements']['d'] ?? $packet['elements']['u'];
-                                $args[] = $uid;
+                            } else if (isset($packet['elements']['p'])) {
+                                $hook   = 'onRankMessage'; // onRankMessage($who, $message, $reason, $array)
+                                $args[] = $packet['elements']['u'];
                                 $args[] = $packet['elements']['t'];
+                                $args[] = $packet['elements']['p'];
+                                $args[] = $packet['elements'];
                             }
+                        } else if ($packet['elements']['s'] & 1) {
+                            $hook   = 'onOldMessage'; // onOldMessage($who, $message)
+                            $args[] = $packet['elements']['d'] ?? $packet['elements']['u'];
+                            $args[] = $packet['elements']['t'];
                         }
                         break;
 

@@ -51,24 +51,20 @@ $store = function ($who, $message, $type) {
 
             return $bot->network->sendMessageAutoDetection($who, 'Those powers cost ' . $storePrice . ' xats in store.', $type);
         } else {
-            foreach ($powers as $id => $array) {
-                if ($array['name'] == strtolower($message[1]) || $id == $message[1]) {
-                    $exist = true;
-                    break;
-                }
-            }
+            $match = $bot->network->findPowerMatch($message[1]);
+            $powerID = $match[0];
 
-            if (!$exist) {
+            if (!$powerID) {
                 return $bot->network->sendMessageAutoDetection($who, 'This power does not exist!', $type);
             }
 
-            if (!isset($array['storeCost'])) {
-                $array['storeCost'] = 'is unknown in store. (This power is not added yet).';
+            if (!isset($powers[$powerID]['storeCost'])) {
+                $powers[$powerID]['storeCost'] = 'is unknown in store. (This power is not added yet).';
             } else {
-                $array['storeCost'] = 'costs '.number_format($array['storeCost']).' xats in store.';
+                $powers[$powerID]['storeCost'] = 'costs '.number_format($powers[$powerID]['storeCost']).' xats in store.';
             }
-
-            return $bot->network->sendMessageAutoDetection($who, '"'.ucfirst($array['name']).'" ' . $array['storeCost'], $type);
+            $dym = $match[1] === false ? 'Did you mean "' . $powers[$powerID]['name'] . '"? ' : '';
+            return $bot->network->sendMessageAutoDetection($who, $dym . '"'.ucfirst($powers[$powerID]['name']).'" ' . $powers[$powerID]['storeCost'], $type);
         }
     }
 };
