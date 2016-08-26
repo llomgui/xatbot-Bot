@@ -14,7 +14,9 @@ $onRankMessage = function ($who, $message, $reason, $array) {
                     $seconds = $reason[1];
                     $hours   = $reason[2];
                     $powers  = xatVariables::getPowers();
-                    
+                    if ($seconds <= 0) {//cheated
+                        return;
+                    }
                     //$bot->network->sendMessage($who . ' finished a ' . $hours . ' hour ' . $powers[$game]['name'] . ' in ' . $seconds . ' seconds.');
                     /* 
                         TODO
