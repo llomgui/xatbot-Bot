@@ -62,13 +62,13 @@ $jinx = function ($who, $message, $type) {
     switch (strtolower($jinxType)) {//JinxIt
         case "reverse":
             for($i = 0; $i < count($message); $i++) {
-                $message[$i] = implode("", array_reverse(str_split($message[$i])));
+                $message[$i] = strrev($message[$i});
             }
             break;
         case "mix":
         default:
             for($i = 0; $i < count($message); $i++) {
-                $message[$i] = implode("", sort((array)str_split($message[$i]), $randomSort($seed)));
+                $message[$i] = str_shuffle($message[$i]);
             }
             break;
         case "ends":
@@ -109,7 +109,7 @@ $jinx = function ($who, $message, $type) {
             for($i = 0; $i < $Arg; $i++) {
                 $messageTmp = implode("_", explode($message2[$seed % count($message2)], $messageTmp));
             }
-            $message = implode(" ", $messageTmp);
+            $message = explode(" ", $messageTmp);
             break;
         case "egg":
             $message = implode(' ', $message);
