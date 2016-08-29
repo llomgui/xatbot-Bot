@@ -62,7 +62,7 @@ $jinx = function ($who, $message, $type) {
     switch (strtolower($jinxType)) {//JinxIt
         case "reverse":
             for($i = 0; $i < count($message); $i++) {
-                $message[$i] = strrev($message[$i});
+                $message[$i] = strrev($message[$i]);
             }
             break;
         case "mix":
@@ -102,9 +102,7 @@ $jinx = function ($who, $message, $type) {
             $messageTmp = implode(" ", $message);
             $message2 = preg_replace("/[ >]/", "", $messageTmp);
             $message2 = str_split($message2);
-            if ($Arg > count($message2)){
-                $Arg = count($message2);
-            }
+            $Arg = $Arg > count($message2) ? count($message2) : $Arg;
             
             for($i = 0; $i < $Arg; $i++) {
                 $messageTmp = implode("_", explode($message2[$seed % count($message2)], $messageTmp));
