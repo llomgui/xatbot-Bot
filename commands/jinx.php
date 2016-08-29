@@ -68,7 +68,7 @@ $jinx = function ($who, $message, $type) {
         case "mix":
         default:
             for($i = 0; $i < count($message); $i++) {
-                $message[$i] = implode("", sort((array)str_split($message[$i]), $randomSort($seed)));
+                $message[$i] = str_shuffle($message[$i]);
             }
             break;
         case "ends":
