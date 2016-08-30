@@ -11,31 +11,27 @@ $onUserJoined = function ($who, $array) {
     $bot->users[$who] = new User($array);
     $user = $bot->users[$who];
 
-    if ($user->isRegistered() && !$user->isAway() && !$user->wasHere()) {
+    if ($user->isAway()) {
+        dataAPI::set('away_' . $user->getID(), true);
+    }
+
+    if ($user->isRegistered() && !$user->wasHere() && !dataAPI::is_set('away_' . $user->getID())) {
         $bot->network->sendTickle($who);
     }
 
-    if (!dataAPI::is_set($who . '_joined')) {
-        dataAPI::set($who . '_joined', false);
-    }
+    if (!dataAPI::is_set('active_' . $who)) {
+        dataAPI::set('active_' . $who, time());
+    } else {
+        if (dataAPI::is_set('left_' . $who)) {
 
-    if (!dataAPI::is_set($who . '_active')) {
-        dataAPI::set($who . '_active', time());
-    }
+            if (dataAPI::get('left_' . $who) < time() - 30) {
+                dataAPI::set('active_' . $who, time());
+            }
 
-    if (dataAPI::is_set($who . '_left')) {
-        if (dataAPI::get($who . '_left') - 300 > dataAPI::get($who . '_active')) {
-            dataAPI::set($who . '_active', time());
-            dataAPI::un_set($who . '_left', time());
+            dataAPI::un_set('left_' . $who);
         }
     }
-
-    if ($user->isAway() or dataAPI::get('away_' . $user->getID())) {
-        dataAPI::set('away_' . $user->getID(), $user->isAway());
-        return;
-    }
     
-
     if (dataAPI::is_set($who . '_gamebanrelog') && !$user->isGamebanned()) {
         dataAPI::un_set($who . '_gamebanrelog');
     }

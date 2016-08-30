@@ -7,24 +7,14 @@ $onUserLeave = function ($who) {
     if ($who >= 1900000000) {
         return;
     }
+
     unset($bot->users[$who]);
 
-
-    if (dataAPI::is_set($who . '_joined')) {
-        dataAPI::un_set($who . '_joined');
+    if (dataAPI::is_set('away_' . $who)) {
+        dataAPI::un_set('away_' . $who);
     }
-    dataAPI::set($who . '_left', time());
 
-    foreach ($bot->users as $id => $object) {
-        if (dataAPI::is_set($id . '_left')) {
-            if (dataAPI::get($who . '_left') + 300 < time()) {
-                dataAPI::un_set($who . '_left');
-                if (dataAPI::is_set($who . '_active')) {
-                    dataAPI::un_set($who . '_active');
-                }
-            }
-        }
-    }
+    dataAPI::set('left_' . $who, time());
 
     return;
 };
