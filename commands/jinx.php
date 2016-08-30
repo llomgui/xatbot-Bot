@@ -7,7 +7,7 @@ $jinx = function ($who, $message, $type) {
     */
     $bot = actionAPI::getBot();
     
-    $jinxType = $message[1] ?? "mix";
+    $jinxType = strtolower($message[1] ?? "mix");
     unset($message[0], $message[1]);
     
     $message = implode(' ', $message);
@@ -51,19 +51,25 @@ $jinx = function ($who, $message, $type) {
             $message[$i] = ">";
         };
     };
-    
-    switch (strtolower($jinxType)) {//JinxIt
+    $jinxType2 = $jinxType;
+    if ($jinxType == "jumble") {
+        $jinxType2 = ($Rand % 4);
+    }
+    switch ($jinxType2) {//JinxIt
+        case 0:
         case "reverse":
             for ($i = 0; $i < count($message); $i++) {
                 $message[$i] = strrev($message[$i]);
             }
             break;
+        case 1:
         case "mix":
         default:
             for ($i = 0; $i < count($message); $i++) {
                 $message[$i] = str_shuffle($message[$i]);
             }
             break;
+        case 2:
         case "ends":
             $message2 = [];
             $messageTmp = "";
@@ -76,6 +82,7 @@ $jinx = function ($who, $message, $type) {
                 $message[$i] = implode($message2);
             }
             break;
+        case 3:
         case "middle":
             $message2 = $message3 = [];
             $messageTmp = $messageTmp2 = "";
@@ -97,6 +104,7 @@ $jinx = function ($who, $message, $type) {
                 }
             }
             break;
+        case 14:
         case "hang":
             $messageTmp = implode(" ", $message);
             $message2 = preg_replace("/[ >]/", "", $messageTmp);
@@ -112,6 +120,7 @@ $jinx = function ($who, $message, $type) {
             
             $message = explode(" ", $messageTmp);
             break;
+        case 16:
         case "egg":
             $message = implode(' ', $message);
             $message = preg_replace( [
