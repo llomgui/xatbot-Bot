@@ -13,14 +13,12 @@ $calc = function ($who, $message, $type) {
 
     $expr = explode('|', $message);
 
-    $stream = [
-        'http' => [
-            'method' => 'POST',
-            'header' => 'Content-Type: application/x-www-form-urlencoded',
-            'content' => json_encode(['expr' => $expr]),
-            'timeout' => 1
-        ]
-    ];
+    $stream = []
+    $stream['http']['method'] = 'POST';
+    $stream['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
+    $stream['http']['content'] = json_encode(['expr' => $expr]);
+    $stream['http']['timeout'] = 1;
+    
     $res = file_get_contents('http://api.mathjs.org/v1/', false, stream_context_create($stream));
     if (!$res) {
         /*
