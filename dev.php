@@ -145,23 +145,39 @@ while (1) {
                         break;
 
                     case 'm':
-                        if (!isset($packet['elements']['s'])) {
-                            if (!isset($packet['elements']['p']) && isset($packet['elements']['i'])) {
-                                $hook   = 'onMessage'; // onMessage($who, $message)
-                                $args[] = $packet['elements']['u'];
-                                $args[] = $packet['elements']['t'];
-                            } else if (isset($packet['elements']['p'])) {
-                                $hook   = 'onRankMessage'; // onRankMessage($who, $message, $reason, $array)
-                                $args[] = $packet['elements']['u'];
-                                $args[] = $packet['elements']['t'];
-                                $args[] = $packet['elements']['p'];
-                                $args[] = $packet['elements'];
+                        if (isset($packet['elements']['u'])) {
+                            if (!$bot->done) {
+                                if (isset($packet['elements']['i'])) {
+                                    $bot->messageCount = $packet['elements']['i'];
+                                } else {
+                                    $bot->messageCount = 0;
+                                }
+                            } else {
+                                $bot->messageCount++;
                             }
-                        } else if ($packet['elements']['s'] & 1) {
-                            $hook   = 'onOldMessage'; // onOldMessage($who, $message)
-                            $args[] = $packet['elements']['d'] ?? $packet['elements']['u'];
-                            $args[] = $packet['elements']['t'];
-                        }
+
+                            if ($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff') {
+                                continue;
+                            }
+
+                            if (!isset($packet['elements']['s'])) {
+                                if (!isset($packet['elements']['p']) && isset($packet['elements']['i'])) {
+                                    $hook   = 'onMessage'; // onMessage($who, $message)
+                                    $args[] = $packet['elements']['u'];
+                                    $args[] = $packet['elements']['t'];
+                                } else if (isset($packet['elements']['p'])) {
+                                    $hook   = 'onRankMessage'; // onRankMessage($who, $message, $reason, $array)
+                                    $args[] = $packet['elements']['u'];
+                                    $args[] = $packet['elements']['t'];
+                                    $args[] = $packet['elements']['p'];
+                                    $args[] = $packet['elements'];
+                                }
+                            } else if ($packet['elements']['s'] & 1) {
+                                $hook   = 'onOldMessage'; // onOldMessage($who, $message)
+                                $args[] = $packet['elements']['d'] ?? $packet['elements']['u'];
+                                $args[] = $packet['elements']['t'];
+                            }
+                         }
                         break;
 
                     case 'o':

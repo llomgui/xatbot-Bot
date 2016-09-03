@@ -9,6 +9,7 @@ class Bot
     public $chatInfo;
     public $users;
     public $started;
+    public $messageCount;
     public $done;
 
     public function __construct($botData)

@@ -7,13 +7,13 @@ $mostactive = function ($who, $message, $type) {
     $most = ['user' => null, 'time' => 0];
 
     foreach ($bot->users as $user) {
-        if (!is_object($user) || !dataAPI::is_set($who . '_active')) {
+        if (!is_object($user) || !dataAPI::is_set('active_' . $user->getID())) {
             continue;
         }
 
-        $userTime = $now - dataAPI::get($who . '_active');
+        $userTime = $now - dataAPI::get('active_' . $user->getID());
 
-        if ($userTime > $most['time']) { // Maybe implement a way to show more then 1 user if activetime is equal?
+        if ($userTime > $most['time']) {
             $most = ['user' => $user, 'time' => $userTime];
         }
     }
