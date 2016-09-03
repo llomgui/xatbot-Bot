@@ -237,13 +237,12 @@ class Network
         $POST['NameEmail']   = xatVariables::getRegname();
         $POST['password']    = xatVariables::getPassword();
         $POST['Login']       = '';
-        $stream = [
-            'http' => [
-                'method' => 'POST',
-                'header' => 'Content-Type: application/x-www-form-urlencoded',
-                'content' => http_build_query($POST)
-            ]
-        ];
+        
+        $stream = []
+        $stream['http']['method'] = 'POST';
+        $stream['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
+        $stream['http']['content'] = http_build_query($POST);
+        
         $res = file_get_contents('http://xat.com/web_gear/chat/register.php', false, stream_context_create($stream));
 
         if (strpos($res, 'style="color:#FF0000"><strong>**')) {
