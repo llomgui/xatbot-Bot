@@ -7,7 +7,6 @@ hangman
 google
 horoscope
 weather
-love
 kickall
 chatinfos
 rank
