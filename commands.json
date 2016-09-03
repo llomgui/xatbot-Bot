@@ -1,6 +1,7 @@
 [
 	"ban",
 	"boot",
+	"clear",
 	"dev",
 	"gag",
 	"kick",
