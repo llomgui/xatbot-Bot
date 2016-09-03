@@ -19,14 +19,13 @@ $shortname = function ($who, $message, $type) {
     if (is_numeric($message[1][0])) {
         return $bot->network->sendMessageAutoDetection($who, "Shortnames can\'t start with a number.", $type);
     }
-    $stream = [
-        'http' => [
-            'method' => 'POST',
-            'header' => 'Content-Type: application/x-www-form-urlencoded',
-            'content' => 'GroupName=' . $message[1] . '&Quote=&agree=ON',
-            'timeout' => 1
-        ]
-    ];
+    
+    $stream = []
+    $stream['http']['method'] = 'POST';
+    $stream['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
+    $stream['http']['content'] = 'GroupName=' . $message[1] . '&Quote=&agree=ON';
+    $stream['http']['timeout'] = 1;
+    
     $res = file_get_contents('http://xat.com/web_gear/chat/BuyShortName.php', false, stream_context_create($stream));
 
     if (!$res) {
