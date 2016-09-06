@@ -18,9 +18,9 @@ $twitch = function ($who, $message, $type) {
 
     /*
         API sends 404 if user doesnt exist :/
-    if (!$page) {
-        return $bot->network->sendMessageAutoDetection($who, 'Twitch API is not accessable at this monent or unknown username, please try again later.', $type);
-    }
+        if (!$page) {
+            return $bot->network->sendMessageAutoDetection($who, 'Twitch API is not accessable at this monent or unknown username, please try again later.', $type);
+        }
     */
     $twitch = json_decode($page);
 
