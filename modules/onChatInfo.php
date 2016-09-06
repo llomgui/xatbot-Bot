@@ -13,6 +13,6 @@ $onChatInfo = function ($array) {
     $bot->chatInfo['language']     = $info[3] ?? 'en';
     $bot->chatInfo['radio']        = str_replace('http://', '', $info[4]);
     $bot->chatInfo['buttons']      = $info[5] ?? 'None';
-    $bot->chatInfo['bot']          = $array['B'] ?? $this->botData['id'];
+    $bot->chatInfo['bot']          = $array['B'] ?? $bot->botData['id'];
     $bot->chatInfo['rank']         = isset($array['r']) && isset($rankA[$array['r']]) ? $rankA[$array['r']] : 'Guest';
 };
