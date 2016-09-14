@@ -13,7 +13,7 @@ $calc = function ($who, $message, $type) {
 
     $expr = explode('|', $message);
 
-    $stream = []
+    $stream = [];
     $stream['http']['method'] = 'POST';
     $stream['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
     $stream['http']['content'] = json_encode(['expr' => $expr]);

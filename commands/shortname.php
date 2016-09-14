@@ -20,7 +20,7 @@ $shortname = function ($who, $message, $type) {
         return $bot->network->sendMessageAutoDetection($who, "Shortnames can\'t start with a number.", $type);
     }
     
-    $stream = []
+    $stream = [];
     $stream['http']['method'] = 'POST';
     $stream['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
     $stream['http']['content'] = 'GroupName=' . $message[1] . '&Quote=&agree=ON';

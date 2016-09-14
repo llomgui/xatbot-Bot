@@ -238,7 +238,7 @@ class Network
         $POST['password']    = xatVariables::getPassword();
         $POST['Login']       = '';
         
-        $stream = []
+        $stream = [];
         $stream['http']['method'] = 'POST';
         $stream['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
         $stream['http']['content'] = http_build_query($POST);
