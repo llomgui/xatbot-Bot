@@ -7,6 +7,7 @@ require_once 'classes/xatUser.php';
 require_once 'classes/xatConnect4.php';
 // custom command extension, default: !
 include_once 'commandextension.php';
+echo 'Command extension set : '.$cmdextension.'' . PHP_EOL;
 
 // API
 require_once 'API/dataAPI.php';
