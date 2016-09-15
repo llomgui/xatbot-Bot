@@ -12,6 +12,7 @@
 			"chatid": 2594913,
 			"name": "Ocean",
 			"avatar": "123",
+			"cmd-extension", "!",
 			"homepage": "xat.com",
 			"gameban_unban" : 1
 		}
