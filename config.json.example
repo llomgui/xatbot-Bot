@@ -4,6 +4,7 @@
 		"xatid":"10101",
 		"password": "",
 		"pin": "",
+		"pw": "",
 		"forcelogin": true
 	},
 	"bots": {

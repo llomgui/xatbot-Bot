@@ -7,6 +7,7 @@ abstract class xatVariables
     private static $xatid;
     private static $password;
     private static $pin;
+    private static $pw;
     private static $forcelogin;
     private static $ip2;
     private static $powers;
@@ -36,6 +37,7 @@ abstract class xatVariables
         self::$xatid      = $data['botaccount']['xatid'];
         self::$password   = $data['botaccount']['password'];
         self::$pin        = $data['botaccount']['pin'];
+        self::$pw         = $data['botaccount']['pw'];
         self::$forcelogin = $data['botaccount']['forcelogin'];
         self::$bots       = $data['bots'];
     }
@@ -1406,6 +1408,11 @@ abstract class xatVariables
     public static function getPin()
     {
         return self::$pin;
+    }
+
+    public static function getPw()
+    {
+        return self::$pw;
     }
 
     public static function getForceLogin()

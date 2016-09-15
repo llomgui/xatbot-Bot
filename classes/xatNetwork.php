@@ -228,6 +228,10 @@ class Network
 
     private function getPw()
     {
+        if (!empty(xatVariables::getPw())) {
+            return xatVariables::getPw();
+        }
+
         $POST['k2']          = '0';
         $POST['UserId']      = '0';
         $POST['mode']        = '0';
