@@ -3,6 +3,10 @@
 $say = function ($who, $message, $type) {
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'say')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     unset($message[0]);
     $message = implode(' ', $message);
 

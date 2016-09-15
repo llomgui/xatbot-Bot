@@ -4,6 +4,7 @@
 		"xatid":"10101",
 		"password": "",
 		"pin": "",
+		"pw": "",
 		"forcelogin": true
 	},
 	"bots": {
@@ -13,7 +14,12 @@
 			"name": "Ocean",
 			"avatar": "123",
 			"homepage": "xat.com",
-			"gameban_unban" : 1
+			"gameban_unban" : 1,
+			"customcommand": "!",
+			"minranks":{
+				"say": 2,
+				"dx": "moderator"
+			}
 		}
 	}
 }

@@ -233,7 +233,7 @@ while (1) {
                         break;
                 }
 
-                if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == '!') {
+                if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == $Ocean->botData['customcommand']) {
                     $args[1] = explode(' ', trim($args[1]));
                     $command = substr($args[1][0], 1);
 

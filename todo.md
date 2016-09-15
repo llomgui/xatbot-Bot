@@ -1,19 +1,17 @@
 #TODO list
 ##Commands
-twitter
 countdown
-scramble
-hangman
-google
-horoscope
-weather
 kickall
 chatinfos
 rank
 game
 pool
-history
 getmain
+
+##Features (pending api keys)
+twitter
+google
+weather
 
 ##Features (pending database connection)
 Alias'
@@ -28,3 +26,6 @@ edit
 staff
 allmissing
 everymissing
+history
+scramble
+hangman
