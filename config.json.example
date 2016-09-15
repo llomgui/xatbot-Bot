@@ -13,7 +13,8 @@
 			"name": "Ocean",
 			"avatar": "123",
 			"homepage": "xat.com",
-			"gameban_unban" : 1
+			"gameban_unban" : 1,
+			"customcommand": "!"
 		}
 	}
 }
