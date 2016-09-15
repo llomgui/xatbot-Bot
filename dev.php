@@ -5,6 +5,9 @@ require_once 'classes/xatVariables.php';
 require_once 'classes/xatBot.php';
 require_once 'classes/xatUser.php';
 require_once 'classes/xatConnect4.php';
+// custom command extension, default: !
+include_once 'commandextension.php';
+echo 'Command extension set : '.$cmdextension.'' . PHP_EOL;
 
 // API
 require_once 'API/dataAPI.php';
@@ -233,7 +236,8 @@ while (1) {
                         break;
                 }
 
-                if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == '!') {
+
+                if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == $cmdextension)  { // == '!'
                     $args[1] = explode(' ', trim($args[1]));
                     $command = substr($args[1][0], 1);
 
