@@ -14,7 +14,11 @@
 			"avatar": "123",
 			"homepage": "xat.com",
 			"gameban_unban" : 1,
-			"customcommand": "!"
+			"customcommand": "!",
+			"minranks":{
+				"say": 2,
+				"dx": "moderator"
+			}
 		}
 	}
 }
