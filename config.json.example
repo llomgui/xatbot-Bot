@@ -19,6 +19,25 @@
 			"minranks":{
 				"say": 2,
 				"dx": "moderator"
+			},
+			"alias": {
+				"snakeme": "gamebanme snakeban",
+				"spaceme": "gamebanme spaceban",
+				"matchme": "gamebanme matchban",
+				"mazeme": "gamebanme mazeban",
+				"codeme": "gamebanme codeban",
+				"slotme": "gamebanme slotban",
+				"guest": "rankme guest",
+				"member": "rankme member",
+				"mod": "rankme moderator",
+				"owner": "rankme owner",
+				"guest": "rankme guest",
+				"em": "everymissing",
+				"allm": "allmissing",
+				"reload": "dev reload",
+				"promo": "misc promo",
+				"reg": "misc regname",
+				"id": "misc xatid"
 			}
 		}
 	}
