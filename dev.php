@@ -237,6 +237,12 @@ while (1) {
                     $args[1] = explode(' ', trim($args[1]));
                     $command = substr($args[1][0], 1);
 
+                    if (isset($Ocean->alias[$command])) {
+                        $args[1][0] = $Ocean->botData['customcommand'] . $Ocean->alias[$command];
+                        $args[1] = explode(' ', trim(implode(' ', $args[1])));
+                        $command = substr($args[1][0], 1);
+                    }
+                    
                     if ($hook == 'onMessage') {
                         $args[2] = 1;
                     } elseif ($hook == 'onPM') {
