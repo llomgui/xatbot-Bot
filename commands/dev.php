@@ -16,11 +16,12 @@ $dev = function ($who, $message, $type) {
             break;
  
         case 'memory':
+            $usage = memory_get_usage(true);
             $memory = [
-                'Bits: ' . round(memory_get_usage(true) * 8),
-                'Bytes: ' . memory_get_usage(true),
-                'Kilobytes: ' . round(memory_get_usage(true) / 1024),
-                'Megabytes: ' . round(memory_get_usage(true) / 1024 / 1024)
+                'Bits: ' . round($usage * 8),
+                'Bytes: ' . $usage,
+                'Kilobytes: ' . round($usage / 1024),
+                'Megabytes: ' . round($usage / 1024 / 1024)
             ];
             
             $bot->network->sendMessageAutoDetection($who, implode(' | ', $memory), $type);
