@@ -10,6 +10,7 @@ class Bot
     public $users;
     public $started;
     public $minranks;
+    public $alias;
     public $messageCount;
     public $done;
 
@@ -17,9 +18,14 @@ class Bot
     {
         $this->started  = time();
         $this->minranks = (!empty($botData['minranks'])) ? $botData['minranks'] : [];
+        $this->alias = (!empty($botData['alias'])) ? $botData['alias'] : [];
 
         if (isset($botData['minranks'])) {
             unset($botData['minranks']);
+        }
+        
+        if (isset($botData['alias'])) {
+            unset($botData['alias']);
         }
 
         foreach ($botData as $key => $val) {

@@ -25,8 +25,8 @@ ${'8ball'} = function ($who, $message, $type) {
         "My Magic 8-Ball shows the letters...'N and o'", "My Magic 8-Ball shows a Lamah Screaming 'Noooo!'", 
         "The Magic 8-Ball shows a picture of a little fairy, trying to teach a little kid how to fly and the little kid doesn't want to lear.....oops wrong story! NO!", 
         "This one will have to go to the judges...and...I'm sorry..The judges have ruled No to that question", 
-        "This one will have to go to the judges...and.....The judges have gave me a thumbs up to that question!", "I'm an 8-ball not a pool stick!", "
-        ummmmmmm....whatever you say :)", "uhhhhh....sure!", "shut up", "I'm sick of questions! I'm gonna barf all over the person that asks me another question!", 
+        "This one will have to go to the judges...and.....The judges have gave me a thumbs up to that question!", "I'm an 8-ball not a pool stick!", 
+        "ummmmmmm....whatever you say :)", "uhhhhh....sure!", "shut up", "I'm sick of questions! I'm gonna barf all over the person that asks me another question!", 
         "Let me ask YOU a question: Don't you have sumthin better to do than sit around and talk to an imaginary 8-ball over the internet?", 
         "f√ck no", "uhhh...hmmm...no??", "uhhh...hmmm..yes??", "sure! uh huh! whatever!", "I'm running out of answers", "I think you've used up all my answers", 
         "Slim chance...", "Good question...I need time to think...try back later...", "I CAN'T DO IT CAPTAIN! I DON'T HAVE THE ANSWER!", "HAHAHAHA! No!", 
