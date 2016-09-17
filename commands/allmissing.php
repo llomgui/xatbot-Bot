@@ -21,7 +21,7 @@ $allmissing = function ($who, $message, $type) {
     }
     
     if (isset($user)) {
-        $base64 = base64_encode(implode(',', array_values($user->getPowers())));
+        $base64 = base64_encode(implode('.', array_values($user->getPowers())));
         $link = 'https://oceanproject.fr/pages/powersmissing/allp/' . $base64 . '/';
         $bot->network->sendMessageAutoDetection($who, $link, $type);
     } else {

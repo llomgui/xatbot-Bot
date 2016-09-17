@@ -1303,6 +1303,26 @@ abstract class xatVariables
         foreach ($page[$topsh][1] as $smiley => $id) {
             $powers[$id]['smilies'][] = $smiley;
         }
+        
+        $id = end($page[6][1]) >= $page[0][1]['id'] ? end($page[6][1]):$page[0][1]['id']; //check for highest id
+        $id = count(array_keys($page[4][1], $id + 1)) > 0 ? $id + 1:$id;//check for higher id
+        $id = count(array_keys($page[4][1], $id + 2)) > 0 ? $id + 2:$id;//check for higher id again (xat skips last id in section)
+        $keys = array_keys($powers); // cant do end(array_keys($powers)) causes error
+        $last = end($keys);
+        
+        if($id != $last) {
+            $lastName = array_search($id, $page[6][1]) == false ? $id : array_search($id, $page[6][1]);
+            $powers[$id]['name']       = $lastName;
+            $powers[$id]['minCost']    = 0;
+            $powers[$id]['maxCost']    = 0;
+            $powers[$id]['isLimited']  = false;
+            $powers[$id]['isAllPower'] = false;
+            $powers[$id]['isEpic']     = false;
+            $powers[$id]['isGroup']    = false;
+            $powers[$id]['isGame']     = false;
+            $powers[$id]['isNew']      = false;
+            $powers[$id]['smilies']    = array_merge([$lastName],  array_keys($page[4][1], $id));
+        }
 
         self::$powers = $powers + self::$powers;
 
@@ -1324,7 +1344,10 @@ abstract class xatVariables
             if ($id === 0) {
                 continue;
             }
-
+            if (!in_array($power['s'], self::$powers[$id]['smilies'])) {
+                array_unshift(self::$powers[$id]['smilies'], $power['s']);
+            }
+            self::$powers[$id]['name']       = $power['s'];
             self::$powers[$id]['isNew']      = isset($power['f']) && $power['f'] & 0x1000 ? true : false;
             self::$powers[$id]['isLimited']  = isset($power['f']) && $power['f'] & 0x2000 ? true : false;
             self::$powers[$id]['isEpic']     = isset($power['f']) && $power['f'] & 8 ? true : false;
