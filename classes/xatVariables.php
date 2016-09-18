@@ -1236,6 +1236,7 @@ abstract class xatVariables
         self::$update = time();
 
         self::updateIP2();
+        self::updateVolunteers();
         self::updatePowers();
     }
 
@@ -1254,7 +1255,37 @@ abstract class xatVariables
             self::$ip2 = json_decode($page, true);
         }
     }
+    
+    private static function updateVolunteers()
+    {
+        $ctx = stream_context_create(['http' => ['timeout' => 1]]);
+        $cpt = 0;
 
+        do {
+            $page = file_get_contents('https://util.xat.com/wiki/index.php?title=Template:List_of_ticket_volunteers&t=' . time(), false, $ctx);
+            $cpt++;
+            usleep(300000);
+        } while (empty($page) && $cpt < 5);
+
+        if (empty($page)) {
+            return false;
+        }
+        
+        $volunteers = [];
+        
+        preg_match_all('/<table.*?>(.*?)<\/table>/si', $page, $lines);
+        preg_match_all('/<td.*?>(.*?)<\/td>/si', $lines[1][0], $cell);
+        foreach ($cell[1] as $key => $value) {
+            if ($key & 1) {
+                $value = explode(' ', strip_tags($value));// reg id
+                $volunteers[] = ['regname' => $value[1], 'xatid' => str_replace(['(', ')'], '', $value[2])];
+            }
+        }
+        
+        self::$volunteers = $volunteers;
+        
+    }
+    
     private static function updatePowers()
     {
         $ctx = stream_context_create(['http' => ['timeout' => 1]]);
