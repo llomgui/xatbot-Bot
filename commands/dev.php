@@ -15,6 +15,15 @@ $dev = function ($who, $message, $type) {
             $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
             break;
 
+			
+		case 'response':
+				$time_start = microtime(true); 
+				$ms = file_get_contents('http://loripsum.net/api/1/veryshort/plaintext');
+				$msx = file_get_contents('http://loripsum.net/api/1/veryshort/plaintext');
+				$bot->network->sendMessageAutoDetection($who, ''.$ms.'('.substr(md5(rand(1000, 9999999)), 0, 5).')' , $type);
+				$bot->network->sendMessageAutoDetection($who, ''.$msx.'('.substr(md5(rand(1000, 9999999)), 0, 5).')' , $type);
+				$bot->network->sendMessageAutoDetection($who, 'Total execution time in seconds: ' . (microtime(true) - $time_start).'', $type);
+			break;
         case 'memory':
             $memory = [
                 'Bits'      => round(memory_get_usage(true) * 8),
