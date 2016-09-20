@@ -3,7 +3,7 @@
 $onLogout = function ($array) {
     
     $bot = actionAPI::getBot();
-    if (!isset($array['e']) {
+    if (!isset($array['e'])) {
     	return;
     }
 
