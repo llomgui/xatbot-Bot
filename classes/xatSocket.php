@@ -59,7 +59,7 @@ class Socket
             }
 
             $this->buffer .= $packet;
-        } while($force && substr($this->buffer, chr(0x00)) === false);
+        } while($force && strpos($this->buffer, chr(0x00)) === false);
 
         if ($force === true) {
             socket_set_nonblock($this->socket);
