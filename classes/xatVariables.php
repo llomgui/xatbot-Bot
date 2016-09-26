@@ -3,17 +3,22 @@
 abstract class xatVariables
 {
     private static $init;
+    private static $update;
+
     private static $regname;
     private static $xatid;
     private static $password;
     private static $pin;
     private static $pw;
     private static $forcelogin;
+
     private static $ip2;
     private static $powers;
     private static $volunteers;
-    private static $update;
     private static $bots;
+
+    private static $loginTime;
+    private static $loginPacket;
 
     public static function init()
     {
@@ -1368,6 +1373,34 @@ abstract class xatVariables
 
             ksort(self::$powers);
         }
+    }
+
+    public static function setLoginPacket($info)
+    {
+        self::$loginPacket = $info;
+    }
+
+    public static function setLoginTime($info)
+    {
+        self::$loginTime = $info;
+    }
+
+    public static function getLoginPacket()
+    {
+        if (empty(self::$loginPacket)) {
+            return '';
+        }
+
+        return self::$loginPacket;
+    }
+    
+    public static function getLoginTime()
+    {
+        if (empty(self::$loginTime)) {
+            return 0;
+        }
+
+        return self::$loginTime;
     }
 
     public static function getIP2()
