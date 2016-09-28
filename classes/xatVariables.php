@@ -87,19 +87,20 @@ abstract class xatVariables
     private static function initVolunteers()
     {
         $volunteers = [
-            ['regname' => 'Brandon', 'xatid' => 1010208],
-            ['regname' => 'Cupim',   'xatid' => 10000690],
-            ['regname' => 'Cyan',    'xatid' => 283021491],
-            ['regname' => 'Davide',  'xatid' => 313558511],
-            ['regname' => 'Elie',    'xatid' => 79328863],
-            ['regname' => 'Ghost',   'xatid' => 220000913],
-            ['regname' => 'Guinho',  'xatid' => 2300000],
-            ['regname' => 'Jayden',  'xatid' => 121040483],
-            ['regname' => 'Mihay',   'xatid' => 1700000],
-            ['regname' => 'Muffins', 'xatid' => 209642885],
-            ['regname' => 'Nick',    'xatid' => 6960969],
-            ['regname' => 'Storm',   'xatid' => 9900000],
-            ['regname' => 'Vale',    'xatid' => 32646043]
+            ['regname' => 'Andre',           'xatid' => 112633],
+            ['regname' => 'Brandon',         'xatid' => 1010208],
+            ['regname' => 'Cupim',           'xatid' => 10000690],
+            ['regname' => 'Cyan',            'xatid' => 283021491],
+            ['regname' => 'Davide',          'xatid' => 313558511],
+            ['regname' => 'ELIE',            'xatid' => 79328863],
+            ['regname' => 'Guinho',          'xatid' => 2300000],
+            ['regname' => 'Jayden',          'xatid' => 121040483],
+            ['regname' => 'Life',            'xatid' => 169697989],
+            ['regname' => 'Mihay',           'xatid' => 1700000],
+            ['regname' => 'elevatordancing', 'xatid' => 209642885],
+            ['regname' => 'Rida',            'xatid' => 9900000],
+            ['regname' => 'Nick',            'xatid' => 6960969],
+            ['regname' => 'Steven',          'xatid' => 400004803]
         ];
 
         self::$volunteers = $volunteers;
@@ -1240,6 +1241,7 @@ abstract class xatVariables
         self::$update = time();
 
         self::updateIP2();
+        self::updateVolunteers();
         self::updatePowers();
     }
 
@@ -1258,7 +1260,36 @@ abstract class xatVariables
             self::$ip2 = json_decode($page, true);
         }
     }
+    
+    private static function updateVolunteers()
+    {
+        $ctx = stream_context_create(['http' => ['timeout' => 1]]);
+        $cpt = 0;
 
+        do {
+            $page = file_get_contents('https://util.xat.com/wiki/index.php?title=Template:List_of_ticket_volunteers&t=' . time(), false, $ctx);
+            $cpt++;
+            usleep(300000);
+        } while (empty($page) && $cpt < 5);
+
+        if (empty($page)) {
+            return false;
+        }
+        
+        $volunteers = [];
+        
+        preg_match_all('/<td.*?>(.*?)<\/td>/si', $page, $cell);
+        foreach ($cell[1] as $key => $value) {
+            if ($key & 1) {
+                $value = explode(' ', strip_tags($value));// reg id
+                $volunteers[] = ['regname' => $value[1], 'xatid' => str_replace(['(', ')'], '', $value[2])];
+            }
+        }
+        
+        self::$volunteers = $volunteers;
+        
+    }
+    
     private static function updatePowers()
     {
         $ctx = stream_context_create(['http' => ['timeout' => 1]]);
@@ -1308,6 +1339,33 @@ abstract class xatVariables
         foreach ($page[$topsh][1] as $smiley => $id) {
             $powers[$id]['smilies'][] = $smiley;
         }
+        
+        foreach($page[7][1] as $name => $value) {
+            if($name != 'time' && $name != "!") {
+                $powers[$value[0]]['pawns'][] = 'h' . $name;
+            }
+        }
+        
+        $id = end($page[6][1]) >= $page[0][1]['id'] ? end($page[6][1]):$page[0][1]['id']; //check for highest id
+        $id = count(array_keys($page[4][1], $id + 1)) > 0 ? $id + 1:$id;//check for higher id
+        $id = count(array_keys($page[4][1], $id + 2)) > 0 ? $id + 2:$id;//check for higher id again (xat skips last id in section)
+        $keys = array_keys($powers); // cant do end(array_keys($powers)) causes error
+        $last = end($keys);
+        
+        if($id != $last) {
+            $lastName = array_search($id, $page[6][1]) == false ? $id : array_search($id, $page[6][1]);
+            $powers[$id]['name']       = $lastName;
+            $powers[$id]['minCost']    = 0;
+            $powers[$id]['maxCost']    = 0;
+            $powers[$id]['storeCost']  = "unknown";
+            $powers[$id]['isLimited']  = false;
+            $powers[$id]['isAllPower'] = false;
+            $powers[$id]['isEpic']     = false;
+            $powers[$id]['isGroup']    = false;
+            $powers[$id]['isGame']     = false;
+            $powers[$id]['isNew']      = false;
+            $powers[$id]['smilies']    = array_merge([$lastName],  array_keys($page[4][1], $id));
+        }
 
         self::$powers = $powers + self::$powers;
 
@@ -1329,7 +1387,10 @@ abstract class xatVariables
             if ($id === 0) {
                 continue;
             }
-
+            if (!in_array($power['s'], self::$powers[$id]['smilies'])) {
+                array_unshift(self::$powers[$id]['smilies'], $power['s']);
+            }
+            self::$powers[$id]['name']       = $power['s'];
             self::$powers[$id]['isNew']      = isset($power['f']) && $power['f'] & 0x1000 ? true : false;
             self::$powers[$id]['isLimited']  = isset($power['f']) && $power['f'] & 0x2000 ? true : false;
             self::$powers[$id]['isEpic']     = isset($power['f']) && $power['f'] & 8 ? true : false;

@@ -109,7 +109,7 @@ $jinx = function ($who, $message, $type) {
             $messageTmp = implode(" ", $message);
             $message2 = preg_replace("/[ >]/", "", $messageTmp);
             
-            if (strlen($message2 > 0)) {
+            if (strlen($message2) > 0) {
                 $message2 = str_split($message2);
                 $Arg = $Arg > count($message2) ? count($message2) : $Arg;
                 
@@ -135,6 +135,65 @@ $jinx = function ($who, $message, $type) {
                 $message
             );
             $message = explode(" ", $message);
+            break;
+        case 9:
+        case "space":
+            $message = [implode($message)];
+            $message[0] = preg_replace("/[ >]/", "", $message[0]);
+        break;
+        case 11:
+        case "rspace":
+            $messageTmp = implode(" ", $message);
+            $messageTmp = preg_replace("/\s+/", " ", $messageTmp);
+            $messageTmp = preg_replace("/[>]/", " ", $messageTmp);
+            $message = explode(" ", $messageTmp);
+            $messageTmp = preg_replace("/[ ]/", "", $messageTmp);
+            $message3 = [];
+            if (count($message) <= 4) {
+                $i = 0;
+                while ($i < strlen($messageTmp)) {
+                    $random2 = (($random() % 1000000) / 10000);
+                    if ($random2 < 2.998) {
+                        $message3[$i] = 1;
+                    } else if ($random2 < 20.649) {
+                        $message3[$i] = 2;
+                    } else if ($random2 < 41.16) {
+                        $message3[$i] = 3;
+                    } else if ($random2 < 55.947) {
+                        $message3[$i] = 4;
+                    } else if ($random2 < 66.647) {
+                        $message3[$i] = 5;
+                    } else if ($random2 < 75.035) {
+                        $message3[$i] = 6;
+                    } else if ($random2 < 82.974) {
+                        $message3[$i] = 7;
+                    } else if ($random2 < 88.917) {
+                        $message3[$i] = 8;
+                    } else {
+                        $message3[$i] = 9;
+                    }
+                    $i = $i + $message3[$i];
+                }
+            } else {
+                $i = 0;
+                while ($i < count($message)) {
+                   $message3[$i] = count($message[$i]);
+                   $i++;
+                }
+                usort($message3, function($a, $b) use (&$random) {
+                    return ($random() & 1) ? -1 : 1;
+                }); 
+            }
+            $messageTmp = preg_replace("/ /", "", $messageTmp);
+            $i2 = 0;
+            $i = 0;
+            while ($id < count($message) - 1) {
+                $i2 = ($i2 + $message2[$i]);
+                $messageTmp = array_slice($messageTmp, 0, $i2) . " " . array_slice($messageTmp, $i2);
+                $i2++;
+                $i++;
+            }
+            $message = explode(" ", $messageTmp);
             break;
     }
     
