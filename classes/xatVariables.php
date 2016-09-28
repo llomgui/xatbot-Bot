@@ -1278,8 +1278,7 @@ abstract class xatVariables
         
         $volunteers = [];
         
-        preg_match_all('/<table.*?>(.*?)<\/table>/si', $page, $lines);
-        preg_match_all('/<td.*?>(.*?)<\/td>/si', $lines[1][0], $cell);
+        preg_match_all('/<td.*?>(.*?)<\/td>/si', $page, $cell);
         foreach ($cell[1] as $key => $value) {
             if ($key & 1) {
                 $value = explode(' ', strip_tags($value));// reg id
