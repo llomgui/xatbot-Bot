@@ -117,38 +117,39 @@ class Network
     }
 
     public function join()
-    {
-        /*
-            TODO
-               set done to false
-        */
-        
+    {        
         $this->socket = new Socket();
 
-        if (!$this->connectToChat(8)) {
-            return false;
+        if (empty(xatVariables::getLoginPacket()) || (time() - xatVariables::getLoginTime()) > 900) {
+            xatVariables::update();
+            if (!$this->connectToChat(8)) {
+                return false;
+            }
+
+            $this->socket->write('y', [
+                    'r' => 8, 
+                    'v' => '0', 
+                    'u' => xatVariables::getXatid(), 
+                    'z' => '8335799305056508195'
+                ]
+            );
+
+            $this->socket->read(true);
+
+            $this->socket->write('v', [
+                    'n' => xatVariables::getRegname(),
+                    'p' => (xatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
+                ]
+            );
+
+            $this->logininfo = $this->socket->read(true)['elements'];
+            $this->socket->disconnect();
+
+            xatVariables::setLoginPacket($this->logininfo);
+            xatVariables::setLoginTime(time());
         }
 
-        $this->socket->write('y', [
-                'r' => 8, 
-                'v' => '0', 
-                'u' => xatVariables::getXatid(), 
-                'z' => '8335799305056508195'
-            ]
-        );
-
-        $packetY = $this->socket->read(true);
-
-        $this->socket->write('v', [
-                'n' => xatVariables::getRegname(),
-                'p' => (xatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
-            ]
-        );
-
-        $this->logininfo = $this->socket->read(true)['elements'];
-
-        $this->socket->disconnect();
-
+        $this->logininfo = xatVariables::getLoginPacket();
         if (!$this->connectToChat($this->botData['chatid'])) {
             return false;
         }

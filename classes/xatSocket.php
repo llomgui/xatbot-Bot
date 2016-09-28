@@ -50,14 +50,16 @@ class Socket
             socket_set_block($this->socket);
         }
 
-        $packet = socket_read($this->socket, 1460);
+        do {
+            $packet = socket_read($this->socket, 1460);
 
-        if ($packet === false && (socket_last_error($this->socket) !== 0) && (socket_last_error($this->socket) !== 11)) {
-            $this->disconnect();
-            return false;
-        }
+            if ($packet === false && (socket_last_error($this->socket) !== 0) && (socket_last_error($this->socket) !== 11)) {
+                $this->disconnect();
+                return false;
+            }
 
-        $this->buffer .= $packet;
+            $this->buffer .= $packet;
+        } while($force && strpos($this->buffer, chr(0x00)) === false);
 
         if ($force === true) {
             socket_set_nonblock($this->socket);
