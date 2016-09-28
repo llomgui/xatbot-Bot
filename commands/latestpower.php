@@ -35,7 +35,7 @@ $latestpower = function ($who, $message, $type) {
         ucfirst($power['name']) . ' (ID: '. $latestID . ')',
         'Pawns: ' . (isset($power['pawns']) ? implode(', ', $power['pawns']) : 'none'),
         'Smilies: ' . implode(', ', $power['smilies']),
-        'Store price: ' . $power['storePrice'] . ' xats',
+        'Store price: ' . $power['storeCost'] . ' xats',
         'Status: ' . $status
     ];
     

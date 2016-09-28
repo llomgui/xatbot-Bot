@@ -1341,6 +1341,12 @@ abstract class xatVariables
             $powers[$id]['smilies'][] = $smiley;
         }
         
+        foreach($page[7][1] as $name => $value) {
+            if($name != 'time' && $name != "!") {
+                $powers[$value[0]]['pawns'][] = 'h' . $name;
+            }
+        }
+        
         $id = end($page[6][1]) >= $page[0][1]['id'] ? end($page[6][1]):$page[0][1]['id']; //check for highest id
         $id = count(array_keys($page[4][1], $id + 1)) > 0 ? $id + 1:$id;//check for higher id
         $id = count(array_keys($page[4][1], $id + 2)) > 0 ? $id + 2:$id;//check for higher id again (xat skips last id in section)
@@ -1360,12 +1366,6 @@ abstract class xatVariables
             $powers[$id]['isGame']     = false;
             $powers[$id]['isNew']      = false;
             $powers[$id]['smilies']    = array_merge([$lastName],  array_keys($page[4][1], $id));
-            
-            foreach($page[7][1] as $name => $value) {
-                if($name != 'time' && $value[0] == $id) {
-                    $powers[$id]['pawns'][] = 'h' . $name;
-                }
-            }
         }
 
         self::$powers = $powers + self::$powers;
