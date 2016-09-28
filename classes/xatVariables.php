@@ -1347,6 +1347,7 @@ abstract class xatVariables
             $powers[$id]['name']       = $lastName;
             $powers[$id]['minCost']    = 0;
             $powers[$id]['maxCost']    = 0;
+            $powers[$id]['storeCost']  = "unknown";
             $powers[$id]['isLimited']  = false;
             $powers[$id]['isAllPower'] = false;
             $powers[$id]['isEpic']     = false;
@@ -1354,6 +1355,12 @@ abstract class xatVariables
             $powers[$id]['isGame']     = false;
             $powers[$id]['isNew']      = false;
             $powers[$id]['smilies']    = array_merge([$lastName],  array_keys($page[4][1], $id));
+            
+            foreach($page[7][1] as $name => $value) {
+                if($name != 'time' && $value[0] == $id) {
+                    $powers[$id]['pawns'][] = 'h' . $name;
+                }
+            }
         }
 
         self::$powers = $powers + self::$powers;
