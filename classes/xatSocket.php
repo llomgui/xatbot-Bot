@@ -46,9 +46,17 @@ class Socket
             return false;
         }
 
+        $status = @socket_get_status($this->socket);
+        if (isset($status['timed_out'])) {
+            $this->disconnect();
+            return false;
+        }
+
         if ($force === true) {
             socket_set_block($this->socket);
         }
+
+        socket_clear_error($this->socket);
 
         do {
             $packet = socket_read($this->socket, 1460);
@@ -56,6 +64,10 @@ class Socket
             if ($packet === false && (socket_last_error($this->socket) !== 0) && (socket_last_error($this->socket) !== 11)) {
                 $this->disconnect();
                 return false;
+            }
+
+            if ($packet !== false && !empty($packet)) {
+                var_dump($packet);
             }
 
             $this->buffer .= $packet;
