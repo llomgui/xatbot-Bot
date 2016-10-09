@@ -162,20 +162,12 @@ class Network
         );
 
         $packetY = $this->socket->read(true);
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> refs/remotes/llomgui/master
         if (empty($packetY)) {
             $this->socket->disconnect();
             return $this->join();
         }
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> refs/remotes/llomgui/master
         $j2['cb'] = time();
         $j2['l5'] = '65535';
         $j2['l4'] = rand(10, 500);
