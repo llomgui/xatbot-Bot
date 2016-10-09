@@ -17,12 +17,6 @@ class Network
         $this->botData = $botData;
         $this->join();
     }
-    
-    public function Tick() 
-    {
-        print "Ticking". PHP_EOL;
-    }
-
     public function getDom($arg1)
     {
         if ($this->xFlag & 8) {

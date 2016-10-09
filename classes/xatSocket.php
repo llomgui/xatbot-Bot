@@ -5,12 +5,27 @@ class Socket
     private $socket;
     private $buffer;
     public $connected = false;
+    public $idle;
+    public $maxIdle = 1800;//possible that it needs to be longer/shorter
 
     public function __destruct()
     {
         $this->disconnect();
     }
-
+    
+    public function Tick() 
+    {
+        if ($this->isConnected()) {
+            print "{$this->idle} | " . time() . " | "  . (time() - $this->idle) . PHP_EOL; 
+            if ($this->idle < (time() - $this->maxIdle)) {
+                $this->write('m', [
+                    't' => "/KEEPPALIVE",
+                    'u' => 0
+                ]);//this is jsut a test packet
+                $this->idle = time();
+            }
+        }
+    }
     public function connect($ip, $port, $timeout)
     {
         $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -25,13 +40,15 @@ class Socket
 
         do {
             if (@socket_getpeername($this->socket, $ip, $port) && $ip != '0.0.0.0') {
+                $this->idle = time();
                 $this->connected = true;
                 return $this->isConnected();
             }
         } while (microtime(true) < $time);
-
+                
         return false;
     }
+    
 
     public function disconnect()
     {
@@ -76,7 +93,7 @@ class Socket
         if ($force === true) {
             socket_set_nonblock($this->socket);
         }
-
+        
         return $this->getPacket();
     }
 
@@ -93,6 +110,7 @@ class Socket
             $this->disconnect();
             return false;
         } else {
+            $this->idle = time();
             echo '--> ' . $packet . PHP_EOL;
             return true;
         }
@@ -109,7 +127,7 @@ class Socket
         $this->buffer = substr($this->buffer, $pos + 1);
 
         echo '<-- ' . $packet . PHP_EOL;
-
+        
         return $this->parsePacket($packet);
     }
 
