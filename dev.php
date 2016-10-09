@@ -35,7 +35,8 @@ while (1) {
     foreach ($xatBots as $botid => $Ocean) {
         $currentBot = $botid;
         $bot        = $Ocean;
-
+        $Ocean->network->Tick();
+        
         usleep(5000);
         try {
             while (1) {

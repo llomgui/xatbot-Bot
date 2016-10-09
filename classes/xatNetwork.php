@@ -17,6 +17,11 @@ class Network
         $this->botData = $botData;
         $this->join();
     }
+    
+    public function Tick() 
+    {
+        print "Ticking". PHP_EOL;
+    }
 
     public function getDom($arg1)
     {
@@ -163,7 +168,12 @@ class Network
         );
 
         $packetY = $this->socket->read(true);
-
+        
+        if (empty($packetY)) {
+            $this->socket->disconnect();
+            return $this->join();
+        }
+        
         $j2['cb'] = time();
         $j2['l5'] = '65535';
         $j2['l4'] = rand(10, 500);
