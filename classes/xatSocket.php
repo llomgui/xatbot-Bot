@@ -29,10 +29,9 @@ class Socket
                 return $this->isConnected();
             }
         } while (microtime(true) < $time);
-                
+
         return false;
     }
-    
 
     public function disconnect()
     {
@@ -77,7 +76,7 @@ class Socket
         if ($force === true) {
             socket_set_nonblock($this->socket);
         }
-        
+
         return $this->getPacket();
     }
 

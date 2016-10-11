@@ -234,7 +234,7 @@ class Network
 
         $this->write('j2', $j2);
     }
-    
+
     public function write($node = null, $elements = []) 
     {
         if ($node != "z") {
