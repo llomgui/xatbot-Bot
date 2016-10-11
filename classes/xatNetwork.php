@@ -11,8 +11,8 @@ class Network
     public $xFlag     = 0;
     public $attempt   = 0;
     public $prevrpool = -1;
-    public $LurkerTimeout = -1;
-    public $LurkerLimit = ((12 * 60) * 5); // 3600
+    public $lurkerTimeout = -1;
+    public $lurkerLimit = (((12 * 60) * 5) * 2); // 7200
 
     public function __construct($botData)
     {
@@ -20,18 +20,18 @@ class Network
         $this->join();
     }
     
-    public function NetworkTick()
+    public function tick()
     {
         if ($this->socket->isConnected()) {
-            if ($this->LurkerTimeout != -1) {
-                if ($this->LurkerTimeout <= 0) {
-                    $this->NetworkSendMsg('c', [
+            if ($this->lurkerTimeout != -1) {
+                if ($this->lurkerTimeout <= 0) {
+                    $this->write('c', [
                             'u' => xatVariables::getXatid(),
                             't' => '/KEEPALIVE'
                         ]
                     );
                 } else {
-                    $this->LurkerTimeout--;
+                    $this->lurkerTimeout--;
                 }
             }
         }
@@ -145,7 +145,7 @@ class Network
                 return false;
             }
 
-            $this->NetworkSendMsg('y', [
+            $this->write('y', [
                     'r' => 8, 
                     'v' => '0', 
                     'u' => xatVariables::getXatid(), 
@@ -155,7 +155,7 @@ class Network
 
             $this->socket->read(true);
 
-            $this->NetworkSendMsg('v', [
+            $this->write('v', [
                     'n' => xatVariables::getRegname(),
                     'p' => (xatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
                 ]
@@ -173,7 +173,7 @@ class Network
             return false;
         }
 
-        $this->NetworkSendMsg('y', [
+        $this->write('y', [
                 'r' => $this->botData['chatid'],
                 'v' => '0',
                 'u' => xatVariables::getXatid(),
@@ -236,13 +236,13 @@ class Network
         $j2['h'] = $this->botData['homepage'];
         $j2['v'] = 'xat Community Project';
 
-        $this->NetworkSendMsg('j2', $j2);
+        $this->write('j2', $j2);
     }
     
-    public function NetworkSendMsg($node = null, $elements = []) 
+    public function write($node = null, $elements = []) 
     {
         if ($node != "z") {
-            $this->LurkerTimeout = $this->LurkerLimit;
+            $this->lurkerTimeout = $this->lurkerLimit;
         }
         $this->socket->write($node, $elements);
     }
@@ -307,7 +307,7 @@ class Network
 
     public function sendMessage($message)
     {
-        $this->NetworkSendMsg('m', [
+        $this->write('m', [
             't' => $message,
             'u' => $this->logininfo['i']
         ]);
@@ -315,7 +315,7 @@ class Network
 
     public function sendPrivateMessage($uid, $message)
     {
-        $this->NetworkSendMsg('p', [
+        $this->write('p', [
             'u' => $uid,
             't' => $message
         ]);
@@ -323,7 +323,7 @@ class Network
 
     public function sendPrivateConversation($uid, $message)
     {
-        $this->NetworkSendMsg('p', [
+        $this->write('p', [
             'u' => $uid,
             't' => $message,
             's' => 2,
@@ -349,7 +349,7 @@ class Network
 
     public function answerTickle($uid)
     {
-        $this->NetworkSendMsg('z', [
+        $this->write('z', [
             'd' => $uid,
             'u' => $this->logininfo['i'] . '_0',
             't' => '/a_NF'
@@ -358,7 +358,7 @@ class Network
 
     public function sendTickle($uid)
     {
-        $this->NetworkSendMsg('z', [
+        $this->write('z', [
             'd' => $uid,
             'u' => $this->logininfo['i'] . '_0',
             't' => '/l'
@@ -368,12 +368,12 @@ class Network
     public function sendFriendList($ids)
     {
         $node = 'f ' . $ids;
-        $this->NetworkSendMsg($node);
+        $this->write($node);
     }
 
     public function kick($uid, $reason, $sound='')
     {
-        $this->NetworkSendMsg('c', [
+        $this->write('c', [
             'p' => $reason.$sound,
             'u' => $uid,
             't' => '/k'
@@ -388,7 +388,7 @@ class Network
 
         $time *= 3600;
 
-        $this->NetworkSendMsg('c', array_merge([
+        $this->write('c', array_merge([
                 'p' => $reason,
                 'u' => $uid,
                 't' => '/'. $tArgument . $time,
@@ -398,7 +398,7 @@ class Network
 
     public function unban($uid)
     {
-        $this->NetworkSendMsg('c', [
+        $this->write('c', [
             'u' => $uid,
             't' => '/u'
         ]);

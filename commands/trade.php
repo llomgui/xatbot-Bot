@@ -72,10 +72,10 @@ $trade = function ($who, $message, $type) {
 	}
 
 	$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'O,0,0,' . $powerstring];
-	$bot->network->NetworkSendMsg('x', $buildPacket);
+	$bot->network->write('x', $buildPacket);
 
 	usleep(300000);
 
 	$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'S,0'];
-	$bot->network->NetworkSendMsg('x', $buildPacket);
+	$bot->network->write('x', $buildPacket);
 };
