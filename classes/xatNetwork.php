@@ -11,32 +11,28 @@ class Network
     public $xFlag     = 0;
     public $attempt   = 0;
     public $prevrpool = -1;
-    public $lurkerTimeout = -1;
-    public $lurkerLimit = (((12 * 60) * 5) * 2); // 7200
+    public $idleTime = 0;
+    public $idleLimit = (60 * 20);// 20 minutes / 1200
 
     public function __construct($botData)
     {
         $this->botData = $botData;
         $this->join();
     }
-    
+
     public function tick()
     {
         if ($this->socket->isConnected()) {
-            if ($this->lurkerTimeout != -1) {
-                if ($this->lurkerTimeout <= 0) {
-                    $this->write('c', [
-                            'u' => xatVariables::getXatid(),
-                            't' => '/KEEPALIVE'
-                        ]
-                    );
-                } else {
-                    $this->lurkerTimeout--;
-                }
+            if ($this->idleTime < (time() - $this->idleLimit)) {
+                $this->write('c', [
+                    'u' => xatVariables::getXatid(),
+                    't' => '/KEEPALIVE'
+                    ]
+                );
             }
         }
     }
-    
+
     public function getDom($arg1)
     {
         if ($this->xFlag & 8) {
@@ -242,7 +238,7 @@ class Network
     public function write($node = null, $elements = []) 
     {
         if ($node != "z") {
-            $this->lurkerTimeout = $this->lurkerLimit;
+            $this->idleTime = time();
         }
         $this->socket->write($node, $elements);
     }
