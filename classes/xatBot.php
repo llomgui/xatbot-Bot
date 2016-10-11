@@ -17,7 +17,7 @@ class Bot
     public function __construct($botData)
     {
         $this->started  = time();
-        
+
         $this->minranks = (!empty($botData['minranks'])) ? $botData['minranks'] : [];
         $this->alias = (!empty($botData['alias'])) ? $botData['alias'] : [];
 

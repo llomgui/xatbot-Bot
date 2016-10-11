@@ -36,7 +36,7 @@ while (1) {
         $currentBot = $botid;
         $bot        = $Ocean;
         $Ocean->network->tick();
-        
+
         usleep(5000);
         try {
             while (1) {
