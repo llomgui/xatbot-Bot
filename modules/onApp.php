@@ -36,7 +36,7 @@ $onApp = function ($who, $app, $array) {
 					$bot->network->sendPrivateConversation($who, "You have lost.");
 				} else if ($move == 666) {
 					$bot->network->sendPrivateConversation($who, "Tsk tsk tsk... No cheating.");
-					return $bot->network->socket->write('x', [
+					return $bot->network->write('x', [
 						'i' => $app,
 						'u' => $array['d'],
 						'd' => $who,
@@ -50,7 +50,7 @@ $onApp = function ($who, $app, $array) {
 					$move = $move[1];
 				}
 				$move = chr($move + 65);
-				$bot->network->socket->write('x', [
+				$bot->network->write('x', [
 					'i'	=> $app,
 					'u' => $array['d'],
 					'd' => $who,
@@ -66,7 +66,7 @@ $onApp = function ($who, $app, $array) {
 
 					case 'G':
 						$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'G'];
-						$bot->network->socket->write('x', $buildPacket);
+						$bot->network->write('x', $buildPacket);
 						break;
 
 					case 'O':
@@ -77,13 +77,13 @@ $onApp = function ($who, $app, $array) {
 						if ($array['t'] == 'S,1') {
 							// <x i="30008" u="xatid" d="destid" t="S,5" />
 							$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'S,5'];
-							$bot->network->socket->write('x', $buildPacket);
+							$bot->network->write('x', $buildPacket);
 
 							usleep(300000);
 
 							// <x i="30008" u="xatid" d="destid" t="S,1" />
 							$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'S,1'];
-							$bot->network->socket->write('x', $buildPacket);
+							$bot->network->write('x', $buildPacket);
 
 							usleep(300000);
 
@@ -91,7 +91,7 @@ $onApp = function ($who, $app, $array) {
 							$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'T,' . 
 								(dataAPI::is_set('sent_trade_' . $who) ? dataAPI::get('sent_trade_' . $who) : '0;0;') . ',' . 
 								(dataAPI::is_set('received_trade_' . $who) ? dataAPI::get('received_trade_' . $who) : '0;0;') . ',' . xatVariables::getPassword()];
-							$bot->network->socket->write('x', $buildPacket);
+							$bot->network->write('x', $buildPacket);
 
 							if (dataAPI::is_set('sent_trade_' . $who)) {
 								dataAPI::un_set('sent_trade_' . $who);

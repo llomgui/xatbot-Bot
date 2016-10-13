@@ -23,6 +23,7 @@ class User
     private $rev;
 
     private $powers;
+    private $disabledPowers;
     private $doubles;
     private $xats;
     private $days;
@@ -274,7 +275,20 @@ class User
 
     public function setPowers($packet)
     {
+        $this->disabledPowers = [];
+        $xpowers = xatVariables::getPowers();
         for ($i=0; $i < xatVariables::getMaxPowerIndex(); $i++) {
+            if (!isset($packet['cb'])) { //only check for disables with <z packet
+                if (isset($packet['p' . $i]) && $this->powers[$i] != $packet['p' . $i]) { // <z info can only be higher
+                    //check only ids in that section making this much faster
+                    foreach (range($i * 32, ($i * 32) + 30) as $id) {//not + 31 because xat doesnt use last subid for regular powers
+                        $hp = isset($packet['p' . $i]) && ($packet['p' . $i] & (1 << ($id % 32)));
+                        if (!$this->hasPower($id) && $hp) {
+                            $this->disabledPowers[$id] = $xpowers[$id];
+                        }
+                    }
+                }
+            }
             $this->powers[$i] = $packet['p' . $i] ?? 0;
         }
     }

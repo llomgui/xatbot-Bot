@@ -11,11 +11,26 @@ class Network
     public $xFlag     = 0;
     public $attempt   = 0;
     public $prevrpool = -1;
+    public $idleTime = 0;
+    public $idleLimit = (60 * 20);// 20 minutes / 1200
 
     public function __construct($botData)
     {
         $this->botData = $botData;
         $this->join();
+    }
+
+    public function tick()
+    {
+        if ($this->socket->isConnected()) {
+            if ($this->idleTime < (time() - $this->idleLimit)) {
+                $this->write('c', [
+                    'u' => xatVariables::getXatid(),
+                    't' => '/KEEPALIVE'
+                    ]
+                );
+            }
+        }
     }
 
     public function getDom($arg1)
@@ -126,7 +141,7 @@ class Network
                 return false;
             }
 
-            $this->socket->write('y', [
+            $this->write('y', [
                     'r' => 8, 
                     'v' => '0', 
                     'u' => xatVariables::getXatid(), 
@@ -136,7 +151,7 @@ class Network
 
             $this->socket->read(true);
 
-            $this->socket->write('v', [
+            $this->write('v', [
                     'n' => xatVariables::getRegname(),
                     'p' => (xatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
                 ]
@@ -154,7 +169,7 @@ class Network
             return false;
         }
 
-        $this->socket->write('y', [
+        $this->write('y', [
                 'r' => $this->botData['chatid'],
                 'v' => '0',
                 'u' => xatVariables::getXatid(),
@@ -217,7 +232,15 @@ class Network
         $j2['h'] = $this->botData['homepage'];
         $j2['v'] = 'xat Community Project';
 
-        $this->socket->write('j2', $j2);
+        $this->write('j2', $j2);
+    }
+
+    public function write($node = null, $elements = []) 
+    {
+        if ($node != "z") {
+            $this->idleTime = time();
+        }
+        $this->socket->write($node, $elements);
     }
 
     private function passwordToHash()
@@ -280,7 +303,7 @@ class Network
 
     public function sendMessage($message)
     {
-        $this->socket->write('m', [
+        $this->write('m', [
             't' => $message,
             'u' => $this->logininfo['i']
         ]);
@@ -288,7 +311,7 @@ class Network
 
     public function sendPrivateMessage($uid, $message)
     {
-        $this->socket->write('p', [
+        $this->write('p', [
             'u' => $uid,
             't' => $message
         ]);
@@ -296,7 +319,7 @@ class Network
 
     public function sendPrivateConversation($uid, $message)
     {
-        $this->socket->write('p', [
+        $this->write('p', [
             'u' => $uid,
             't' => $message,
             's' => 2,
@@ -322,7 +345,7 @@ class Network
 
     public function answerTickle($uid)
     {
-        $this->socket->write('z', [
+        $this->write('z', [
             'd' => $uid,
             'u' => $this->logininfo['i'] . '_0',
             't' => '/a_NF'
@@ -331,7 +354,7 @@ class Network
 
     public function sendTickle($uid)
     {
-        $this->socket->write('z', [
+        $this->write('z', [
             'd' => $uid,
             'u' => $this->logininfo['i'] . '_0',
             't' => '/l'
@@ -341,12 +364,12 @@ class Network
     public function sendFriendList($ids)
     {
         $node = 'f ' . $ids;
-        $this->socket->write($node);
+        $this->write($node);
     }
 
     public function kick($uid, $reason, $sound='')
     {
-        $this->socket->write('c', [
+        $this->write('c', [
             'p' => $reason.$sound,
             'u' => $uid,
             't' => '/k'
@@ -361,7 +384,7 @@ class Network
 
         $time *= 3600;
 
-        $this->socket->write('c', array_merge([
+        $this->write('c', array_merge([
                 'p' => $reason,
                 'u' => $uid,
                 't' => '/'. $tArgument . $time,
@@ -371,7 +394,7 @@ class Network
 
     public function unban($uid)
     {
-        $this->socket->write('c', [
+        $this->write('c', [
             'u' => $uid,
             't' => '/u'
         ]);
