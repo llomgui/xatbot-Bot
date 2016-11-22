@@ -1267,7 +1267,7 @@ abstract class xatVariables
         $cpt = 0;
 
         do {
-            $page = file_get_contents('https://util.xat.com/wiki/index.php?title=Template:List_of_ticket_volunteers&t=' . time(), false, $ctx);
+            $page = file_get_contents('https://xat.wiki/Template:List_of_ticket_volunteers&mobileaction=toggle_view_mobile&t=' . time(), false, $ctx);
             $cpt++;
             usleep(300000);
         } while (empty($page) && $cpt < 5);

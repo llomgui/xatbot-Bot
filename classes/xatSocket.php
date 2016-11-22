@@ -109,7 +109,7 @@ class Socket
         $this->buffer = substr($this->buffer, $pos + 1);
 
         echo '<-- ' . $packet . PHP_EOL;
-
+        
         return $this->parsePacket($packet);
     }
 

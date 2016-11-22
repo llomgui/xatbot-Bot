@@ -37,7 +37,9 @@
 				"reload": "dev reload",
 				"promo": "misc promo",
 				"reg": "misc regname",
-				"id": "misc xatid"
+				"id": "misc xatid",
+				"sn": "shortname",
+				"vols": "online volunteers"
 			}
 		}
 	}
