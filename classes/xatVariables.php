@@ -1481,7 +1481,12 @@ abstract class xatVariables
 
     public static function getMaxPowerIndex()
     {
-        return ceil(max(array_keys(self::$powers)) / 32);
+        $max = max(array_keys(self::$powers)) / 32;
+        if (!is_float($max)) {
+            $max += 1;
+        }
+
+        return ceil($max);
     }
 
     public static function getRegname()
