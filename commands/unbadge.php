@@ -1,6 +1,6 @@
 <?php
 
-$unbadge = function ($who, $message, $type) {
+$unbadge = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

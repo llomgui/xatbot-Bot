@@ -1,6 +1,6 @@
 <?php
 
-$boot = function ($who, $message, $type) {
+$boot = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

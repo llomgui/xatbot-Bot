@@ -1,6 +1,6 @@
 <?php
 
-$onChatInfo = function ($array) {
+$onChatInfo = function (array $array) {
 
     $bot = actionAPI::getBot();
 

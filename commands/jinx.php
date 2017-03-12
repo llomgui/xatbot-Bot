@@ -1,6 +1,6 @@
 <?php
 
-$jinx = function ($who, $message, $type) {
+$jinx = function (int $who, array $message, int $type) {
     /*
         Work In Progress
         Contains a few errors

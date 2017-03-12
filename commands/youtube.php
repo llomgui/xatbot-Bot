@@ -1,6 +1,6 @@
 <?php
 
-$youtube = function ($who, $message, $type) {
+$youtube = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 	

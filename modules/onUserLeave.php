@@ -1,6 +1,6 @@
 <?php
 
-$onUserLeave = function ($who) {
+$onUserLeave = function (int $who) {
 
     $bot  = actionAPI::getBot();
 

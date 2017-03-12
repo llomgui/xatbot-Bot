@@ -1,6 +1,6 @@
 <?php
 
-$onTickle = function ($who, $array) {
+$onTickle = function (int $who, array $array) {
 
     $bot = actionAPI::getBot();
 

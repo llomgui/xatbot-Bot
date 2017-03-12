@@ -1,6 +1,6 @@
 <?php
 
-$active = function ($who, $message, $type) {
+$active = function (int $who, array $message, int $type) {
 
     $bot  = actionAPI::getBot();
     $now  = time();

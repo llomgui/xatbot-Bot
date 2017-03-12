@@ -1,6 +1,6 @@
 <?php
 
-$twitch = function ($who, $message, $type) {
+$twitch = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

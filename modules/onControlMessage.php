@@ -1,6 +1,6 @@
 <?php
 
-$onControlMessage = function ($array) {
+$onControlMessage = function (array $array) {
     
     $bot = actionAPI::getBot();
 

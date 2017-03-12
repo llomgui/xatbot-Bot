@@ -1,6 +1,6 @@
 <?php
 
-$onFriendList = function ($array) {
+$onFriendList = function (array $array) {
 
     if (!isset($array['v'])) {
         var_dump($array);

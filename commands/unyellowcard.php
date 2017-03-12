@@ -1,6 +1,6 @@
 <?php
 
-$unyellowcard = function ($who, $message, $type) {
+$unyellowcard = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

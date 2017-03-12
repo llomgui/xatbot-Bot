@@ -1,6 +1,6 @@
 <?php
 
-$allmissing = function ($who, $message, $type) {
+$allmissing = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
     $user = $bot->users[$who]; 

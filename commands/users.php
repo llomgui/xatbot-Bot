@@ -1,6 +1,6 @@
 <?php
 
-$users = function ($who, $message, $type) {
+$users = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

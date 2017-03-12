@@ -1,6 +1,6 @@
 <?php
 
-$poorest = function ($who, $message, $type) {
+$poorest = function (int $who, array $message, int $type) {
 
     $bot    = actionAPI::getBot();
     $powers = xatVariables::getPowers();

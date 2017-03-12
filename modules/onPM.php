@@ -1,5 +1,5 @@
 <?php
 
-$onPM = function ($who, $message) {
+$onPM = function (int $who, string $message) {
 
 };

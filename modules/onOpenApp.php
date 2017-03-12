@@ -1,5 +1,5 @@
 <?php
 
-$onOpenApp = function ($who, $app) {
+$onOpenApp = function (int $who, int $app) {
 
 };
