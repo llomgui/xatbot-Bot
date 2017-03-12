@@ -200,9 +200,15 @@ class User
 
     public function isMobile()
     {
-        return (($this->flag0 & 1 << 11) != 0);
+		return !$this->onXat(); // how can you be offline but online at the same time? (chris be trollin)
+        //return (($this->flag0 & 1 << 11) != 0); "outdated mobile pawn not used anymore
     }
-
+	
+	public function onXat() 
+	{
+		return (($this->qflags & 1) != 0);
+	}
+	
     public function isBannished()
     {
         return (($this->flag0 & 1 << 12) != 0);
