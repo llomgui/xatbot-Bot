@@ -87,20 +87,21 @@ abstract class xatVariables
     private static function initVolunteers()
     {
         $volunteers = [
-            ['regname' => 'Andre',           'xatid' => 112633],
-            ['regname' => 'Brandon',         'xatid' => 1010208],
-            ['regname' => 'Cupim',           'xatid' => 10000690],
-            ['regname' => 'Cyan',            'xatid' => 283021491],
-            ['regname' => 'Davide',          'xatid' => 313558511],
-            ['regname' => 'ELIE',            'xatid' => 79328863],
-            ['regname' => 'Guinho',          'xatid' => 2300000],
-            ['regname' => 'Jayden',          'xatid' => 121040483],
-            ['regname' => 'Life',            'xatid' => 169697989],
-            ['regname' => 'Mihay',           'xatid' => 1700000],
-            ['regname' => 'elevatordancing', 'xatid' => 209642885],
-            ['regname' => 'Rida',            'xatid' => 9900000],
-            ['regname' => 'Nick',            'xatid' => 6960969],
-            ['regname' => 'Steven',          'xatid' => 400004803]
+            ['regname' => 'Andre',   'xatid' => 112633],
+            ['regname' => 'Brandon', 'xatid' => 1010208],
+            ['regname' => 'Chelly',  'xatid' => 19032000],
+            ['regname' => 'Cupim',   'xatid' => 10000690],
+            ['regname' => 'Cyan',    'xatid' => 283021491],
+            ['regname' => 'Elie',    'xatid' => 79328863],
+            ['regname' => 'Guinho',  'xatid' => 2300000],
+            ['regname' => 'Jayden',  'xatid' => 121040483],
+            ['regname' => 'Junior',  'xatid' => 21299],
+            ['regname' => 'Kyle',    'xatid' => 96321545],
+            ['regname' => 'Mihay',   'xatid' => 1700000],
+            ['regname' => 'Mike',    'xatid' => 7000000],
+            ['regname' => 'Muffins', 'xatid' => 209642885],
+            ['regname' => 'Nick',    'xatid' => 6960969],
+            ['regname' => 'Steven',  'xatid' => 400004803]
         ];
 
         self::$volunteers = $volunteers;
