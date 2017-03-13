@@ -16,6 +16,7 @@ abstract class xatVariables
     private static $powers;
     private static $volunteers;
     private static $bots;
+    private static $developers;
 
     private static $loginTime;
     private static $loginPacket;
@@ -30,6 +31,7 @@ abstract class xatVariables
         self::initIP2();
         self::initVolunteers();
         self::initPowers();
+        self::initDevelopers();
 
         return self::$init = true;
     }
@@ -1237,6 +1239,13 @@ abstract class xatVariables
         self::$powers = $powers;
     }
 
+    private static function initDevelopers()
+    {
+        $data = json_decode(file_get_contents('./config.json', true), true);
+
+        self::$developers = $data['developers'];
+    }
+
     public static function update()
     {
         self::$update = time();
@@ -1523,5 +1532,10 @@ abstract class xatVariables
     public static function getBots()
     {
         return self::$bots;
+    }
+
+    public static function getDevelopers()
+    {
+        return self::$developers;
     }
 }

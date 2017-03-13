@@ -2,7 +2,7 @@
 
 $dev = function (int $who, array $message, int $type) {
 
-    if (!in_array($who, [1000000000, 45193538])) {
+    if (!in_array($who, xatVariables::getDevelopers())) {
         return;
     }
 
