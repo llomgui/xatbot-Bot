@@ -1,6 +1,6 @@
 <?php
 
-${'8ball'} = function ($who, $message, $type) {
+${'8ball'} = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

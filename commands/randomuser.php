@@ -1,6 +1,6 @@
 <?php
 
-$randomuser = function ($who, $message, $type) {
+$randomuser = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

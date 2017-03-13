@@ -1,6 +1,6 @@
 <?php
 
-$randomsmiley = function ($who, $message, $type) {
+$randomsmiley = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (empty($message[1]) || !isset($message[1])) {

@@ -1,6 +1,6 @@
 <?php
 
-$onUserJoined = function ($who, $array) {
+$onUserJoined = function (int $who, array $array) {
 
     $bot = actionAPI::getBot();
 

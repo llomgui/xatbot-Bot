@@ -1,5 +1,5 @@
 <?php
-$misc = function ($who, $message, $type) {
+$misc = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

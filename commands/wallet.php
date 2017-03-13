@@ -1,6 +1,6 @@
 <?php
 
-$wallet = function ($who, $message, $type) {
+$wallet = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
     $user = $bot->users[$who]; 

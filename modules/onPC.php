@@ -1,5 +1,5 @@
 <?php
 
-$onPC = function ($who, $message) {
+$onPC = function (int $who, string $message) {
 
 };

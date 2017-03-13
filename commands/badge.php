@@ -1,6 +1,6 @@
 <?php
 
-$badge = function ($who, $message, $type) {
+$badge = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

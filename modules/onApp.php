@@ -1,6 +1,6 @@
 <?php
 
-$onApp = function ($who, $app, $array) {
+$onApp = function (int $who, int $app, array $array) {
 	$bot = actionAPI::getBot();
 	switch ($app) {
 		case 10000: //Example stub for doodle

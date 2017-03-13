@@ -1,6 +1,6 @@
 <?php
 
-$shortname = function ($who, $message, $type) {
+$shortname = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

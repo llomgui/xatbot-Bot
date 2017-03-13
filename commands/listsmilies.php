@@ -1,6 +1,6 @@
 <?php
 
-$listsmilies = function ($who, $message, $type) {
+$listsmilies = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

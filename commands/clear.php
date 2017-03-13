@@ -1,6 +1,6 @@
 <?php
 
-$clear = function ($who, $message, $type) {
+$clear = function (int $who, array $message, int $type) {
 
 	$bot = actionAPI::getBot();
 

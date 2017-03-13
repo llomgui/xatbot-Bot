@@ -1,6 +1,6 @@
 <?php
 
-$ban = function ($who, $message, $type) {
+$ban = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

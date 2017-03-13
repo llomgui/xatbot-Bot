@@ -1,5 +1,5 @@
 <?php
-$slots = function ($who, $message, $type) {
+$slots = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

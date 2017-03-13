@@ -1,6 +1,6 @@
 <?php
 
-$zipban = function ($who, $message, $type) {
+$zipban = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

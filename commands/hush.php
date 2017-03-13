@@ -1,6 +1,6 @@
 <?php
 
-$hush = function ($who, $message, $type) {
+$hush = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

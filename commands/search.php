@@ -1,6 +1,6 @@
 <?php
 
-$search = function ($who, $message, $type) {
+$search = function (int $who, array $message, int $type) {
 
 	$bot = actionAPI::getBot();
 

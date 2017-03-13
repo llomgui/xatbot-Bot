@@ -1,6 +1,6 @@
 <?php
 
-$online = function ($who, $message, $type) {
+$online = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (empty($message[1]) || !isset($message[1])) {

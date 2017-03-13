@@ -1,6 +1,6 @@
 <?php
 
-$naughtystep = function ($who, $message, $type) {
+$naughtystep = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
