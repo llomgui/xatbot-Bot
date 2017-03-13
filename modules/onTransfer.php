@@ -1,5 +1,5 @@
 <?php
-$onTransfer = function ($from, $to, $xats, $days, $message) {
+$onTransfer = function (int $from, int $to, int $xats, int $days, string $message) {
     //TODO process transfer
     return;
 };

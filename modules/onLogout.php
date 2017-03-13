@@ -1,6 +1,6 @@
 <?php
 
-$onLogout = function ($array) {
+$onLogout = function (array $array) {
     
     $bot = actionAPI::getBot();
     if (!isset($array['e'])) {

@@ -1,6 +1,6 @@
 <?php
 
-$sinbin = function ($who, $message, $type) {
+$sinbin = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

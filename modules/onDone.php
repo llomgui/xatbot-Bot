@@ -1,6 +1,6 @@
 <?php
 
-$onDone = function ($array) {
+$onDone = function (array $array) {
 
     $bot = actionAPI::getBot();
     $bot->network->idleTime = time();

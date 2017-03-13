@@ -1,6 +1,6 @@
 <?php
 
-$dice = function ($who, $message, $type) {
+$dice = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 	

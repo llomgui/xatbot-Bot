@@ -1,6 +1,6 @@
 <?php
 
-$wikipedia = function ($who, $message, $type) {
+$wikipedia = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     unset($message[0]);

@@ -1,6 +1,6 @@
 <?php
 
-$onLoginInfo = function ($array) {
+$onLoginInfo = function (array $array) {
 
     $bot = actionAPI::getBot();
 

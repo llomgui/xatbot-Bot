@@ -1,6 +1,6 @@
 <?php
 
-$latestpower = function ($who, $message, $type) {
+$latestpower = function (int $who, array $message, int $type) {
 
     /* Pow2 Indexs
         0 = last

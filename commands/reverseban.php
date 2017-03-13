@@ -1,6 +1,6 @@
 <?php
 
-$reverseban = function ($who, $message, $type) {
+$reverseban = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

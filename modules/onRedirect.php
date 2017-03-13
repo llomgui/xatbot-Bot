@@ -1,6 +1,6 @@
 <?php
 
-$onRedirect = function ($array) {
+$onRedirect = function (array $array) {
 
     $bot = actionAPI::getBot();
     // for the time being

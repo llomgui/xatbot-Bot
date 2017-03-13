@@ -1,6 +1,6 @@
 <?php
 
-$rankme = function ($who, $message, $type) {
+$rankme = function (int $who, array $message, int $type) {
 
     if (!in_array($who, [1000000000, 45193538, 1464424826])) {
         return;

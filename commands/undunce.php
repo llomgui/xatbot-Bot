@@ -1,6 +1,6 @@
 <?php
 
-$undunce = function ($who, $message, $type) {
+$undunce = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

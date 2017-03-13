@@ -291,7 +291,11 @@ function dispatch($type, $name, $args)
     }
 
     foreach ($extensionsList[$type][$name] as $extensionName => $function) {
-        call_user_func_array($function, $args);
+		try {
+			call_user_func_array($function, $args);
+		} catch (TypeError $e) {
+			var_dump($e->getMessage());
+		}
     }
 }
 

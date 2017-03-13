@@ -1,6 +1,6 @@
 <?php
 
-$trade = function ($who, $message, $type) {
+$trade = function (int $who, array $message, int $type) {
 
 	$bot = actionAPI::getBot();
 

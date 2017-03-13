@@ -1,6 +1,6 @@
 <?php
 
-$onRankMessage = function ($who, $message, $reason, $array) {
+$onRankMessage = function (int $who, string $message, string $reason, array $array) {
     $bot = actionAPI::getBot();
     
     if ($message[0] == "/") {

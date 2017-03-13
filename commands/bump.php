@@ -1,6 +1,6 @@
 <?php
 
-$bump = function ($who, $message, $type) {
+$bump = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

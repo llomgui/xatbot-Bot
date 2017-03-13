@@ -1,6 +1,6 @@
 <?php
 
-$gamebanme = function ($who, $message, $type) {
+$gamebanme = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

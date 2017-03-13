@@ -1,6 +1,6 @@
 <?php
 
-$die = function ($who, $message, $type) {
+$die = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
     //TODO kill this bot

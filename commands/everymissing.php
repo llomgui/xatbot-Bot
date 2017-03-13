@@ -1,6 +1,6 @@
 <?php
 
-$everymissing = function ($who, $message, $type) {
+$everymissing = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 

@@ -1,5 +1,5 @@
 <?php
 
-$onBlast = function ($array) {
+$onBlast = function (array $array) {
 
 };

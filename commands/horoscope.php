@@ -1,6 +1,6 @@
 <?php
 
-$horoscope = function ($who, $message, $type) {
+$horoscope = function (int $who, array $message, int $type) {
 	$bot = actionAPI::getBot();
 
 	if (!$bot->minrank($who, 'horoscope')) {

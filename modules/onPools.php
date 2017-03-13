@@ -1,6 +1,6 @@
 <?php
 
-$onPools = function ($array) {
+$onPools = function (array $array) {
     
     $bot = actionAPI::getBot();
 
