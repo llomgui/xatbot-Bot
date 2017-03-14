@@ -1,5 +1,5 @@
-#TODO list
-##Commands
+# TODO list
+### Commands
 * countdown
 * kickall
 * chatinfos
@@ -8,12 +8,12 @@
 * pool
 * getmain
 
-##Features (pending api keys) - Set API keys in config.json
+### Features (pending api keys) - Set API keys in config.json
 * twitter
 * google
 * weather
 
-##Features (pending database connection)
+### Features (pending database connection)
 * Alias'
 * Responses
 * Minranks
