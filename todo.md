@@ -1,7 +1,7 @@
 # TODO list
 ### Commands
 * [x] countdown
-* [ ] kickall
+* [x] kickall
 * [ ] chatinfos
 * [ ] rank
 * [ ] game
