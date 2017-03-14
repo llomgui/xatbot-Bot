@@ -2,7 +2,7 @@
 ### Commands
 * [x] countdown
 * [x] kickall
-* [ ] chatinfos
+* [x] chatinfos
 * [ ] rank
 * [ ] game
 * [ ] pool
