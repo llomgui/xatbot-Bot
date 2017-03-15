@@ -118,4 +118,18 @@ class Bot
         $dtT = new \DateTime("@$seconds");
         return $dtF->diff($dtT)->format('%a days, %h hours, %i minutes and %s seconds');
     }
+
+    public function stribet($inputstr, $deliLeft, $deliRight)
+    {
+        $posLeft = stripos($inputstr, $deliLeft) + strlen($deliLeft);
+        $posRight = stripos($inputstr, $deliRight, $posLeft);
+        return substr($inputstr, $posLeft, $posRight - $posLeft);
+    }
+
+    public function getChatName($param1)
+    {
+        $url = 'http://xat.com/xat' . $param1;
+        $fgc = file_get_contents($url);
+        return $this->stribet($fgc, "uname='", "';");
+    }
 }

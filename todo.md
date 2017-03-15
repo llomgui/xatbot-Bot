@@ -6,7 +6,6 @@
 * [x] rank
 * [ ] game
 * [x] pool
-* [ ] getmain
 
 ### Features (pending api keys) - Set API keys in config.json
 * [ ] twitter
@@ -29,3 +28,4 @@
 * [ ] history
 * [ ] scramble
 * [ ] hangman
+* [ ] getmain - Needs pw stored in database
