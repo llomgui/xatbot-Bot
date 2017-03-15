@@ -5,7 +5,7 @@
 * [x] chatinfos
 * [x] rank
 * [ ] game
-* [ ] pool
+* [x] pool
 * [ ] getmain
 
 ### Features (pending api keys) - Set API keys in config.json
