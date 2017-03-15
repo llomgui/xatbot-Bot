@@ -3,7 +3,7 @@
 * [x] countdown
 * [x] kickall
 * [x] chatinfos
-* [ ] rank
+* [x] rank
 * [ ] game
 * [ ] pool
 * [ ] getmain

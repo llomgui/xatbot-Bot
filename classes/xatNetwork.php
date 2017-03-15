@@ -400,6 +400,15 @@ class Network
         ]);
     }
 
+    public function changeRank($uid, $rank)
+    {
+        $rankCmd = ['owner' => '/M', 'moderator' => '/m', 'member' => '/e', 'guest' => '/r'];
+        $this->socket->write('c', [
+            'u' => $uid,
+            't' => $rankCmd[$rank]
+        ]);
+    }
+
     public function findPowerMatch($string) {
         $powers = xatVariables::getPowers();
 
@@ -423,7 +432,7 @@ class Network
             }
         }
 
-        if($closest) {
+        if ($closest) {
             return [$closest, false];
         }
 
