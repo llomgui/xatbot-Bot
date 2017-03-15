@@ -21,6 +21,10 @@ abstract class xatVariables
     private static $loginTime;
     private static $loginPacket;
 
+    private static $releaseTime;
+    private static $adMessage1;
+    private static $adMessage2;
+
     public static function init()
     {
         if (self::$init) {
@@ -1253,6 +1257,7 @@ abstract class xatVariables
         self::updateIP2();
         self::updateVolunteers();
         self::updatePowers();
+        self::updateAd();
     }
 
     private static function updateIP2()
@@ -1446,6 +1451,30 @@ abstract class xatVariables
         }
     }
 
+    public static function updateAd()
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 120);
+        curl_setopt($curl, CURLOPT_URL, 'http://xat.com/json/ad.php?Ocean=' . time());
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $page = curl_exec($curl);
+        curl_close($curl);
+
+        if (!$page) {
+            return false;
+        }
+
+        $json = json_decode($page, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return false;
+        }
+        
+        self::$adMessage1  = $json['m1'];
+        self::$adMessage2  = $json['m2'];
+        self::$releaseTime = $json['t'];
+    }
+
     public static function setLoginPacket($info)
     {
         self::$loginPacket = $info;
@@ -1537,5 +1566,20 @@ abstract class xatVariables
     public static function getDevelopers()
     {
         return self::$developers;
+    }
+
+    public static function getReleaseTime()
+    {
+        return self::$releaseTime;
+    }
+    
+    public static function getAdMessage1()
+    {
+        return self::$adMessage1;
+    }
+    
+    public static function getAdMessage2()
+    {
+        return self::$adMessage2;
     }
 }

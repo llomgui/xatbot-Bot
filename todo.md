@@ -1,31 +1,31 @@
-#TODO list
-##Commands
-countdown
-kickall
-chatinfos
-rank
-game
-pool
-getmain
+# TODO list
+### Commands
+* [x] countdown
+* [x] kickall
+* [x] chatinfos
+* [x] rank
+* [ ] game
+* [x] pool
+* [ ] getmain
 
-##Features (pending api keys)
-twitter
-google
-weather
+### Features (pending api keys) - Set API keys in config.json
+* [ ] twitter
+* [ ] google
+* [ ] weather
 
-##Features (pending database connection)
-Alias'
-Responses
-Minranks
-combine "ban/unban" commands with alias
-hasmost
-userinfo
-lastseen
-power [enable/disable/clear/list]
-edit
-staff
-allmissing
-everymissing
-history
-scramble
-hangman
+### Features (pending database connection)
+* [ ] Alias'
+* [ ] Responses
+* [ ] Minranks
+* [ ] combine "ban/unban" commands with alias
+* [ ] hasmost
+* [ ] userinfo
+* [ ] lastseen
+* [ ] power [enable/disable/clear/list]
+* [ ] edit
+* [ ] staff
+* [ ] allmissing
+* [ ] everymissing
+* [ ] history
+* [ ] scramble
+* [ ] hangman
