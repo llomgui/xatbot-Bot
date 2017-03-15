@@ -294,12 +294,10 @@ class User
     public function setMaskedPowers($packet) 
     {
         for ($i=0; $i < xatVariables::getMaxPowerIndex(); $i++) {
-            if (isset($packet['p' . $i]) && $packet['p' . $i] > $this->powers[$i]) {
-                $this->maskedpowers[$i] = $packet['p' . $i] - $this->powers[$i];
-            }
+            $this->maskedpowers[$i] = isset($packet['p' . $i]) ? $packet['p' . $i] - $this->powers[$i] : 0;
         }
-    }    
-
+    }   
+    
     public function setDoubles($info)
     {
         $this->doubles = $info;
