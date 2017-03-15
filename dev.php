@@ -75,7 +75,11 @@ while (1) {
                 }
 
                 switch ($packet['node']) {
-
+                    case 'abort':
+                        $hook   = 'onAbort'; // onAbort($array)
+                        $args[] = $packet['elements'];
+                        break;
+                        
                     case 'a':
                         $hook   = 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message)
                         $args[] = $packet['elements']['u'];
@@ -138,6 +142,10 @@ while (1) {
                     case 'l':
                         $hook   = 'onUserLeave'; // onUserLeave($who)
                         $args[] = $packet['elements']['u'];
+                        break;
+                        
+                    case 'ldone':
+                        // meh
                         break;
                         
                     case 'logout':
