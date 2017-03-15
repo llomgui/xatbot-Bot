@@ -24,6 +24,8 @@ abstract class xatVariables
     private static $releaseTime;
     private static $adMessage1;
     private static $adMessage2;
+    
+    private static $apikeys;
 
     public static function init()
     {
@@ -36,6 +38,7 @@ abstract class xatVariables
         self::initVolunteers();
         self::initPowers();
         self::initDevelopers();
+        self::initAPIKeys();
 
         return self::$init = true;
     }
@@ -1249,6 +1252,13 @@ abstract class xatVariables
 
         self::$developers = $data['developers'];
     }
+    
+    private static function initAPIKeys()
+    {
+        $data = json_decode(file_get_contents('./config.json', true), true);
+
+        self::$apikeys = $data['apikeys'];
+    }
 
     public static function update()
     {
@@ -1582,4 +1592,10 @@ abstract class xatVariables
     {
         return self::$adMessage2;
     }
+    
+    public static function getAPIKeys()
+    {
+        return self::$apikeys;
+    }
+
 }
