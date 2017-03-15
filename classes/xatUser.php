@@ -23,7 +23,7 @@ class User
     private $rev;
 
     private $powers;
-    private $disabledPowers;
+    private $maskedpowers;
     private $doubles;
     private $xats;
     private $days;
@@ -79,6 +79,11 @@ class User
     public function getPowers()
     {
         return $this->powers;
+    }
+    
+    public function getMaskedPowers()
+    {
+        return $this->maskedpowers;
     }
     
     public function isStealth()
@@ -200,14 +205,14 @@ class User
 
     public function isMobile()
     {
-		return !$this->onXat(); // how can you be offline but online at the same time? (chris be trollin)
+        return !$this->onXat(); // how can you be offline but online at the same time? (chris be trollin)
         //return (($this->flag0 & 1 << 11) != 0); "outdated mobile pawn not used anymore
     }
 	
-	public function onXat() 
-	{
-		return (($this->qflags & 1) != 0);
-	}
+    public function onXat() 
+    {
+        return (($this->qflags & 1) != 0);
+    }
 	
     public function isBannished()
     {
@@ -281,23 +286,19 @@ class User
 
     public function setPowers($packet)
     {
-        $this->disabledPowers = [];
-        $xpowers = xatVariables::getPowers();
         for ($i=0; $i < xatVariables::getMaxPowerIndex(); $i++) {
-            if (!isset($packet['cb'])) { //only check for disables with <z packet
-                if (isset($packet['p' . $i]) && $this->powers[$i] != $packet['p' . $i]) { // <z info can only be higher
-                    //check only ids in that section making this much faster
-                    foreach (range($i * 32, ($i * 32) + 30) as $id) {//not + 31 because xat doesnt use last subid for regular powers
-                        $hp = isset($packet['p' . $i]) && ($packet['p' . $i] & (1 << ($id % 32)));
-                        if (!$this->hasPower($id) && $hp) {
-                            $this->disabledPowers[$id] = $xpowers[$id];
-                        }
-                    }
-                }
-            }
             $this->powers[$i] = $packet['p' . $i] ?? 0;
         }
     }
+    
+    public function setMaskedPowers($packet) 
+    {
+        for ($i=0; $i < xatVariables::getMaxPowerIndex(); $i++) {
+            if (isset($packet['p' . $i]) && $packet['p' . $i] > $this->powers[$i]) {
+                $this->maskedpowers[$i] = $packet['p' . $i] - $this->powers[$i];
+            }
+        }
+    }    
 
     public function setDoubles($info)
     {
@@ -313,20 +314,23 @@ class User
     {
         $this->days = (int)$days;
     }
-
-    public function hasPower($id)
+    
+    public function hasPower($id, $masked = false)
     {
         if (!$this->hasDays()) {
             return false;
-        }
-
+        }  
+        
         $id    = (int)$id;
         $index = (int)($id / 32);
         $bit   = (int)($id % 32);
-
+        
+        if ($masked) {
+            return (isset($this->maskedpowers[$index]) && ($this->maskedpowers[$index] & (1 << $bit)));
+        }
+        
         return (isset($this->powers[$index]) && ($this->powers[$index] & (1 << $bit)));
     }
-
     public function getLoginTimestamp()
     {
         return $this->login;

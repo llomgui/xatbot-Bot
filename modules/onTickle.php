@@ -54,9 +54,8 @@ $onTickle = function (int $who, array $array) {
             if (isset($array['y'])) {
                 $bot->users[$who]->setDays($array['y']);
             }
-
-            $bot->users[$who]->setPowers($array);
-
+            
+            $bot->users[$who]->setMaskedPowers($array);
             break;
 
     }
