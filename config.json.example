@@ -16,6 +16,7 @@
 			"homepage": "xat.com",
 			"autowelcome": "Hello!",
 			"toggleautowelcome": "pm",
+			"automember": "reg",
 			"gameban_unban" : 1,
 			"customcommand": "!",
 			"minranks":{

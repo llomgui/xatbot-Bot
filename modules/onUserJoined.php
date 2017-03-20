@@ -64,6 +64,45 @@ $onUserJoined = function (int $who, array $array) {
             $bot->network->sendMessage("{$user->getRegname()} signed out and in twice to get unbanned from the gameban '{$powers[$array['w']]['name']}'.");
         }
     }
+
+    if ($user->isGuest() && $user->getNick()) {
+        $member = false;
+
+        switch ($bot->botData['automember']) {
+            case 'sub':
+                $member = ($user->hadDays());
+                break;
+
+            case 'reg':
+                $member = ($user->isRegistered());
+                break;
+
+            case 'notoon':
+                if (!in_array($user->getNick(), xatVariables::getDefaultName())) {
+                    $member = true;
+                }
+                break;
+
+            case 'maths':
+                $foo = rand(5,20);
+                $bar = rand(4,19);
+                dataAPI::set('automember_' . $who, $foo + $bar);
+                $bot->network->sendPrivateConversation($who, 'Answer that question to be a member: ' . $foo . ' + ' . $bar);
+                break;
+
+            case 'all':
+                $member = true;
+                break;
+            
+            default:
+                $member = false;
+                break;
+        }
+
+        if ($member) {
+            $bot->network->changeRank($who, 'member');
+        }
+    }
     
     return;
 };
