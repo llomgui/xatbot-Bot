@@ -14,6 +14,10 @@ $onUserLeave = function (int $who) {
         dataAPI::un_set('away_' . $who);
     }
 
+    if (dataAPI::is_set('joined_' . $who)) {
+        dataAPI::un_set('joined_' . $who);
+    }
+
     dataAPI::set('left_' . $who, time());
 
     return;

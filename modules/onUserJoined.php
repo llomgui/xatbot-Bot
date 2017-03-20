@@ -11,12 +11,27 @@ $onUserJoined = function (int $who, array $array) {
     $bot->users[$who] = new User($array);
     $user = $bot->users[$who];
 
+
     if ($user->isAway()) {
-        dataAPI::set('away_' . $user->getID(), true);
+        dataAPI::set('away_' . $who, true);
     }
 
-    if ($user->isRegistered() && !$user->wasHere() && !dataAPI::is_set('away_' . $user->getID())) {
+    if ($user->isRegistered() && !$user->wasHere() && !dataAPI::is_set('away_' . $who)) {
         $bot->network->sendTickle($who);
+    }
+
+    if (!$user->wasHere() && !dataAPI::is_set('away_' . $who) && !dataAPI::is_set('joined_' . $who)) {
+        if (!empty($bot->botData['autowelcome'])) {
+            if ($bot->botData['toggleautowelcome'] == 'pc') {
+                $bot->network->sendPrivateConversation($who, $bot->botData['autowelcome']);
+            } else if ($bot->botData['toggleautowelcome'] == 'pm') {
+                $bot->network->sendPrivateMessage($who, $bot->botData['autowelcome']);
+            }
+        }
+    }
+
+    if (!dataAPI::is_set('joined_' . $who)) {
+        dataAPI::set('joined_' . $who, true);
     }
 
     if (!dataAPI::is_set('active_' . $who)) {
@@ -31,7 +46,7 @@ $onUserJoined = function (int $who, array $array) {
             dataAPI::un_set('left_' . $who);
         }
     }
-    
+
     if (dataAPI::is_set('gamebanrelog_' . $who) && !$user->isGamebanned()) {
         dataAPI::un_set('gamebanrelog_' . $who);
     }

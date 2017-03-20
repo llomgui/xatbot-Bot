@@ -14,6 +14,8 @@
 			"name": "Ocean",
 			"avatar": "123",
 			"homepage": "xat.com",
+			"autowelcome": "Hello!",
+			"toggleautowelcome": "pm",
 			"gameban_unban" : 1,
 			"customcommand": "!",
 			"minranks":{
