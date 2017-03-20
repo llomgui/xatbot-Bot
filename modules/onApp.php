@@ -9,30 +9,30 @@ $onApp = function (int $who, int $app, array $array) {
 		case 20010:
 			if (isset($array['d']) && $who != $bot->network->logininfo['i']) {
 				if (!isset($array['t']) || empty($array['t'])) {
-					if(dataAPI::is_set($who . '_boards')) {
-						dataAPI::un_set($who . '_boards');
+					if(dataAPI::is_set('boards_' . $who)) {
+						dataAPI::un_set('boards_' . $who);
 					}
 					return;
 				}
-				if ((dataAPI::is_set($who . '_boards') && (strlen($array['t']) == 0 || strlen($array['t'] == 1))) || !dataAPI::is_set($who . '_boards')) {
-					dataAPI::set($who . '_boards', new Connect4());
+				if ((dataAPI::is_set('boards_' . $who) && (strlen($array['t']) == 0 || strlen($array['t'] == 1))) || !dataAPI::is_set('boards_' . $who)) {
+					dataAPI::set('boards_' . $who, new Connect4());
 				}
 				$last = substr($array['t'], -1);
 				if(is_numeric($last)) {
 					return $bot->network->sendPrivateConversation($who, "The fuck you doin?");
 				}
-				$move = dataAPI::get($who . '_boards')->set(ord($last) - 65);
+				$move = dataAPI::get('boards_' . $who)->set(ord($last) - 65);
 				if($move == 1000) {
-					dataAPI::un_set($who . '_boards');
+					dataAPI::un_set('boards_' . $who);
 					return $bot->network->sendPrivateConversation($who, "You have won.");
 				} else if ($move == 50) {
-					dataAPI::un_set($who . '_boards');
+					dataAPI::un_set('boards_' . $who);
 					return $bot->network->sendPrivateConversation($who, "You caused the game to become a draw.");
 				} else if ($move[0] == 51) {
-					dataAPI::un_set($who . '_boards');
+					dataAPI::un_set('boards_' . $who);
 					$bot->network->sendPrivateConversation($who, "I caused the game to become a draw.");
 				} else if ($move == -1000 || $move[0] == -1000) {
-					dataAPI::un_set($who . '_boards');
+					dataAPI::un_set('boards_' . $who);
 					$bot->network->sendPrivateConversation($who, "You have lost.");
 				} else if ($move == 666) {
 					$bot->network->sendPrivateConversation($who, "Tsk tsk tsk... No cheating.");
@@ -43,7 +43,7 @@ $onApp = function (int $who, int $app, array $array) {
 						't' => substr($array['t'], 0, -1)
 					]);
 				} else if(strlen($array['t']) >= 42) {
-					dataAPI::un_set($who . '_boards');
+					dataAPI::un_set('boards_' . $who);
 					return $bot->network->sendPrivateConversation($who, "The game has ended in a draw because the board is full.");
 				}
 				if(is_array($move)) {

@@ -32,18 +32,18 @@ $onUserJoined = function (int $who, array $array) {
         }
     }
     
-    if (dataAPI::is_set($who . '_gamebanrelog') && !$user->isGamebanned()) {
-        dataAPI::un_set($who . '_gamebanrelog');
+    if (dataAPI::is_set('gamebanrelog_' . $who) && !$user->isGamebanned()) {
+        dataAPI::un_set('gamebanrelog_' . $who);
     }
         
     if ($user->isGamebanned() && $bot->botData['gameban_unban'] == 2) {
-        if (!dataAPI::is_set($who . '_gamebanrelog')) {
-            dataAPI::set($who . '_gamebanrelog', 0);
+        if (!dataAPI::is_set('gamebanrelog_' . $who)) {
+            dataAPI::set('gamebanrelog_' . $who, 0);
         } else {
-            dataAPI::set($who . '_gamebanrelog', dataAPI::get($who . '_gamebanrelog') + 1);
+            dataAPI::set('gamebanrelog_' . $who, dataAPI::get('gamebanrelog_' . $who) + 1);
         }
-        if (dataAPI::get($who . '_gamebanrelog') >= 2) {
-            dataAPI::un_set($who . '_gamebanrelog');
+        if (dataAPI::get('gamebanrelog_' . $who) >= 2) {
+            dataAPI::un_set('gamebanrelog_' . $who);
             $powers = xatVariables::getPowers();
             $bot->network->unban($who);
             $bot->network->sendMessage("{$user->getRegname()} signed out and in twice to get unbanned from the gameban '{$powers[$array['w']]['name']}'.");
