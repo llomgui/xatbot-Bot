@@ -11,15 +11,18 @@ class Bot
     public $started;
     public $minranks;
     public $alias;
+    public $responses;
     public $messageCount;
     public $done;
 
     public function __construct($botData)
     {
-        $this->started  = time();
+        var_dump($botData);
+        $this->started = time();
 
-        $this->minranks = (!empty($botData['minranks'])) ? $botData['minranks'] : [];
-        $this->alias = (!empty($botData['alias'])) ? $botData['alias'] : [];
+        $this->minranks  = (!empty($botData['minranks'])) ? $botData['minranks'] : [];
+        $this->alias     = (!empty($botData['alias'])) ? $botData['alias'] : [];
+        $this->responses = (!empty($botData['responses'])) ? $botData['responses'] : [];
 
         if (isset($botData['minranks'])) {
             unset($botData['minranks']);
@@ -27,6 +30,10 @@ class Bot
         
         if (isset($botData['alias'])) {
             unset($botData['alias']);
+        }
+
+        if (isset($botData['responses'])) {
+            unset($botData['responses']);
         }
 
         foreach ($botData as $key => $val) {

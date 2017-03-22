@@ -43,6 +43,11 @@
 				"id": "misc xatid",
 				"sn": "shortname",
 				"vols": "online volunteers"
+			},
+			"responses":{
+				"hello": "Hi {regname}",
+				"*jedi": "The force is strong in my family!",
+				"test test": "test test test"
 			}
 		}
 	},
