@@ -11,7 +11,7 @@ class Network
     public $xFlag     = 0;
     public $attempt   = 0;
     public $prevrpool = -1;
-    public $idleTime = 0;
+    public $idleTime  = 0;
     public $idleLimit = (60 * 20);// 20 minutes / 1200
 
     public function __construct($botData)

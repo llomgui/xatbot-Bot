@@ -17,7 +17,6 @@ class Bot
 
     public function __construct($botData)
     {
-        var_dump($botData);
         $this->started = time();
 
         $variables = ['minranks', 'alias', 'responses'];
