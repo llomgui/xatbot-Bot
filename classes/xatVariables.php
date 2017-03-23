@@ -15,6 +15,7 @@ abstract class xatVariables
     private static $ip2;
     private static $powers;
     private static $volunteers;
+    private static $freeSmilies;
     private static $bots;
     private static $developers;
 
@@ -36,6 +37,7 @@ abstract class xatVariables
         self::initBotAccount();
         self::initIP2();
         self::initVolunteers();
+        self::initFreeSmilies();
         self::initPowers();
         self::initDevelopers();
         self::initAPIKeys();
@@ -114,6 +116,64 @@ abstract class xatVariables
         ];
 
         self::$volunteers = $volunteers;
+    }
+
+    private static function initFreeSmilies()
+    {
+        $group1_smilies = [
+            'smile|tongue|biggrin|mad|confused|redface|crying|frown|eek|wink',
+            '3d|cool|6|a|sry|crs|un|d|scn|nod',
+            'gagged|nme|swt|roll|rofl|chkl|inlove|blk|xp|eyes', 
+            'tired|smirk|ill|dead|hello|yum|think|mischief|zip2|puke',
+            'yawn|swear|cry2|what|omg|o_o|goo|smirk2|beye|wary',
+            'shock|xd|cyc|wt|chew|contempt|fedup|aghast|look|spin2',
+            'tipsy|twitch|shifty|ashamed|pty|sad|rolling|no|jolly|annoyed',
+            'astonished|evil|sinister|sour|um|dream|memory|babythrow|candyeat|cute',
+            'flowerthrow|gloomy|hey|hula|loving|meloneat|shadesoff|stressing|waiting|hmm',
+            'meh|ugh|hi|applause|donttalk|joyful|smug|victory|blowkiss|point',
+            'dull|medmask|sob|wacky|ecstatic|ok|sweat|wailing|content|farewell',
+            'pensive|tearhair|weary|daydream|flustered|tmi|whatever|furious|sarcastic|toj',
+            'whistling|depressed|here|screaming|ttm|zany|desire|hih|sidetear|unamused',
+            'dollar|idc|slap|confounded|unreal|deal|hug|uhuh|pirate2|hehe',
+            'clap|shrug|prop'
+        ];
+
+        $group2_smilies = [
+            'ugc|hearts2|peach|xana|x|chest|gst|alien|bby|bot1',
+            'tox|8ball|eye|kirb|pm|pmg|inv|inv2|inv3|sonic',
+            'shadow|mario|luigi|mushroom|yoshi|countb|ness|smashball|mephiles|tri',
+            'lucario|nights|arbiter|mouser|mewtwo|xj9|hk|lolwut|kermit|beaker',
+            'beast|dv|homer|3tomoe|mangekyou|pikachu|pball|wwe|sm|a1',
+            'nko|x3|dog|cat|pig|mk|penguin|panda|bear|cc',
+            'ccc|cotton|pie|c|b|o|i|t|mo|so',
+            'sb|oo|p|ph|yt|dmd|bin|ush|ipod|ip',
+            'sun|rain|r|f|li|l|u|y|n|grl',
+            'boy|scb|bio|rad|pgm|mgp|ao|star|note|hex',
+            'yy|moon|rubik|cir|cdy|deer|snta|g|sman|xday',
+            'xtre|xstk|mtoe|hly|egg|ghat|clover|stickman|stickman2|stickman3',
+            'stickairguitar|stickkungfu|stickangry|stickymca|danny|turkey|ss|qbone|mc|lb',
+            'mario8|nop|okp|mate|confetti|champagne|argue|cry|snow|gifts',
+            'hippo|paint|surprise|bugs|magic8ball|airplane|parachute|dynamite|globe|grumpy',
+            'lips|bomb|fireworks|pull|shark|blood|ca|censor'
+        ];
+
+        $yellow_smilies = [];
+        foreach ($group1_smilies as $group1_smilie) {
+            $foo = explode('|', $group1_smilie);
+            for ($i = 0; $i < sizeof($foo); $i++) {
+                $yellow_smilies[] = $foo[$i];
+            }
+        }
+
+        $other_smilies  = [];
+        foreach ($group2_smilies as $group2_smilie) {
+            $foo = explode('|', $group2_smilie);
+            for ($i = 0; $i < sizeof($foo); $i++) {
+                $other_smilies[] = $foo[$i];
+            }
+        }
+
+        self::$freeSmilies = $yellow_smilies + $other_smilies;
     }
 
     private static function initPowers()
@@ -1596,6 +1656,11 @@ abstract class xatVariables
     public static function getAPIKeys()
     {
         return self::$apikeys;
+    }
+
+    public static function getFreeSmilies()
+    {
+        return self::$freeSmilies;
     }
 
 }

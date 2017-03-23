@@ -21,11 +21,9 @@ $whatis = function (int $who, array $message, int $type) {
 		}
 	}
 	
-	/*
-	
-	TODO Get a list of free smilies and search it too.
-	
-	*/
+	if (in_array($message[1], xatVariables::getFreeSmilies())) {
+		return $bot->network->sendMessageAutoDetection($who, '"' . $message[1] . '" is a free smiley.', $type);
+	}
 	
 	$bot->network->sendMessageAutoDetection($who, '"' . $message[1] . '" was not found as a smiley.', $type);
 };
