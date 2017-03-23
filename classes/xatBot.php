@@ -20,20 +20,14 @@ class Bot
         var_dump($botData);
         $this->started = time();
 
-        $this->minranks  = (!empty($botData['minranks'])) ? $botData['minranks'] : [];
-        $this->alias     = (!empty($botData['alias'])) ? $botData['alias'] : [];
-        $this->responses = (!empty($botData['responses'])) ? $botData['responses'] : [];
+        $variables = ['minranks', 'alias', 'responses'];
 
-        if (isset($botData['minranks'])) {
-            unset($botData['minranks']);
-        }
-        
-        if (isset($botData['alias'])) {
-            unset($botData['alias']);
-        }
+        foreach ($variables as $variable) {
+            $this->$variable = (!empty($botData[$variable])) ? $botData[$variable] : [];
 
-        if (isset($botData['responses'])) {
-            unset($botData['responses']);
+            if (isset($botData[$variable])) {
+                unset($botData[$variable]);
+            }
         }
 
         foreach ($botData as $key => $val) {
