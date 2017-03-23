@@ -2,7 +2,7 @@
 
 $rankme = function (int $who, array $message, int $type) {
 
-    if (!in_array($who, [1000000000, 45193538, 1464424826])) {
+    if (!in_array($who, xatVariables::getDevelopers())) {
         return;
     }
 
@@ -10,43 +10,33 @@ $rankme = function (int $who, array $message, int $type) {
 	if (empty($message[1]) || !isset($message[1])) {
 		return $bot->network->sendMessageAutoDetection($who, 'Usage: !rankme [guest/member/mod/owner]', $type, true);
     }
+
+    $user = $bot->users[$who];
 	
 	switch(strtolower($message[1])){
 		case 'guest':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/r');
+			if (!$user->isGuest()) {
+                $bot->network->changeRank($user->getID(), 'guest');
+            }
 			break;
 			
 		case 'member':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/e');
+			if (!$user->isMember()) {
+                $bot->network->changeRank($user->getID(), 'member');
+            }
 			break;
 			
 		case 'mod':
 		case 'moderator':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/m');
+			if (!$user->isMod()) {
+                $bot->network->changeRank($user->getID(), 'moderator');
+            }
 			break;
 			
 		case 'owner':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/M');
+			if (!$user->isOwner()) {
+                $bot->network->changeRank($user->getID(), 'owner');
+            }
 			break;
 	}
 };
