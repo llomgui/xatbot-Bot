@@ -3,6 +3,11 @@
 $mostactive = function (int $who, array $message, int $type) {
 
     $bot  = actionAPI::getBot();
+
+    if (!$bot->minrank($who, 'mostactive')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     $now  = time();
     $most = ['user' => null, 'time' => 0];
 

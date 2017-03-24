@@ -2,7 +2,12 @@
 
 $poorest = function (int $who, array $message, int $type) {
 
-    $bot    = actionAPI::getBot();
+    $bot = actionAPI::getBot();
+
+    if (!$bot->minrank($who, 'poorest')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     $powers = xatVariables::getPowers();
 
     foreach ($bot->users as $user) {

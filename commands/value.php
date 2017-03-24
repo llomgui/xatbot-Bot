@@ -4,6 +4,10 @@ $value = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'value')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     if (!isset($message[1]) || empty($message[1])) {
         $xatusers[] = $who;
     } else {

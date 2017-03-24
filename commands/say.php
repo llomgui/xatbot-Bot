@@ -1,6 +1,7 @@
 <?php
 
 $say = function (int $who, array $message, int $type) {
+    
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'say')) {

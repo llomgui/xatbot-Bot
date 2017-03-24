@@ -4,6 +4,10 @@ $sinbin = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'sinbin')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     if (!$bot->botHasPower(33)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'sinbin'), $type);
     }

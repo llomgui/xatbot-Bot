@@ -3,6 +3,11 @@
 $active = function (int $who, array $message, int $type) {
 
     $bot  = actionAPI::getBot();
+
+    if (!$bot->minrank($who, 'active')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     $now  = time();
     $userTime = $now - dataAPI::get('active_' . $who);
     $displayName = $bot->users[$who]->isRegistered() ? $bot->users[$who]->getRegname() . '(' . $bot->users[$who]->getID() . ')'  : $bot->users[$who]->getID();

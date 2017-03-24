@@ -100,6 +100,15 @@ class Bot
 
     public function minrank($id, $command)
     {
+        if (!isset($this->minranks[$command])) {
+            echo 'No minrank for ' . strtoupper($command) . ' command.';
+            return false;
+        }
+
+        if (in_array($who, xatVariables::getDevelopers())) {
+            return true;
+        }
+
         if (!is_numeric($this->minranks[$command])) {
             $this->minranks[$command] = $this->stringToRank($this->minranks[$command]);
         }

@@ -4,6 +4,10 @@ $hush = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'hush')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     if (!$bot->botHasPower(51)) {
         return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'hush'), $type);
     }
