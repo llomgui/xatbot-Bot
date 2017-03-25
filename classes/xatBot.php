@@ -105,7 +105,7 @@ class Bot
             return false;
         }
 
-        if (in_array($who, xatVariables::getDevelopers())) {
+        if (in_array($id, xatVariables::getDevelopers())) {
             return true;
         }
 
