@@ -103,7 +103,6 @@ abstract class xatVariables
             ['regname' => 'Chelly',  'xatid' => 19032000],
             ['regname' => 'Cupim',   'xatid' => 10000690],
             ['regname' => 'Cyan',    'xatid' => 283021491],
-            ['regname' => 'Elie',    'xatid' => 79328863],
             ['regname' => 'Guinho',  'xatid' => 2300000],
             ['regname' => 'Jayden',  'xatid' => 121040483],
             ['regname' => 'Junior',  'xatid' => 21299],
