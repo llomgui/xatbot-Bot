@@ -4,6 +4,10 @@ $love = function (int $who, array $message, int $type) {
 
 	$bot = actionAPI::getBot();
 
+	if (!$bot->minrank($who, 'love')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
 	$l        = 0;
 	$lover[0] = null;
 	$lover[1] = null;

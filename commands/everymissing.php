@@ -4,6 +4,10 @@ $everymissing = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'everymissing')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     if (isset($message[1]) || !empty($message[1])) {
         if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
             $user = $bot->users[$message[1]];

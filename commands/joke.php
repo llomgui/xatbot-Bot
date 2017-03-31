@@ -4,6 +4,10 @@ $joke = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'joke')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     $stream = stream_context_create(['http'=> ['timeout' => 1]]);
     $page = file_get_contents('http://www.jokesclean.com/OneLiner/Random/', false, $stream);
     if (!$page) {

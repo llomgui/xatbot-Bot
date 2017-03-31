@@ -1,7 +1,12 @@
 <?php
 
 $randomsmiley = function (int $who, array $message, int $type) {
+    
     $bot = actionAPI::getBot();
+
+    if (!$bot->minrank($who, 'randomsmiley')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
 
     if (empty($message[1]) || !isset($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !randomsmiley [1 - 20] [optional power]', $type, true);

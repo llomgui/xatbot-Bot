@@ -4,6 +4,10 @@ $rank = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'rank')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     if (empty($message[1]) || empty($message[2])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !rank [member/mod/owner] [ID/Regname]', $type, true);
     }

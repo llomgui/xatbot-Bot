@@ -3,6 +3,10 @@
 $whatis = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
+
+    if (!$bot->minrank($who, 'whatis')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
 	
 	if (empty($message[1]) || !isset($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !whatis [smiley]', $type, true);
@@ -21,11 +25,9 @@ $whatis = function (int $who, array $message, int $type) {
 		}
 	}
 	
-	/*
-	
-	TODO Get a list of free smilies and search it too.
-	
-	*/
+	if (in_array($message[1], xatVariables::getFreeSmilies())) {
+		return $bot->network->sendMessageAutoDetection($who, '"' . $message[1] . '" is a free smiley.', $type);
+	}
 	
 	$bot->network->sendMessageAutoDetection($who, '"' . $message[1] . '" was not found as a smiley.', $type);
 };

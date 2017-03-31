@@ -6,6 +6,10 @@ $jinx = function (int $who, array $message, int $type) {
         Contains a few errors
     */
     $bot = actionAPI::getBot();
+
+    if (!$bot->minrank($who, 'jinx')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
     
     $jinxType = strtolower($message[1] ?? "mix");
     unset($message[0], $message[1]);

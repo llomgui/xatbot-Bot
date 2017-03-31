@@ -11,22 +11,22 @@ class Bot
     public $started;
     public $minranks;
     public $alias;
+    public $responses;
     public $messageCount;
     public $done;
 
     public function __construct($botData)
     {
-        $this->started  = time();
+        $this->started = time();
 
-        $this->minranks = (!empty($botData['minranks'])) ? $botData['minranks'] : [];
-        $this->alias = (!empty($botData['alias'])) ? $botData['alias'] : [];
+        $variables = ['minranks', 'alias', 'responses'];
 
-        if (isset($botData['minranks'])) {
-            unset($botData['minranks']);
-        }
-        
-        if (isset($botData['alias'])) {
-            unset($botData['alias']);
+        foreach ($variables as $variable) {
+            $this->$variable = (!empty($botData[$variable])) ? $botData[$variable] : [];
+
+            if (isset($botData[$variable])) {
+                unset($botData[$variable]);
+            }
         }
 
         foreach ($botData as $key => $val) {
@@ -100,6 +100,15 @@ class Bot
 
     public function minrank($id, $command)
     {
+        if (!isset($this->minranks[$command])) {
+            echo 'No minrank for ' . strtoupper($command) . ' command.';
+            return false;
+        }
+
+        if (in_array($id, xatVariables::getDevelopers())) {
+            return true;
+        }
+
         if (!is_numeric($this->minranks[$command])) {
             $this->minranks[$command] = $this->stringToRank($this->minranks[$command]);
         }

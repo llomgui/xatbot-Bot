@@ -2,51 +2,53 @@
 
 $rankme = function (int $who, array $message, int $type) {
 
-    if (!in_array($who, [1000000000, 45193538, 1464424826])) {
-        return;
+    $bot = actionAPI::getBot();
+    if (empty($message[1]) || !isset($message[1])) {
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !rankme [guest/member/mod/owner]', $type, true);
     }
 
-    $bot = actionAPI::getBot();
-	if (empty($message[1]) || !isset($message[1])) {
-		return $bot->network->sendMessageAutoDetection($who, 'Usage: !rankme [guest/member/mod/owner]', $type, true);
+    $user = $bot->users[$who];
+    
+    switch (strtolower($message[1])) {
+        case 'guest':
+            if (!$bot->minrank($who, 'guestme')) {
+                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+            }
+
+            if (!$user->isGuest()) {
+                $bot->network->changeRank($user->getID(), 'guest');
+            }
+            break;
+            
+        case 'member':
+            if (!$bot->minrank($who, 'memberme')) {
+                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+            }
+
+            if (!$user->isMember()) {
+                $bot->network->changeRank($user->getID(), 'member');
+            }
+            break;
+            
+        case 'mod':
+        case 'moderator':
+            if (!$bot->minrank($who, 'modme')) {
+                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+            }
+
+            if (!$user->isMod()) {
+                $bot->network->changeRank($user->getID(), 'moderator');
+            }
+            break;
+            
+        case 'owner':
+            if (!$bot->minrank($who, 'ownerme')) {
+                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+            }
+
+            if (!$user->isOwner()) {
+                $bot->network->changeRank($user->getID(), 'owner');
+            }
+            break;
     }
-	
-	switch(strtolower($message[1])){
-		case 'guest':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/r');
-			break;
-			
-		case 'member':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/e');
-			break;
-			
-		case 'mod':
-		case 'moderator':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/m');
-			break;
-			
-		case 'owner':
-			/*
-			
-			TODO Check rank
-			
-			*/
-			$bot->network->sendPrivateConversation($who, '/M');
-			break;
-	}
 };

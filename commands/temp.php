@@ -4,6 +4,10 @@ $temp = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
 
+    if (!$bot->minrank($who, 'temp')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     if (empty($message[1]) || empty($message[2])       ||
         empty($message[3]) || !is_numeric($message[3]) ||
         $message[3] < 0    || $message[3] > 24) {

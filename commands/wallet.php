@@ -3,6 +3,11 @@
 $wallet = function (int $who, array $message, int $type) {
 
     $bot = actionAPI::getBot();
+
+    if (!$bot->minrank($who, 'wallet')) {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+    }
+
     $user = $bot->users[$who]; 
 
     if (isset($message[1]) || !empty($message[1])) {
