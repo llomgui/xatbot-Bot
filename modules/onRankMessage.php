@@ -26,15 +26,34 @@ $onRankMessage = function (int $who, string $message, string $reason, array $arr
                     //regular unban
                 }
                 break;
+                
             case '/g': //ban
                 if (isset($array['w'])) {
                     //game banned
                 }
                 return; //for now
                 break;
+                
             case '/m': //change rank (mem,guest,mod,owner)
-                return; //for now
+                switch ($reason)  {
+                    case 'M':// Owner
+                        break;
+                        
+                    case 'm': // Moderator
+                        break;
+
+                    case 'e': // Member
+                        break;
+
+                    case 'r': // Guest
+                        break;
+                }
                 break;
+                
+            case '/k': // kick
+                return;
+                break;
+                
             default:
                 return;
                 break;

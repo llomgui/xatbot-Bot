@@ -1,6 +1,6 @@
 <?php
 
-$onAbort = function () {
+$onAbort = function (array $array) {
 
     $bot = actionAPI::getBot();
     // for the time being
