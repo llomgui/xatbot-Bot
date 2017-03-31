@@ -9,7 +9,7 @@ $undunce = function (int $who, array $message, int $type) {
     }
 
 	if (!$bot->botHasPower(158)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'dunce'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['dunce']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {

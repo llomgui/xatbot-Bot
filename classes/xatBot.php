@@ -12,6 +12,7 @@ class Bot
     public $minranks;
     public $alias;
     public $responses;
+    public $botlang;
     public $messageCount;
     public $done;
 
@@ -19,7 +20,7 @@ class Bot
     {
         $this->started = time();
 
-        $variables = ['minranks', 'alias', 'responses'];
+        $variables = ['minranks', 'alias', 'responses', 'botlang'];
 
         foreach ($variables as $variable) {
             $this->$variable = (!empty($botData[$variable])) ? $botData[$variable] : [];
@@ -118,6 +119,17 @@ class Bot
         }
 
         return false;
+    }
+    
+    public function botLang($name, $args = []): String
+    {
+        if (!isset($this->botlang[$name])) {
+            return 'Invalid sentence';
+        }
+        
+        $args = array_flip(preg_filter('/^/', '$', array_flip($args)));
+        $response = str_replace(array_keys($args), array_values($args), $this->botlang[$name]);
+        return is_string($response) ? htmlspecialchars_decode($response) : 'Invalid sentence';
     }
 
     public function secondsToTime($seconds) 

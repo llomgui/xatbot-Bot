@@ -9,7 +9,7 @@ $unnaughtystep = function (int $who, array $message, int $type) {
     }
 
 	if (!$bot->botHasPower(284)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'naughtystep'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['naughtystep']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {

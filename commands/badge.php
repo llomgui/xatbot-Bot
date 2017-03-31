@@ -9,7 +9,7 @@ $badge = function (int $who, array $message, int $type) {
     }
 
     if (!$bot->botHasPower(264)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'badge'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['badge']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {

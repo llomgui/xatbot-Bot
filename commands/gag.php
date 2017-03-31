@@ -9,7 +9,7 @@ $gag = function (int $who, array $message, int $type) {
     }
 
     if (!$bot->botHasPower(41)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'gag'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['gag']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {

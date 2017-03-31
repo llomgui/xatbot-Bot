@@ -9,7 +9,7 @@ $bump = function (int $who, array $message, int $type) {
     }
 
     if (!$bot->botHasPower(75)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'bump'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['bump']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {

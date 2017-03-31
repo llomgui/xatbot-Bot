@@ -120,6 +120,9 @@
 				"hello": "Hi {regname}",
 				"*jedi": "The force is strong in my family!",
 				"test test": "test test test"
+			},
+			"botlang": {
+				"missing.power": "Sorry, but i don't have the power $0."
 			}
 		}
 	},

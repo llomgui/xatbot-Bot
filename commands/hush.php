@@ -9,7 +9,7 @@ $hush = function (int $who, array $message, int $type) {
     }
 
     if (!$bot->botHasPower(51)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'hush'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['hush']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {

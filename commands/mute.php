@@ -9,7 +9,7 @@ $mute = function (int $who, array $message, int $type) {
     }
 
     if (!$bot->botHasPower(46)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'mute'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['mute']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {

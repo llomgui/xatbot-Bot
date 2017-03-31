@@ -9,7 +9,7 @@ $kickall = function (int $who, array $message, int $type) {
     }
 
     if (!$bot->botHasPower(244)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'kickall'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['kickall']), $type);
     }
 
     switch (strtolower($message[1])) {   
