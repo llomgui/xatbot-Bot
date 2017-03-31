@@ -39,6 +39,18 @@ class Bot
 
     public function botHasPower($id)
     {
+        if (!is_numeric($id)) {
+            $powers = xatVariables::getPowers();
+            foreach($powers as $key => $value) {
+                if ($value['name'] == $id) {
+                    $id = $key;
+                    break;
+                }
+            }
+            if (!is_numeric($id)) {
+                return false;
+            }
+        }
         $id    = (int)$id;
         $index = (int)($id / 32) + 4;
         $bit   = (int)($id % 32);
@@ -126,7 +138,7 @@ class Bot
         if (!isset($this->botlang[$name])) {
             return 'Invalid sentence';
         }
-        
+        $args = array_map('strval', $args);
         $args = array_flip(preg_filter('/^/', '$', array_flip($args)));
         $response = str_replace(array_keys($args), array_values($args), $this->botlang[$name]);
         return is_string($response) ? htmlspecialchars_decode($response) : 'Invalid sentence';

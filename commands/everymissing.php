@@ -5,7 +5,7 @@ $everymissing = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'everymissing')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (isset($message[1]) || !empty($message[1])) {
@@ -28,6 +28,6 @@ $everymissing = function (int $who, array $message, int $type) {
         $link = 'https://oceanproject.fr/pages/powersmissing/everyp/' . $base64 . '/';
         $bot->network->sendMessageAutoDetection($who, $link, $type);
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type, true);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type, true);
     }
 };

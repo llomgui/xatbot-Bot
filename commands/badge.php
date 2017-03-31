@@ -5,7 +5,7 @@ $badge = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'badge')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(264)) {
@@ -31,7 +31,7 @@ $badge = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if ($user->isBadged()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is already badged.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.already', ['badged']), $type);
         }
 
         if (isset($message[2])) {
@@ -40,6 +40,6 @@ $badge = function (int $who, array $message, int $type) {
 
         $bot->network->sendPrivateConversation($user->getID(), '/nb' . ($reason ?? ''));
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };

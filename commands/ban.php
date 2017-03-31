@@ -5,7 +5,7 @@ $ban = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'ban')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
@@ -27,7 +27,7 @@ $ban = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if ($user->isBanned()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is already banned.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.already', ['banned']), $type);
         }
 
         $hours = $message[2];
@@ -38,6 +38,6 @@ $ban = function (int $who, array $message, int $type) {
 
         $bot->network->ban($user->getID(), $hours, $reason ?? '');
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };

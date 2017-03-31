@@ -5,7 +5,7 @@ $unyellowcard = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'unyellowcard')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
 	if (!$bot->botHasPower(292)) {
@@ -36,6 +36,6 @@ $unyellowcard = function (int $who, array $message, int $type) {
 
         $bot->network->ban($user->getID(), 0, $reason ?? '', 'gy');
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };

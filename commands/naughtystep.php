@@ -5,7 +5,7 @@ $naughtystep = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'naughtystep')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(284)) {
@@ -31,7 +31,7 @@ $naughtystep = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if ($user->isNaughty()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is already naughtystepped.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.already', ['naughtystepped']), $type);
         }
 
         if (isset($message[2])) {
@@ -40,6 +40,6 @@ $naughtystep = function (int $who, array $message, int $type) {
 
         $bot->network->ban($user->getID(), 0, $reason ?? '', 'gn');
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };
