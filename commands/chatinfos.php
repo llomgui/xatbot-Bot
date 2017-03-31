@@ -5,7 +5,7 @@ $chatinfos = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'chatinfos')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (empty($message[1]) || empty($message[2])) {
@@ -25,42 +25,42 @@ $chatinfos = function (int $who, array $message, int $type) {
     switch ($message[1]) {
         case 'background':
             if (empty($infos[0])) {
-                $bot->network->sendMessageAutoDetection($who, 'No background for this chat.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.notfound', ['background']), $type);
             } else {
-                $bot->network->sendMessageAutoDetection($who, 'The background for the chat '.$elements->g.': _'.$infos[0], $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.found', ['background', $elements->g, $infos[0]]), $type);
             }
             break;
 
         case 'radio':
             if (empty($infos[4])) {
-                $bot->network->sendMessageAutoDetection($who, 'No radio for this chat.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.notfound', ['radio']), $type);
             } else {
-                $bot->network->sendMessageAutoDetection($who, 'The radio for the chat '.$elements->g.': _'.$infos[4], $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.found', ['radio', $elements->g, $infos[4]]), $type);
             }
             break;
 
         case 'button':
             if ($infos[5] == '- Cant') {
-                $bot->network->sendMessageAutoDetection($who, 'No button color for this chat.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.notfound', ['button color']), $type);
             } else {
-                $bot->network->sendMessageAutoDetection($who, 'The button color for the chat '.$elements->g.': _'.$infos[5], $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.found', ['button color', $elements->g, $infos[5]]), $type);
             }
             break;
 
         case 'language':
             if (empty($infos[3])) {
-                $bot->network->sendMessageAutoDetection($who, 'No language for this chat.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.notfound', ['language']), $type);
             } else {
-                $bot->network->sendMessageAutoDetection($who, 'The language for the chat '.$elements->g.': _'.$infos[3], $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.found', ['language', $elements->g, $infos[3]]), $type);
             }
             break;
 
         case 'description':
             if (empty($elements->d)) {
-                $bot->network->sendMessageAutoDetection($who, 'No description for this chat.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.notfound', ['description']), $type);
             }
 
-            $bot->network->sendMessageAutoDetection($who, 'the description for the chat '.$elements->g.': '.$elements->d, $type);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.chatinfos.found', ['description', $elements->g, $elements->d]), $type);
             break;
     }
 
