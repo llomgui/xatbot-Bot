@@ -27,6 +27,10 @@ $dev = function (int $who, array $message, int $type) {
             $bot->network->sendMessageAutoDetection($who, implode(' | ', $memory), $type);
             break;
 
+        case 'reconnect':
+            $bot->network->reconnect();
+            break;
+
         default:
             break;
     }
