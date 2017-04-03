@@ -5,7 +5,7 @@ $gamebanme = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'gamebanme')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
@@ -52,7 +52,7 @@ $gamebanme = function (int $who, array $message, int $type) {
     }
 
     if (!$bot->botHasPower($gamebanid)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', strtolower($gameban)), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', [strtolower($gameban)]), $type);
     }
 
     $bot->network->ban($who, $hours, 'Requested', 'g', $gamebanid);

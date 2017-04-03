@@ -5,7 +5,7 @@ $users = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'users')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     $ucount = count($bot->users);

@@ -5,7 +5,7 @@ $wallet = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'wallet')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     $user = $bot->users[$who]; 
@@ -28,10 +28,10 @@ $wallet = function (int $who, array $message, int $type) {
     if (isset($user)) {
         $display = ($user->isRegistered() ? $user->getRegname() : $user->getID());
         if ($user->hasPower(27) && !($user->getXats() + $user->getDays() == 0)) {
-            return $bot->network->sendMessageAutoDetection($who, $display . " has " . number_format($user->getXats()) . " xats and " . number_format($user->getDays()) . " days.", $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.wallet', [$display, number_format($user->getXats()), number_format($user->getDays())]), $type);
         }
-        return $bot->network->sendMessageAutoDetection($who, $display . " dosent have the power show or its disabled.", $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.missing.power', [$display, 'show']), $type);
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type, true);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type, true);
     }
 };

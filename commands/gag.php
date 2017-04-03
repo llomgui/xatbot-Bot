@@ -5,11 +5,11 @@ $gag = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'gag')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(41)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'gag'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['gag']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
@@ -29,7 +29,7 @@ $gag = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if ($user->isGagged()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is already gagged.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.already', ['gagged']), $type);
         }
 
         if (isset($message[2])) {
@@ -37,6 +37,6 @@ $gag = function (int $who, array $message, int $type) {
         }
         $bot->network->ban($user->getID(), 1, $reason ?? '', 'gg');
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };

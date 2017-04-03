@@ -5,7 +5,7 @@ $value = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'value')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
@@ -115,7 +115,7 @@ $value = function (int $who, array $message, int $type) {
                     }
                 }
             } else {
-                return $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
                 // TODO if user empty -> get data from userinfo
             }
         }

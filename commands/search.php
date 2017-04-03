@@ -5,7 +5,7 @@ $search = function (int $who, array $message, int $type) {
 	$bot = actionAPI::getBot();
 
 	if (!$bot->minrank($who, 'search')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
 	if (!isset($message[1]) || empty($message[1])) {

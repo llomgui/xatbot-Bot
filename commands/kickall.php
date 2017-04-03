@@ -5,11 +5,11 @@ $kickall = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'kickall')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(244)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'kickall'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['kickall']), $type);
     }
 
     switch (strtolower($message[1])) {   

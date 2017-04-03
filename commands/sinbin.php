@@ -5,11 +5,11 @@ $sinbin = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'sinbin')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(33)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'sinbin'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['sinbin']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
@@ -37,6 +37,6 @@ $sinbin = function (int $who, array $message, int $type) {
         $hours = $message[2];
         $bot->network->sendPrivateConversation($user->getID(), '/n' . $hours);
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };

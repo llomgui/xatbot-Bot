@@ -5,11 +5,11 @@ $boot = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'boot')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(25)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'boot'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['boot']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
@@ -37,7 +37,7 @@ $boot = function (int $who, array $message, int $type) {
 
         $bot->network->kick($user->getID(), $reason ?? '', '#' . $chat);
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 
 };

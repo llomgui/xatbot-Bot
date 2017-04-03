@@ -120,6 +120,17 @@
 				"hello": "Hi {regname}",
 				"*jedi": "The force is strong in my family!",
 				"test test": "test test test"
+			},
+			"botlang": {
+				"not.enough.rank": "Sorry you do not have enough rank to use this command!",
+				"missing.power": "Sorry, but i don't have the power $0.",
+				"user.missing.power": "$0 dosent have the power $1 or its disabled.",
+				"user.not.here": "That user is not here",
+				"user.already": "That user is already $0.",
+				"cmd.wallet": "$0 has $1 xats and $2 days.",
+				"cmd.xd": "$0 $1 equals $2 $3",
+				"cmd.chatinfos.notfound": "No $0 for this chat.",
+				"cmd.chatinfos.found": "The radio for the chat $0: _$1"
 			}
 		}
 	},

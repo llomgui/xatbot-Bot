@@ -12,7 +12,7 @@ $rankme = function (int $who, array $message, int $type) {
     switch (strtolower($message[1])) {
         case 'guest':
             if (!$bot->minrank($who, 'guestme')) {
-                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 
             if (!$user->isGuest()) {
@@ -22,7 +22,7 @@ $rankme = function (int $who, array $message, int $type) {
             
         case 'member':
             if (!$bot->minrank($who, 'memberme')) {
-                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 
             if (!$user->isMember()) {
@@ -33,7 +33,7 @@ $rankme = function (int $who, array $message, int $type) {
         case 'mod':
         case 'moderator':
             if (!$bot->minrank($who, 'modme')) {
-                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 
             if (!$user->isMod()) {
@@ -43,7 +43,7 @@ $rankme = function (int $who, array $message, int $type) {
             
         case 'owner':
             if (!$bot->minrank($who, 'ownerme')) {
-                return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 
             if (!$user->isOwner()) {

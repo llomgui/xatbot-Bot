@@ -5,11 +5,11 @@ $unbadge = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'unbadge')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(264)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'badge'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['badge']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
@@ -36,6 +36,6 @@ $unbadge = function (int $who, array $message, int $type) {
 
         $bot->network->sendPrivateConversation($user->getID(), '/nb');
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };

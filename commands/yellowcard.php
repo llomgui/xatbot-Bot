@@ -5,11 +5,11 @@ $yellowcard = function (int $who, array $message, int $type) {
     $bot = actionAPI::getBot();
 
     if (!$bot->minrank($who, 'yellowcard')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry you do not have enough rank to use this command!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
     if (!$bot->botHasPower(292)) {
-        return $bot->network->sendMessageAutoDetection($who, sprintf('Sorry, but i don\'t have the power \'%s\'.', 'yellowcard'), $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['yellowcard']), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
@@ -31,7 +31,7 @@ $yellowcard = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if ($user->isYellowCarded()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is already yellowcarded.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.already', ['yellowcarded']), $type);
         }
 
         if (isset($message[2])) {
@@ -40,6 +40,6 @@ $yellowcard = function (int $who, array $message, int $type) {
 
         $bot->network->ban($user->getID(), 0, $reason ?? '', 'gy');
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'That user is not here', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
 };
