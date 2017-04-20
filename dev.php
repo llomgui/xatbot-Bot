@@ -50,7 +50,7 @@ while (1) {
 
                 if ($packet === false) {
                     echo 'ERROR packet false!' . PHP_EOL;
-                    exit('You have an error in your code or socket died.');
+                    $Ocean->network->reconnect();
                     break;
                 }
 
