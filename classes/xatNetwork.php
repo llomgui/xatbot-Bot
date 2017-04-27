@@ -3,7 +3,7 @@
 require_once 'xatSocket.php';
 require_once 'xatVariables.php';
 
-class Network
+class xatNetwork
 {
     public $socket;
     public $logininfo;
@@ -133,7 +133,7 @@ class Network
 
     public function join()
     {        
-        $this->socket = new Socket();
+        $this->socket = new xatSocket();
 
         if (empty(xatVariables::getLoginPacket()) || (time() - xatVariables::getLoginTime()) > 900) {
             xatVariables::update();

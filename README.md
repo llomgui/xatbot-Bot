@@ -10,10 +10,13 @@
 First, edit config.json.example with your data, rename it to config.json.
 If you want to add modules or commands, don't forget to update modules.json or commands.json.
 
-To run it: php dev.php
+This project is linked to [OceanProject Website](https://github.com/llomgui/OceanProject-Website)
+You need to clone this projet to make it work (It has the database).
+
+Once everything is cloned, you can launch bots servers with: php start.php
 
 ## I want to contribute, how do I?
 
 Make your tests on your computer, then send a pull request.
 
-This has been tested on Windows PC and dosen't seem to work as intended
+This has been tested on Windows PC and dosen't seem to work as intended.

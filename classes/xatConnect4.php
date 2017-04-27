@@ -1,5 +1,5 @@
 <?php
-class Connect4 
+class xatConnect4 
 {
     public $red = 1;
     public $yellow = 2;

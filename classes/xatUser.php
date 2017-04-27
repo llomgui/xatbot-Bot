@@ -2,7 +2,7 @@
 
 require_once 'xatVariables.php';
 
-class User
+class xatUser
 {
     private $id;
     private $regname;

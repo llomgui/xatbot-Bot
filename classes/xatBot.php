@@ -2,7 +2,7 @@
 
 require_once 'xatNetwork.php';
 
-class Bot
+class xatBot
 {
     public $network;
     public $botData;
@@ -16,11 +16,13 @@ class Bot
     public $messageCount;
     public $done;
 
-    public function __construct($botData)
+    public function __construct(Bot $bot)
     {
         $this->started = time();
 
-        $variables = ['minranks', 'alias', 'responses', 'botlang'];
+        dd($bot);
+
+        /*$variables = ['minranks', 'alias', 'responses', 'botlang'];
 
         foreach ($variables as $variable) {
             $this->$variable = (!empty($botData[$variable])) ? $botData[$variable] : [];
@@ -34,7 +36,7 @@ class Bot
             $this->botData[$key] = htmlspecialchars_decode($val);
         }
 
-        $this->network = new Network($this->botData);
+        $this->network = new xatNetwork($this->botData);*/
     }
 
     public function botHasPower($id)

@@ -1,4 +1,11 @@
 {
+    "database": {
+        "driver": "pgsql",
+        "host": "127.0.0.1",
+        "database": "database_name",
+        "username": "user",
+        "password": "secret"
+    },
     "botaccount": {
         "regname": "Ocean",
         "xatid":"10101",

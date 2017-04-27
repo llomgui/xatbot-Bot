@@ -1,6 +1,6 @@
 <?php
 
-class Socket
+class xatSocket
 {
     private $socket;
     private $buffer;

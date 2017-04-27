@@ -8,7 +8,7 @@ $onUserJoined = function (int $who, array $array) {
         return;
     }
 
-    $bot->users[$who] = new User($array);
+    $bot->users[$who] = new xatUser($array);
     $user = $bot->users[$who];
 
 
