@@ -22,7 +22,7 @@ $onTickle = function (int $who, array $array) {
                 $bot->network->answerTickle($who);
             } else if (time() - dataAPI::get($key) <= 5) {
                 dataAPI::set($key, time());
-                if ($bot->botData['gameban_unban'] == 1) {
+                if ($bot->data->gameban_unban == 1) {
                     if (isset($bot->users[$who]) 
                     && is_object($bot->users[$who])
                     && $bot->users[$who]->isGamebanned()) {

@@ -21,11 +21,11 @@ $onUserJoined = function (int $who, array $array) {
     }
 
     if (!$user->wasHere() && !dataAPI::is_set('away_' . $who) && !dataAPI::is_set('joined_' . $who)) {
-        if (!empty($bot->botData['autowelcome'])) {
-            if ($bot->botData['toggleautowelcome'] == 'pc') {
-                $bot->network->sendPrivateConversation($who, $bot->botData['autowelcome']);
-            } else if ($bot->botData['toggleautowelcome'] == 'pm') {
-                $bot->network->sendPrivateMessage($who, $bot->botData['autowelcome']);
+        if (!empty($bot->data->autowelcome)) {
+            if ($bot->data->toggleautowelcome == 'pc') {
+                $bot->network->sendPrivateConversation($who, $bot->data->autowelcome);
+            } else if ($bot->data->toggleautowelcome == 'pm') {
+                $bot->network->sendPrivateMessage($who, $bot->data->autowelcome);
             }
         }
     }
@@ -51,7 +51,7 @@ $onUserJoined = function (int $who, array $array) {
         dataAPI::un_set('gamebanrelog_' . $who);
     }
         
-    if ($user->isGamebanned() && $bot->botData['gameban_unban'] == 2) {
+    if ($user->isGamebanned() && $bot->data->gameban_unban == 2) {
         if (!dataAPI::is_set('gamebanrelog_' . $who)) {
             dataAPI::set('gamebanrelog_' . $who, 0);
         } else {
@@ -68,7 +68,7 @@ $onUserJoined = function (int $who, array $array) {
     if ($user->isGuest() && $user->getNick()) {
         $member = false;
 
-        switch ($bot->botData['automember']) {
+        switch ($bot->data->automember) {
             case 'sub':
                 $member = ($user->hadDays());
                 break;

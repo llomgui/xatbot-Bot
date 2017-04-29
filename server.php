@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 if (empty($argv[1])) {
     exit('Sorry, you forgot to specify a server name');
 }
@@ -242,14 +244,14 @@ while (1) {
 
                         case 'm':
                             if (isset($packet['elements']['u'])) {
-                                if (!$bot->done) {
+                                if (!$Ocean->done) {
                                     if (isset($packet['elements']['i'])) {
-                                        $bot->messageCount = $packet['elements']['i'];
+                                        $Ocean->messageCount = $packet['elements']['i'];
                                     } else {
-                                        $bot->messageCount = 0;
+                                        $Ocean->messageCount = 0;
                                     }
                                 } else {
-                                    $bot->messageCount++;
+                                    $Ocean->messageCount++;
                                 }
 
                                 if ($packet['elements']['t'] == '/RTypeOn' || $packet['elements']['t'] == '/RTypeOff') {
@@ -329,12 +331,12 @@ while (1) {
                             break;
                     }
 
-                    if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == $Ocean->botData['customcommand']) {
+                    if (in_array($hook, ['onMessage', 'onPM', 'onPC']) && $args[1][0] == $Ocean->data->customcommand) {
                         $args[1] = explode(' ', trim($args[1]));
                         $command = substr($args[1][0], 1);
 
-                        if (isset($Ocean->alias[$command])) {
-                            $args[1][0] = $Ocean->botData['customcommand'] . $Ocean->alias[$command];
+                        if (isset($Ocean->aliases[$command])) {
+                            $args[1][0] = $Ocean->data->customcommand . $Ocean->aliases[$command];
                             $args[1] = explode(' ', trim(implode(' ', $args[1])));
                             $command = substr($args[1][0], 1);
                         }
@@ -470,8 +472,11 @@ function start($botid)
     global $xatBots;
 
     try {
-        $bot = new xatBot(Bot::find($botid));
-        $xatBots[$botid] = $bot;
+        $bot = Bot::find($botid);
+        $Ocean = new xatBot($bot);
+        $bot->bot_status_id = BotStatus::where('name', 'Online')->first()->id;
+        $bot->save();
+        $xatBots[$botid] = $Ocean;
     } catch (Exception $e) {
         var_dump($e);
         return false;
@@ -482,7 +487,7 @@ function start($botid)
 function restart($botid)
 {
     stop($botid);
-    return start($botid);
+    start($botid);
 }
 
 function stop($botid)
@@ -490,6 +495,13 @@ function stop($botid)
     global $xatBots;
 
     if (isset($xatBots[$botid])) {
+
+        $xatBots[$botid]->network->socket->disconnect();
+
+        $bot = Bot::find($botid);
+        $bot->bot_status_id = BotStatus::where('name', 'Offline')->first()->id;
+        $bot->save();
+
         unset($xatBots[$botid]);
         return true;
     }

@@ -7,16 +7,16 @@ class xatNetwork
 {
     public $socket;
     public $logininfo;
-    public $botData;
+    public $data;
     public $xFlag     = 0;
     public $attempt   = 0;
     public $prevrpool = -1;
     public $idleTime  = 0;
     public $idleLimit = (60 * 20);// 20 minutes / 1200
 
-    public function __construct($botData)
+    public function __construct(Bot $data)
     {
-        $this->botData = $botData;
+        $this->data = $data;
         $this->join();
     }
 
@@ -165,12 +165,12 @@ class xatNetwork
         }
 
         $this->logininfo = xatVariables::getLoginPacket();
-        if (!$this->connectToChat($this->botData['chatid'])) {
+        if (!$this->connectToChat($this->data->chatid)) {
             return false;
         }
 
         $this->write('y', [
-                'r' => $this->botData['chatid'],
+                'r' => $this->data->chatid,
                 'v' => '0',
                 'u' => xatVariables::getXatid(),
                 'z' => '8335799305056508195'
@@ -200,10 +200,10 @@ class xatNetwork
 
         $j2['z']  = 12;
         $j2['p']  = '0';
-        $j2['c']  = $this->botData['chatid'];
-        $j2['r']  = (!empty($this->botData['chatpass'])) ? $this->botData['chatpass'] : '';
-        $j2['f']  = (!empty($this->botData['chatpass'])) ? '6' : '0';
-        $j2['e']  = (!empty($this->botData['chatpass'])) ? '1' : '';
+        $j2['c']  = $this->data->chatid;
+        $j2['r']  = (!empty($this->data->chatpw)) ? $this->data->chatpw : '';
+        $j2['f']  = (!empty($this->data->chatpw)) ? '6' : '0';
+        $j2['e']  = (!empty($this->data->chatpw)) ? '1' : '';
         $j2['u']  = $this->logininfo['i'];
         $j2['d0'] = $this->logininfo['d0'] ?? $this->logininfo['d0'];
 
@@ -227,9 +227,9 @@ class xatNetwork
         }
 
         $j2['N'] = xatVariables::getRegname();
-        $j2['n'] = $this->botData['name'];
-        $j2['a'] = $this->botData['avatar'];
-        $j2['h'] = $this->botData['homepage'];
+        $j2['n'] = $this->data->nickname . '##' . $this->data->status;
+        $j2['a'] = $this->data->avatar . '#' . $this->data->pcback;
+        $j2['h'] = $this->data->homepage;
         $j2['v'] = 'xat Community Project';
 
         $this->write('j2', $j2);

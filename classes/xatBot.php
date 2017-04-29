@@ -1,42 +1,79 @@
 <?php
 
 require_once 'xatNetwork.php';
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class xatBot
 {
     public $network;
-    public $botData;
+    public $data;
     public $chatInfo;
     public $users;
     public $started;
     public $minranks;
-    public $alias;
+    public $aliases;
     public $responses;
-    public $botlang;
+    public $botlangs;
     public $messageCount;
     public $done;
 
-    public function __construct(Bot $bot)
+    public function __construct(Bot $data)
     {
-        $this->started = time();
+        $this->data      = $data;
+        $this->started   = time();
+        $this->aliases   = $this->setAliases();
+        $this->minranks  = $this->setMinranks();
+        $this->botlangs  = $this->setBotlangs();
+        $this->responses = $this->setResponses();
+        $this->network   = new xatNetwork($this->data);
+    }
 
-        dd($bot);
+    public function setMinranks()
+    {
+        $results = Capsule::table('bot_command_minrank')
+                    ->join('minranks', 'bot_command_minrank.minrank_id', '=', 'minranks.id')
+                    ->join('commands', 'bot_command_minrank.command_id', '=', 'commands.id')
+                    ->where('bot_id', $this->data->id)
+                    ->select('commands.name', 'minranks.level')
+                    ->get()
+                    ->toArray();
 
-        /*$variables = ['minranks', 'alias', 'responses', 'botlang'];
+        return array_column($results, 'level', 'name');
+    }
 
-        foreach ($variables as $variable) {
-            $this->$variable = (!empty($botData[$variable])) ? $botData[$variable] : [];
+    public function setBotlangs()
+    {
+        $results = Capsule::table('botlang')
+                    ->join('botlang_sentences', 'botlang.botlang_sentences_id', '=', 'botlang_sentences.id')
+                    ->where('bot_id', $this->data->id)
+                    ->select('botlang_sentences.name', 'botlang.value', 'botlang_sentences.default_value')
+                    ->get()
+                    ->toArray();
 
-            if (isset($botData[$variable])) {
-                unset($botData[$variable]);
+        for ($i = 0; $i < sizeof($results); $i++) {
+            if (empty($results[$i]->value)) {
+                $results[$i]->value = $results[$i]->default_value;
             }
         }
 
-        foreach ($botData as $key => $val) {
-            $this->botData[$key] = htmlspecialchars_decode($val);
-        }
+        return array_column($results, 'value', 'name');
+    }
 
-        $this->network = new xatNetwork($this->botData);*/
+    public function setAliases()
+    {
+        $results = Capsule::table('aliases')
+                ->join('commands', 'aliases.command_id', '=', 'commands.id')
+                ->where('bot_id', $this->data->id)
+                ->select('commands.name', 'aliases.alias')
+                ->get()
+                ->toArray();
+
+        return array_column($results, 'alias', 'name');
+    }
+
+    public function setResponses()
+    {
+        return [];
     }
 
     public function botHasPower($id)
@@ -137,12 +174,12 @@ class xatBot
     
     public function botLang($name, $args = []): String
     {
-        if (!isset($this->botlang[$name])) {
+        if (!isset($this->botlangs[$name])) {
             return 'Invalid sentence';
         }
         $args = array_map('strval', $args);
         $args = array_flip(preg_filter('/^/', '$', array_flip($args)));
-        $response = str_replace(array_keys($args), array_values($args), $this->botlang[$name]);
+        $response = str_replace(array_keys($args), array_values($args), $this->botlangs[$name]);
         return is_string($response) ? htmlspecialchars_decode($response) : 'Invalid sentence';
     }
 
@@ -166,5 +203,11 @@ class xatBot
         $url = 'http://xat.com/xat' . $param1;
         $fgc = file_get_contents($url);
         return $this->stribet($fgc, "uname='", "';");
+    }
+
+    public function refresh()
+    {
+        $bot = Bot::find($this->data->id);
+        $this->__construct($bot);
     }
 }

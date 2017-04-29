@@ -12,7 +12,7 @@ $onMessage = function (int $who, string $message) {
 			'{status}'  => $bot->users[$who]->getStatus(), 
 			'{regname}' => $bot->users[$who]->getRegname(),
 			'{users}'   => sizeof($bot->users),
-			'{cmdcode}' => $bot->botData['customcommand'],
+			'{cmdcode}' => $bot->data->customcommand,
 			'{id}'      => $bot->users[$who]->getID(),			
 		];
 
