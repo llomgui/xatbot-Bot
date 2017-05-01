@@ -25,6 +25,7 @@ class xatBot
         $this->minranks  = $this->setMinranks();
         $this->botlangs  = $this->setBotlangs();
         $this->responses = $this->setResponses();
+        $this->stafflist = $this->setStafflist();
         $this->network   = new xatNetwork($this->data);
     }
 
@@ -62,18 +63,29 @@ class xatBot
     public function setAliases()
     {
         $results = Capsule::table('aliases')
-                ->join('commands', 'aliases.command_id', '=', 'commands.id')
                 ->where('bot_id', $this->data->id)
-                ->select('commands.name', 'aliases.alias')
+                ->select('aliases.command', 'aliases.alias')
                 ->get()
                 ->toArray();
 
-        return array_column($results, 'alias', 'name');
+        return array_column($results, 'command', 'alias');
     }
 
     public function setResponses()
     {
         return [];
+    }
+
+    public function setStafflist()
+    {
+        $results = Capsule::table('staffs')
+                ->join('minranks', 'staffs.minrank_id', '=', 'minranks.id')
+                ->where('bot_id', $this->data->id)
+                ->select('staffs.xatid', 'minranks.level')
+                ->get()
+                ->toArray();
+
+        return array_column($results, 'level', 'xatid');
     }
 
     public function botHasPower($id)
@@ -167,6 +179,12 @@ class xatBot
         
         if ($this->flagToRank($id) >= $this->minranks[$command]) {
             return true;
+        }
+
+        if (isset($this->stafflist[$id])) {
+            if ($this->minranks[$command] <= $this->stafflist[$id]) {
+                return true;
+            }
         }
 
         return false;

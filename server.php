@@ -495,9 +495,6 @@ function stop($botid)
     global $xatBots;
 
     if (isset($xatBots[$botid])) {
-
-        $xatBots[$botid]->network->socket->disconnect();
-
         $bot = Bot::find($botid);
         $bot->bot_status_id = BotStatus::where('name', 'Offline')->first()->id;
         $bot->save();

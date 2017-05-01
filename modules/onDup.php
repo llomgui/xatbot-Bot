@@ -1,5 +1,7 @@
 <?php
 
 $onDup = function () {
-    die();
+
+    $bot = actionAPI::getBot();
+    stop($bot->data->id);
 };
