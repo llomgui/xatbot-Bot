@@ -16,7 +16,6 @@ abstract class xatVariables
     private static $powers;
     private static $volunteers;
     private static $freeSmilies;
-    private static $bots;
     private static $developers;
 
     private static $loginTime;
@@ -55,7 +54,6 @@ abstract class xatVariables
         self::$pin        = $data['botaccount']['pin'];
         self::$pw         = $data['botaccount']['pw'];
         self::$forcelogin = $data['botaccount']['forcelogin'];
-        self::$bots       = $data['bots'];
     }
 
     private static function initIP2()
@@ -1625,11 +1623,6 @@ abstract class xatVariables
     public static function getForceLogin()
     {
         return self::$forcelogin;
-    }
-
-    public static function getBots()
-    {
-        return self::$bots;
     }
 
     public static function getDevelopers()
