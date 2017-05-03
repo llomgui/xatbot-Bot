@@ -31,13 +31,20 @@ class xatBot
 
     public function setMinranks()
     {
-        $results = Capsule::table('bot_command_minrank')
+        $results = Capsule::table('commands')
+                    ->join('bot_command_minrank', 'bot_command_minrank.command_id', '=', 'commands.id')
                     ->join('minranks', 'bot_command_minrank.minrank_id', '=', 'minranks.id')
-                    ->join('commands', 'bot_command_minrank.command_id', '=', 'commands.id')
                     ->where('bot_id', $this->data->id)
-                    ->select('commands.name', 'minranks.level')
+                    ->orWhere('bot_command_minrank.bot_id', '=', null)
+                    ->select('commands.name', 'minranks.level', 'commands.default_level')
                     ->get()
                     ->toArray();
+
+        for ($i = 0; $i < sizeof($results); $i++) {
+            if (empty($results[$i]->level)) {
+                $results[$i]->level = $results[$i]->default_level;
+            }
+        }
 
         return array_column($results, 'level', 'name');
     }
