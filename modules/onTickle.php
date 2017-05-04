@@ -20,6 +20,11 @@ $onTickle = function (int $who, array $array) {
             if (time() - dataAPI::get($key) >= 5) {
                 dataAPI::set($key, time());
                 $bot->network->answerTickle($who);
+
+                if (!empty(trim($bot->data->ticklemessage))) {
+                    $bot->network->sendPrivateMessage($who, $bot->data->ticklemessage);
+                }
+
             } else if (time() - dataAPI::get($key) <= 5) {
                 dataAPI::set($key, time());
                 if ($bot->data->gameban_unban == 1) {
