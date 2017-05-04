@@ -19,7 +19,10 @@ $onTickle = function (int $who, array $array) {
             // Answer to tickle every 5 seconds
             if (time() - dataAPI::get($key) >= 5) {
                 dataAPI::set($key, time());
-                $bot->network->answerTickle($who);
+
+                if ($bot->isPremium) {
+                    $bot->network->answerTickle($who);
+                }
 
                 if (!empty(trim($bot->data->ticklemessage))) {
                     $bot->network->sendPrivateMessage($who, $bot->data->ticklemessage);

@@ -4,6 +4,11 @@ $onMessage = function (int $who, string $message) {
 
 	$bot = actionAPI::getBot();
 
+	if ($bot->isPremium && $bot->data->premium < time()) {
+		$bot->network->sendMessage('Ah! My premium time is over (cry2)');
+		return $bot->refresh();
+	}
+
 	if (!empty($bot->responses)) {
 
 		$message2 = explode(' ', $message);

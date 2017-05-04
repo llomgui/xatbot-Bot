@@ -15,6 +15,7 @@ class xatBot
     public $responses;
     public $botlangs;
     public $messageCount;
+    public $isPremium;
     public $done;
 
     public function __construct(Bot $data)
@@ -26,6 +27,13 @@ class xatBot
         $this->botlangs  = $this->setBotlangs();
         $this->responses = $this->setResponses();
         $this->stafflist = $this->setStafflist();
+
+        if ($this->data->premium > time()) {
+            $this->isPremium = true;
+        } else {
+            $this->isPremium = false;
+        }
+
         $this->network   = new xatNetwork($this->data);
     }
 
@@ -98,6 +106,10 @@ class xatBot
 
     public function botHasPower($id)
     {
+        if (!$this->isPremium()) {
+            return false;
+        }
+
         if (!is_numeric($id)) {
             $powers = xatVariables::getPowers();
             foreach($powers as $key => $value) {
@@ -235,5 +247,20 @@ class xatBot
     {
         $bot = Bot::find($this->data->id);
         $this->__construct($bot);
+    }
+
+    public function sec2hms($sec, $padHours = false)
+    {
+        $hms = '';
+        $days = intval($sec/86400);
+        $hms .= (($padHours) ? str_pad($hours, 2, '0', STR_PAD_LEFT) . ':' : $days . ' days, ');
+        $sec-= ($days * 86400);
+        $hours = intval(intval($sec) / 3600);
+        $hms .= (($padHours) ? str_pad($hours, 2, '0', STR_PAD_LEFT) . ':' : $hours . ' hours, ');
+        $minutes = intval(($sec / 60) % 60);
+        $hms .= str_pad($minutes, 2, '0', STR_PAD_LEFT) . ' minutes, ';
+        $seconds = intval($sec % 60);
+        $hms .= str_pad($seconds, 2, '0', STR_PAD_LEFT) . ' seconds';
+        return $hms;
     }
 }

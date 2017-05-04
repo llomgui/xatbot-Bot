@@ -214,6 +214,17 @@ class xatNetwork
             }
         }
 
+        if ($this->data->premium < time()) {
+            $j2['m0'] = 2147483647;
+            $j2['m1'] = 2147483647;
+            $j2['m2'] = 4294836223;
+            $j2['m3'] = 4294967295;
+
+            for ($i = 4; $i < ($maxPowerIndex - 1); $i++) {
+                $j2['m' . $i] = 2147483647;
+            }
+        }
+
         if (isset($this->logininfo['dO'])) {
             $j2['dO'] = $this->logininfo['dO'];
         }

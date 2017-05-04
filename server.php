@@ -170,12 +170,13 @@ while (1) {
                             break;
                             
                         case 'a':
-                            $hook   = 'onTransfer'; // onTransfer($from, $to, $xats, $days, $message)
+                            $hook   = 'onTransfer'; // onTransfer($from, $type, $message, $to, $xats, $days)
                             $args[] = $packet['elements']['u'];
-                            $args[] = $packet['elements']['d'];
-                            $args[] = $packet['elements']['x'];
-                            $args[] = $packet['elements']['s'];
-                            $args[] = $packet['elements']['t'];
+                            $args[] = $packet['elements']['k'];
+                            $args[] = $packet['elements']['t'] ?? '';
+                            $args[] = $packet['elements']['b'];
+                            $args[] = $packet['elements']['x'] ?? 0;
+                            $args[] = $packet['elements']['s'] ?? 0;
                             break;
 
                         case 'bl':
