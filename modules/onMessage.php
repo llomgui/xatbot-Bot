@@ -2,65 +2,81 @@
 
 $onMessage = function (int $who, string $message) {
 
-	$bot = actionAPI::getBot();
+    $bot = actionAPI::getBot();
 
-	if ($bot->isPremium && $bot->data->premium < time()) {
-		$bot->network->sendMessage('Ah! My premium time is over (cry2)');
-		return $bot->refresh();
-	}
+    if ($bot->isPremium && $bot->data->premium < time()) {
+        $bot->network->sendMessage('Ah! My premium time is over (cry2)');
+        return $bot->refresh();
+    }
 
-	if (!empty($bot->responses)) {
+    $message = strtolower($message);
+    $message2 = explode(' ', $message);
 
-		$message2 = explode(' ', $message);
-		$replace = [
-			'{name}'    => $bot->users[$who]->getNick(),
-			'{status}'  => $bot->users[$who]->getStatus(), 
-			'{regname}' => $bot->users[$who]->getRegname(),
-			'{users}'   => sizeof($bot->users),
-			'{cmdcode}' => $bot->data->customcommand,
-			'{id}'      => $bot->users[$who]->getID(),			
-		];
+    if ($bot->flagToRank($who) < $bot->stringToRank($bot->chatInfo['rank'])) {
+        if (isset($bot->data->maxchar) && $bot->data->maxchar > 0) {
+            foreach ($message2 as $value) {
+                if (strpos($value, 'ffffff') || strpos($value, '------') || strpos($value, '000000')) {
+                    
+                } else {
+                    if (preg_match_all('/(.)\1{4,}/iu', $value)) {
+                        return $bot->network->kick($who, 'You are not allowed to spam! (maxChar: ' . $bot->data->maxchar . ')');
+                    }
+                }
+            }
+        }
+    }
 
-		$responses = $bot->responses;
-		foreach ($responses as $key => $value) {
-			if (strlen($key) == 0) {
-				continue;
-			}
+    if (!empty($bot->responses)) {
 
-			if ($key[0] == '*') {
-				$key = substr($key, 1);
+        $replace = [
+            '{name}'    => $bot->users[$who]->getNick(),
+            '{status}'  => $bot->users[$who]->getStatus(), 
+            '{regname}' => $bot->users[$who]->getRegname(),
+            '{users}'   => sizeof($bot->users),
+            '{cmdcode}' => $bot->data->customcommand,
+            '{id}'      => $bot->users[$who]->getID(),
+        ];
 
-				if (strtolower($key) == strtolower($message)) {
-					foreach ($replace as $k => $v) {
-						$value = str_replace(strtolower($k), $v, $value);
-					}
-					
-					return $bot->network->sendMessage($value);
-				}
-			} else {
-				if (sizeof(explode(' ', $key)) > 1) {
-					if (stripos($message, $key) !== false) {
-						foreach ($replace as $k => $v) {
-							$responses = str_replace(strtolower($k), $v, $responses);
-						}
+        $responses = $bot->responses;
+        foreach ($responses as $key => $value) {
+            if (strlen($key) == 0) {
+                continue;
+            }
 
-						return $bot->network->sendMessage($responses[$key]);
-					}
-				} else {
-					for ($i = 0; $i < sizeof($message2); $i++) {
-						if ($message2[$i] == $key) {
-							foreach($replace as $k => $v) {
-								$responses = str_replace(strtolower($k), $v, $responses);
-							}
+            if ($key[0] == '*') {
+                $key = substr($key, 1);
 
-							return $bot->network->sendMessage($responses[$key]);
-						}
-					}
-				}
-			}
-		}
-	}
+                if (strtolower($key) == $message) {
+                    foreach ($replace as $k => $v) {
+                        $value = str_replace(strtolower($k), $v, $value);
+                    }
+                    
+                    return $bot->network->sendMessage($value);
+                }
+            } else {
+                if (sizeof(explode(' ', $key)) > 1) {
+                    if (stripos($message, $key) !== false) {
+                        foreach ($replace as $k => $v) {
+                            $responses = str_replace(strtolower($k), $v, $responses);
+                        }
 
-	return;
+                        return $bot->network->sendMessage($responses[$key]);
+                    }
+                } else {
+                    for ($i = 0; $i < sizeof($message2); $i++) {
+                        if ($message2[$i] == strtolower($key)) {
+                            foreach($replace as $k => $v) {
+                                $responses = str_replace(strtolower($k), $v, $responses);
+                            }
+
+                            return $bot->network->sendMessage($responses[$key]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return;
 
 };

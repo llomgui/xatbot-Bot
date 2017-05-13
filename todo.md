@@ -6,7 +6,7 @@
 * [ ] weather
 * [ ] raid protection
 * [ ] flood filter
-* [ ] spam filter
+* [x] spam filter
 * [ ] badwords filter (in chat, name, status)
 * [ ] links filter (in chat, name, status)
 * [ ] smilies filter (in chat, name)
@@ -15,7 +15,7 @@
 * [ ] Alias' !alias [add/edit/remove] [command] [alias]
 * [ ] Responses
 * [ ] Minranks !minrank [command] [rank]
-* [ ] Edit !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]
+* [x] Edit !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]
 * [ ] Staff [add/edit/remove] [regname/xatid] [rank]
 * [ ] hasmost [powerid]
 * [ ] userinfo [regname/xatid]

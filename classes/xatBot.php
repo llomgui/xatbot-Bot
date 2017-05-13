@@ -89,7 +89,13 @@ class xatBot
 
     public function setResponses()
     {
-        return [];
+        $results = Capsule::table('responses')
+                ->where('bot_id', $this->data->id)
+                ->select('phrase', 'response')
+                ->get()
+                ->toArray();
+
+        return array_column($results, 'response', 'phrase');
     }
 
     public function setStafflist()
