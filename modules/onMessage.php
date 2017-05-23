@@ -12,13 +12,36 @@ $onMessage = function (int $who, string $message) {
     $message = strtolower($message);
     $message2 = explode(' ', $message);
 
+    if (!dataAPI::is_set('lastMessage')) {
+        dataAPI::set('lastMessage', $who);
+    } else {
+        if (dataAPI::get('lastMessage') != $who) {
+            dataAPI::set('lastMessage', $who);
+            dataAPI::set('countMessage', 1);
+        }
+    }
+
     if ($bot->flagToRank($who) < $bot->stringToRank($bot->chatInfo['rank'])) {
+
+        if (isset($bot->data->maxflood) && $bot->data->maxflood > 1) {
+            if (!dataAPI::is_set('countMessage')) {
+                dataAPI::set('countMessage', 1);
+            } else {
+                $value = dataAPI::get('countMessage');
+                dataAPI::set('countMessage', ++$value);
+                if ($value >= $bot->data->maxflood) {
+                    dataAPI::set('countMessage', 0);
+                    return $bot->network->kick($who, 'You are not allowed to flood!');
+                }
+            }
+        }
+
         if (isset($bot->data->maxchar) && $bot->data->maxchar > 0) {
             foreach ($message2 as $value) {
                 if (strpos($value, 'ffffff') || strpos($value, '------') || strpos($value, '000000')) {
-                    
+
                 } else {
-                    if (preg_match_all('/(.)\1{4,}/iu', $value)) {
+                    if (preg_match_all('/(.)\1{' . $bot->data->maxchar . ',}/iu', $value)) {
                         return $bot->network->kick($who, 'You are not allowed to spam! (maxChar: ' . $bot->data->maxchar . ')');
                     }
                 }

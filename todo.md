@@ -5,7 +5,7 @@
 * [ ] google
 * [ ] weather
 * [ ] raid protection
-* [ ] flood filter
+* [x] flood filter
 * [x] spam filter
 * [ ] badwords filter (in chat, name, status)
 * [ ] links filter (in chat, name, status)
