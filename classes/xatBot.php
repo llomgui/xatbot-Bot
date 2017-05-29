@@ -13,6 +13,8 @@ class xatBot
     public $minranks;
     public $aliases;
     public $responses;
+    public $stafflist;
+    public $badwords;
     public $botlangs;
     public $messageCount;
     public $isPremium;
@@ -25,6 +27,7 @@ class xatBot
         $this->aliases   = $this->setAliases();
         $this->minranks  = $this->setMinranks();
         $this->botlangs  = $this->setBotlangs();
+        $this->badwords  = $this->setBadwords();
         $this->responses = $this->setResponses();
         $this->stafflist = $this->setStafflist();
 
@@ -34,7 +37,7 @@ class xatBot
             $this->isPremium = false;
         }
 
-        $this->network   = new xatNetwork($this->data);
+        $this->network = new xatNetwork($this->data);
     }
 
     public function setMinranks()
@@ -108,6 +111,24 @@ class xatBot
                 ->toArray();
 
         return array_column($results, 'level', 'xatid');
+    }
+
+    public function setBadwords()
+    {
+        $results = Capsule::table('badwords')
+                ->where('bot_id', $this->data->id)
+                ->select('badword', 'method', 'hours')
+                ->get()
+                ->toArray();
+
+        $badwords = [];
+        for ($i = 0; $i < sizeof($results); $i++) { 
+            $badwords[$i]['badword'] = $results[$i]->badword;
+            $badwords[$i]['method']  = $results[$i]->method;
+            $badwords[$i]['hours']   = $results[$i]->hours;
+        }
+
+        return $badwords;
     }
 
     public function botHasPower($id)

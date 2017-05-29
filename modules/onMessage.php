@@ -1,4 +1,4 @@
-<?php
+=<?php
 
 $onMessage = function (int $who, string $message) {
 
@@ -10,6 +10,7 @@ $onMessage = function (int $who, string $message) {
     }
 
     $message = strtolower($message);
+    $regname = $bot->users[$who]->getRegname();
     $message2 = explode(' ', $message);
 
     if (!dataAPI::is_set('lastMessage')) {
@@ -36,13 +37,83 @@ $onMessage = function (int $who, string $message) {
             }
         }
 
-        if (isset($bot->data->maxchar) && $bot->data->maxchar > 0) {
-            foreach ($message2 as $value) {
+        foreach ($message2 as $value) {
+            if (isset($bot->data->maxchar) && $bot->data->maxchar > 0) {
                 if (strpos($value, 'ffffff') || strpos($value, '------') || strpos($value, '000000')) {
 
                 } else {
                     if (preg_match_all('/(.)\1{' . $bot->data->maxchar . ',}/iu', $value)) {
                         return $bot->network->kick($who, 'You are not allowed to spam! (maxChar: ' . $bot->data->maxchar . ')');
+                    }
+                }
+            }
+        }
+
+        if (sizeof($bot->badwords) > 0) {
+            for ($i = 0; $i < sizeof($bot->badwords); $i++) { 
+                if (strpos($message, strtolower($bot->badwords[$i]['badword']))) {
+                    dataAPI::set('modproof', 'User: ' . ((!is_null($regname)) ? $regname . ' (' . $who . ')' : $who) . ' Message: ' . $message);
+
+                    switch ($bot->badwords[$i]['method']) {
+                        case 'ban':
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !');
+                            break;
+
+                        case 'kick':
+                            return $bot->network->kick($who, 'Do not say inapp words :o !');
+                            break;
+
+                        case 'dunce':
+                            return $bot->network->ban($who, 0, 'Do not say inapp words :o !', 'gd');
+                            break;
+
+                        case 'zap':
+                            return $bot->network->kick($who, 'Do not say inapp words :o !', '#rasberry#bump');
+                            break;
+
+                        case 'reverse':
+                            return $bot->network->ban($who, $hours, 'Do not say inapp words :o !', 'g', 176);
+                            break;
+
+                        case 'yellowcard':
+                            return $bot->network->ban($who, 0, 'Do not say inapp words :o !', 'gy');
+                            break;
+
+                        case 'badge':
+                            return $bot->network->sendPrivateConversation($who, '/nb' . 'Do not say inapp words :o !');
+                            break;
+
+                        case 'naughtystep':
+                            return $bot->network->ban($who, 0, 'Do not say inapp words :o !', 'gn');
+                            break;
+
+                        case 'snakeban':
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', );
+                            break;
+
+                        case 'spaceban':
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', );
+                            break;
+
+                        case 'matchban':
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', );
+                            break;
+
+                        case 'codeban':
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', );
+                            break;
+
+                        case 'mazeban':
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', );
+                            break;
+
+                        case 'slotban':
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', );
+                            break;
+                        
+                        default:
+                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !');
+                            break;
                     }
                 }
             }

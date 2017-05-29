@@ -11,7 +11,6 @@ $onUserJoined = function (int $who, array $array) {
     $bot->users[$who] = new xatUser($array);
     $user = $bot->users[$who];
 
-
     if ($user->isAway()) {
         dataAPI::set('away_' . $who, true);
     }
@@ -62,6 +61,76 @@ $onUserJoined = function (int $who, array $array) {
             $powers = xatVariables::getPowers();
             $bot->network->unban($who);
             $bot->network->sendMessage("{$user->getRegname()} signed out and in twice to get unbanned from the gameban '{$powers[$array['w']]['name']}'.");
+        }
+    }
+
+    if (sizeof($bot->badwords) > 0) {
+        for ($i = 0; $i < sizeof($bot->badwords); $i++) { 
+            if (strpos(strtolower($user->getNick()), strtolower($bot->badwords[$i]['badword'])) {
+                dataAPI::set('modproof', 'User: ' . ((!is_null($regname)) ? $regname . ' (' . $who . ')' : $who) . ' Nick: ' . $user->getNick());
+
+                switch ($bot->badwords[$i]['method']) {
+                    case 'ban':
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !');
+                        break;
+
+                    case 'kick':
+                        return $bot->network->kick($who, 'Do not have inapp words in your name/status :o !');
+                        break;
+
+                    case 'dunce':
+                        return $bot->network->ban($who, 0, 'Do not have inapp words in your name/status :o !', 'gd');
+                        break;
+
+                    case 'zap':
+                        return $bot->network->kick($who, 'Do not have inapp words in your name/status :o !', '#rasberry#bump');
+                        break;
+
+                    case 'reverse':
+                        return $bot->network->ban($who, $hours, 'Do not have inapp words in your name/status :o !', 'g', 176);
+                        break;
+
+                    case 'yellowcard':
+                        return $bot->network->ban($who, 0, 'Do not have inapp words in your name/status :o !', 'gy');
+                        break;
+
+                    case 'badge':
+                        return $bot->network->sendPrivateConversation($who, '/nb' . 'Do not have inapp words in your name/status :o !');
+                        break;
+
+                    case 'naughtystep':
+                        return $bot->network->ban($who, 0, 'Do not have inapp words in your name/status :o !', 'gn');
+                        break;
+
+                    case 'snakeban':
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !', 'g', );
+                        break;
+
+                    case 'spaceban':
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !', 'g', );
+                        break;
+
+                    case 'matchban':
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !', 'g', );
+                        break;
+
+                    case 'codeban':
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !', 'g', );
+                        break;
+
+                    case 'mazeban':
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !', 'g', );
+                        break;
+
+                    case 'slotban':
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !', 'g', );
+                        break;
+                    
+                    default:
+                        return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !');
+                        break;
+                }
+            }
         }
     }
 

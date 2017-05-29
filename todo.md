@@ -7,7 +7,7 @@
 * [ ] raid protection
 * [x] flood filter
 * [x] spam filter
-* [ ] badwords filter (in chat, name, status)
+* [x] badwords filter (in chat, name, status)
 * [ ] links filter (in chat, name, status)
 * [ ] smilies filter (in chat, name)
 
