@@ -28,3 +28,4 @@
 * [ ] hangman
 * [ ] getmain [password] IN PC ONLY
 * [ ] mail [send/read/check/empty/delete/store/unstore/blockall/staff] [info]
+* [ ] typerace [start/repeat/end]
