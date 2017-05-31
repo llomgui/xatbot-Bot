@@ -1,4 +1,6 @@
 {
+    "name": "oceanproject/bot",
+    "description": "OceanProject Bot",
     "require": {
         "php": ">=7.0.0",
         "illuminate/database": "^5.4"
@@ -9,7 +11,10 @@
     },
     "autoload":{
         "classmap": [
-            "models"
-        ]
+            "lib/Models"
+        ],
+        "psr-4": {
+            "OceanProject\\Bot\\": "lib/"
+        }
     }
 }
