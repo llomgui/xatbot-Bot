@@ -404,9 +404,6 @@ function dispatch($type, $name, $args)
 
     foreach ($extensionsList[$type][$name] as $extensionName => $function) {
 		try {
-            var_dump($function);
-            var_dump($args);
-            exit;
 			call_user_func_array($function, $args);
 		} catch (TypeError $e) {
 			var_dump($e->getMessage());
