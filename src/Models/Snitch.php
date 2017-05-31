@@ -21,7 +21,7 @@ class Snitch extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function snitch_bot()
+    public function snitchBot()
     {
         return $this->hasOne(Bot::class, 'id', 'bot_id');
     }

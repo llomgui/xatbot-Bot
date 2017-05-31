@@ -9,7 +9,6 @@ $dev = function (int $who, array $message, int $type) {
     $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     switch ($message[1]) {
-
         case 'reload':
             reloadExtensions();
             $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
@@ -34,5 +33,4 @@ $dev = function (int $who, array $message, int $type) {
         default:
             break;
     }
-
 };

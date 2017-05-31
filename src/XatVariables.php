@@ -122,7 +122,7 @@ abstract class XatVariables
         $group1_smilies = [
             'smile|tongue|biggrin|mad|confused|redface|crying|frown|eek|wink',
             '3d|cool|6|a|sry|crs|un|d|scn|nod',
-            'gagged|nme|swt|roll|rofl|chkl|inlove|blk|xp|eyes', 
+            'gagged|nme|swt|roll|rofl|chkl|inlove|blk|xp|eyes',
             'tired|smirk|ill|dead|hello|yum|think|mischief|zip2|puke',
             'yawn|swear|cry2|what|omg|o_o|goo|smirk2|beye|wary',
             'shock|xd|cyc|wt|chew|contempt|fedup|aghast|look|spin2',
@@ -1729,7 +1729,6 @@ abstract class XatVariables
         }
         
         self::$volunteers = $volunteers;
-        
     }
     
     private static function updatePowers()
@@ -1782,8 +1781,8 @@ abstract class XatVariables
             $powers[$id]['smilies'][] = $smiley;
         }
         
-        foreach($page[7][1] as $name => $value) {
-            if($name != 'time' && $name != "!") {
+        foreach ($page[7][1] as $name => $value) {
+            if ($name != 'time' && $name != "!") {
                 $powers[$value[0]]['pawns'][] = 'h' . $name;
             }
         }
@@ -1794,7 +1793,7 @@ abstract class XatVariables
         $keys = array_keys($powers); // cant do end(array_keys($powers)) causes error
         $last = end($keys);
         
-        if($id != $last) {
+        if ($id != $last) {
             $lastName = array_search($id, $page[6][1]) == false ? $id : array_search($id, $page[6][1]);
             $powers[$id]['name']       = $lastName;
             $powers[$id]['minCost']    = 0;
@@ -1806,7 +1805,7 @@ abstract class XatVariables
             $powers[$id]['isGroup']    = false;
             $powers[$id]['isGame']     = false;
             $powers[$id]['isNew']      = false;
-            $powers[$id]['smilies']    = array_merge([$lastName],  array_keys($page[4][1], $id));
+            $powers[$id]['smilies']    = array_merge([$lastName], array_keys($page[4][1], $id));
         }
 
         self::$powers = $powers + self::$powers;
@@ -1859,7 +1858,7 @@ abstract class XatVariables
             $header = explode(',', $lines[0]);
 
             for ($i = 1; $i < sizeof($lines); $i++) {
-                $power      = explode(',',  $lines[$i]);
+                $power      = explode(',', $lines[$i]);
                 $id         = $power[0];
 
                 if (!isset(self::$powers[$id])) {
@@ -2014,5 +2013,4 @@ abstract class XatVariables
     {
         return self::$freeSmilies;
     }
-
 }

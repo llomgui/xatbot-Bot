@@ -57,5 +57,4 @@ $rank = function (int $who, array $message, int $type) {
     } else {
         return $bot->network->sendMessageAutoDetection($who, 'This user is not in the chat.', $type);
     }
-
 };

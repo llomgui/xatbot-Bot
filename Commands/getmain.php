@@ -45,5 +45,4 @@ $getmain = function (int $who, array $message, int $type) {
 
     // TODO insert pw in database then restart the bot.
     $bot->network->sendPrivateConversation($who, 'Oh I am Main Owner now (cool#).');
-
 };

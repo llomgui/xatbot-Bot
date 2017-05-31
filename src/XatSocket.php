@@ -63,7 +63,7 @@ class XatSocket
         do {
             $packet = socket_read($this->socket, 1460);
 
-            if ($packet === false && (socket_last_error($this->socket) !== 0) 
+            if ($packet === false && (socket_last_error($this->socket) !== 0)
                 && (socket_last_error($this->socket) !== 11)
             ) {
                 $this->disconnect();
@@ -75,7 +75,7 @@ class XatSocket
             }
 
             $this->buffer .= $packet;
-        } while($force && strpos($this->buffer, chr(0x00)) === false);
+        } while ($force && strpos($this->buffer, chr(0x00)) === false);
 
         if ($force === true) {
             socket_set_nonblock($this->socket);
@@ -189,10 +189,10 @@ class XatSocket
     public function unsanitize($str)
     {
         $str = str_replace(chr(0xCB).chr(0x83), '>', $str);
-        $str = str_replace('&lt;',   '<', $str);
+        $str = str_replace('&lt;', '<', $str);
         $str = str_replace('&apos;', "'", $str);
         $str = str_replace('&quot;', '"', $str);
-        $str = str_replace('&amp;',  '&', $str);
+        $str = str_replace('&amp;', '&', $str);
 
         return $str;
     }

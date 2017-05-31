@@ -13,7 +13,7 @@ $latestpower = function (int $who, array $message, int $type) {
         7 = pawns
         8 = nomob (temp)
         9 = pawns2 (temp)
-    */	
+    */
 
     $bot = OceanProject\Bot\API\ActionAPI::getBot();
 

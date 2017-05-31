@@ -38,5 +38,4 @@ $zap = function (int $who, array $message, int $type) {
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
-
 };

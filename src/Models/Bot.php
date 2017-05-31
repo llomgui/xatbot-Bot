@@ -38,7 +38,7 @@ class Bot extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function bot_status()
+    public function botStatus()
     {
         return $this->hasOne(BotStatus::class, 'id', 'bot_status_id');
     }

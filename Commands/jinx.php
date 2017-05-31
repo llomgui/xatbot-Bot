@@ -24,20 +24,20 @@ $jinx = function (int $who, array $message, int $type) {
     
     $seed = $Rand;
 
-    $random = function() use (&$seed){
+    $random = function () use (&$seed) {
         $seed = ($seed ^ ($seed << 21));
         
         $a = $seed;
         $b = 35;
-        $z = hexdec(80000000); 
-        if ($z & $a) { 
-            $a = ($a >> 1); 
-            $a &= (~$z); 
-            $a |= 0x40000000; 
-            $a = ($a >> ($b - 1)); 
-        } else { 
-            $a = ($a >> $b); 
-        } 
+        $z = hexdec(80000000);
+        if ($z & $a) {
+            $a = ($a >> 1);
+            $a &= (~$z);
+            $a |= 0x40000000;
+            $a = ($a >> ($b - 1));
+        } else {
+            $a = ($a >> $b);
+        }
         
         $seed = ($seed ^ ($a));
         $seed = ($seed ^ ($seed << 4));
@@ -50,7 +50,7 @@ $jinx = function (int $who, array $message, int $type) {
     $_local_9 = [];
 
     for ($i = 0; $i < count($message); $i++) {
-        if ($message[$i][0] == "(" && end($message[$i]) == ")"){
+        if ($message[$i][0] == "(" && end($message[$i]) == ")") {
             $_local_9[] = $message[$i];
             $message[$i] = ">";
         };
@@ -98,9 +98,9 @@ $jinx = function (int $who, array $message, int $type) {
                     $messageTmp2 = end($message2);
                     $message3 = array_slice($message2, 1, count($message2) - 1);
                     
-                    usort($message3, function($a, $b) use (&$random) {
+                    usort($message3, function ($a, $b) use (&$random) {
                         return ($random() & 1) ? -1 : 1;
-                    });   
+                    });
                     
                     array_unshift($message3, $messageTmp);
                     $message3[] = $messageTmp2;
@@ -134,8 +134,8 @@ $jinx = function (int $who, array $message, int $type) {
                     "/[OŒØǾȌȎṌṎṐṒỌỎỐỒỔỖỘỚỜỞỠỢŌÒÓŎŐÔÕÖoœøǿȍȏṍṏṑṓọỏốồổỗộớờởỡợōòóŏőôõö]/",
                     "/[UŨŪŬŮŰŲÙÚÛÜȔȖṲṴṶṸṺỤỦỨỪỬỮỰuũūŭůűųùúûüȕȗṳṵṷṹṻụủứừửữự]/",
                     "/[YẙỲỴỶỸŶŸÝyẙỳỵỷỹŷÿý]/"
-                ], 
-                ["egge", "egga", "eggi", "eggo", "eggu", "eggy"], 
+                ],
+                ["egge", "egga", "eggi", "eggo", "eggu", "eggy"],
                 $message
             );
             $message = explode(" ", $message);
@@ -144,7 +144,7 @@ $jinx = function (int $who, array $message, int $type) {
         case "space":
             $message = [implode($message)];
             $message[0] = preg_replace("/[ >]/", "", $message[0]);
-        break;
+            break;
         case 11:
         case "rspace":
             $messageTmp = implode(" ", $message);
@@ -159,19 +159,19 @@ $jinx = function (int $who, array $message, int $type) {
                     $random2 = (($random() % 1000000) / 10000);
                     if ($random2 < 2.998) {
                         $message3[$i] = 1;
-                    } else if ($random2 < 20.649) {
+                    } elseif ($random2 < 20.649) {
                         $message3[$i] = 2;
-                    } else if ($random2 < 41.16) {
+                    } elseif ($random2 < 41.16) {
                         $message3[$i] = 3;
-                    } else if ($random2 < 55.947) {
+                    } elseif ($random2 < 55.947) {
                         $message3[$i] = 4;
-                    } else if ($random2 < 66.647) {
+                    } elseif ($random2 < 66.647) {
                         $message3[$i] = 5;
-                    } else if ($random2 < 75.035) {
+                    } elseif ($random2 < 75.035) {
                         $message3[$i] = 6;
-                    } else if ($random2 < 82.974) {
+                    } elseif ($random2 < 82.974) {
                         $message3[$i] = 7;
-                    } else if ($random2 < 88.917) {
+                    } elseif ($random2 < 88.917) {
                         $message3[$i] = 8;
                     } else {
                         $message3[$i] = 9;
@@ -181,12 +181,12 @@ $jinx = function (int $who, array $message, int $type) {
             } else {
                 $i = 0;
                 while ($i < count($message)) {
-                   $message3[$i] = count($message[$i]);
-                   $i++;
+                    $message3[$i] = count($message[$i]);
+                    $i++;
                 }
-                usort($message3, function($a, $b) use (&$random) {
+                usort($message3, function ($a, $b) use (&$random) {
                     return ($random() & 1) ? -1 : 1;
-                }); 
+                });
             }
             $messageTmp = preg_replace("/ /", "", $messageTmp);
             $i2 = 0;
@@ -202,7 +202,7 @@ $jinx = function (int $who, array $message, int $type) {
     }
     
     for ($i = 0; $i < count($message); $i++) {
-        if ($message[$i] == ">"){
+        if ($message[$i] == ">") {
             $message[$i] = array_pop($_local_9);
         }
     }

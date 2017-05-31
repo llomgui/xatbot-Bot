@@ -8,7 +8,7 @@ $undunce = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-	if (!$bot->botHasPower(158)) {
+    if (!$bot->botHasPower(158)) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['dunce']), $type);
     }
 

@@ -145,9 +145,9 @@ class XatNetwork
 
             $this->write(
                 'y', [
-                    'r' => 8, 
-                    'v' => '0', 
-                    'u' => XatVariables::getXatid(), 
+                    'r' => 8,
+                    'v' => '0',
+                    'u' => XatVariables::getXatid(),
                     'z' => '8335799305056508195'
                 ]
             );
@@ -251,7 +251,7 @@ class XatNetwork
         $this->write('j2', $j2);
     }
 
-    public function write($node = null, $elements = []) 
+    public function write($node = null, $elements = [])
     {
         if ($node != "z") {
             $this->idleTime = time();
@@ -393,7 +393,7 @@ class XatNetwork
         $this->write($node);
     }
 
-    public function kick($uid, $reason, $sound='')
+    public function kick($uid, $reason, $sound = '')
     {
         $this->write(
             'c', [
@@ -404,7 +404,7 @@ class XatNetwork
         );
     }
 
-    public function ban($uid, $time, $reason, $tArgument='g', $gamebanid='')
+    public function ban($uid, $time, $reason, $tArgument = 'g', $gamebanid = '')
     {
         if ($time < 0) {
             $time = 1;
@@ -444,7 +444,7 @@ class XatNetwork
         );
     }
 
-    public function findPowerMatch($string) 
+    public function findPowerMatch($string)
     {
         $powers = XatVariables::getPowers();
 
@@ -461,8 +461,8 @@ class XatNetwork
             $lev = levenshtein($string, $info['name']);
             if ($lev == 0) {
                 return [$id, true];
-            }    
-            if ($lev <= $distance || $distance < 0 ) {
+            }
+            if ($lev <= $distance || $distance < 0) {
                 $closest = $id;
                 $distance = $lev;
             }

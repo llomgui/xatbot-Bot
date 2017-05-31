@@ -27,7 +27,7 @@ $onUserJoined = function (int $who, array $array) {
         if (!empty($bot->data->autowelcome)) {
             if ($bot->data->toggleautowelcome == 'pc') {
                 $bot->network->sendPrivateConversation($who, $bot->data->autowelcome);
-            } else if ($bot->data->toggleautowelcome == 'pm') {
+            } elseif ($bot->data->toggleautowelcome == 'pm') {
                 $bot->network->sendPrivateMessage($who, $bot->data->autowelcome);
             }
         }
@@ -41,7 +41,6 @@ $onUserJoined = function (int $who, array $array) {
         DataAPI::set('active_' . $who, time());
     } else {
         if (DataAPI::isSetVariable('left_' . $who)) {
-
             if (DataAPI::get('left_' . $who) < time() - 30) {
                 DataAPI::set('active_' . $who, time());
             }
@@ -69,9 +68,8 @@ $onUserJoined = function (int $who, array $array) {
     }
 
     if (sizeof($bot->badwords) > 0) {
-        for ($i = 0; $i < sizeof($bot->badwords); $i++) { 
+        for ($i = 0; $i < sizeof($bot->badwords); $i++) {
             if (strpos(strtolower($user->getNick()), strtolower($bot->badwords[$i]['badword']))) {
-
                 DataAPI::set(
                     'modproof',
                     'User: ' . ((!is_null($regname)) ? $regname . ' (' . $who . ')' : $who) . ' Nick: ' . $user->getNick()
@@ -161,8 +159,8 @@ $onUserJoined = function (int $who, array $array) {
                 break;
 
             case 'maths':
-                $foo = rand(5,20);
-                $bar = rand(4,19);
+                $foo = rand(5, 20);
+                $bar = rand(4, 19);
                 DataAPI::set('automember_' . $who, $foo + $bar);
                 $bot->network->sendPrivateConversation($who, 'Answer that question to be a member: ' . $foo . ' + ' . $bar);
                 break;

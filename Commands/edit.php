@@ -9,7 +9,11 @@ $edit = function (int $who, array $message, int $type) {
     }
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]', $type, true);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]',
+            $type, true
+        );
     }
 
     switch ($message[1]) {
@@ -74,7 +78,9 @@ $edit = function (int $who, array $message, int $type) {
 
         case 'customcommand':
             if (strlen($message[2]) > 1) {
-                return $bot->network->sendMessageAutoDetection($who, 'The max length of customcommand is 1.', $type, true);
+                return $bot->network->sendMessageAutoDetection(
+                    $who, 'The max length of customcommand is 1.', $type, true
+                );
             }
             $bot->data->customcommand = $message[2];
             $bot->data->save();
@@ -82,7 +88,11 @@ $edit = function (int $who, array $message, int $type) {
             break;
         
         default:
-            return $bot->network->sendMessageAutoDetection($who, 'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]', $type, true);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]',
+                $type, true
+            );
             break;
     }
 };

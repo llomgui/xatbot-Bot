@@ -17,10 +17,10 @@ $test = function (int $who, array $message, int $type) {
     }
     //remove parentheses, replace all #'s & alt255 with a space
     //not using regex because people like to use emojis/symbols with num
-    $message = trim(str_replace(array('(',')','#',' '/*<-alt255*/), ' ', $message));	
+    $message = trim(str_replace(array('(',')','#',' '/*<-alt255*/), ' ', $message));
     $message = explode(' ', $message);
     $message = array_filter($message, 'strlen');
-	
+    
     if (count($message) < 1) {
         return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type, true);
     }

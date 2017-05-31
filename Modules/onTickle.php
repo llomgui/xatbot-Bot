@@ -13,7 +13,6 @@ $onTickle = function (int $who, array $array) {
 
     switch (substr($array['t'], 0, 2)) {
         case '/l':
-
             $key = 'tickle_' . $array['u'];
             if (!DataAPI::isSetVariable($key)) {
                 DataAPI::set($key, 0);
@@ -30,11 +29,10 @@ $onTickle = function (int $who, array $array) {
                 if (!empty(trim($bot->data->ticklemessage))) {
                     $bot->network->sendPrivateMessage($who, $bot->data->ticklemessage);
                 }
-
-            } else if (time() - DataAPI::get($key) <= 5) {
+            } elseif (time() - DataAPI::get($key) <= 5) {
                 DataAPI::set($key, time());
                 if ($bot->data->gameban_unban == 1) {
-                    if (isset($bot->users[$who]) 
+                    if (isset($bot->users[$who])
                     && is_object($bot->users[$who])
                     && $bot->users[$who]->isGamebanned()) {
                         $powers = XatVariables::getPowers();
@@ -49,7 +47,6 @@ $onTickle = function (int $who, array $array) {
             break;
 
         case '/a':
-
             if (!isset($bot->users[$who])) {
                 return;
             }
@@ -68,7 +65,6 @@ $onTickle = function (int $who, array $array) {
             
             $bot->users[$who]->setMaskedPowers($array);
             break;
-
     }
 
     return;

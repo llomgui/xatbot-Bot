@@ -23,7 +23,7 @@ $pool = function (int $who, array $message, int $type) {
 
         case 'banpool':
             $pool = 2;
-            break;        
+            break;
         
         default:
             return $bot->network->sendMessageAutoDetection($who, 'Usage: !pool [main/staff/banpool]', $type);

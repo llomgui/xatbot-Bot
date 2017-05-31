@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class BotStatus extends Eloquent
 {
-	/**
+    /**
      * @var array
      */
     protected $fillable = ['name'];

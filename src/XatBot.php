@@ -124,7 +124,7 @@ class XatBot
                 ->toArray();
 
         $badwords = [];
-        for ($i = 0; $i < sizeof($results); $i++) { 
+        for ($i = 0; $i < sizeof($results); $i++) {
             $badwords[$i]['badword'] = $results[$i]->badword;
             $badwords[$i]['method']  = $results[$i]->method;
             $badwords[$i]['hours']   = $results[$i]->hours;
@@ -141,7 +141,7 @@ class XatBot
 
         if (!is_numeric($id)) {
             $powers = xatVariables::getPowers();
-            foreach($powers as $key => $value) {
+            foreach ($powers as $key => $value) {
                 if ($value['name'] == $id) {
                     $id = $key;
                     break;
@@ -167,16 +167,15 @@ class XatBot
 
         if ($this->users[$id]->isMain()) {
             return 5;
-        } else if ($this->users[$id]->isOwner()) {
+        } elseif ($this->users[$id]->isOwner()) {
             return 4;
-        } else if ($this->users[$id]->isMod()) {
+        } elseif ($this->users[$id]->isMod()) {
             return 3;
-        } else if ($this->users[$id]->isMember()) {
+        } elseif ($this->users[$id]->isMember()) {
             return 2;
-        } else if ($this->users[$id]->isGuest()) {
+        } elseif ($this->users[$id]->isGuest()) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -184,29 +183,29 @@ class XatBot
     public function stringToRank($string)
     {
         $string = strtolower($string);
-        switch($string) {
-        case 'main':
-            $rank = 5;
-            break;
-        case 'owner':
-            $rank = 4;
-            break;
-        case 'mod':
-        case 'moderator':
-            $rank = 3;
-            break;
-        case 'mem':
-        case 'member':
-            $rank = 2;
-            break;
-        case 'guest':
-            $rank = 1;
-            break;
-        case 'banned':
-            $rank = 0;
-            break;
-        default:
-            $rank = 0;
+        switch ($string) {
+            case 'main':
+                $rank = 5;
+                break;
+            case 'owner':
+                $rank = 4;
+                break;
+            case 'mod':
+            case 'moderator':
+                $rank = 3;
+                break;
+            case 'mem':
+            case 'member':
+                $rank = 2;
+                break;
+            case 'guest':
+                $rank = 1;
+                break;
+            case 'banned':
+                $rank = 0;
+                break;
+            default:
+                $rank = 0;
         }
 
         return $rank;
@@ -251,7 +250,7 @@ class XatBot
         return is_string($response) ? htmlspecialchars_decode($response) : 'Invalid sentence';
     }
 
-    public function secondsToTime($seconds) 
+    public function secondsToTime($seconds)
     {
         $dtF = new \DateTime('@0');
 

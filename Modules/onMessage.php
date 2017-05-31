@@ -26,7 +26,6 @@ $onMessage = function (int $who, string $message) {
     }
 
     if ($bot->flagToRank($who) < $bot->stringToRank($bot->chatInfo['rank'])) {
-
         if (isset($bot->data->maxflood) && $bot->data->maxflood > 1) {
             if (!DataAPI::isSetVariable('countMessage')) {
                 DataAPI::set('countMessage', 1);
@@ -43,7 +42,6 @@ $onMessage = function (int $who, string $message) {
         foreach ($message2 as $value) {
             if (isset($bot->data->maxchar) && $bot->data->maxchar > 0) {
                 if (strpos($value, 'ffffff') || strpos($value, '------') || strpos($value, '000000')) {
-
                 } else {
                     if (preg_match_all('/(.)\1{' . $bot->data->maxchar . ',}/iu', $value)) {
                         return $bot->network->kick($who, 'You are not allowed to spam! (maxChar: ' . $bot->data->maxchar . ')');
@@ -53,7 +51,7 @@ $onMessage = function (int $who, string $message) {
         }
 
         if (sizeof($bot->badwords) > 0) {
-            for ($i = 0; $i < sizeof($bot->badwords); $i++) { 
+            for ($i = 0; $i < sizeof($bot->badwords); $i++) {
                 if (strpos($message, strtolower($bot->badwords[$i]['badword']))) {
                     DataAPI::set('modproof', 'User: ' . ((!is_null($regname)) ? $regname . ' (' . $who . ')' : $who) . ' Message: ' . $message);
 
@@ -124,10 +122,9 @@ $onMessage = function (int $who, string $message) {
     }
 
     if (!empty($bot->responses)) {
-
         $replace = [
             '{name}'    => $bot->users[$who]->getNick(),
-            '{status}'  => $bot->users[$who]->getStatus(), 
+            '{status}'  => $bot->users[$who]->getStatus(),
             '{regname}' => $bot->users[$who]->getRegname(),
             '{users}'   => sizeof($bot->users),
             '{cmdcode}' => $bot->data->customcommand,
@@ -162,7 +159,7 @@ $onMessage = function (int $who, string $message) {
                 } else {
                     for ($i = 0; $i < sizeof($message2); $i++) {
                         if ($message2[$i] == strtolower($key)) {
-                            foreach($replace as $k => $v) {
+                            foreach ($replace as $k => $v) {
                                 $responses = str_replace(strtolower($k), $v, $responses);
                             }
 
@@ -175,5 +172,4 @@ $onMessage = function (int $who, string $message) {
     }
 
     return;
-
 };

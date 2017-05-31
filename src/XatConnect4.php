@@ -12,22 +12,22 @@ class XatConnect4
     public $height = [];
     public $won = false;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->field  = array_fill(0, 7, [0, 0, 0, 0, 0, 0]);
         $this->height = [5, 5, 5, 5, 5, 5, 5];
     }
 
-    public function get($column, $row) 
+    public function get($column, $row)
     {
         if (($column < 0) || ($column > 6) || ($row < 0) || ($row > 5)) {
             return $this->outside;
         } else {
             return $this->field[$column][$row];
-        } 
+        }
     }
 
-    public function set($column) 
+    public function set($column)
     {
         if (($column < 0) || ($column > 6) || ($this->height[$column] < 0) || ($this->height[$column] > 5)) {
             return 666;
@@ -38,19 +38,19 @@ class XatConnect4
                 $this->won=true;
                 return 1000;
             }
-            if (($this->height[0] == -1) && ($this->height[1] == -1) && ($this->height[2] == -1) 
-                && ($this->height[3] == -1) && ($this->height[4] == -1) && ($this->height[5] == -1) 
+            if (($this->height[0] == -1) && ($this->height[1] == -1) && ($this->height[2] == -1)
+                && ($this->height[3] == -1) && ($this->height[4] == -1) && ($this->height[5] == -1)
                 && ($this->height[6] == -1)
             ) {
                 return 50;
             }
             if ($this->won != true) {
-                return $this->computer();       
+                return $this->computer();
             }
         }
     }
 
-    public function check($x, $y, $quantity, $color, $check_bei_2) 
+    public function check($x, $y, $quantity, $color, $check_bei_2)
     {
         $yes = false;
         if ($color == $this->red) {
@@ -112,22 +112,22 @@ class XatConnect4
                 $this->field[$x][$y] = $color;
                 $this->height[$x]--;
                 for ($j = 0; $j <= 3; $j++) {
-                    if (($sum1 >= $quantity) && ($this->get($x - $k + $j, $y) == 0) 
+                    if (($sum1 >= $quantity) && ($this->get($x - $k + $j, $y) == 0)
                         && ($this->get($x - $k + $j, $this->height[$x - $k + $j] + 1) == 0)
                     ) {
                         $sum12++;
                     }
-                    if (($sum2 >= $quantity) && ($this->get($x, $y - $k + $j) == 0) 
+                    if (($sum2 >= $quantity) && ($this->get($x, $y - $k + $j) == 0)
                         && ($this->get($x, $this->height[$x] + 1) == 0)
                     ) {
                         $sum22++;
                     }
-                    if (($sum3 >= $quantity) && ($this->get($x - $k + $j, $y - $k + $j) == 0) 
+                    if (($sum3 >= $quantity) && ($this->get($x - $k + $j, $y - $k + $j) == 0)
                         && ($this->get($x - $k + $j, $this->height[$x - $k + $j] + 1) == 0)
                     ) {
                         $sum32++;
                     }
-                    if (($sum4 >= $quantity) && ($this->get($x + $k - $j, $y - $k + $j) == 0) 
+                    if (($sum4 >= $quantity) && ($this->get($x + $k - $j, $y - $k + $j) == 0)
                         && ($this->get($x + $k - $j, $this->height[$x + $k - $j] + 1) == 0)
                     ) {
                         $sum42++;
@@ -143,12 +143,12 @@ class XatConnect4
         return $yes;
     }
     
-    public function random() 
+    public function random()
     {
         return (mt_rand() / mt_getrandmax());
     }
 
-    public function computer() 
+    public function computer()
     {
         $chance = [
             13 + $this->random() * 4,
@@ -181,14 +181,14 @@ class XatConnect4
             if ($this->check($i, $this->height[$i], 2, $this->red, false) == true) {
                 $chance[$i] = $chance[$i] + 50 + $this->random() * 3;
             }
-            if (($this->check($i, $this->height[$i], 2, $this->yellow, true) == true) 
+            if (($this->check($i, $this->height[$i], 2, $this->yellow, true) == true)
                 && ($this->height[$i] > 0)
             ) {
                 $this->field[$i][$this->height[$i]] = $this->yellow;
                 $this->height[$i]--;
                 $count = 0;
-                for ($j = 0; $j <= 6; $j++) { 
-                    if($this->check($j, $this->height[$j], 3, $this->yellow, false) == true) {
+                for ($j = 0; $j <= 6; $j++) {
+                    if ($this->check($j, $this->height[$j], 3, $this->yellow, false) == true) {
                         $count++;
                     }
                 }
@@ -218,13 +218,13 @@ class XatConnect4
             if ($this->check($i, $this->height[$i] - 1, 1, $this->yellow, false) == true) {
                 $chance[$i] = $chance[$i] + 1;
             }
-            if (($this->check($i, $this->height[$i], 2, $this->yellow, true) == true) 
+            if (($this->check($i, $this->height[$i], 2, $this->yellow, true) == true)
                 && ($this->height[$i] > 0)
             ) {
                 $this->field[$i][$this->height[$i]] = $this->yellow;
                 $this->height[$i]--;
-                for ($k = 0; $k <= 6; $k++) {    
-                    if (($this->check($k, $this->height[$k], 3, $this->yellow, false) == true) 
+                for ($k = 0; $k <= 6; $k++) {
+                    if (($this->check($k, $this->height[$k], 3, $this->yellow, false) == true)
                         && ($this->height[$k] > 0)
                     ) {
                         $this->field[$k][$this->height[$k]] = $this->red;
@@ -241,13 +241,13 @@ class XatConnect4
                 $this->height[$i]++;
                 $this->field[$i][$this->height[$i]] = 0;
             }
-            if (($this->check($i, $this->height[$i], 2, $this->red, true) == true) 
+            if (($this->check($i, $this->height[$i], 2, $this->red, true) == true)
                 && ($this->height[$i] > 0)
             ) {
                 $this->field[$i][$this->height[$i]] = $this->red;
                 $this->height[$i]--;
                 for ($k = 0; $k <= 6; $k++) {
-                    if (($this->check($k, $this->height[$k], 3, $this->red, false) == true) 
+                    if (($this->check($k, $this->height[$k], 3, $this->red, false) == true)
                         && ($this->height[$k] > 0)
                     ) {
                         $this->field[$k][$this->height[$k]] = $this->yellow;
@@ -264,13 +264,13 @@ class XatConnect4
                 $this->height[$i]++;
                 $this->field[$i][$this->height[$i]] = 0;
             }
-            if (($this->check($i, $this->height[$i] - 1, 2, $this->red, true) == true) 
+            if (($this->check($i, $this->height[$i] - 1, 2, $this->red, true) == true)
                 && ($this->height[$i] > 1)
             ) {
                 $this->field[$i][$this->height[$i]] = $this->red;
                 $this->height[$i]--;
                 for ($k = 0; $k <= 6; $k++) {
-                    if (($this->check($k, $this->height[$k] - 1, 3, $this->red, false) == true) 
+                    if (($this->check($k, $this->height[$k] - 1, 3, $this->red, false) == true)
                         && ($this->height[$k] > 0)
                     ) {
                         $this->field[$k][$this->height[$k]] = $this->yellow;
@@ -305,8 +305,8 @@ class XatConnect4
         if ($this->check($column, $this->height[$column] + 1, 4, $this->yellow, false) == true) {
             return [-1000, $column];
         }
-        if (($this->height[0] == -1) && ($this->height[1] == -1) && ($this->height[2] == -1) 
-            && ($this->height[3] == -1) && ($this->height[4] == -1)  && ($this->height[5] == -1) 
+        if (($this->height[0] == -1) && ($this->height[1] == -1) && ($this->height[2] == -1)
+            && ($this->height[3] == -1) && ($this->height[4] == -1)  && ($this->height[5] == -1)
             && ($this->height[6] == -1)
         ) {
             return [51, $column];

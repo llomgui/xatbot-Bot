@@ -6,7 +6,7 @@ $onRankMessage = function (int $who, string $message, string $reason, array $arr
     $bot = OceanProject\Bot\API\ActionAPI::getBot();
     
     if ($message[0] == "/") {
-        $action = str_replace(range(0,9), '', $message);
+        $action = str_replace(range(0, 9), '', $message);
         $duration = substr($message, strlen($action) - 1);
         switch (substr($action, 0, 2)) {
             case '/u': //unban
@@ -20,7 +20,7 @@ $onRankMessage = function (int $who, string $message, string $reason, array $arr
                         return;
                     }
                     //$bot->network->sendMessage($who . ' finished a ' . $hours . ' hour ' . $powers[$game]['name'] . ' in ' . $seconds . ' seconds.');
-                    /* 
+                    /*
                         TODO
                         Save highscores to database
                     */
@@ -37,7 +37,7 @@ $onRankMessage = function (int $who, string $message, string $reason, array $arr
                 break;
                 
             case '/m': //change rank (mem,guest,mod,owner)
-                switch ($reason)  {
+                switch ($reason) {
                     case 'M':// Owner
                         break;
                         

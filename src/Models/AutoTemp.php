@@ -21,7 +21,7 @@ class AutoTemp extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function autotemp_bot()
+    public function autotempBot()
     {
         return $this->hasOne(Bot::class, 'id', 'bot_id');
     }

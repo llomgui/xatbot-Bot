@@ -8,7 +8,7 @@ $unyellowcard = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-	if (!$bot->botHasPower(292)) {
+    if (!$bot->botHasPower(292)) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['yellowcard']), $type);
     }
 

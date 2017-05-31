@@ -8,7 +8,7 @@ $wallet = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    $user = $bot->users[$who]; 
+    $user = $bot->users[$who];
 
     if (isset($message[1]) || !empty($message[1])) {
         if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {

@@ -8,7 +8,7 @@ $unnaughtystep = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-	if (!$bot->botHasPower(284)) {
+    if (!$bot->botHasPower(284)) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['naughtystep']), $type);
     }
 

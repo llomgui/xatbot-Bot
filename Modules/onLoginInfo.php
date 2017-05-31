@@ -11,5 +11,4 @@ $onLoginInfo = function (array $array) {
         XatVariables::setLoginTime(time());
         $bot->network->reconnect();
     }
-
 };

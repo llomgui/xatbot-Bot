@@ -21,7 +21,7 @@ class Staff extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function staff_minrank()
+    public function staffMinrank()
     {
         return $this->hasOne(Minrank::class, 'id', 'minrank_id');
     }
@@ -29,7 +29,7 @@ class Staff extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function staff_bot()
+    public function staffBot()
     {
         return $this->hasOne(Bot::class, 'id', 'bot_id');
     }

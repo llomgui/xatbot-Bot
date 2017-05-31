@@ -81,5 +81,4 @@ $poorest = function (int $who, array $message, int $type) {
     }
 
     $bot->network->sendMessageAutoDetection($who, 'The poorest user in this room is ' . $res[0]['user']->getRegname().'('.$res[0]['user']->getID().').', $type);
-
 };

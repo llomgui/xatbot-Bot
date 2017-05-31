@@ -137,5 +137,4 @@ $value = function (int $who, array $message, int $type) {
 
         $bot->network->sendMessageAutoDetection($who, $message, $type);
     }
-
 };

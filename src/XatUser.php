@@ -2,7 +2,7 @@
 
 namespace OceanProject\Bot;
 
-class xatUser
+class XatUser
 {
     private $id;
     private $regname;
@@ -209,7 +209,7 @@ class xatUser
         //return (($this->flag0 & 1 << 11) != 0); "outdated mobile pawn not used anymore
     }
     
-    public function onXat() 
+    public function onXat()
     {
         return (($this->qflags & 1) != 0);
     }
@@ -291,12 +291,12 @@ class xatUser
         }
     }
     
-    public function setMaskedPowers($packet) 
+    public function setMaskedPowers($packet)
     {
         for ($i=0; $i < XatVariables::getMaxPowerIndex(); $i++) {
             $this->maskedpowers[$i] = isset($packet['p' . $i]) ? $packet['p' . $i] - $this->powers[$i] : 0;
         }
-    }   
+    }
     
     public function setDoubles($info)
     {
@@ -317,7 +317,7 @@ class xatUser
     {
         if (!$this->hasDays()) {
             return false;
-        }  
+        }
         
         $id    = (int)$id;
         $index = (int)($id / 32);
