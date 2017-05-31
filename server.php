@@ -419,10 +419,10 @@ function read()
     foreach ($extensionsDirectories as $extensionsDir) {
         $callbacks = json_decode(file_get_contents($extensionsDir . '.json', true), true);
 
-        $dir = opendir('lib' . DIRECTORY_SEPARATOR . $extensionsDir);
+        $dir = opendir($extensionsDir);
 
         while (($file = readdir($dir)) !== false) {
-            $url = 'lib' . DIRECTORY_SEPARATOR . $extensionsDir . DIRECTORY_SEPARATOR . $file;
+            $url = '.' . DIRECTORY_SEPARATOR . $extensionsDir . DIRECTORY_SEPARATOR . $file;
 
             if (!is_file($url)) {
                 continue;
