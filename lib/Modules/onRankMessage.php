@@ -1,7 +1,9 @@
 <?php
 
+use OceanProject\Bot\XatVariables;
+
 $onRankMessage = function (int $who, string $message, string $reason, array $array) {
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
     
     if ($message[0] == "/") {
         $action = str_replace(range(0,9), '', $message);
@@ -13,7 +15,7 @@ $onRankMessage = function (int $who, string $message, string $reason, array $arr
                     $game    = $reason[0];
                     $seconds = $reason[1];
                     $hours   = $reason[2];
-                    $powers  = xatVariables::getPowers();
+                    $powers  = XatVariables::getPowers();
                     if ($seconds <= 0) {//cheated
                         return;
                     }

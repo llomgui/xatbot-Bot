@@ -1,8 +1,11 @@
 <?php
 
+use OceanProject\Bot\API\DataAPI;
+use OceanProject\Bot\XatVariables;
+
 $onTickle = function (int $who, array $array) {
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     if (!isset($array['t'])) {
         return;
@@ -34,7 +37,7 @@ $onTickle = function (int $who, array $array) {
                     if (isset($bot->users[$who]) 
                     && is_object($bot->users[$who])
                     && $bot->users[$who]->isGamebanned()) {
-                        $powers = xatVariables::getPowers();
+                        $powers = XatVariables::getPowers();
                         $bot->network->unban($who);
                         $bot->network->sendMessage("{$bot->users[$who]->getRegname()} rapid tickled me to get unbanned from the gameban '{$powers[$bot->users[$who]->getGameban()]['name']}'.");
                     }

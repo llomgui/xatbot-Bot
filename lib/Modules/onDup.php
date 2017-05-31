@@ -2,6 +2,6 @@
 
 $onDup = function () {
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
     stop($bot->data->id);
 };

@@ -2,7 +2,7 @@
 
 $love = function (int $who, array $message, int $type) {
 
-	$bot = ActionAPI::getBot();
+	$bot = OceanProject\Bot\API\ActionAPI::getBot();
 
 	if (!$bot->minrank($who, 'love')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

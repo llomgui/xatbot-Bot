@@ -6,7 +6,7 @@ $dev = function (int $who, array $message, int $type) {
         return;
     }
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     switch ($message[1]) {
 

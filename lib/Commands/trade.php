@@ -2,7 +2,7 @@
 
 $trade = function (int $who, array $message, int $type) {
 
-	$bot = ActionAPI::getBot();
+	$bot = OceanProject\Bot\API\ActionAPI::getBot();
 
 	if ($who != 1000000000) {
 		return $bot->network->sendMessageAutoDetection($who, 'Nope! :)', $type);

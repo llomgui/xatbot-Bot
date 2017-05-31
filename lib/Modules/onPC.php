@@ -1,8 +1,10 @@
 <?php
 
+use OceanProject\Bot\API\DataAPI;
+
 $onPC = function (int $who, string $message) {
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
     $message = explode(' ', $message);
 
     if (!isset($bot->users[$who])) {

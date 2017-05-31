@@ -1,5 +1,8 @@
 <?php
 
+use OceanProject\Bot\API\DataAPI;
+use OceanProject\Bot\XatVariables;
+
 $onFriendList = function (array $array) {
 
     if (!isset($array['v'])) {
@@ -7,11 +10,11 @@ $onFriendList = function (array $array) {
         return;
     }
 
-    $bot  = ActionAPI::getBot();
+    $bot  = OceanProject\Bot\API\ActionAPI::getBot();
     $list = explode(',', $array['v']);
     $ctx  = stream_context_create(['http' => ['timeout' => 1]]);
 
-    $volunteers = xatVariables::getVolunteers();
+    $volunteers = XatVariables::getVolunteers();
 
     $volids = [];
     for ($i = 0; $i < sizeof($volunteers); $i++) {

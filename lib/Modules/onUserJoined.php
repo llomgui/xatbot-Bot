@@ -1,14 +1,18 @@
 <?php
 
+use OceanProject\Bot\XatUser;
+use OceanProject\Bot\API\DataAPI;
+use OceanProject\Bot\XatVariables;
+
 $onUserJoined = function (int $who, array $array) {
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     if ($who >= 1900000000) {
         return;
     }
 
-    $bot->users[$who] = new xatUser($array);
+    $bot->users[$who] = new XatUser($array);
     $user = $bot->users[$who];
 
     if ($user->isAway()) {
@@ -58,7 +62,7 @@ $onUserJoined = function (int $who, array $array) {
         }
         if (DataAPI::get('gamebanrelog_' . $who) >= 2) {
             DataAPI::unSetVariable('gamebanrelog_' . $who);
-            $powers = xatVariables::getPowers();
+            $powers = XatVariables::getPowers();
             $bot->network->unban($who);
             $bot->network->sendMessage("{$user->getRegname()} signed out and in twice to get unbanned from the gameban '{$powers[$array['w']]['name']}'.");
         }
@@ -151,7 +155,7 @@ $onUserJoined = function (int $who, array $array) {
                 break;
 
             case 'notoon':
-                if (!in_array($user->getNick(), xatVariables::getDefaultName())) {
+                if (!in_array($user->getNick(), XatVariables::getDefaultName())) {
                     $member = true;
                 }
                 break;

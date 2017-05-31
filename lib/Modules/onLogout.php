@@ -2,7 +2,7 @@
 
 $onLogout = function (array $array) {
     
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
     if (!isset($array['e'])) {
         return;
     }

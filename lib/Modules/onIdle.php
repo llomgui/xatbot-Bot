@@ -1,7 +1,6 @@
 <?php
 
 $onIdle = function () {
-    $bot = ActionAPI::getBot();
-
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
     $bot->network->reconnect();
 };

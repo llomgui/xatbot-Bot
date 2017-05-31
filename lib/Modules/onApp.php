@@ -1,7 +1,10 @@
 <?php
 
+use OceanProject\Bot\API\DataAPI;
+use OceanProject\Bot\XatVariables;
+
 $onApp = function (int $who, int $app, array $array) {
-	$bot = ActionAPI::getBot();
+	$bot = OceanProject\Bot\API\ActionAPI::getBot();
 	switch ($app) {
 		case 10000: //Example stub for doodle
 
@@ -65,7 +68,7 @@ $onApp = function (int $who, int $app, array $array) {
 				switch ($array['t'][0]) {
 
 					case 'G':
-						$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'G'];
+						$buildPacket = ['i' => 30008, 'u' => XatVariables::getXatid(), 'd' => $who, 't' => 'G'];
 						$bot->network->write('x', $buildPacket);
 						break;
 
@@ -76,21 +79,21 @@ $onApp = function (int $who, int $app, array $array) {
 					case 'S':
 						if ($array['t'] == 'S,1') {
 							// <x i="30008" u="xatid" d="destid" t="S,5" />
-							$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'S,5'];
+							$buildPacket = ['i' => 30008, 'u' => XatVariables::getXatid(), 'd' => $who, 't' => 'S,5'];
 							$bot->network->write('x', $buildPacket);
 
 							usleep(300000);
 
 							// <x i="30008" u="xatid" d="destid" t="S,1" />
-							$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'S,1'];
+							$buildPacket = ['i' => 30008, 'u' => XatVariables::getXatid(), 'd' => $who, 't' => 'S,1'];
 							$bot->network->write('x', $buildPacket);
 
 							usleep(300000);
 
 							// <x i="30008" u="xatid" d="destid" t="T,0;0;259=2|,0;0;,password" />
-							$buildPacket = ['i' => 30008, 'u' => xatVariables::getXatid(), 'd' => $who, 't' => 'T,' . 
+							$buildPacket = ['i' => 30008, 'u' => XatVariables::getXatid(), 'd' => $who, 't' => 'T,' . 
 								(DataAPI::isSetVariable('sent_trade_' . $who) ? DataAPI::get('sent_trade_' . $who) : '0;0;') . ',' . 
-								(DataAPI::isSetVariable('received_trade_' . $who) ? DataAPI::get('received_trade_' . $who) : '0;0;') . ',' . xatVariables::getPassword()];
+								(DataAPI::isSetVariable('received_trade_' . $who) ? DataAPI::get('received_trade_' . $who) : '0;0;') . ',' . XatVariables::getPassword()];
 							$bot->network->write('x', $buildPacket);
 
 							if (DataAPI::isSetVariable('sent_trade_' . $who)) {

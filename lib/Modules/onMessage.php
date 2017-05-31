@@ -1,8 +1,11 @@
-=<?php
+<?php
+
+use OceanProject\Bot\API\DataAPI;
+use OceanProject\Bot\XatVariables;
 
 $onMessage = function (int $who, string $message) {
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     if ($bot->isPremium && $bot->data->premium < time()) {
         $bot->network->sendMessage('Ah! My premium time is over (cry2)');

@@ -2,7 +2,7 @@
 
 $onDone = function (array $array) {
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
     $bot->network->idleTime = time();
     $bot->done = true;
 };

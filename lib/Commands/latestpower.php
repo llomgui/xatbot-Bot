@@ -15,7 +15,7 @@ $latestpower = function (int $who, array $message, int $type) {
         9 = pawns2 (temp)
     */	
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'latestpower')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

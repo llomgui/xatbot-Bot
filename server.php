@@ -13,6 +13,7 @@ require_once 'vendor/autoload.php';
 use OceanProject\Bot\Models;
 use OceanProject\Bot\XatBot;
 use OceanProject\Bot\API\BaseAPI;
+use OceanProject\Bot\API\ActionAPI;
 use OceanProject\Bot\XatVariables;
 
 echo 'Loading database...' . PHP_EOL;

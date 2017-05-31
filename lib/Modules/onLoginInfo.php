@@ -1,12 +1,14 @@
 <?php
 
+use OceanProject\Bot\XatVariables;
+
 $onLoginInfo = function (array $array) {
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     if (isset($array['RL']) && $array['RL'] == '1') {
-        xatVariables::setLoginPacket($array);
-        xatVariables::setLoginTime(time());
+        XatVariables::setLoginPacket($array);
+        XatVariables::setLoginTime(time());
         $bot->network->reconnect();
     }
 

@@ -1,11 +1,12 @@
 <?php
+
 $onTransfer = function (int $from, string $type, string $message, int $to, int $xats, int $days) {
 
     if ($type != 'T') {
         return;
     }
 
-    $bot = ActionAPI::getBot();
+    $bot = OceanProject\Bot\API\ActionAPI::getBot();
 
     if ($days > 0) {
         $xats = $days * 13 + $xats;
