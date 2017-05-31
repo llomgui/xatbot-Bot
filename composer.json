@@ -10,9 +10,6 @@
         "phpunit/phpunit": "~5.7"
     },
     "autoload":{
-        "classmap": [
-            "lib/Models"
-        ],
         "psr-4": {
             "OceanProject\\Bot\\": "lib/"
         }
