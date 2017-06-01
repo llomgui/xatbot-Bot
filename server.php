@@ -10,12 +10,27 @@ define('IPC_SOCKET', 'sockets/' . strtolower($argv[1]) . '.sock');
 // load composer autoload
 require_once 'vendor/autoload.php';
 
+use Monolog\Logger;
+use Monolog\ErrorHandler;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
+
 use OceanProject\Bot\Models;
 use OceanProject\Bot\XatBot;
 use OceanProject\Bot\API\BaseAPI;
 use OceanProject\Bot\XatVariables;
 
-echo 'Loading database...' . PHP_EOL;
+$format = "[%datetime%] %channel% %level_name%: %message%\n";
+$formatter = new LineFormatter($format);
+
+$stream = new StreamHandler('logs/logs.txt');
+$stream->setFormatter($formatter);
+
+$logger = new Logger($argv[1]);
+ErrorHandler::register($logger);
+$logger->pushHandler($stream);
+
+$logger->info('Loading database...');
 $infos = json_decode(file_get_contents('config.json'), true)['database'];
 $capsule = new Capsule();
 
@@ -36,26 +51,26 @@ $capsule->addConnection(
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-echo 'Loading variables...' . PHP_EOL;
+$logger->info('Loading variables...');
 XatVariables::init();
 XatVariables::update();
 
-echo 'Loading API...' . PHP_EOL;
+$logger->info('Loading API...');
 $params     = BaseAPI::init();
 $currentBot = &$params['botID'];
 $bot        = &$params['bot'];
 
-echo 'Loading bots...' . PHP_EOL;
+$logger->info('Loading bots...');
 $xatBots = [];
 
-echo 'Loading extensions...' . PHP_EOL;
+$logger->info('Loading extensions...');
 $extensionsList = [];
 read();
 
-echo 'Loading IPC...' . PHP_EOL;
+$logger->info('Loading IPC...');
 $socket = IPC_Start();
 
-echo 'Server is ready!' . PHP_EOL;
+$logger->info('Server is ready!');
 
 while (1) {
     $tmpClient = @socket_accept($socket);
@@ -76,6 +91,7 @@ while (1) {
                 continue;
             }
 
+            $logger->notice($packet);
             $packet  = explode(' ', trim($packet));
             $command = $packet[0];
             $args    = [];
@@ -143,7 +159,7 @@ while (1) {
             try {
                 while (1) {
                     if (!$Ocean->network->socket->isConnected()) {
-                        echo 'Socket not connected!' . PHP_EOL;
+                        $logger->critical('Socket not connected!');
                         exit('You have an error in your code or socket died.');
                         break;
                     }
@@ -151,7 +167,7 @@ while (1) {
                     $packet = $Ocean->network->socket->read();
 
                     if ($packet === false) {
-                        echo 'ERROR packet false!' . PHP_EOL;
+                        $logger->critical('ERROR packet false!');
                         $Ocean->network->reconnect();
                         break;
                     }
@@ -367,13 +383,12 @@ while (1) {
                         if (!$unknow && !empty($hook)) {
                             dispatch('Modules', $hook, $args);
                         } elseif ($unknow) {
-                            echo 'Unknow node ['.$packet['node'].'] on chat FIXME' . PHP_EOL;
+                            $logger->critical('Unknow node ['.$packet['node'].'] on chat FIXME');
                         }
                     }
                 }
             } catch (Exception $e) {
-                var_dump($e->getMessage());
-                echo 'Error botid: ' . $botid . PHP_EOL;
+                $logger->critical('Error botid: ' . $botid . ' Message: ' . $e->getMessage());
             }
         }
     }
@@ -406,7 +421,7 @@ function dispatch($type, $name, $args)
 		try {
 			call_user_func_array($function, $args);
 		} catch (TypeError $e) {
-			var_dump($e->getMessage());
+            $logger->critical('Error dispatch, message: ' . $e->getMessage());
 		}
     }
 }
@@ -492,7 +507,7 @@ function start($botid)
         $bot->save();
         $xatBots[$botid] = $Ocean;
     } catch (Exception $e) {
-        var_dump($e);
+        $logger->critical('Error start, message: ' . $e->getMessage());
         return false;
     }
     return true;

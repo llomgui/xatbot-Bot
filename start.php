@@ -1,9 +1,5 @@
 <?php
 
-// load composer autoload database
-require_once 'vendor/autoload.php';
-require_once 'classes/database.php';
-
 function forkOff($lambda, $args)
 {
     $pid = pcntl_fork();
@@ -34,13 +30,13 @@ function forkOff($lambda, $args)
 
 function startServer($name)
 {
-    $main = ['php server.php ' . $name . ' >> logs/' . $name . '.log 2>> logs/' . $name . '.err.log'];
+    $main = ['php server.php ' . $name];
 
     forkOff('system', $main);
     echo '.:: Server ' . $name . ' ready ::.' . PHP_EOL;
 }
 
-$servers = [['name' => 'Saturn']];/*Server::all()->toArray();*/
+$servers = [['name' => 'Saturn']]; /*Server::all()->toArray();*/
 
 for ($i = 0; $i < sizeof($servers); $i++) {
     startServer($servers[$i]['name']);
