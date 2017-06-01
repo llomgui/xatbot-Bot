@@ -49,7 +49,7 @@ ${'8ball'} = function (int $who, array $message, int $type) {
         "cannot think now, i'm constipated.", "hmmmm... i think so.......", "you'll find out yourself!!!",
         "YES, OF COURSE!", "i don't know, ask again...", "HELLZ no!!", "Can't help you with that.", "f√ck if I know!",
         "Its your lucky day!", "Go ask a psychic!!", "Shut-up! Im busy right now!!!",
-        "Considering the circumstances... YES!", "Considering the circumstances... NO!", 
+        "Considering the circumstances... YES!", "Considering the circumstances... NO!",
         "uhhhhh.. I guess so, but I could be wrong, im just a dumb b0t", "Yupperz!",
         "please dont ask hard questions like that :(", "I'm on the can.. ask again later..",
         "Lose 20 lbs and shave off that gotee and its a possibility...", "Gimme 50 bucks and I'll say yes. ;)",

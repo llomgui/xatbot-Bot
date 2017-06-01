@@ -75,7 +75,7 @@ $onApp = function (int $who, int $app, array $array) {
                     case 'O':
                         DataAPI::set(
                             'received_trade_' . $who,
-                            str_replace([',', 'undefined'], [';', '0'],substr($array['t'], 2))
+                            str_replace([',', 'undefined'], [';', '0'], substr($array['t'], 2))
                         );
                         break;
 
