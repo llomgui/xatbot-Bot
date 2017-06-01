@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-
 if (empty($argv[1])) {
     exit('Sorry, you forgot to specify a server name');
 }
@@ -11,24 +10,38 @@ define('IPC_SOCKET', 'sockets/' . strtolower($argv[1]) . '.sock');
 // load composer autoload
 require_once 'vendor/autoload.php';
 
-// classes
-require_once 'classes/xatVariables.php';
-require_once 'classes/xatBot.php';
-require_once 'classes/xatUser.php';
-require_once 'classes/xatConnect4.php';
-require_once 'classes/IPC.php';
-require_once 'classes/database.php';
+use OceanProject\Bot\Models;
+use OceanProject\Bot\XatBot;
+use OceanProject\Bot\API\BaseAPI;
+use OceanProject\Bot\XatVariables;
 
-// API
-require_once 'API/dataAPI.php';
-require_once 'API/actionAPI.php';
+echo 'Loading database...' . PHP_EOL;
+$infos = json_decode(file_get_contents('config.json'), true)['database'];
+$capsule = new Capsule();
+
+$capsule->addConnection(
+    [
+    'driver'    => $infos['driver'],
+    'host'      => $infos['host'],
+    'database'  => $infos['database'],
+    'username'  => $infos['username'],
+    'password'  => $infos['password'],
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
+    'strict'    => false,
+    ]
+);
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
 
 echo 'Loading variables...' . PHP_EOL;
-xatVariables::init();
-xatVariables::update();
+XatVariables::init();
+XatVariables::update();
 
 echo 'Loading API...' . PHP_EOL;
-$params     = API::init();
+$params     = BaseAPI::init();
 $currentBot = &$params['botID'];
 $bot        = &$params['bot'];
 
@@ -157,7 +170,7 @@ while (1) {
                     $unknow = false;
                     
                     $parseElements = ['u', 'd'];
-                    foreach($parseElements as $parse) {
+                    foreach ($parseElements as $parse) {
                         if (isset($packet['elements'][$parse])) {
                             $packet['elements'][$parse] = $Ocean->network->parseID($packet['elements'][$parse]);
                         }
@@ -349,10 +362,10 @@ while (1) {
                         } elseif ($hook == 'onPC') {
                             $args[2] = 3;
                         }
-                        dispatch('commands', $command, $args);
+                        dispatch('Commands', $command, $args);
                     } else {
                         if (!$unknow && !empty($hook)) {
-                            dispatch('modules', $hook, $args);
+                            dispatch('Modules', $hook, $args);
                         } elseif ($unknow) {
                             echo 'Unknow node ['.$packet['node'].'] on chat FIXME' . PHP_EOL;
                         }
@@ -401,7 +414,7 @@ function dispatch($type, $name, $args)
 function read()
 {
     global $extensionsList;
-    $extensionsDirectories = ['modules', 'commands'];
+    $extensionsDirectories = ['Modules', 'Commands'];
 
     foreach ($extensionsDirectories as $extensionsDir) {
         $callbacks = json_decode(file_get_contents($extensionsDir . '.json', true), true);
@@ -473,9 +486,9 @@ function start($botid)
     global $xatBots;
 
     try {
-        $bot = Bot::find($botid);
-        $Ocean = new xatBot($bot);
-        $bot->bot_status_id = BotStatus::where('name', 'Online')->first()->id;
+        $bot = Models\Bot::find($botid);
+        $Ocean = new XatBot($bot);
+        $bot->bot_status_id = Models\BotStatus::where('name', 'Online')->first()->id;
         $bot->save();
         $xatBots[$botid] = $Ocean;
     } catch (Exception $e) {
@@ -496,8 +509,8 @@ function stop($botid)
     global $xatBots;
 
     if (isset($xatBots[$botid])) {
-        $bot = Bot::find($botid);
-        $bot->bot_status_id = BotStatus::where('name', 'Offline')->first()->id;
+        $bot = Models\Bot::find($botid);
+        $bot->bot_status_id = Models\BotStatus::where('name', 'Offline')->first()->id;
         $bot->save();
 
         unset($xatBots[$botid]);
