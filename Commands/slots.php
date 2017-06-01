@@ -8,10 +8,13 @@ $slots = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    $smilies = ['(smile#)','(biggrin#)','(wink#)','(eek#)','(tongue#)','(cool#)','(mad#)','(confused#)','(redface#)','(frown#)','(crying#)'];
+    $smilies = [
+        '(smile#)', '(biggrin#)', '(wink#)', '(eek#)', '(tongue#)', '(cool#)',
+        '(mad#)', '(confused#)', '(redface#)', '(frown#)', '(crying#)'
+    ];
 
     if ($bot->botHasPower(236)) {
-        $smilies = ['(slotban#)','(slotbar#)','(cherries#)','(orange2#)','(plum2#)','(seven#)'];
+        $smilies = ['(slotban#)', '(slotbar#)', '(cherries#)', '(orange2#)', '(plum2#)', '(seven#)'];
     }
 
     $smilieCount = 3;
@@ -29,10 +32,14 @@ $slots = function (int $who, array $message, int $type) {
     }
 
     $user = $bot->users[$who];
-    $response = isset($user) ? ($user->isRegistered() ? $user->getRegname() : $user->getID()) . " has spun: " : $who . " has spun: ";
+    $response = isset($user) ?
+        ($user->isRegistered() ? $user->getRegname() : $user->getID()) . " has spun: " :
+        $who . " has spun: ";
 
-    $bot->network->sendMessageAutoDetection($who, 'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')), $type);
-    usleep(800001);//prevent "Limit" (possible better way to do this?)
+    $bot->network->sendMessageAutoDetection(
+        $who, 'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')), $type
+    );
+    usleep(50000); //prevent "Limit" (possible better way to do this?)
     if (count(array_unique($spun)) == 1) {
         $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and won (clap#)', $type);
     } else {

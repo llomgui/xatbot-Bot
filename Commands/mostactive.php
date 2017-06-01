@@ -23,7 +23,13 @@ $mostactive = function (int $who, array $message, int $type) {
         }
     }
 
-    $displayName = $most['user']->isRegistered() ? $most['user']->getRegname() . '(' . $most['user']->getID() . ')'  : $most['user']->getID();
+    $displayName = $most['user']->isRegistered() ?
+        $most['user']->getRegname() . '(' . $most['user']->getID() . ')' :
+        $most['user']->getID();
 
-    $bot->network->sendMessageAutoDetection($who, 'The current most active user is ' . $displayName . ' with a time of ' . $bot->secondsToTime($userTime), $type);
+    $bot->network->sendMessageAutoDetection(
+        $who,
+        'The current most active user is ' . $displayName . ' with a time of ' . $bot->secondsToTime($userTime),
+        $type
+    );
 };

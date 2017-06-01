@@ -35,6 +35,8 @@ $kickall = function (int $who, array $message, int $type) {
             break;
 
         default:
-            return $bot->network->sendMessageAutoDetection($who, 'Usage: !kickall [all/register/toon/banned/raid]', $type, true);
+            return $bot->network->sendMessageAutoDetection(
+                $who, 'Usage: !kickall [all/register/toon/banned/raid]', $type, true
+            );
     }
 };

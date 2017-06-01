@@ -31,15 +31,21 @@ $listsmilies = function (int $who, array $message, int $type) {
             $topsh = $array['smilies'];
 
             if (count($topsh) > 10) {
-                $implode = $bot->botHasPower($id) ?  '('.implode('#)(', array_slice($topsh, 0, 10)).'#)' : implode(' ', array_slice($topsh, 0, 10));
+                $implode = $bot->botHasPower($id) ?
+                    '('.implode('#)(', array_slice($topsh, 0, 10)).'#)' :
+                    implode(' ', array_slice($topsh, 0, 10));
                 $implode .= implode(' ', array_slice($topsh, 10));
             } else {
                 $implode = $bot->botHasPower($id) ? '(' . implode('#)(', $topsh) . '#)' : implode(' ', $topsh);
             }
 
-            $bot->network->sendMessageAutoDetection($who, ucfirst($array['name']) . '\'s ' . count($topsh) . ' smilies: ' . $implode . '.', $type);
+            $bot->network->sendMessageAutoDetection(
+                $who, ucfirst($array['name']) . '\'s ' . count($topsh) . ' smilies: ' . $implode . '.', $type
+            );
         } else {
-            $bot->network->sendMessageAutoDetection($who, ucfirst($array['name']) . ' currently dosen\'t have smilies', $type);
+            $bot->network->sendMessageAutoDetection(
+                $who, ucfirst($array['name']) . ' currently dosen\'t have smilies', $type
+            );
         }
     } else {
         $bot->network->sendMessageAutoDetection($who, '_' . $message[1] . ' is not a power.', $type);

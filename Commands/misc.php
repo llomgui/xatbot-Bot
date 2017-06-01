@@ -8,7 +8,9 @@ $misc = function (int $who, array $message, int $type) {
     }
 
     if (!isset($message[1]) || empty($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc [reserve/chatid/chatname/xatid/regname/hug/kiss/slap/promo] [info]', $type, true);
+        return $bot->network->sendMessageAutoDetection(
+            $who, 'Usage: !misc [reserve/chatid/chatname/xatid/regname/hug/kiss/slap/promo] [info]', $type, true
+        );
     }
 
     switch (strtolower($message[1])) {
@@ -20,7 +22,12 @@ $misc = function (int $who, array $message, int $type) {
             $xats = $message[2];
             $days = (ceil($xats / 50));
 
-            $bot->network->sendMessageAutoDetection($who, $message[2] . ' reserved ' . ($xats > 1 ? 'xats' : 'xat') . ' is ' . (ceil($message[2] / 50)) . ' ' . ($days > 1 ? 'days' : 'day') . ' of being reserved.', $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $message[2] . ' reserved ' . ($xats > 1 ? 'xats' : 'xat') . ' is ' . (ceil($message[2] / 50)) . ' ' .
+                    ($days > 1 ? 'days' : 'day') . ' of being reserved.',
+                $type
+            );
             break;
 
         case 'chatid':
@@ -127,11 +134,18 @@ $misc = function (int $who, array $message, int $type) {
                     $seconds = $timeLeft % 60;
                 }
 
-                $promoMessage .= ' ' . $group->n . ' [' . (isset($group->t) ? sprintf("%02d hours, %02d minutes and %02d seconds", $hours, $minutes, $seconds) . ' left' : "Auto promoted") . '], ';
+                $promoMessage .= ' ' . $group->n . ' [' . (isset($group->t) ?
+                    sprintf("%02d hours, %02d minutes and %02d seconds", $hours, $minutes, $seconds) . ' left' :
+                    "Auto promoted") . '], ';
                 $count++;
             }
 
-            $bot->network->sendMessageAutoDetection($who, '[' . $count . '] promoted ' . $language . ' ' . ($count > 1 ? 'chats' : 'chat') . ':' . rtrim($promoMessage, ', '), $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                '[' . $count . '] promoted ' . $language . ' ' .($count > 1 ? 'chats' : 'chat') . ':' .
+                    rtrim($promoMessage, ', '),
+                $type
+            );
             break;
             //TODO hug, kiss, slap
     }

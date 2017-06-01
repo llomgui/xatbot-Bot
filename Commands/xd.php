@@ -15,5 +15,9 @@ $xd = function (int $who, array $message, int $type) {
     $xats = round($message[1]);
     $days = round($message[1] / 13);
 
-    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.xd', [$xats, $message[1] > 1 ? 'xats' : 'xat', $days, $days == 1 ? 'day' : 'days']), $type);
+    $bot->network->sendMessageAutoDetection(
+        $who,
+        $bot->botlang('cmd.xd', [$xats, $message[1] > 1 ? 'xats' : 'xat', $days, $days == 1 ? 'day' : 'days']),
+        $type
+    );
 };

@@ -13,7 +13,10 @@ $online = function (int $who, array $message, int $type) {
     }
 
     if ($message[1] == 'xat' || $message[1] == '42') {
-        return $bot->network->sendMessageAutoDetection($who, '42 does not appear online on friendlists, so it is impossible to determine if he is online or not.', $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who, '42 does not appear online on friendlists, so it is impossible to determine if he is online or not.',
+            $type
+        );
     }
 
     if (!is_numeric($message[1]) && $message[1] != 'volunteers') {

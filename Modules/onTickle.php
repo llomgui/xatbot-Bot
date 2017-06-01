@@ -37,7 +37,10 @@ $onTickle = function (int $who, array $array) {
                     && $bot->users[$who]->isGamebanned()) {
                         $powers = XatVariables::getPowers();
                         $bot->network->unban($who);
-                        $bot->network->sendMessage("{$bot->users[$who]->getRegname()} rapid tickled me to get unbanned from the gameban '{$powers[$bot->users[$who]->getGameban()]['name']}'.");
+                        $bot->network->sendMessage(
+                            $bot->users[$who]->getRegname() . ' rapid tickled me to get unbanned from the gameban ' .
+                            $powers[$bot->users[$who]->getGameban()]['name'] . '.'
+                        );
                     }
                 }
             } else {

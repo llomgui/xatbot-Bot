@@ -19,7 +19,9 @@ $onRankMessage = function (int $who, string $message, string $reason, array $arr
                     if ($seconds <= 0) {//cheated
                         return;
                     }
-                    //$bot->network->sendMessage($who . ' finished a ' . $hours . ' hour ' . $powers[$game]['name'] . ' in ' . $seconds . ' seconds.');
+                    //$bot->network->sendMessage(
+                    //$who . ' finished a ' . $hours . ' hour ' . $powers[$game]['name'] . ' in ' .
+                    //$seconds . ' seconds.');
                     /*
                         TODO
                         Save highscores to database

@@ -24,5 +24,7 @@ $horoscope = function (int $who, array $message, int $type) {
     $luck   = round(((($who >> 0x10) & 0xFF) ^ $xor) / 0xFF * 100);
     $money  = round(((($who >> 0x18) & 0xFF) ^ $xor) / 0xFF * 100);
 
-    return $bot->network->sendMessageAutoDetection($who, 'Love: ' . $love . '%, health: ' . $health . '%, luck: ' . $luck . '%, money: ' . $money . '%.', $type);
+    return $bot->network->sendMessageAutoDetection(
+        $who, 'Love: ' . $love . '%, health: ' . $health . '%, luck: ' . $luck . '%, money: ' . $money . '%.', $type
+    );
 };

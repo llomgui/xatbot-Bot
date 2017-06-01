@@ -44,7 +44,9 @@ $onMessage = function (int $who, string $message) {
                 if (strpos($value, 'ffffff') || strpos($value, '------') || strpos($value, '000000')) {
                 } else {
                     if (preg_match_all('/(.)\1{' . $bot->data->maxchar . ',}/iu', $value)) {
-                        return $bot->network->kick($who, 'You are not allowed to spam! (maxChar: ' . $bot->data->maxchar . ')');
+                        return $bot->network->kick(
+                            $who, 'You are not allowed to spam! (maxChar: ' . $bot->data->maxchar . ')'
+                        );
                     }
                 }
             }
@@ -53,7 +55,11 @@ $onMessage = function (int $who, string $message) {
         if (sizeof($bot->badwords) > 0) {
             for ($i = 0; $i < sizeof($bot->badwords); $i++) {
                 if (strpos($message, strtolower($bot->badwords[$i]['badword']))) {
-                    DataAPI::set('modproof', 'User: ' . ((!is_null($regname)) ? $regname . ' (' . $who . ')' : $who) . ' Message: ' . $message);
+                    DataAPI::set(
+                        'modproof',
+                        'User: ' . ((!is_null($regname)) ?
+                            $regname . ' (' . $who . ')' : $who) . ' Message: ' . $message
+                    );
 
                     switch ($bot->badwords[$i]['method']) {
                         case 'ban':
@@ -89,27 +95,39 @@ $onMessage = function (int $who, string $message) {
                             break;
 
                         case 'snakeban':
-                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 134);
+                            return $bot->network->ban(
+                                $who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 134
+                            );
                             break;
 
                         case 'spaceban':
-                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 136);
+                            return $bot->network->ban(
+                                $who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 136
+                            );
                             break;
 
                         case 'matchban':
-                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 140);
+                            return $bot->network->ban(
+                                $who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 140
+                            );
                             break;
 
                         case 'codeban':
-                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 162);
+                            return $bot->network->ban(
+                                $who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 162
+                            );
                             break;
 
                         case 'mazeban':
-                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 152);
+                            return $bot->network->ban(
+                                $who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 152
+                            );
                             break;
 
                         case 'slotban':
-                            return $bot->network->ban($who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 236);
+                            return $bot->network->ban(
+                                $who, $bot->badwords[$i]['hours'], 'Do not say inapp words :o !', 'g', 236
+                            );
                             break;
                         
                         default:

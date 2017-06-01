@@ -12,7 +12,8 @@ $sinbin = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['sinbin']), $type);
     }
 
-    if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
+    if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) ||
+        !is_numeric($message[2])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !sinbin [regname/xatid] [hours]', $type, true);
     }
 

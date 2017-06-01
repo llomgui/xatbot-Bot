@@ -12,8 +12,11 @@ $zipban = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['zip']), $type);
     }
 
-    if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !zipban [ID/Regname] [hours] [reason]', $type, true);
+    if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) ||
+        !is_numeric($message[2])) {
+        return $bot->network->sendMessageAutoDetection(
+            $who, 'Usage: !zipban [ID/Regname] [hours] [reason]', $type, true
+        );
     }
 
     if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {

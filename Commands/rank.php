@@ -9,7 +9,9 @@ $rank = function (int $who, array $message, int $type) {
     }
 
     if (empty($message[1]) || empty($message[2])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !rank [member/mod/owner] [ID/Regname]', $type, true);
+        return $bot->network->sendMessageAutoDetection(
+            $who, 'Usage: !rank [member/mod/owner] [ID/Regname]', $type, true
+        );
     }
 
     if (is_numeric($message[2]) && isset($bot->users[$message[2]])) {

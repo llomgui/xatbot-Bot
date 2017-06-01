@@ -9,7 +9,9 @@ $premium = function (int $who, array $message, int $type) {
     }
 
     if ($bot->isPremium) {
-        $bot->network->sendMessageAutoDetection($who, 'I am premium for the next ' . $bot->sec2hms($bot->data->premium - time()) . '.', $type);
+        $bot->network->sendMessageAutoDetection(
+        	$who, 'I am premium for the next ' . $bot->sec2hms($bot->data->premium - time()) . '.', $type
+        );
     } else {
         $bot->network->sendMessageAutoDetection($who, 'I am not premium!', $type);
     }

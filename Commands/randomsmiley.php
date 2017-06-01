@@ -13,7 +13,9 @@ $randomsmiley = function (int $who, array $message, int $type) {
     }
     
     if (empty($message[1]) || !isset($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !randomsmiley [1 - 20] [optional power]', $type, true);
+        return $bot->network->sendMessageAutoDetection(
+            $who, 'Usage: !randomsmiley [1 - 20] [optional power]', $type, true
+        );
     }
 
     if (!is_numeric($message[1]) || $message[1] > 25 || $message[1] < 1) {
@@ -39,7 +41,9 @@ $randomsmiley = function (int $who, array $message, int $type) {
         }
 
         if (!$bot->botHasPower($array['name'])) {
-            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', [$array['name']]), $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who, $bot->botlang('missing.power', [$array['name']]), $type
+            );
         }
         $rand[] = $array['name'];
     } else {

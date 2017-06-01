@@ -78,10 +78,14 @@ $onFriendList = function (array $array) {
                 $string .= 'is online!';
             }
 
-            $bot->network->sendMessageAutoDetection(DataAPI::get('online_command')['who'], $string, DataAPI::get('online_command')['type']);
+            $bot->network->sendMessageAutoDetection(
+                DataAPI::get('online_command')['who'], $string, DataAPI::get('online_command')['type']
+            );
         }
     } else {
-        $bot->network->sendMessageAutoDetection(DataAPI::get('online_command')['who'], 'Offline', DataAPI::get('online_command')['type']);
+        $bot->network->sendMessageAutoDetection(
+            DataAPI::get('online_command')['who'], 'Offline', DataAPI::get('online_command')['type']
+        );
     }
 
     DataAPI::unSetVariable('online_command');

@@ -28,9 +28,18 @@ $wallet = function (int $who, array $message, int $type) {
     if (isset($user)) {
         $display = ($user->isRegistered() ? $user->getRegname() : $user->getID());
         if ($user->hasPower(27) && !($user->getXats() + $user->getDays() == 0)) {
-            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.wallet', [$display, number_format($user->getXats()), number_format($user->getDays())]), $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang(
+                    'cmd.wallet',
+                    [$display, number_format($user->getXats()), number_format($user->getDays())]
+                ),
+                $type
+            );
         }
-        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.missing.power', [$display, 'show']), $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who, $bot->botlang('user.missing.power', [$display, 'show']), $type
+        );
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type, true);
     }

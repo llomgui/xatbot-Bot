@@ -12,8 +12,11 @@ $hush = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['hush']), $type);
     }
 
-    if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !hush [guest/member/mod/owner] [seconds] [reason]', $type, true);
+    if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) ||
+        !is_numeric($message[2])) {
+        return $bot->network->sendMessageAutoDetection(
+            $who, 'Usage: !hush [guest/member/mod/owner] [seconds] [reason]', $type, true
+        );
     }
 
     $rank    = $message[1];
