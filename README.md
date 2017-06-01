@@ -1,4 +1,4 @@
-# OceanProject - xatBot
+# OceanProject - xatBot [![Build Status](https://travis-ci.org/llomgui/OceanProject-Bot.svg?branch=master)](https://travis-ci.org/llomgui/OceanProject-Bot)
 
 ## What do i need to run it?
 
