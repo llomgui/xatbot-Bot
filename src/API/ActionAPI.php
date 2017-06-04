@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject\Bot\API;
+namespace OceanProject\API;
 
 class ActionAPI extends BaseAPI
 {

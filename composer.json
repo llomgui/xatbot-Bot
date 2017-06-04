@@ -3,7 +3,8 @@
     "description": "OceanProject Bot",
     "require": {
         "php": ">=7.0.0",
-        "illuminate/database": "^5.4"
+        "illuminate/database": "^5.4",
+        "monolog/monolog": "^1.22"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.0",
@@ -11,7 +12,7 @@
     },
     "autoload":{
         "psr-4": {
-            "OceanProject\\Bot\\": "src/"
+            "OceanProject\\": "src/"
         }
     }
 }
