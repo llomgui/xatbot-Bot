@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject\Bot\Models;
+namespace OceanProject\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 

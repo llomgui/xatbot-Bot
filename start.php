@@ -8,7 +8,7 @@ function forkOff($lambda, $args)
     }
 
     if ($pid === 0) {
-        while(true) {
+        while (true) {
             $pid = pcntl_fork();
 
             if ($pid === -1) { // Error

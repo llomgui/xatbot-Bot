@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject\Bot\API;
+namespace OceanProject\API;
 
 abstract class BaseAPI
 {
