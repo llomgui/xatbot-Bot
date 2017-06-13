@@ -1,5 +1,7 @@
 <?php
 
+use OceanProject\Extensions;
+
 $dev = function (int $who, array $message, int $type) {
 
     if (!in_array($who, OceanProject\Bot\XatVariables::getDevelopers())) {
@@ -10,7 +12,7 @@ $dev = function (int $who, array $message, int $type) {
 
     switch ($message[1]) {
         case 'reload':
-            reloadExtensions();
+            Extensions::readExtensions();
             $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
             break;
  

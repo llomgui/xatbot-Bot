@@ -9,6 +9,7 @@ use Monolog\Handler\StreamHandler;
 
 use OceanProject\Models;
 use OceanProject\Bot\XatBot;
+use OceanProject\Extensions;
 use OceanProject\API\BaseAPI;
 use OceanProject\Bot\XatVariables;
 
@@ -22,7 +23,6 @@ class Server
     public $params;
     public $bot;
     public $xatBots;
-    public $extensionsList;
     public $started;
 
     public function __construct($name)
@@ -105,7 +105,7 @@ class Server
     private function initExtensions()
     {
         $this->logger->info('Loading extensions...');
-        $this->readExtensions();
+        Extensions::readExtensions();
     }
 
     private function initIPC()
@@ -139,64 +139,6 @@ class Server
         }
 
         chmod('sockets' . DIRECTORY_SEPARATOR . strtolower($this->name) . '.sock', 0777);
-    }
-
-    private function readExtensions()
-    {
-        $this->extensionsList = [];
-
-        $extensionsDirectories = ['Modules', 'Commands'];
-
-        foreach ($extensionsDirectories as $extensionsDir) {
-            $callbacks = json_decode(
-                file_get_contents('.' . DIRECTORY_SEPARATOR . strtolower($extensionsDir) . '.json', true),
-                true
-            );
-
-            $dir = opendir('src' . DIRECTORY_SEPARATOR . $extensionsDir);
-
-            while (($file = readdir($dir)) !== false) {
-                $url = 'src' . DIRECTORY_SEPARATOR . $extensionsDir . DIRECTORY_SEPARATOR . $file;
-
-                if (!is_file($url)) {
-                    continue;
-                }
-
-                $pos = strrpos($file, '.');
-
-                if ($pos === false) {
-                    continue;
-                }
-
-                if (substr($file, $pos + 1) != 'php') {
-                    continue;
-                }
-
-                $this->extensionsList = $this->loadExtension(
-                    $this->extensionsList,
-                    $extensionsDir,
-                    substr($file, 0, $pos),
-                    $url,
-                    $callbacks
-                );
-            }
-        }
-    }
-
-
-    private function loadExtension($data, $type, $name, $url, $callbacks)
-    {
-        require($url);
-
-        for ($i = 0; $i < sizeof($callbacks); $i++) {
-            if (isset(${$callbacks[$i]})) {
-                $data[$type][$callbacks[$i]][$name] = ${$callbacks[$i]};
-            } else {
-                unset($data[$type][$callbacks[$i]][$name]);
-            }
-        }
-
-        return $data;
     }
 
     public function handle()
@@ -529,11 +471,13 @@ class Server
 
     private function dispatch($type, $name, $args)
     {
-        if (!isset($this->extensionsList[$type][$name])) {
+        $extensionsList = Extensions::getExtensionsList();
+
+        if (!isset($extensionsList[$type][$name])) {
             return false;
         }
 
-        foreach ($this->extensionsList[$type][$name] as $extensionName => $function) {
+        foreach ($extensionsList[$type][$name] as $extensionName => $function) {
             try {
                 call_user_func_array($function, $args);
             } catch (TypeError $e) {
