@@ -1,5 +1,7 @@
 <?php
 
+use OceanProject\Bot\xatVariables;
+
 $hasmost = function (int $who, array $message, int $type) {
 
     $bot = OceanProject\API\ActionAPI::getBot();
