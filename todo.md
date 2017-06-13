@@ -19,7 +19,7 @@
 * [ ] Staff [add/edit/remove] [regname/xatid] [rank]
 * [x] hasmost [powerid]
 * [x] userinfo [regname/xatid/on/off]
-* [ ] lastseen [regname/xatid]
+* [x] lastseen [regname/xatid]
 * [ ] power [enable/disable/clear/list] [powername/powerid]
 * [ ] allmissing [null/regname/xatid]
 * [ ] everymissing [null/regname/xatid]
