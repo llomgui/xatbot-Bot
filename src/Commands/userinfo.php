@@ -26,7 +26,7 @@ $userinfo = function (int $who, array $message, int $type) {
                 ->where('xatid', $message[1])
                 ->orderBy('updated_at', 'desc')
                 ->get()
-                ->toArray()[0];
+                ->toArray();
     } elseif (in_array(strtolower($message[0]), ['on', 'off'])) {
         switch (strtolower($message[0])) {
             case 'on':
@@ -48,10 +48,11 @@ $userinfo = function (int $who, array $message, int $type) {
                 ->whereRaw('LOWER(regname) = ?', [strtolower($message[1])])
                 ->orderBy('updated_at', 'desc')
                 ->get()
-                ->toArray()[0];
+                ->toArray();
     }
 
     if (!empty($info)) {
+        $info = $info[0];
         if ($info->optout !== true) {
             return $bot->network->sendMessageAutoDetection(
                 $who, 'https://oceanproject.fr/userinfo/' . $info->regname, $type
