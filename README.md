@@ -15,6 +15,17 @@ You need to clone this projet to make it work (It has the database).
 
 Once everything is cloned, you can launch bots servers with: php start.php
 
+Docker:
+
+- docker run -it --rm -v $(pwd):/op php:7.1-alpine sh
+- cd op
+- docker-php-ext-install sockets
+- php start.php
+
+Docker-compose:
+
+- docker-compose run --rm php
+
 ## I want to contribute, how do I?
 
 Make your tests on your computer, then send a pull request.
