@@ -48,7 +48,8 @@ $onApp = function (int $who, int $app, array $array) {
                 } elseif (strlen($array['t']) >= 42) {
                     DataAPI::unSetVariable('boards_' . $who);
                     return $bot->network->sendPrivateConversation(
-                        $who, 'The game has ended in a draw because the board is full.'
+                        $who,
+                        'The game has ended in a draw because the board is full.'
                     );
                 }
                 if (is_array($move)) {

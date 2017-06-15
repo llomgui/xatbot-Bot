@@ -26,7 +26,8 @@ class XatNetwork
         if ($this->socket->isConnected()) {
             if ($this->idleTime < (time() - $this->idleLimit)) {
                 $this->write(
-                    'c', [
+                    'c',
+                    [
                     'u' => XatVariables::getXatid(),
                     't' => '/KEEPALIVE'
                     ]
@@ -144,7 +145,8 @@ class XatNetwork
             }
 
             $this->write(
-                'y', [
+                'y',
+                [
                     'r' => 8,
                     'v' => '0',
                     'u' => XatVariables::getXatid(),
@@ -155,7 +157,8 @@ class XatNetwork
             $this->socket->read(true);
 
             $this->write(
-                'v', [
+                'v',
+                [
                     'n' => XatVariables::getRegname(),
                     'p' => (XatVariables::getForceLogin()) ? $this->getPw() : $this->passwordToHash()
                 ]
@@ -174,7 +177,8 @@ class XatNetwork
         }
 
         $this->write(
-            'y', [
+            'y',
+            [
                 'r' => $this->data->chatid,
                 'v' => '0',
                 'u' => XatVariables::getXatid(),
@@ -320,7 +324,8 @@ class XatNetwork
     public function sendMessage($message)
     {
         $this->write(
-            'm', [
+            'm',
+            [
             't' => $message,
             'u' => $this->logininfo['i']
             ]
@@ -330,7 +335,8 @@ class XatNetwork
     public function sendPrivateMessage($uid, $message)
     {
         $this->write(
-            'p', [
+            'p',
+            [
             'u' => $uid,
             't' => $message
             ]
@@ -340,7 +346,8 @@ class XatNetwork
     public function sendPrivateConversation($uid, $message)
     {
         $this->write(
-            'p', [
+            'p',
+            [
             'u' => $uid,
             't' => $message,
             's' => 2,
@@ -368,7 +375,8 @@ class XatNetwork
     public function answerTickle($uid)
     {
         $this->write(
-            'z', [
+            'z',
+            [
             'd' => $uid,
             'u' => $this->logininfo['i'] . '_0',
             't' => '/a_NF'
@@ -379,7 +387,8 @@ class XatNetwork
     public function sendTickle($uid)
     {
         $this->write(
-            'z', [
+            'z',
+            [
             'd' => $uid,
             'u' => $this->logininfo['i'] . '_0',
             't' => '/l'
@@ -396,7 +405,8 @@ class XatNetwork
     public function kick($uid, $reason, $sound = '')
     {
         $this->write(
-            'c', [
+            'c',
+            [
             'p' => $reason.$sound,
             'u' => $uid,
             't' => '/k'
@@ -413,12 +423,14 @@ class XatNetwork
         $time *= 3600;
 
         $this->write(
-            'c', array_merge(
+            'c',
+            array_merge(
                 [
                 'p' => $reason,
                 'u' => $uid,
                 't' => '/'. $tArgument . $time,
-                ], (empty($gamebanid) ? [] : ['w' => $gamebanid])
+                ],
+                (empty($gamebanid) ? [] : ['w' => $gamebanid])
             )
         );
     }
@@ -426,7 +438,8 @@ class XatNetwork
     public function unban($uid)
     {
         $this->write(
-            'c', [
+            'c',
+            [
             'u' => $uid,
             't' => '/u'
             ]
@@ -437,7 +450,8 @@ class XatNetwork
     {
         $rankCmd = ['owner' => '/M', 'moderator' => '/m', 'member' => '/e', 'guest' => '/r'];
         $this->socket->write(
-            'c', [
+            'c',
+            [
             'u' => $uid,
             't' => $rankCmd[$rank]
             ]

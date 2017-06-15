@@ -14,7 +14,10 @@ $boot = function (int $who, array $message, int $type) {
 
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !boot [regname/xatid] [chat] [reason]', $type, true
+            $who,
+            'Usage: !boot [regname/xatid] [chat] [reason]',
+            $type,
+            true
         );
     }
 

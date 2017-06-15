@@ -82,7 +82,9 @@ $onUserJoined = function (int $who, array $array) {
                 switch ($bot->badwords[$i]['method']) {
                     case 'ban':
                         return $bot->network->ban(
-                            $who, $bot->badwords[$i]['hours'], 'Do not have inapp words in your name/status :o !'
+                            $who,
+                            $bot->badwords[$i]['hours'],
+                            'Do not have inapp words in your name/status :o !'
                         );
                         break;
 
@@ -96,13 +98,19 @@ $onUserJoined = function (int $who, array $array) {
 
                     case 'zap':
                         return $bot->network->kick(
-                            $who, 'Do not have inapp words in your name/status :o !', '#rasberry#bump'
+                            $who,
+                            'Do not have inapp words in your name/status :o !',
+                            '#rasberry#bump'
                         );
                         break;
 
                     case 'reverse':
                         return $bot->network->ban(
-                            $who, $hours, 'Do not have inapp words in your name/status :o !', 'g', 176
+                            $who,
+                            $hours,
+                            'Do not have inapp words in your name/status :o !',
+                            'g',
+                            176
                         );
                         break;
 
@@ -112,7 +120,8 @@ $onUserJoined = function (int $who, array $array) {
 
                     case 'badge':
                         return $bot->network->sendPrivateConversation(
-                            $who, '/nb' . 'Do not have inapp words in your name/status :o !'
+                            $who,
+                            '/nb' . 'Do not have inapp words in your name/status :o !'
                         );
                         break;
 
@@ -184,7 +193,8 @@ $onUserJoined = function (int $who, array $array) {
                         return $bot->network->ban(
                             $who,
                             $bot->badwords[$i]['hours'],
-                            'Do not have inapp words in your name/status :o !');
+                            'Do not have inapp words in your name/status :o !'
+                        );
                         break;
                 }
             }
@@ -214,7 +224,8 @@ $onUserJoined = function (int $who, array $array) {
                 $bar = rand(4, 19);
                 DataAPI::set('automember_' . $who, $foo + $bar);
                 $bot->network->sendPrivateConversation(
-                    $who, 'Answer that question to be a member: ' . $foo . ' + ' . $bar
+                    $who,
+                    'Answer that question to be a member: ' . $foo . ' + ' . $bar
                 );
                 break;
 

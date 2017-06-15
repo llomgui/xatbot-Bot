@@ -22,19 +22,23 @@ $youtube = function (int $who, array $message, int $type) {
         file_get_contents(
             'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' .
                 urlencode($message[1]) . '&key=' . $key . '&type=video&maxResults=3'
-            ),
+        ),
         true
     );
     
     if ($response['error']) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Sorry i can\'t search youtube at this time, please try again later.', $type
+            $who,
+            'Sorry i can\'t search youtube at this time, please try again later.',
+            $type
         );
     }
 
     foreach ($response['items'] as $result) {
         $bot->network->sendMessageAutoDetection(
-            $who, $result['snippet']['title'].' - http://youtube.com/watch?v='.$result['id']['videoId'], $type
+            $who,
+            $result['snippet']['title'].' - http://youtube.com/watch?v='.$result['id']['videoId'],
+            $type
         );
         sleep(1);
     }

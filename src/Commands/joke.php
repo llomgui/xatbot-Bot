@@ -12,7 +12,9 @@ $joke = function (int $who, array $message, int $type) {
     $page = file_get_contents('http://www.jokesclean.com/OneLiner/Random/', false, $stream);
     if (!$page) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'I am unable to grab a joke at this moment, please try again later.', $type
+            $who,
+            'I am unable to grab a joke at this moment, please try again later.',
+            $type
         );
     }
 

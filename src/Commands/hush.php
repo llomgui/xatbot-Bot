@@ -15,7 +15,10 @@ $hush = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) ||
         !is_numeric($message[2])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !hush [guest/member/mod/owner] [seconds] [reason]', $type, true
+            $who,
+            'Usage: !hush [guest/member/mod/owner] [seconds] [reason]',
+            $type,
+            true
         );
     }
 

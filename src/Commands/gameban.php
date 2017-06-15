@@ -11,7 +11,10 @@ $gameban = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) ||
         !isset($message[3]) || empty($message[3]) || !is_numeric($message[3])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !gameban [snake/space/match/maze/code/slot] [ID/Regname] [hours] [reason]', $type, true
+            $who,
+            'Usage: !gameban [snake/space/match/maze/code/slot] [ID/Regname] [hours] [reason]',
+            $type,
+            true
         );
     }
 
@@ -71,7 +74,9 @@ $gameban = function (int $who, array $message, int $type) {
 
         if (!$bot->botHasPower($gamebanid)) {
             return $bot->network->sendMessageAutoDetection(
-                $who, $bot->botlang('missing.power', [strtolower($gameban)]), $type
+                $who,
+                $bot->botlang('missing.power', [strtolower($gameban)]),
+                $type
             );
         }
 

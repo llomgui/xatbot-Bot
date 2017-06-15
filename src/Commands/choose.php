@@ -14,7 +14,10 @@ $choose = function (int $who, array $message, int $type) {
 
     if ((!isset($message[0]) || empty($message[0])) || (!isset($message[1]) || empty($message[1]))) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !choose [first choice] or [second choice]', $type, true
+            $who,
+            'Usage: !choose [first choice] or [second choice]',
+            $type,
+            true
         );
     }
 

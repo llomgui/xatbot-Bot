@@ -38,7 +38,9 @@ $wallet = function (int $who, array $message, int $type) {
             );
         }
         return $bot->network->sendMessageAutoDetection(
-            $who, $bot->botlang('user.missing.power', [$display, 'show']), $type
+            $who,
+            $bot->botlang('user.missing.power', [$display, 'show']),
+            $type
         );
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type, true);

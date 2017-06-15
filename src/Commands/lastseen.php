@@ -6,9 +6,9 @@ $lastseen = function (int $who, array $message, int $type) {
 
     $bot = OceanProject\API\ActionAPI::getBot();
 
-    /*if (!$bot->minrank($who, 'lastseen')) {
+    if (!$bot->minrank($who, 'lastseen')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
-    }*/
+    }
 
     if (empty($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage !lastseen [regname/xatid]', $type);
@@ -46,7 +46,9 @@ $lastseen = function (int $who, array $message, int $type) {
             );
         } else {
             return $bot->network->sendMessageAutoDetection(
-                $who, $info->regname . ' has chosen to opt out of userinfo.', $type
+                $who,
+                $info->regname . ' has chosen to opt out of userinfo.',
+                $type
             );
         }
     } else {

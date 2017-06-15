@@ -37,7 +37,9 @@ $slots = function (int $who, array $message, int $type) {
         $who . " has spun: ";
 
     $bot->network->sendMessageAutoDetection(
-        $who, 'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')), $type
+        $who,
+        'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')),
+        $type
     );
     usleep(50000); //prevent "Limit" (possible better way to do this?)
     if (count(array_unique($spun)) == 1) {

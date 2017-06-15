@@ -10,7 +10,10 @@ $rank = function (int $who, array $message, int $type) {
 
     if (empty($message[1]) || empty($message[2])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !rank [member/mod/owner] [ID/Regname]', $type, true
+            $who,
+            'Usage: !rank [member/mod/owner] [ID/Regname]',
+            $type,
+            true
         );
     }
 

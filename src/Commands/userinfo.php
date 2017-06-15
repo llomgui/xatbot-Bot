@@ -32,14 +32,18 @@ $userinfo = function (int $who, array $message, int $type) {
             case 'on':
                 Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 1]);
                 return $bot->network->sendMessageAutoDetection(
-                    $who, 'You have successfully opted out of userinfo.', $type
+                    $who,
+                    'You have successfully opted out of userinfo.',
+                    $type
                 );
                 break;
             
             case 'off':
                 Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 0]);
                 return $bot->network->sendMessageAutoDetection(
-                    $who, 'You have successfully opted into userinfo.', $type
+                    $who,
+                    'You have successfully opted into userinfo.',
+                    $type
                 );
                 break;
         }
@@ -55,11 +59,15 @@ $userinfo = function (int $who, array $message, int $type) {
         $info = $info[0];
         if ($info->optout !== true) {
             return $bot->network->sendMessageAutoDetection(
-                $who, 'https://oceanproject.fr/userinfo/' . $info->regname, $type
+                $who,
+                'https://oceanproject.fr/userinfo/' . $info->regname,
+                $type
             );
         } else {
             return $bot->network->sendMessageAutoDetection(
-                $who, $info->regname . ' has chosen to opt out of userinfo.', $type
+                $who,
+                $info->regname . ' has chosen to opt out of userinfo.',
+                $type
             );
         }
     } else {

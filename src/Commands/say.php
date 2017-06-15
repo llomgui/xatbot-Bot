@@ -15,7 +15,9 @@ $say = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type);
     } else {
         return $bot->network->sendMessageAutoDetection(
-            $who, in_array($message[0], ['/', '#']) ? '_' . $message : $message, $type
+            $who,
+            in_array($message[0], ['/', '#']) ? '_' . $message : $message,
+            $type
         );
     }
 };

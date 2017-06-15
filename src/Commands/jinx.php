@@ -127,14 +127,15 @@ $jinx = function (int $who, array $message, int $type) {
         case 16:
         case "egg":
             $message = implode(' ', $message);
-            $message = preg_replace( [
+            $message = preg_replace(
+                [
                     "/[EȄȆḔḖḘḚḜẸẺẼẾỀỂỄỆĒĔĖĘĚÈÉÊËeȅȇḕḗḙḛḝẹẻẽếềểễệēĕėęěèéêë]/",
                     "/[AÀÁÂÃÄÅĀĂĄǺȀȂẠẢẤẦẨẪẬẮẰẲẴẶḀÆǼaàáâãäåāăąǻȁȃạảấầẩẫậắằẳẵặḁæǽ]/",
                     "/[IȈȊḬḮỈỊĨĪĬĮİÌÍÎÏĲiȉȋḭḯỉịĩīĭįiìíîïĳ]/",
                     "/[OŒØǾȌȎṌṎṐṒỌỎỐỒỔỖỘỚỜỞỠỢŌÒÓŎŐÔÕÖoœøǿȍȏṍṏṑṓọỏốồổỗộớờởỡợōòóŏőôõö]/",
                     "/[UŨŪŬŮŰŲÙÚÛÜȔȖṲṴṶṸṺỤỦỨỪỬỮỰuũūŭůűųùúûüȕȗṳṵṷṹṻụủứừửữự]/",
                     "/[YẙỲỴỶỸŶŸÝyẙỳỵỷỹŷÿý]/"
-                ],
+                 ],
                 ["egge", "egga", "eggi", "eggo", "eggu", "eggy"],
                 $message
             );
@@ -212,7 +213,9 @@ $jinx = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type);
     } else {
         return $bot->network->sendMessageAutoDetection(
-            $who, in_array($message[0], ['/', '#']) ? '_' . $message : $message, $type
+            $who,
+            in_array($message[0], ['/', '#']) ? '_' . $message : $message,
+            $type
         );
     }
 };

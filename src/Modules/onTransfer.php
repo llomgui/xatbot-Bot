@@ -27,7 +27,8 @@ $onTransfer = function (int $from, string $type, string $message, int $to, int $
     $bot->data->save();
 
     $bot->network->sendPrivateConversation(
-        $from, 'Thanks for your payment, you added ' . $bot->sec2hms($calc) . ' to your bot.'
+        $from,
+        'Thanks for your payment, you added ' . $bot->sec2hms($calc) . ' to your bot.'
     );
     $bot->refresh();
 

@@ -25,7 +25,9 @@ $store = function (int $who, array $message, int $type) {
         }
 
         $bot->network->sendMessageAutoDetection(
-            $who, '"Allpowers" cost ' . number_format($storePrice) . ' xats in store.', $type
+            $who,
+            '"Allpowers" cost ' . number_format($storePrice) . ' xats in store.',
+            $type
         );
     } elseif (in_array($message[1], ['everypower', 'everypowers'])) {
         foreach ($powers as $id => $array) {
@@ -37,7 +39,9 @@ $store = function (int $who, array $message, int $type) {
         }
 
         $bot->network->sendMessageAutoDetection(
-            $who, '"Everypower" costs ' . number_format($storePrice) . ' xats in store.', $type
+            $who,
+            '"Everypower" costs ' . number_format($storePrice) . ' xats in store.',
+            $type
         );
     } else {
         if (isset($message[2]) && !empty($message[2])) {
@@ -58,7 +62,9 @@ $store = function (int $who, array $message, int $type) {
             }
 
             return $bot->network->sendMessageAutoDetection(
-                $who, 'Those powers cost ' . $storePrice . ' xats in store.', $type
+                $who,
+                'Those powers cost ' . $storePrice . ' xats in store.',
+                $type
             );
         } else {
             $match = $bot->network->findPowerMatch($message[1]);
@@ -76,7 +82,9 @@ $store = function (int $who, array $message, int $type) {
             }
             $dym = $match[1] === false ? 'Did you mean "' . $powers[$powerID]['name'] . '"? ' : '';
             return $bot->network->sendMessageAutoDetection(
-                $who, $dym . '"'.ucfirst($powers[$powerID]['name']).'" ' . $powers[$powerID]['storeCost'], $type
+                $who,
+                $dym . '"'.ucfirst($powers[$powerID]['name']).'" ' . $powers[$powerID]['storeCost'],
+                $type
             );
         }
     }

@@ -40,11 +40,15 @@ $listsmilies = function (int $who, array $message, int $type) {
             }
 
             $bot->network->sendMessageAutoDetection(
-                $who, ucfirst($array['name']) . '\'s ' . count($topsh) . ' smilies: ' . $implode . '.', $type
+                $who,
+                ucfirst($array['name']) . '\'s ' . count($topsh) . ' smilies: ' . $implode . '.',
+                $type
             );
         } else {
             $bot->network->sendMessageAutoDetection(
-                $who, ucfirst($array['name']) . ' currently dosen\'t have smilies', $type
+                $who,
+                ucfirst($array['name']) . ' currently dosen\'t have smilies',
+                $type
             );
         }
     } else {

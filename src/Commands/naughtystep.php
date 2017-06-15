@@ -14,7 +14,10 @@ $naughtystep = function (int $who, array $message, int $type) {
 
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !naughtystep [regname/xatid] [reason]', $type, true
+            $who,
+            'Usage: !naughtystep [regname/xatid] [reason]',
+            $type,
+            true
         );
     }
 
@@ -34,7 +37,9 @@ $naughtystep = function (int $who, array $message, int $type) {
     if (isset($user)) {
         if ($user->isNaughty()) {
             return $bot->network->sendMessageAutoDetection(
-                $who, $bot->botlang('user.already', ['naughtystepped']), $type
+                $who,
+                $bot->botlang('user.already', ['naughtystepped']),
+                $type
             );
         }
 

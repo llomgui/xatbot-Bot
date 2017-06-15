@@ -30,13 +30,17 @@ $calc = function (int $who, array $message, int $type) {
             if site not reachable use preset calc code
         */
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Sorry i can\'t solve any equation\'s at this time, please try again later.', $type
+            $who,
+            'Sorry i can\'t solve any equation\'s at this time, please try again later.',
+            $type
         );
     }
     $json = json_decode($res);
     if ($json->error == null) {
         return $bot->network->sendMessageAutoDetection(
-            $who, '_' . $message . ' = ' .$json->result[count($json->result) - 1], $type
+            $who,
+            '_' . $message . ' = ' .$json->result[count($json->result) - 1],
+            $type
         );
     } else {
         return $bot->network->sendMessageAutoDetection($who, $json->error, $type, true);

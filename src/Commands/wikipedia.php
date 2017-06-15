@@ -22,7 +22,9 @@ $wikipedia = function (int $who, array $message, int $type) {
     );
     if (!$page) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'I can\'t reach wikipedia.org at this monent, please try again later.', $type
+            $who,
+            'I can\'t reach wikipedia.org at this monent, please try again later.',
+            $type
         );
     }
 

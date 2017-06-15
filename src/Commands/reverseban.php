@@ -15,7 +15,10 @@ $reverseban = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2]) ||
         !is_numeric($message[2])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !reverseban [ID/Regname] [hours] [reason]', $type, true
+            $who,
+            'Usage: !reverseban [ID/Regname] [hours] [reason]',
+            $type,
+            true
         );
     }
 
@@ -35,7 +38,9 @@ $reverseban = function (int $who, array $message, int $type) {
     if (isset($user)) {
         if ($user->isReverseBanned()) {
             return $bot->network->sendMessageAutoDetection(
-                $who, $bot->botlang('user.already', ['reverse banned']), $type
+                $who,
+                $bot->botlang('user.already', ['reverse banned']),
+                $type
             );
         }
 

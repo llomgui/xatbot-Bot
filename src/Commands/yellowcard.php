@@ -14,7 +14,10 @@ $yellowcard = function (int $who, array $message, int $type) {
 
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 'Usage: !yellowcard [regname/xatid] [reason]', $type, true
+            $who,
+            'Usage: !yellowcard [regname/xatid] [reason]',
+            $type,
+            true
         );
     }
 
@@ -34,7 +37,9 @@ $yellowcard = function (int $who, array $message, int $type) {
     if (isset($user)) {
         if ($user->isYellowCarded()) {
             return $bot->network->sendMessageAutoDetection(
-                $who, $bot->botlang('user.already', ['yellowcarded']), $type
+                $who,
+                $bot->botlang('user.already', ['yellowcarded']),
+                $type
             );
         }
 

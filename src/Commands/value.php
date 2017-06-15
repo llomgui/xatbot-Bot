@@ -46,13 +46,17 @@ $value = function (int $who, array $message, int $type) {
             if (isset($user)) {
                 if (!$user->isRegistered()) {
                     return $bot->network->sendMessageAutoDetection(
-                        $who, 'You cannot value an unregistered account!', $type
+                        $who,
+                        'You cannot value an unregistered account!',
+                        $type
                     );
                 }
 
                 if (!$user->hasDays()) {
                     return $bot->network->sendMessageAutoDetection(
-                        $who, 'You cannot value an account without days!', $type
+                        $who,
+                        'You cannot value an account without days!',
+                        $type
                     );
                 }
 

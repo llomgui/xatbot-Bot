@@ -28,11 +28,15 @@ $chatinfos = function (int $who, array $message, int $type) {
         case 'background':
             if (empty($infos[0])) {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.notfound', ['background']), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.notfound', ['background']),
+                    $type
                 );
             } else {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.found', ['background', $elements->g, $infos[0]]), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.found', ['background', $elements->g, $infos[0]]),
+                    $type
                 );
             }
             break;
@@ -40,11 +44,15 @@ $chatinfos = function (int $who, array $message, int $type) {
         case 'radio':
             if (empty($infos[4])) {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.notfound', ['radio']), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.notfound', ['radio']),
+                    $type
                 );
             } else {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.found', ['radio', $elements->g, $infos[4]]), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.found', ['radio', $elements->g, $infos[4]]),
+                    $type
                 );
             }
             break;
@@ -52,11 +60,15 @@ $chatinfos = function (int $who, array $message, int $type) {
         case 'button':
             if ($infos[5] == '- Cant') {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.notfound', ['button color']), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.notfound', ['button color']),
+                    $type
                 );
             } else {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.found', ['button color', $elements->g, $infos[5]]), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.found', ['button color', $elements->g, $infos[5]]),
+                    $type
                 );
             }
             break;
@@ -64,11 +76,15 @@ $chatinfos = function (int $who, array $message, int $type) {
         case 'language':
             if (empty($infos[3])) {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.notfound', ['language']), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.notfound', ['language']),
+                    $type
                 );
             } else {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.found', ['language', $elements->g, $infos[3]]), $type
+                    $who,
+                    $bot->botlang('cmd.chatinfos.found', ['language', $elements->g, $infos[3]]),
+                    $type
                 );
             }
             break;
@@ -76,11 +92,17 @@ $chatinfos = function (int $who, array $message, int $type) {
         case 'description':
             if (empty($elements->d)) {
                 $bot->network->sendMessageAutoDetection(
-                    $who, $bot->botlang('cmd.chatinfos.notfound', ['description']), $type);
+                    $who,
+                    $bot->botlang('cmd.chatinfos.notfound', ['description']),
+                    $type
+                );
             }
 
             $bot->network->sendMessageAutoDetection(
-                $who, $bot->botlang('cmd.chatinfos.found', ['description', $elements->g, $elements->d]), $type);
+                $who,
+                $bot->botlang('cmd.chatinfos.found', ['description', $elements->g, $elements->d]),
+                $type
+            );
             break;
     }
 };
