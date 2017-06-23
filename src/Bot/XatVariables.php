@@ -98,20 +98,18 @@ abstract class XatVariables
     private static function initVolunteers()
     {
         $volunteers = [
-            ['regname' => 'Andre',   'xatid' => 112633],
             ['regname' => 'Brandon', 'xatid' => 1010208],
             ['regname' => 'Chelly',  'xatid' => 19032000],
             ['regname' => 'Cupim',   'xatid' => 10000690],
             ['regname' => 'Cyan',    'xatid' => 283021491],
             ['regname' => 'Guinho',  'xatid' => 2300000],
             ['regname' => 'Jayden',  'xatid' => 121040483],
-            ['regname' => 'Junior',  'xatid' => 21299],
             ['regname' => 'Kyle',    'xatid' => 96321545],
             ['regname' => 'Mihay',   'xatid' => 1700000],
             ['regname' => 'Mike',    'xatid' => 7000000],
             ['regname' => 'Muffins', 'xatid' => 209642885],
             ['regname' => 'Nick',    'xatid' => 6960969],
-            ['regname' => 'Steven',  'xatid' => 400004803]
+            ['regname' => 'Vale',    'xatid' => 32646043]
         ];
 
         self::$volunteers = $volunteers;
