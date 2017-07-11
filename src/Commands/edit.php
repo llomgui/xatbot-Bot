@@ -22,6 +22,7 @@ $edit = function (int $who, array $message, int $type) {
             unset($message[0]);
             unset($message[1]);
             $message = implode(' ', $message);
+            $message = str_replace(' ', '', $message);
             $bot->data->nickname = $message;
             $bot->data->save();
             $bot->network->sendMessageAutoDetection($who, 'Nickname is updated!', $type, true);
