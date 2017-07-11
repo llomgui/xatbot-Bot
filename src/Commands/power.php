@@ -46,6 +46,10 @@ $power = function (int $who, array $message, int $type) {
                 }
             }
 
+            if ($powerid == 93) {
+                return $bot->network->sendMessageAutoDetection($who, 'Sorry you can\'t enable MINT power.', $type);
+            }
+
             if (empty($powerid)) {
                 return $bot->network->sendMessageAutoDetection($who, 'This power does not exist', $type);
             } else {
@@ -105,7 +109,7 @@ $power = function (int $who, array $message, int $type) {
 
         case 'clear':
             $bot->data->powersdisabled = json_encode([93]);
-            $bot->save();
+            $bot->data->save();
             $bot->network->sendMessageAutoDetection($who, 'Every Powers enabled!', $type);
             return $bot->refresh();
             break;
@@ -119,7 +123,8 @@ $power = function (int $who, array $message, int $type) {
 
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'List of disabled powers: ' . implode(' ', $powerNames)
+                'List of disabled powers: ' . implode(' ', $powerNames),
+                $type
             );
             break;
     }

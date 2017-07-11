@@ -149,8 +149,7 @@ class XatNetwork
                 [
                     'r' => 8,
                     'v' => '0',
-                    'u' => XatVariables::getXatid(),
-                    'z' => '8335799305056508195'
+                    'u' => XatVariables::getXatid()
                 ]
             );
 
@@ -210,18 +209,17 @@ class XatNetwork
         $j2['z']  = 12;
         $j2['p']  = '0';
         $j2['c']  = $this->data->chatid;
-        $j2['r']  = (!empty($this->data->chatpw)) ? $this->data->chatpw : '';
-        $j2['f']  = (!empty($this->data->chatpw)) ? '6' : '0';
-        $j2['e']  = (!empty($this->data->chatpw)) ? '1' : '';
-        $j2['u']  = $this->logininfo['i'];
-        $j2['d0'] = $this->logininfo['d0'] ?? $this->logininfo['d0'];
 
-        $maxPowerIndex = XatVariables::getMaxPowerIndex() + 3;
-        for ($i = 2; $i <= $maxPowerIndex; $i++) {
-            if (isset($this->logininfo['d' . $i])) {
-                $j2['d' . $i] = $this->logininfo['d' . $i];
-            }
+        if (!empty($this->data->chatpw)) {
+            $j2['r']  = $this->data->chatpw;
+            $j2['f']  = 6;
+            $j2['e']  = 1;
+        } else {
+            $j2['f']  = '0';
         }
+
+        $j2['u']  = $this->logininfo['i'];
+        $maxPowerIndex = XatVariables::getMaxPowerIndex();
 
         if ($this->data->premium < time()) {
             $j2['m0'] = 2147483647;
@@ -229,8 +227,30 @@ class XatNetwork
             $j2['m2'] = 4294836223;
             $j2['m3'] = 4294967295;
 
-            for ($i = 4; $i < ($maxPowerIndex - 1); $i++) {
+            for ($i = 4; $i < $maxPowerIndex; $i++) {
                 $j2['m' . $i] = 2147483647;
+            }
+        } else {
+            $powersdisabled = [];
+            $powerslist = json_decode($this->data->powersdisabled, true);
+            for ($i = 0; $i < sizeof($powerslist); $i++) {
+                if (array_key_exists($powerslist[$i], XatVariables::getPowers())) {
+                    @$powersdisabled[(int)($powerslist[$i] / 32)] += pow(2, ($powerslist[$i] % 32));
+                }
+            }
+
+            for ($i = 0; $i < $maxPowerIndex; $i++) {
+                if (isset($powersdisabled[$i])) {
+                    $j2['m' . $i] = $powersdisabled[$i];
+                }
+            }
+        }
+
+        $j2['d0'] = $this->logininfo['d0'] ?? $this->logininfo['d0'];
+
+        for ($i = 2; $i <= ($maxPowerIndex + 3); $i++) {
+            if (isset($this->logininfo['d' . $i])) {
+                $j2['d' . $i] = $this->logininfo['d' . $i];
             }
         }
 
@@ -257,7 +277,7 @@ class XatNetwork
 
     public function write($node = null, $elements = [])
     {
-        if ($node != "z") {
+        if ($node != 'z') {
             $this->idleTime = time();
         }
         $this->socket->write($node, $elements);
