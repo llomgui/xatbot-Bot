@@ -53,6 +53,18 @@ $onMessage = function (int $who, string $message) {
             }
         }
 
+        if (isset($bot->data->maxsmilies) && $bot->data->maxsmilies > 1) {
+            $count = 0;
+            $count += preg_match_all('/\([^ ]+\)/', $message, $matches);
+            $count += preg_match_all('/:-?(P|p|S|s|O|o|D|d|@|\[|\$|\)|\(|\'\(|\||\*)/', $message, $matches);
+            if ($count > $bot->data->maxsmilies) {
+                return $bot->network->kick(
+                    $who,
+                    'You are not allowed to send more than ' . $bot->data->maxsmilies . ' smilies per message.'
+                );
+            }
+        }
+
         if (sizeof($bot->badwords) > 0) {
             for ($i = 0; $i < sizeof($bot->badwords); $i++) {
                 if (strpos($message, strtolower($bot->badwords[$i]['badword']))) {

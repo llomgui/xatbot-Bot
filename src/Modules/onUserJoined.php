@@ -70,6 +70,18 @@ $onUserJoined = function (int $who, array $array) {
         }
     }
 
+    if (isset($bot->data->maxsmilies) && $bot->data->maxsmilies > 1) {
+        $count = 0;
+        $count += preg_match_all('/\([^ ]+\)/', $user->getNick(), $matches);
+        $count += preg_match_all('/:-?(P|p|S|s|O|o|D|d|@|\[|\$|\)|\(|\'\(|\||\*)/', $user->getNick(), $matches);
+        if ($count > $bot->data->maxsmilies) {
+            return $bot->network->kick(
+                $who,
+                'You are not allowed to have more than ' . $bot->data->maxsmilies . ' smilies in nick/status.'
+            );
+        }
+    }
+
     if (sizeof($bot->badwords) > 0) {
         for ($i = 0; $i < sizeof($bot->badwords); $i++) {
             if (strpos(strtolower($user->getNick()), strtolower($bot->badwords[$i]['badword']))) {

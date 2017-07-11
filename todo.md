@@ -9,7 +9,7 @@
 * [x] spam filter
 * [x] badwords filter (in chat, name, status)
 * [ ] links filter (in chat, name, status)
-* [ ] smilies filter (in chat, name)
+* [x] smilies filter (in chat, name)
 
 ### Commands
 * [ ] Alias' !alias [add/edit/remove] [command] [alias]
@@ -20,7 +20,7 @@
 * [x] hasmost [powerid]
 * [x] userinfo [regname/xatid/on/off]
 * [x] lastseen [regname/xatid]
-* [ ] power [enable/disable/clear/list] [powername/powerid]
+* [x] power [enable/disable/clear/list] [powername/powerid]
 * [ ] allmissing [null/regname/xatid]
 * [ ] everymissing [null/regname/xatid]
 * [ ] history
