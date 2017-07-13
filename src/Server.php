@@ -8,6 +8,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 
 use OceanProject\Models;
+use OceanProject\Userinfo;
 use OceanProject\Bot\XatBot;
 use OceanProject\Extensions;
 use OceanProject\API\BaseAPI;
@@ -41,6 +42,7 @@ class Server
         $this->initBots();
         $this->initExtensions();
         $this->initIPC();
+        $this->initUserinfo();
         $this->logger->info('Server is ready!');
     }
 
@@ -139,6 +141,12 @@ class Server
         }
 
         chmod('sockets' . DIRECTORY_SEPARATOR . strtolower($this->name) . '.sock', 0777);
+    }
+
+    private function initUserinfo()
+    {
+        $this->logger->info('Loading userinfo...');
+        Userinfo::init();
     }
 
     public function handle()
