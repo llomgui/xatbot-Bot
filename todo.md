@@ -1,6 +1,6 @@
 # TODO list
 
-### Features (pending api keys) - Set API keys in config.json
+### Features
 * [ ] twitter
 * [ ] google
 * [ ] weather
@@ -10,13 +10,19 @@
 * [x] badwords filter (in chat, name, status)
 * [ ] links filter (in chat, name, status)
 * [x] smilies filter (in chat, name)
+* [ ] premium freeze/unfreeze
+* [ ] autotemp
+* [ ] moderation on/off
+* [ ] custom commands
+* [ ] radio
+* [ ] autoban
 
 ### Commands
-* [ ] Alias' !alias [add/edit/remove] [command] [alias]
+* [ ] alias [add/edit/remove] [command] [alias]
 * [ ] Responses
-* [ ] Minranks !minrank [command] [rank]
-* [x] Edit !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]
-* [ ] Staff [add/edit/remove] [regname/xatid] [rank]
+* [ ] minrank [command] [rank]
+* [x] edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]
+* [ ] Staff [add/remove] [regname/xatid] [rank]
 * [x] hasmost [powerid]
 * [x] userinfo [regname/xatid/on/off]
 * [x] lastseen [regname/xatid]
@@ -29,3 +35,15 @@
 * [ ] getmain [password] IN PC ONLY
 * [ ] mail [send/read/check/empty/delete/store/unstore/blockall/staff] [info]
 * [ ] typerace [start/repeat/end]
+* [ ] xatwiki
+* [ ] leastactive
+* [ ] edit language [en/fr/pt/es/...]
+* [ ] premium [freeze/unfreeze/time]
+* [ ] snitch [add/remove/list] [regname/xatid]
+* [ ] autotemp [add/remove] [regname/xatid]
+* [ ] customcommand [add/remove]
+* [ ] radio [scroll/chat/on/off]
+* [ ] autoban [add/remove/list] [regname/xatid] [hours]
+* [ ] pc [regname/xatid] [message]
+* [ ] pm [regname/xatid] [message]
+* [ ] scroll [message/clear]
