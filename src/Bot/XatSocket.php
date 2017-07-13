@@ -70,10 +70,6 @@ class XatSocket
                 return false;
             }
 
-            if ($packet !== false && !empty($packet)) {
-                var_dump($packet);
-            }
-
             $this->buffer .= $packet;
         } while ($force && strpos($this->buffer, chr(0x00)) === false);
 

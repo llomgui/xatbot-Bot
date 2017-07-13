@@ -51,7 +51,7 @@ class Server
         $format = "[%datetime%] %channel% %level_name%: %message%\n";
         $formatter = new LineFormatter($format);
 
-        $stream = new StreamHandler('logs/logs.txt');
+        $stream = new StreamHandler('logs/' . $this->name . '.log');
         $stream->setFormatter($formatter);
 
         $this->logger = new Logger($this->name);
