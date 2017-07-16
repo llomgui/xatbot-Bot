@@ -3,7 +3,7 @@
 ### Features
 * [ ] twitter
 * [ ] google
-* [ ] weather
+* [x] weather
 * [ ] raid protection
 * [x] flood filter
 * [x] spam filter
@@ -44,6 +44,6 @@
 * [ ] customcommand [add/remove]
 * [ ] radio [scroll/chat/on/off]
 * [ ] autoban [add/remove/list] [regname/xatid] [hours]
-* [ ] pc [regname/xatid] [message]
-* [ ] pm [regname/xatid] [message]
+* [x] pc [regname/xatid] [message]
+* [x] pm [regname/xatid] [message]
 * [ ] scroll [message/clear]
