@@ -1,10 +1,11 @@
 <?php
 
 use OceanProject\Extensions;
+use OceanProject\Bot\XatVariables;
 
 $dev = function (int $who, array $message, int $type) {
 
-    if (!in_array($who, OceanProject\Bot\XatVariables::getDevelopers())) {
+    if (!in_array($who, XatVariables::getDevelopers())) {
         return;
     }
 
@@ -14,6 +15,11 @@ $dev = function (int $who, array $message, int $type) {
         case 'reload':
             Extensions::readExtensions();
             $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
+            break;
+
+        case 'update':
+            XatVariables::update();
+            $bot->network->sendMessageAutoDetection($who, 'Config updated!', $type);
             break;
  
         case 'memory':
@@ -26,10 +32,6 @@ $dev = function (int $who, array $message, int $type) {
             ];
             
             $bot->network->sendMessageAutoDetection($who, implode(' | ', $memory), $type);
-            break;
-
-        case 'reconnect':
-            $bot->network->reconnect();
             break;
 
         default:

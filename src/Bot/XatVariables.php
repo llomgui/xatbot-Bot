@@ -1679,6 +1679,14 @@ abstract class XatVariables
         self::updateVolunteers();
         self::updatePowers();
         self::updateAd();
+        self::updateAPIKeys();
+    }
+
+    public static function updateAPIKeys()
+    {
+        $data = json_decode(file_get_contents('./config.json', true), true);
+
+        self::$apikeys = $data['apikeys'];
     }
 
     private static function updateIP2()
