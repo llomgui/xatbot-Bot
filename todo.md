@@ -35,7 +35,7 @@
 * [ ] getmain [password] IN PC ONLY
 * [ ] mail [send/read/check/empty/delete/store/unstore/blockall/staff] [info]
 * [ ] typerace [start/repeat/end]
-* [ ] xatwiki
+* [x] xatwiki
 * [ ] leastactive
 * [ ] edit language [en/fr/pt/es/...]
 * [x] premium [freeze/unfreeze/time]
@@ -46,4 +46,4 @@
 * [ ] autoban [add/remove/list] [regname/xatid] [hours]
 * [x] pc [regname/xatid] [message]
 * [x] pm [regname/xatid] [message]
-* [ ] scroll [message/clear]
+* [x] scroll [message/clear]
