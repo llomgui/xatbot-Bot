@@ -36,7 +36,7 @@
 * [ ] mail [send/read/check/empty/delete/store/unstore/blockall/staff] [info]
 * [ ] typerace [start/repeat/end]
 * [x] xatwiki
-* [ ] leastactive
+* [x] leastactive
 * [ ] edit language [en/fr/pt/es/...]
 * [x] premium [freeze/unfreeze/time]
 * [ ] snitch [add/remove/list] [regname/xatid]
