@@ -1,7 +1,7 @@
 # TODO list
 
 ### Features
-* [ ] twitter
+* [x] twitter
 * [ ] google
 * [x] weather
 * [ ] raid protection
