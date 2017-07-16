@@ -221,7 +221,7 @@ class XatNetwork
         $j2['u']  = $this->logininfo['i'];
         $maxPowerIndex = XatVariables::getMaxPowerIndex();
 
-        if ($this->data->premium < time()) {
+        if ($this->data->premium < time() || $this->data->premiumfreeze > 1) {
             $j2['m0'] = 2147483647;
             $j2['m1'] = 2147483647;
             $j2['m2'] = 4294836223;

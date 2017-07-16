@@ -10,7 +10,7 @@
 * [x] badwords filter (in chat, name, status)
 * [ ] links filter (in chat, name, status)
 * [x] smilies filter (in chat, name)
-* [ ] premium freeze/unfreeze
+* [x] premium freeze/unfreeze
 * [ ] autotemp
 * [ ] moderation on/off
 * [ ] custom commands
@@ -38,7 +38,7 @@
 * [ ] xatwiki
 * [ ] leastactive
 * [ ] edit language [en/fr/pt/es/...]
-* [ ] premium [freeze/unfreeze/time]
+* [x] premium [freeze/unfreeze/time]
 * [ ] snitch [add/remove/list] [regname/xatid]
 * [ ] autotemp [add/remove] [regname/xatid]
 * [ ] customcommand [add/remove]

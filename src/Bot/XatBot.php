@@ -33,7 +33,7 @@ class XatBot
         $this->responses = $this->setResponses();
         $this->stafflist = $this->setStafflist();
 
-        if ($this->data->premium > time()) {
+        if ($this->data->premium > time() && $this->data->premiumfreeze == 1) {
             $this->isPremium = true;
         } else {
             $this->isPremium = false;
