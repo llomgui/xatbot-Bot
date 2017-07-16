@@ -9,7 +9,7 @@ $active = function (int $who, array $message, int $type) {
     }
 
     $now  = time();
-    $userTime = $now - DataAPI::get('active_' . $who);
+    $userTime = $now - OceanProject\API\DataAPI::get('active_' . $who);
     $displayName = $bot->users[$who]->isRegistered() ? $bot->users[$who]->getRegname() . '(' .
         $bot->users[$who]->getID() . ')'  : $bot->users[$who]->getID();
 

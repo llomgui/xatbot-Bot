@@ -70,7 +70,7 @@ $trade = function (int $who, array $message, int $type) {
     }
 
     if (!empty($powerstring)) {
-        DataAPI::set('sent_trade_' . $who, '0;0;' . $powerstring);
+        OceanProject\API\DataAPI::set('sent_trade_' . $who, '0;0;' . $powerstring);
     }
 
     $buildPacket = ['i' => 30008, 'u' => XatVariables::getXatid(), 'd' => $who, 't' => 'O,0,0,' . $powerstring];

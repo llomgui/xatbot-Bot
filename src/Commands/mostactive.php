@@ -1,5 +1,7 @@
 <?php
 
+use OceanProject\API\DataAPI;
+
 $mostactive = function (int $who, array $message, int $type) {
 
     $bot  = OceanProject\API\ActionAPI::getBot();
