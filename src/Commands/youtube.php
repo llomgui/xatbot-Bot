@@ -26,7 +26,7 @@ $youtube = function (int $who, array $message, int $type) {
         true
     );
     
-    iif (isset($response['error'])) {
+    if (isset($response['error'])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
             'Sorry i can\'t search youtube at this time, please try again later.',
