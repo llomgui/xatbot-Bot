@@ -36,7 +36,7 @@ $onFriendList = function (array $array) {
 
             $online[] = [
                 'regname'     => $regname,
-                'xatid'       => $id,
+                'xatid'       => $id[0] == '0' ? substr($id, 1) : $id,
                 'isAvailable' => ($id[0] == '0') ? true : false
             ];
         }
