@@ -13,14 +13,23 @@ $twitch = function (int $who, array $message, int $type) {
     }
 
     $message[1] = preg_replace("/[^a-zA-Z0-9_]/", "", $message[1]);
+    $key = OceanProject\Bot\XatVariables::getAPIKeys()['twitch'];
+
+    if (empty($key)) {
+        return $bot->network->sendMessageAutoDetection($who, "Twitch API Key needs to be setup", $type);
+    }
 
     if (empty($message[1])) {
         return $bot->network->sendMessageAutoDetection($who, 'Invalid twitch username', $type);
     }
 
-    $stream = stream_context_create(['http'=> ['timeout' => 1]]);
+    $stream = stream_context_create([
+        'http'=> [
+            'timeout' => 1,
+            'header' => 'Client-ID: ' . $key
+        ]
+    ]);
     $page = file_get_contents('https://api.twitch.tv/kraken/streams/' . $message[1], false, $stream);
-
     /*
         API sends 404 if user doesnt exist :/
         if (!$page) {
@@ -30,7 +39,7 @@ $twitch = function (int $who, array $message, int $type) {
         }
     */
     $twitch = json_decode($page);
-
+    
     if (isset($twitch->error)) {
         return $bot->network->sendMessageAutoDetection($who, $twitch->message, $type, true);
     } elseif (!$page) {
