@@ -26,10 +26,18 @@ $youtube = function (int $who, array $message, int $type) {
         true
     );
     
-    if ($response['error']) {
+    iif (isset($response['error'])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
             'Sorry i can\'t search youtube at this time, please try again later.',
+            $type
+        );
+    }
+
+    if ($response['pageInfo']['totalResults'] < 1) {
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'I found nothing for that search. :(',
             $type
         );
     }
