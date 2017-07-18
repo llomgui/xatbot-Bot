@@ -22,6 +22,7 @@
     "apikeys": {
         "youtube": "",
         "google": "",
+        "twitch": "",
         "twitter": {
             "consumer_key": "",
             "consumer_secret": "",
