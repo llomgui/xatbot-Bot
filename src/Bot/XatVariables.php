@@ -1695,7 +1695,7 @@ abstract class XatVariables
         $cpt = 0;
 
         do {
-            $page = file_get_contents('http://xat.com/web_gear/chat/ip2.php?Ocean=' . time(), false, $ctx);
+            $page = file_get_contents('https://xat.com/web_gear/chat/ip2.php?Ocean=' . time(), false, $ctx);
             $cpt++;
             usleep(300000);
         } while (empty($page) && $cpt < 5);
@@ -1743,7 +1743,7 @@ abstract class XatVariables
         $cpt = 0;
 
         do {
-            $page = file_get_contents('http://xat.com/web_gear/chat/pow2.php?Ocean=' . time(), false, $ctx);
+            $page = file_get_contents('https://xat.com/web_gear/chat/pow2.php?Ocean=' . time(), false, $ctx);
             $cpt++;
             usleep(300000);
         } while (empty($page) && $cpt < 5);
@@ -1819,7 +1819,7 @@ abstract class XatVariables
         $cpt = 0;
 
         do {
-            $page = file_get_contents('http://xat.com/json/powers.php?Ocean=' . time(), false, $ctx);
+            $page = file_get_contents('https://xat.com/json/powers.php?Ocean=' . time(), false, $ctx);
             $cpt++;
             usleep(300000);
         } while (empty($page) && $cpt < 5);
@@ -1888,7 +1888,7 @@ abstract class XatVariables
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
         curl_setopt($curl, CURLOPT_TIMEOUT, 120);
-        curl_setopt($curl, CURLOPT_URL, 'http://xat.com/json/ad.php?Ocean=' . time());
+        curl_setopt($curl, CURLOPT_URL, 'https://xat.com/json/ad.php?Ocean=' . time());
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $page = curl_exec($curl);
         curl_close($curl);
