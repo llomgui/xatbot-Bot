@@ -135,7 +135,7 @@ class XatBot
 
     public function botHasPower($id)
     {
-        if (!$this->isPremium()) {
+        if (!$this->isPremium) {
             return false;
         }
 
