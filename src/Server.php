@@ -460,7 +460,12 @@ class Server
                                 } elseif ($hook == 'onPC') {
                                     $args[2] = 3;
                                 }
-                                $this->dispatch('Commands', $command, $args);
+
+                                $isDispatched = $this->dispatch('Commands', $command, $args);
+
+                                if (!$isDispatched) {
+                                    $this->dispatch('Commands', 'handlecustomcommands', $args);
+                                }
                             } else {
                                 if (!$unknow && !empty($hook)) {
                                     $this->dispatch('Modules', $hook, $args);
@@ -492,6 +497,8 @@ class Server
                 $this->logger->critical('Error dispatch, message: ' . $e->getMessage());
             }
         }
+
+        return true;
     }
 
     public function start($botid)
