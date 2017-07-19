@@ -41,11 +41,6 @@ class XatBot
         $this->linksfilter    = $this->setLinksfilter();
         $this->customcommands = $this->setCustomCommands();
 
-        var_dump($this->autotemps);
-        var_dump($this->autobans);
-        var_dump($this->linksfilter);
-        var_dump($this->customcommands);
-
         if ($this->data->premium > time() && $this->data->premiumfreeze == 1) {
             $this->isPremium = true;
         } else {
@@ -154,7 +149,7 @@ class XatBot
                 ->get()
                 ->toArray();
 
-        return $results;
+        return array_column($results, 'link');
     }
 
     public function setAutotempList()
@@ -162,13 +157,12 @@ class XatBot
         $results = Capsule::table('autotemps')
                 ->where('bot_id', $this->data->id)
                 ->select('xatid', 'regname', 'hours')
-                ->get()
-                ->toArray();
+                ->get();
 
         $list = [];
         for ($i = 0; $i < sizeof($results); $i++) {
             $list[$i]['xatid']   = $results[$i]->xatid;
-            $list[$i]['regname'] = $results[$i]->method;
+            $list[$i]['regname'] = $results[$i]->regname;
             $list[$i]['hours']   = $results[$i]->hours;
         }
 
@@ -180,8 +174,7 @@ class XatBot
         $results = Capsule::table('autobans')
                 ->where('bot_id', $this->data->id)
                 ->select('xatid', 'regname', 'hours', 'method')
-                ->get()
-                ->toArray();
+                ->get();
 
         $list = [];
         for ($i = 0; $i < sizeof($results); $i++) {
@@ -200,10 +193,16 @@ class XatBot
                 ->join('minranks', 'customcommands.minrank_id', '=', 'minranks.id')
                 ->where('bot_id', $this->data->id)
                 ->select('customcommands.command', 'customcommands.response', 'minranks.level')
-                ->get()
-                ->toArray();
+                ->get();
 
-        return array_column($results, 'command', 'response', 'level');
+        $list = [];
+        for ($i = 0; $i < sizeof($results); $i++) {
+            $list[$i]['command']  = $results[$i]->command;
+            $list[$i]['response'] = $results[$i]->response;
+            $list[$i]['level']    = $results[$i]->level;
+        }
+
+        return $list;
     }
 
     public function botHasPower($id)
