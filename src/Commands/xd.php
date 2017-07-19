@@ -8,7 +8,7 @@ $xd = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    if (!isset($message[1]) || empty($message[1]) || !is_numeric($message[1]) || $message[1] == 0) {
+    if (!isset($message[1]) || empty($message[1]) || !is_numeric($message[1]) || $message[1] <= 0) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !xd [xats]', $type, true);
     }
 
@@ -17,7 +17,10 @@ $xd = function (int $who, array $message, int $type) {
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        $bot->botlang('cmd.xd', [$xats, $message[1] > 1 ? 'xats' : 'xat', $days, $days == 1 ? 'day' : 'days']),
+        $bot->botlang('cmd.xd', [
+                $xats,
+                $xats > 1 ? 'xats' : 'xat', $days, $days == 1 ? 'day' : 'days'
+            ]),
         $type
     );
 };
