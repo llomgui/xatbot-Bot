@@ -108,7 +108,7 @@ class XatNetwork
             $return = [$local7[0], $local8, $local4];
         } else {
             $local9  = $this->getDom($chatid);
-            $local10 = $this->getport($chatid);
+            $local10 = $this->getPort($chatid);
             $local11 = $local3[1][(4 * $local9) + floor((mt_rand(0, 10) / 10) * 4)];
             $return  = [$local11, $local10, $local4];
         }
@@ -121,7 +121,9 @@ class XatNetwork
         $infos      = $this->pickIP($chatid);
         $sockdomain = $infos[0];
         $useport    = $infos[1];
-        $ctimeout   = $infos[2];
+        $ctimeout   = 1; // $infos[2];
+
+        echo 'IP: ' . $sockdomain . ' PORT: ' . $useport . ' ROOM: ' . $chatid . ' BotID: ' . $this->data->id . PHP_EOL;
 
         if ($this->socket->connect($sockdomain, $useport, $ctimeout)) {
             return true;
