@@ -87,7 +87,8 @@ $onMessage = function (int $who, string $message) {
                             return $bot->network->kick(
                                 $who,
                                 'Do not say inapp words :o !
-                                ');
+                                '
+                            );
                             break;
 
                         case 'dunce':
