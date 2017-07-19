@@ -123,7 +123,7 @@ $power = function (int $who, array $message, int $type) {
 
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'List of disabled powers: ' . implode(' ', $powerNames),
+                'List of disabled powers: ' . implode(', ', $powerNames) . '.',
                 $type
             );
             break;

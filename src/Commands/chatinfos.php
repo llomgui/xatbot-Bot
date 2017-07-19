@@ -15,10 +15,10 @@ $chatinfos = function (int $who, array $message, int $type) {
     }
 
     $ctx      = stream_context_create(array('http' => array('timeout' => 1)));
-    $json     = file_get_contents('http://xat.com/web_gear/chat/roomid.php?v2&d='.$message[2], false, $ctx);
+    $json     = file_get_contents('https://xat.com/web_gear/chat/roomid.php?v2&d='.$message[2], false, $ctx);
     $elements = json_decode($json);
 
-    if (!is_numeric($elements->id)) {
+    if (!is_object($elements)) {
         return $bot->network->sendMessageAutoDetection($who, 'Chat not found', $type);
     }
 

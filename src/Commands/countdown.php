@@ -13,7 +13,7 @@ $countdown = function (int $who, array $message, int $type) {
     if ($releaseTime > 1) {
         $message = 'The new power will be sold in ' . gmdate("H:i:s", $releaseTime - time()) . '.';
     } else {
-        $message = 'The new power is already released/sold out, or Admins did not put a countdown on the xat banner.';
+        $message = 'There is no countdown at the moment.';
     }
 
     $bot->network->sendMessageAutoDetection($who, $message, $type);

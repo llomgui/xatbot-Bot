@@ -18,7 +18,7 @@ $misc = function (int $who, array $message, int $type) {
 
     switch (strtolower($message[1])) {
         case 'reserve':
-            if (!isset($message[2]) || empty($message[2]) || !is_numeric($message[2])) {
+            if (!isset($message[2]) || empty($message[2]) || !is_numeric($message[2]) || $message[2] < 1) {
                 return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc reserve [xats]', $type, true);
             }
 
@@ -38,7 +38,7 @@ $misc = function (int $who, array $message, int $type) {
                 return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc chatid [chat name]', $type, true);
             }
 
-            $json = json_decode(file_get_contents('http://xat.com/web_gear/chat/roomid.php?d=' . $message[2].'&v2'));
+            $json = json_decode(file_get_contents('https://xat.com/web_gear/chat/roomid.php?d=' . $message[2].'&v2'));
 
             if (!$json) {
                 return $bot->network->sendMessageAutoDetection($who, 'That chat doesn\'t exist.', $type);
@@ -52,7 +52,7 @@ $misc = function (int $who, array $message, int $type) {
                 return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc chatname [chat id]', $type, true);
             }
 
-            $json = json_decode(file_get_contents('http://xat.com/web_gear/chat/roomid.php?i=' . $message[2].'&v2'));
+            $json = json_decode(file_get_contents('https://xat.com/web_gear/chat/roomid.php?i=' . $message[2].'&v2'));
 
             if (!$json) {
                 return $bot->network->sendMessageAutoDetection($who, 'That chat doesn\'t exist.', $type);
@@ -66,7 +66,7 @@ $misc = function (int $who, array $message, int $type) {
                 return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc xatid [regname]', $type, true);
             }
 
-            $id = file_get_contents('http://xat.me/x?name=' . $message[2]);
+            $id = file_get_contents('https://xat.me/x?name=' . $message[2]);
 
             if (!$id) {
                 return $bot->network->sendMessageAutoDetection($who, 'That user doesn\'t exist.', $type);
@@ -80,7 +80,7 @@ $misc = function (int $who, array $message, int $type) {
                 return $bot->network->sendMessageAutoDetection($who, 'Usage: !misc regname [id]', $type, true);
             }
 
-            $reg = file_get_contents('http://xat.me/x?id=' . $message[2]);
+            $reg = file_get_contents('https://xat.me/x?id=' . $message[2]);
 
             if (!$reg) {
                 return $bot->network->sendMessageAutoDetection($who, 'That user doesn\'t exist.', $type);
@@ -90,7 +90,7 @@ $misc = function (int $who, array $message, int $type) {
             break;
 
         case 'promo':
-            $promo = json_decode(file_get_contents("http://xat.com/json/promo.php"));
+            $promo = json_decode(file_get_contents("https://xat.com/json/promo.php"));
 
             switch (strtolower(trim($message[2]))) {
                 case "english":
