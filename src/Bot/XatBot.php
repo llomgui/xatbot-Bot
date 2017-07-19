@@ -18,20 +18,33 @@ class XatBot
     public $stafflist;
     public $badwords;
     public $botlangs;
+    public $autotemps;
+    public $autobans;
+    public $linksfilter;
+    public $customcommands;
     public $messageCount;
     public $isPremium;
     public $done;
 
     public function __construct(Bot $data)
     {
-        $this->data      = $data;
-        $this->started   = time();
-        $this->aliases   = $this->setAliases();
-        $this->minranks  = $this->setMinranks();
-        $this->botlangs  = $this->setBotlangs();
-        $this->badwords  = $this->setBadwords();
-        $this->responses = $this->setResponses();
-        $this->stafflist = $this->setStafflist();
+        $this->data           = $data;
+        $this->started        = time();
+        $this->aliases        = $this->setAliases();
+        $this->minranks       = $this->setMinranks();
+        $this->botlangs       = $this->setBotlangs();
+        $this->badwords       = $this->setBadwords();
+        $this->autobans       = $this->setAutobanList();
+        $this->responses      = $this->setResponses();
+        $this->stafflist      = $this->setStafflist();
+        $this->autotemps      = $this->setAutotempList();
+        $this->linksfilter    = $this->setLinksfilter();
+        $this->customcommands = $this->setCustomCommands();
+
+        var_dump($this->autotemps);
+        var_dump($this->autobans);
+        var_dump($this->linksfilter);
+        var_dump($this->customcommands);
 
         if ($this->data->premium > time() && $this->data->premiumfreeze == 1) {
             $this->isPremium = true;
@@ -131,6 +144,66 @@ class XatBot
         }
 
         return $badwords;
+    }
+
+    public function setLinksfilter()
+    {
+        $results = Capsule::table('linksfilter')
+                ->where('bot_id', $this->data->id)
+                ->select('link')
+                ->get()
+                ->toArray();
+
+        return $results;
+    }
+
+    public function setAutotempList()
+    {
+        $results = Capsule::table('autotemps')
+                ->where('bot_id', $this->data->id)
+                ->select('xatid', 'regname', 'hours')
+                ->get()
+                ->toArray();
+
+        $list = [];
+        for ($i = 0; $i < sizeof($results); $i++) {
+            $list[$i]['xatid']   = $results[$i]->xatid;
+            $list[$i]['regname'] = $results[$i]->method;
+            $list[$i]['hours']   = $results[$i]->hours;
+        }
+
+        return $list;
+    }
+
+    public function setAutobanList()
+    {
+        $results = Capsule::table('autobans')
+                ->where('bot_id', $this->data->id)
+                ->select('xatid', 'regname', 'hours', 'method')
+                ->get()
+                ->toArray();
+
+        $list = [];
+        for ($i = 0; $i < sizeof($results); $i++) {
+            $list[$i]['xatid']   = $results[$i]->xatid;
+            $list[$i]['regname'] = $results[$i]->method;
+            $list[$i]['hours']   = $results[$i]->hours;
+            $list[$i]['method']  = $results[$i]->method;
+        }
+
+        return $list;
+    }
+
+    public function setCustomCommands()
+    {
+        $results = Capsule::table('customcommands')
+                ->join('minranks', 'customcommands.minrank_id', '=', 'minranks.id')
+                ->where('bot_id', $this->data->id)
+                ->select('customcommands.command', 'customcommands.response', 'minranks.level')
+                ->get()
+                ->toArray();
+
+        return array_column($results, 'command', 'response', 'level');
     }
 
     public function botHasPower($id)
