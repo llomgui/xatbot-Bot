@@ -53,6 +53,28 @@ $onMessage = function (int $who, string $message) {
             }
         }
 
+        if ($bot->data->togglelinkfilter === true) {
+            $bool = false;
+            $allowedWebsites = (sizeof($bot->linksfilter) > 0) ? $bot->linksfilter :  ['oceanproject.fr'];
+            $pattern = "/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?/";
+            foreach ($message2 as $value) {
+                if (preg_match($pattern, $value)) {
+                    foreach ($allowedWebsites as $website) {
+                        if (strpos($value, $website) !== false) {
+                            $bool = true;
+                            break;
+                        }
+                    }
+                    if (!$bool) {
+                        return $bot->network->kick(
+                            $who,
+                            'You are not allowed to send links!'
+                        );
+                    }
+                }
+            }
+        }
+
         if (isset($bot->data->maxsmilies) && $bot->data->maxsmilies > 1) {
             $count = 0;
             $count += preg_match_all('/\([^ ]+\)/', $message, $matches);
