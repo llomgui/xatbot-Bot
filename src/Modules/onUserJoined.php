@@ -254,6 +254,28 @@ $onUserJoined = function (int $who, array $array) {
             $bot->network->changeRank($who, 'member');
         }
     }
+
+    $moderators = 0;
+    foreach ($bot->users as $id => $xatuser) {
+        if (is_numeric($id) && is_object($xatuser)) {
+            if ($xatuser->isMod() || $xatuser->isOwner() || $xatuser->isMain()) {
+                $moderators++;
+            }
+        }
+    }
+
+    if (!isset($bot->data->minstaffautotemp)) {
+        $bot->data->minstaffautotemp = 0;
+    }
+
+    if ($moderators <= $bot->data->minstaffautotemp) {
+        $key = array_search($who, array_column($bot->autotemps, 'xatid'));
+        if (!isset($key) && is_numeric($key)) {
+            if (!$bot->users[$who]->isMod() && !$bot->users[$who]->isOwner() && !$bot->users[$who]->isMain()) {
+                $bot->network->tempRank($who, 'moderator', $bot->autotemps[$key]['hours']);
+            }
+        }
+    }
     
     return;
 };

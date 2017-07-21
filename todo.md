@@ -11,9 +11,9 @@
 * [ ] links filter (in chat, name, status)
 * [x] smilies filter (in chat, name)
 * [x] premium freeze/unfreeze
-* [ ] autotemp
+* [x] autotemp
 * [ ] moderation on/off
-* [ ] custom commands
+* [x] custom commands
 * [ ] radio
 * [ ] autoban
 

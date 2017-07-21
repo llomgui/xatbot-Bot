@@ -480,6 +480,15 @@ class XatNetwork
         );
     }
 
+    public function tempRank($uid, $rank, $hours)
+    {
+        if (empty($hours) || $hours < 1 || $hours > 24) {
+            $hours = 1;
+        }
+        $rankCmd = ['owner' => '/mo', 'moderator' => '/m', 'member' => '/mb'];
+        $this->sendPrivateConversation($uid, $rankCmd[$rank] . $hours);
+    }
+
     public function findPowerMatch($string)
     {
         $powers = XatVariables::getPowers();
