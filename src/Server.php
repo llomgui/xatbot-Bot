@@ -25,6 +25,8 @@ class Server
     public $bot;
     public $xatBots;
     public $started;
+    public $lastAutorestart;
+    public $botsToBeStarted;
 
     public function __construct($name)
     {
@@ -102,6 +104,8 @@ class Server
     {
         $this->logger->info('Loading bots...');
         $this->xatBots = [];
+        $this->lastAutorestart = 1;
+        $this->botsToBeStarted = [];
     }
 
     private function initExtensions()
@@ -229,6 +233,35 @@ class Server
                 }
             } else {
                 // Bots loop
+
+                if ($this->lastAutorestart < time()) {
+                    $results = Capsule::table('bots')
+                        ->join('servers', 'bots.server_id', '=', 'servers.id')
+                        ->where('bots.autorestart', true)
+                        ->where('bots.bot_status_id', '1')
+                        ->orderBy('bots.id', 'ASC')
+                        ->select('bots.id')
+                        ->get();
+
+                    for ($i = 0; $i < sizeof($results); $i++) {
+                        $this->botsToBeStarted[] = $results[$i]->id;
+                    }
+
+                    $this->lastAutorestart = time() + 600;
+                }
+
+                if (!empty($this->botsToBeStarted)) {
+                    $botid = min($this->botsToBeStarted);
+                    if (!array_key_exists($botid, $this->xatBots)) {
+                        echo 'Starting botID: ' . $botid . '...';
+                        $this->start($botid);
+                        echo 'Done' . PHP_EOL;
+                    }
+
+                    unset($this->botsToBeStarted[array_search($botid, $this->botsToBeStarted)]);
+                    unset($botid);
+                }
+
                 foreach ($this->xatBots as $botid => $Ocean) {
                     $this->currentBot = $botid;
                     $this->bot        = $Ocean;
