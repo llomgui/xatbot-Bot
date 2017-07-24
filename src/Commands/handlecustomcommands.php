@@ -25,7 +25,7 @@ $handlecustomcommands = function (int $who, array $message, int $type) {
                 }
 
                 $search[] = '{randomname}';
-                $replace[] = $randomuser[rand(0, sizeof($randomuser))]->getNick();
+                $replace[] = $randomuser[rand(0, sizeof($randomuser) - 1)]->getNick();
                 
                 $response = str_replace($search, $replace, $cc['response']);
                 return $bot->network->sendMessageAutoDetection($who, $response, $type);
