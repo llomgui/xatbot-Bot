@@ -27,6 +27,8 @@ abstract class XatVariables
     private static $adMessage1;
     private static $adMessage2;
     
+    private static $defaultName;
+    
     private static $apikeys;
 
     public static function init()
@@ -40,6 +42,7 @@ abstract class XatVariables
         self::initVolunteers();
         self::initFreeSmilies();
         self::initPowers();
+        self::initDefaultName();
         self::initDevelopers();
         self::initAPIKeys();
 
@@ -113,6 +116,39 @@ abstract class XatVariables
         ];
 
         self::$volunteers = $volunteers;
+    }
+    
+    private static function initDefaultName()
+    {
+        $name1 = [
+          'Baby', 'Booble', 'Bunker', 'Cuddle',
+          'Cutie', 'Doodle', 'Foofie', 'Gooble',
+          'Honey', 'Kissie', 'Lover', 'Lovey',
+          'Moofie', 'Mooglie', 'Moopie', 'Moopsie',
+          'Nookum', 'Poochie', 'Pookie', 'Schmoopie',
+          'Schnoogle', 'Schnookie', 'Schnookum', 'Smooch',
+          'Smoochie', 'Smoosh', 'Snoogle', 'Snoogy',
+          'Snookie', 'Snookum', 'Snuggy', 'Sweetie',
+          'Woogle', 'Woogy', 'Wookie', 'Wookum',
+          'Wuddle', 'Wuggy', 'Wunny', 'Bumble',
+          'Bump', 'Dip'
+        ];
+        $name2 = [
+          'Boo', 'Bunch', 'Bunny', 'Cake',
+          'Cakes', 'Cute', 'Darling', 'Dumpling',
+          'Dumplings', 'Face', 'Foof', 'Goo',
+          'Head', 'Kin', 'Kins', 'Lips',
+          'Love', 'Mush', 'Pie', 'Pook',
+          'Pums', 'Bumble', 'Bump', 'Dip'
+        ];
+  
+        foreach ($name1 as $n1) {
+            foreach ($name2 as $n2) {
+                $defaultName[] = $n1.$n2;
+            }
+        }
+        
+        self::$defaultName = $defaultName;
     }
 
     private static function initFreeSmilies()
@@ -2018,5 +2054,10 @@ abstract class XatVariables
     public static function getFreeSmilies()
     {
         return self::$freeSmilies;
+    }
+    
+    public static function getDefaultName()
+    {
+          return self::$defaultName;
     }
 }
