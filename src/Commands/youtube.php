@@ -17,11 +17,14 @@ $youtube = function (int $who, array $message, int $type) {
     if (empty($key)) {
         return $bot->network->sendMessageAutoDetection($who, "Youtube API Key needs to be setup", $type);
     }
+    
+    unset($message[0]);
+    $message = implode(' ', $message);
 
     $response = json_decode(
         file_get_contents(
             'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' .
-                urlencode($message[1]) . '&key=' . $key . '&type=video&maxResults=3'
+                urlencode($message) . '&key=' . $key . '&type=video&maxResults=3'
         ),
         true
     );

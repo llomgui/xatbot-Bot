@@ -8,7 +8,7 @@
 * [x] flood filter
 * [x] spam filter
 * [x] badwords filter (in chat, name, status)
-* [ ] links filter (in chat, name, status)
+* [x] links filter (in chat, name, status)
 * [x] smilies filter (in chat, name)
 * [x] premium freeze/unfreeze
 * [x] autotemp
@@ -32,7 +32,7 @@
 * [ ] history
 * [ ] scramble
 * [ ] hangman
-* [ ] getmain [password] IN PC ONLY
+* [x] getmain [password] IN PC ONLY
 * [ ] mail [send/read/check/empty/delete/store/unstore/blockall/staff] [info]
 * [ ] typerace [start/repeat/end]
 * [x] xatwiki
