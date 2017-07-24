@@ -13,6 +13,10 @@ $price = function (int $who, array $message, int $type) {
     }
 
     $powers = OceanProject\Bot\XatVariables::getPowers();
+    
+    if (strtolower($message[1]) == 'latest') {
+        $message[1] = end($powers)['name'];
+    }
 
     $match = $bot->network->findPowerMatch($message[1]);
 
