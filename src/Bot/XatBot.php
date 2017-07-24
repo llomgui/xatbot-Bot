@@ -339,7 +339,7 @@ class XatBot
 
     public function getChatName($param1)
     {
-        $url = 'http://xat.com/xat' . $param1;
+        $url = 'https://xat.com/xat' . $param1;
         $fgc = file_get_contents($url);
         return $this->stribet($fgc, "uname='", "';");
     }
