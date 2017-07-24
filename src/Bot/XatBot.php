@@ -364,4 +364,41 @@ class XatBot
         $hms .= str_pad($seconds, 2, '0', STR_PAD_LEFT) . ' seconds';
         return $hms;
     }
+
+    public function getCurrentSong()
+    {
+        if (empty($this->chatInfo['radio'])) {
+            return false;
+        }
+
+        $url  = $this->chatInfo['radio'] . '7.html';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13)');
+        curl_setopt($curl, CURLOPT_TIMEOUT, 5);
+        $data = curl_exec($curl);
+
+        if ($data == false) {
+            return false;
+        }
+        curl_close($curl);
+
+        $r = explode('<body>', $data);
+        if (isset($r[1])) {
+            $r = explode('</body>', $r[1]);
+            $data = $r[0];
+        }
+
+        $infos = explode(',', $data);
+        if (sizeof($infos) < 6) {
+            return false;
+        }
+
+        $song      = htmlspecialchars_decode($infos[6]);
+        $listeners = $infos[0];
+        $max       = $infos[3];
+
+        return ['lastCheck' => time() + 120, 'song' => $song, 'listeners' => $listeners, 'max' => $max];
+    }
 }

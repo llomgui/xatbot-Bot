@@ -288,5 +288,31 @@ $onMessage = function (int $who, string $message) {
         }
     }
 
+    if (in_array($bot->data->toggleradio, ['scroll', 'main'])) {
+        $bool = false;
+        if (DataAPI::isSetVariable('radio')) {
+            $infos = DataAPI::get('radio');
+            if ($infos['lastCheck'] > time()) {
+                $before = ($bot->data->toggleradio == 'scroll' ? '/s' : '');
+                $bot->network->sendMessage(
+                    $before . 'Listening to: ' . $infos['song'] . ' ' . $infos['listeners'] . '/' . $infos['max'] . '.'
+                );
+                $bool = true;
+            }
+        }
+
+        if (!$bool) {
+            $song = $bot->getCurrentSong();
+
+            if ($song == false) {
+                $bot->network->sendMessage(
+                    'You have an error with the radio! If you don\'t want to use this feature, set it to OFF in panel.'
+                );
+            }
+
+            DataAPI::set('radio', $song);
+        }
+    }
+
     return;
 };
