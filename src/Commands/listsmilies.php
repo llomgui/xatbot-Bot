@@ -47,7 +47,7 @@ $listsmilies = function (int $who, array $message, int $type) {
         } else {
             $bot->network->sendMessageAutoDetection(
                 $who,
-                ucfirst($array['name']) . ' currently dosen\'t have smilies',
+                ucfirst($array['name']) . ' currently doesn\'t have smilies',
                 $type
             );
         }
