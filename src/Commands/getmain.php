@@ -16,7 +16,7 @@ $getmain = function (int $who, array $message, int $type) {
         return $bot->network->sendPrivateConversation($who, 'Usage: !getmain [chatpassword]');
     }
 
-    $group  = $bot->getChatName($bot->botData['chatid']);
+    $group  = $bot->getChatName($bot->data->chatid);
 
     $POST['GroupName']  = $group;
     $POST['password']   = $message[1];
@@ -30,7 +30,7 @@ $getmain = function (int $who, array $message, int $type) {
         ]
     ];
 
-    $res = file_get_contents('http://xat.com/web_gear/chat/editgroup.php', false, stream_context_create($stream));
+    $res = file_get_contents('https://xat.com/web_gear/chat/editgroup.php', false, stream_context_create($stream));
 
     if (strpos($res, '**<span data-localize=buy.wrongpassword>Wrong password</span>')) {
         return $bot->network->sendMessageAutoDetection($who, 'Wrong password!', $type);
