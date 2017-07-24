@@ -43,6 +43,8 @@ $getmain = function (int $who, array $message, int $type) {
         return $bot->network->sendPrivateConversation($who, 'Oh I cannot get main :(');
     }
 
-    // TODO insert pw in database then restart the bot.
+    $bot->data->chatpw = $pw;
+    $bot->data->save();
     $bot->network->sendPrivateConversation($who, 'Oh I am Main Owner now (cool#).');
+    $bot->refresh();
 };
