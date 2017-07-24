@@ -120,17 +120,34 @@ abstract class XatVariables
     
     private static function initDefaultName()
     {
-        $name1 = ['Baby,Booble,Bunker,Cuddle,Cutie,Doodle,Foofie,Gooble,Honey,Kissie,Lover,Lovey,Moofie,Mooglie,Moopie,Moopsie,Nookum,Poochie,Pookie,Schmoopie,Schnoogle,Schnookie,Schnookum,Smooch,Smoochie,Smoosh,Snoogle,Snoogy,Snookie,Snookum,Snuggy,Sweetie,Woogle,Woogy,Wookie,Wookum,Wuddle,Wuggy,Wunny,Bumble,Bump,Dip'];
-        $name2 = ['Boo,Bunch,Bunny,Cake,Cakes,Cute,Darling,Dumpling,Dumplings,Face,Foof,Goo,Head,Kin,Kins,Lips,Love,Mush,Pie,Pook,Pums,Bumble,Bump,Dip'];
-          $n1 = explode(',', $name1);
-          $n2 = explode(',', $name2);
+        $name1 = [
+          'Baby', 'Booble', 'Bunker', 'Cuddle',
+          'Cutie', 'Doodle', 'Foofie', 'Gooble',
+          'Honey', 'Kissie', 'Lover', 'Lovey',
+          'Moofie', 'Mooglie', 'Moopie', 'Moopsie',
+          'Nookum', 'Poochie', 'Pookie', 'Schmoopie',
+          'Schnoogle', 'Schnookie', 'Schnookum', 'Smooch',
+          'Smoochie', 'Smoosh', 'Snoogle', 'Snoogy',
+          'Snookie', 'Snookum', 'Snuggy', 'Sweetie',
+          'Woogle', 'Woogy', 'Wookie', 'Wookum',
+          'Wuddle', 'Wuggy', 'Wunny', 'Bumble',
+          'Bump', 'Dip'
+        ];
+        $name2 = [
+          'Boo', 'Bunch', 'Bunny', 'Cake',
+          'Cakes', 'Cute', 'Darling', 'Dumpling',
+          'Dumplings', 'Face', 'Foof', 'Goo',
+          'Head', 'Kin', 'Kins', 'Lips',
+          'Love', 'Mush', 'Pie', 'Pook',
+          'Pums', 'Bumble', 'Bump', 'Dip'
+        ];
   
-        foreach ($n1 as $name1) {
-            foreach ($n2 as $name2) {
-                $defaultName[] = $name1.$name2;
+        foreach ($name1 as $n1) {
+            foreach ($name2 as $n2) {
+                $defaultName[] = $n1.$n2;
             }
         }
-  
+        
         self::$defaultName = $defaultName;
     }
 
