@@ -22,7 +22,7 @@ $search = function (int $who, array $message, int $type) {
     $a['http']['header']  = 'Content-Type: application/x-www-form-urlencoded';
     $a['http']['content'] = 'search='.$message[1];
 
-    $fgc = file_get_contents('http://xat.com/web_gear/chat/search.php', false, stream_context_create($a));
+    $fgc = file_get_contents('https://xat.com/web_gear/chat/search.php', false, stream_context_create($a));
     preg_match_all($regex, $fgc, $matches);
 
     unset($matches[0]);
