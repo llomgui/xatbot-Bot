@@ -27,6 +27,8 @@ abstract class XatVariables
     private static $adMessage1;
     private static $adMessage2;
     
+    private static $defaultName;
+    
     private static $apikeys;
 
     public static function init()
@@ -40,6 +42,7 @@ abstract class XatVariables
         self::initVolunteers();
         self::initFreeSmilies();
         self::initPowers();
+        self::initDefaultName();
         self::initDevelopers();
         self::initAPIKeys();
 
@@ -113,6 +116,20 @@ abstract class XatVariables
         ];
 
         self::$volunteers = $volunteers;
+    }
+    
+    private static function initDefaultName()
+    {
+          $n1 = explode(',', 'Baby,Booble,Bunker,Cuddle,Cutie,Doodle,Foofie,Gooble,Honey,Kissie,Lover,Lovey,Moofie,Mooglie,Moopie,Moopsie,Nookum,Poochie,Pookie,Schmoopie,Schnoogle,Schnookie,Schnookum,Smooch,Smoochie,Smoosh,Snoogle,Snoogy,Snookie,Snookum,Snuggy,Sweetie,Woogle,Woogy,Wookie,Wookum,Wuddle,Wuggy,Wunny,Bumble,Bump,Dip');
+          $n2 = explode(',', 'Boo,Bunch,Bunny,Cake,Cakes,Cute,Darling,Dumpling,Dumplings,Face,Foof,Goo,Head,Kin,Kins,Lips,Love,Mush,Pie,Pook,Pums,Bumble,Bump,Dip');
+  
+        foreach ($n1 as $name1) {
+            foreach ($n2 as $name2) {
+                $defaultName[] = $name1.$name2;
+            }
+        }
+  
+        self::$defaultName = $defaultName;
     }
 
     private static function initFreeSmilies()
@@ -2018,5 +2035,10 @@ abstract class XatVariables
     public static function getFreeSmilies()
     {
         return self::$freeSmilies;
+    }
+    
+    public static function getDefaultName()
+    {
+          return self::$defaultName;
     }
 }
