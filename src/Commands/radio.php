@@ -24,7 +24,7 @@ $radio = function (int $who, array $message, int $type) {
     $song = $bot->getCurrentSong();
 
     if ($song == false) {
-        $this->network->sendMessageAutoDetection($who, 'You have an error with the radio!', $who);
+        $bot->network->sendMessageAutoDetection($who, 'You have an error with the radio!', $who);
     }
 
     DataAPI::set('radio', $song);
