@@ -8,7 +8,7 @@
 * [x] flood filter
 * [x] spam filter
 * [x] badwords filter (in chat, name, status)
-* [ ] links filter (in chat, name, status)
+* [x] links filter (in chat, name, status)
 * [x] smilies filter (in chat, name)
 * [x] premium freeze/unfreeze
 * [x] autotemp
