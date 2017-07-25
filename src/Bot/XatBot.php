@@ -24,12 +24,14 @@ class XatBot
     public $customcommands;
     public $messageCount;
     public $isPremium;
+    public $stopped;
     public $done;
 
     public function __construct(Bot $data)
     {
         $this->data           = $data;
         $this->started        = time();
+        $this->stopped        = false;
         $this->aliases        = $this->setAliases();
         $this->minranks       = $this->setMinranks();
         $this->botlangs       = $this->setBotlangs();
@@ -348,6 +350,11 @@ class XatBot
     {
         $bot = Bot::find($this->data->id);
         $this->__construct($bot);
+    }
+
+    public function stop()
+    {
+        $this->stopped = true;
     }
 
     public function sec2hms($sec, $padHours = false)

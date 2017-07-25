@@ -233,7 +233,6 @@ class Server
                 }
             } else {
                 // Bots loop
-
                 if ($this->lastAutorestart < time()) {
                     $results = Capsule::table('bots')
                         ->join('servers', 'bots.server_id', '=', 'servers.id')
@@ -273,6 +272,11 @@ class Server
                             if (!$Ocean->network->socket->isConnected()) {
                                 $this->logger->critical('Socket not connected!');
                                 exit('You have an error in your code or socket died.');
+                                break;
+                            }
+
+                            if ($Ocean->stopped) {
+                                stop($botid);
                                 break;
                             }
 
