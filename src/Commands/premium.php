@@ -8,6 +8,10 @@ $premium = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
+    if (!isset($message[1]) || empty($message[1])) {
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !premium [time/freeze/unfreeze]', $type);
+    }
+
     switch ($message[1]) {
         case 'time':
             if ($bot->isPremium) {
