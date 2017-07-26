@@ -69,13 +69,13 @@ $onTickle = function (int $who, array $array) {
             
             $bot->users[$who]->setMaskedPowers($array);
 
-            $userinfo = Userinfo::getUserinfo();
-            $userinfo[$who]['xatid'] = $who;
-            $userinfo[$who]['regname'] = $bot->users[$who]->getRegname();
-            $userinfo[$who]['chatid'] = $bot->data->chatid;
-            $userinfo[$who]['chatname'] = $bot->data->chatname;
-            $userinfo[$who]['packet'] = json_encode($array);
-            Userinfo::setUserinfo($userinfo);
+            $userinfo = new Userinfo(
+                $who,
+                $bot->users[$who]->getRegname(),
+                $bot->data->chatid,
+                $bot->data->chatname,
+                json_encode($array)
+            );
 
             break;
     }
