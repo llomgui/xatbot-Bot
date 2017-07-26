@@ -3,12 +3,12 @@
 use OceanProject\API\DataAPI;
 use OceanProject\Bot\XatVariables;
 
-$onApp = function (int $who, int $app, array $array) {
+$onApp = function (int $who, string $app, array $array) {
     $bot = OceanProject\API\ActionAPI::getBot();
     switch ($app) {
-        case 10000:
+        case '10000':
             break;
-        case 20010:
+        case '20010':
             if (isset($array['d']) && $who != $bot->network->logininfo['i']) {
                 if (!isset($array['t']) || empty($array['t'])) {
                     if (DataAPI::isSetVariable('boards_' . $who)) {
@@ -65,7 +65,7 @@ $onApp = function (int $who, int $app, array $array) {
             }
             break;
 
-        case 30008:
+        case '30008':
             if (isset($array['t'])) {
                 switch ($array['t'][0]) {
                     case 'G':
