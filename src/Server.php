@@ -479,7 +479,9 @@ class Server
                                 if (!$unknow && !empty($hook)) {
                                     $this->dispatch('Modules', $hook, $args);
                                 } elseif ($unknow) {
-                                    Logger::getLogger()->critical('[' . $botid . '] Unknow node ['.$packet['node'].'] on chat FIXME');
+                                    Logger::getLogger()->critical(
+                                        '[' . $botid . '] Unknow node ['.$packet['node'].'] on chat FIXME'
+                                    );
                                 }
                             }
                         }
