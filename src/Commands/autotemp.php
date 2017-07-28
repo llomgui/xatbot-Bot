@@ -11,8 +11,12 @@ $autotemp = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
     
-    if (!isset($message[1]) || empty($message[1]) || !in_array($message[1], ['add', 'remove', 'rm'])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Usage: !autotemp [add/remove] [xatid] [hours]', $type);
+    if (!isset($message[1]) || empty($message[1]) || !in_array($message[1], ['add', 'remove', 'rm', 'list', 'ls'])) {
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !autotemp [add/remove/list] [xatid] [hours]',
+            $type
+        );
     }
 
     switch ($message[1]) {
@@ -82,7 +86,16 @@ $autotemp = function (int $who, array $message, int $type) {
                 return $bot->network->sendMessageAutoDetection($who, 'I could not find this user in the list.', $type);
             }
             break;
+
+        case 'list':
+        case 'ls':
+            $string = '';
+            foreach ($bot->autotemps as $autotemp) {
+                $string .= '[' . $autotemp['regname'] . '(' . $autotemp['xatid'] . ')' . $autotemp['hours'] . ' hours]';
+            }
+            return $bot->network->sendMessageAutoDetection($who, $string, $type);
+            break;
     }
 
-    return $bot->network->sendMessageAutoDetection($who, 'Usage: !autotemp [add/remove] [xatid] [hours]', $type);
+    return $bot->network->sendMessageAutoDetection($who, 'Usage: !autotemp [add/remove/list] [xatid] [hours]', $type);
 };
