@@ -270,7 +270,7 @@ $onUserJoined = function (int $who, array $array) {
 
     if ($moderators <= $bot->data->minstaffautotemp) {
         $key = array_search($who, array_column($bot->autotemps, 'xatid'));
-        if (!isset($key) && is_numeric($key)) {
+        if (isset($key) && is_numeric($key)) {
             if (!$bot->users[$who]->isMod() && !$bot->users[$who]->isOwner() && !$bot->users[$who]->isMain()) {
                 $bot->network->tempRank($who, 'moderator', $bot->autotemps[$key]['hours']);
             }
