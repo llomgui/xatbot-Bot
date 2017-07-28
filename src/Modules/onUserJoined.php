@@ -25,10 +25,23 @@ $onUserJoined = function (int $who, array $array) {
 
     if (!$user->wasHere() && !DataAPI::isSetVariable('away_' . $who) && !DataAPI::isSetVariable('joined_' . $who)) {
         if (!empty($bot->data->autowelcome)) {
+            $search[] = '{name}';
+            $replace[] = $bot->users[$who]->getNick();
+            $search[] = '{status}';
+            $replace[] = $bot->users[$who]->getStatus();
+            $search[] = '{regname}';
+            $replace[] = $bot->users[$who]->getRegname();
+            $search[] = '{users}';
+            $replace[] = sizeof($bot->users);
+            $search[] = '{cmdcode}';
+            $replace[] = $bot->data->customcommand;
+            $search[] = '{id}';
+            $replace[] = $bot->users[$who]->getID();
+
             if ($bot->data->toggleautowelcome == 'pc') {
-                $bot->network->sendPrivateConversation($who, $bot->data->autowelcome);
+                $bot->network->sendPrivateConversation($who, str_replace($search, $replace, $bot->data->autowelcome));
             } elseif ($bot->data->toggleautowelcome == 'pm') {
-                $bot->network->sendPrivateMessage($who, $bot->data->autowelcome);
+                $bot->network->sendPrivateMessage($who, str_replace($search, $replace, $bot->data->autowelcome));
             }
         }
     }
