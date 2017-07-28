@@ -2,6 +2,7 @@
 
 namespace OceanProject\Bot;
 
+use OceanProject\Logger;
 use OceanProject\Models\Bot;
 
 class XatNetwork
@@ -123,7 +124,9 @@ class XatNetwork
         $useport    = $infos[1];
         $ctimeout   = 1; // $infos[2];
 
-        echo 'IP: ' . $sockdomain . ' PORT: ' . $useport . ' ROOM: ' . $chatid . ' BotID: ' . $this->data->id . PHP_EOL;
+        Logger::getLogger()->info(
+            '[' . $this->data->id. '] IP: ' . $sockdomain . ' PORT: ' . $useport . ' ROOM: ' . $chatid
+        );
 
         if ($this->socket->connect($sockdomain, $useport, $ctimeout)) {
             return true;
@@ -138,7 +141,7 @@ class XatNetwork
 
     public function join()
     {
-        $this->socket = new XatSocket();
+        $this->socket = new XatSocket($this->data->id);
 
         if (empty(XatVariables::getLoginPacket()) || (time() - XatVariables::getLoginTime()) > 900) {
             XatVariables::update();

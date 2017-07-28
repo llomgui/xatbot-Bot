@@ -2,12 +2,8 @@
 
 namespace OceanProject;
 
-use Monolog\Logger;
-use Monolog\ErrorHandler;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\StreamHandler;
-
 use OceanProject\Models;
+use OceanProject\Logger;
 use OceanProject\Bot\XatBot;
 use OceanProject\Extensions;
 use OceanProject\API\BaseAPI;
@@ -18,7 +14,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Server
 {
     public $name;
-    public $logger;
     public $capsule;
     public $params;
     public $bot;
@@ -36,32 +31,19 @@ class Server
 
     private function init()
     {
-        $this->initLogger();
+        Logger::init($this->name);
         $this->initDatabase();
         $this->initVariables();
         $this->initAPI();
         $this->initBots();
         $this->initExtensions();
         $this->initIPC();
-        $this->logger->info('Server is ready!');
-    }
-
-    private function initLogger()
-    {
-        $format = "[%datetime%] %channel% %level_name%: %message%\n";
-        $formatter = new LineFormatter($format);
-
-        $stream = new StreamHandler('logs/' . $this->name . '.log');
-        $stream->setFormatter($formatter);
-
-        $this->logger = new Logger($this->name);
-        ErrorHandler::register($this->logger);
-        $this->logger->pushHandler($stream);
+        Logger::getLogger()->info('Server is ready!');
     }
 
     private function initDatabase()
     {
-        $this->logger->info('Loading database...');
+        Logger::getLogger()->info('Loading database...');
         $infos = json_decode(file_get_contents('config.json'), true)['database'];
         $this->capsule = new Capsule();
 
@@ -85,14 +67,14 @@ class Server
 
     private function initVariables()
     {
-        $this->logger->info('Loading variables...');
+        Logger::getLogger()->info('Loading variables...');
         XatVariables::init();
         XatVariables::update();
     }
 
     private function initAPI()
     {
-        $this->logger->info('Loading API...');
+        Logger::getLogger()->info('Loading API...');
         $this->params     = BaseAPI::init();
         $this->currentBot = &$this->params['botID'];
         $this->bot        = &$this->params['bot'];
@@ -100,7 +82,7 @@ class Server
 
     private function initBots()
     {
-        $this->logger->info('Loading bots...');
+        Logger::getLogger()->info('Loading bots...');
         $this->xatBots = [];
         $this->lastAutorestart = 1;
         $this->botsToBeStarted = [];
@@ -108,13 +90,13 @@ class Server
 
     private function initExtensions()
     {
-        $this->logger->info('Loading extensions...');
+        Logger::getLogger()->info('Loading extensions...');
         Extensions::readExtensions();
     }
 
     private function initIPC()
     {
-        $this->logger->info('Loading IPC...');
+        Logger::getLogger()->info('Loading IPC...');
         $this->socket = socket_create(AF_UNIX, SOCK_STREAM, 0);
         if (!$this->socket) {
             exit('Cannot create unix socket');
@@ -166,7 +148,7 @@ class Server
                         continue;
                     }
 
-                    $this->logger->notice($packet);
+                    Logger::getLogger()->notice('From socket: ' . $packet);
                     $packet  = explode(' ', trim($packet));
                     $command = $packet[0];
                     $args    = [];
@@ -244,9 +226,7 @@ class Server
                 if (!empty($this->botsToBeStarted)) {
                     $botid = min($this->botsToBeStarted);
                     if (!array_key_exists($botid, $this->xatBots)) {
-                        echo 'Starting botID: ' . $botid . '...';
                         $this->start($botid);
-                        echo 'Done' . PHP_EOL;
                     }
 
                     unset($this->botsToBeStarted[array_search($botid, $this->botsToBeStarted)]);
@@ -262,7 +242,7 @@ class Server
                     try {
                         while (1) {
                             if (!$Ocean->network->socket->isConnected()) {
-                                $this->logger->critical('Socket not connected!');
+                                Logger::getLogger()->critical('[' . $botid . '] Socket not connected!');
                                 exit('You have an error in your code or socket died.');
                                 break;
                             }
@@ -275,7 +255,7 @@ class Server
                             $packet = $Ocean->network->socket->read();
 
                             if ($packet === false) {
-                                $this->logger->critical('ERROR packet false!');
+                                Logger::getLogger()->critical('[' . $botid . '] Packet false!');
                                 $Ocean->network->reconnect();
                                 break;
                             }
@@ -499,12 +479,12 @@ class Server
                                 if (!$unknow && !empty($hook)) {
                                     $this->dispatch('Modules', $hook, $args);
                                 } elseif ($unknow) {
-                                    $this->logger->critical('Unknow node ['.$packet['node'].'] on chat FIXME');
+                                    Logger::getLogger()->critical('[' . $botid . '] Unknow node ['.$packet['node'].'] on chat FIXME');
                                 }
                             }
                         }
                     } catch (Exception $e) {
-                        $this->logger->critical('Error botid: ' . $botid . ' Message: ' . $e->getMessage());
+                        Logger::getLogger()->critical('[' . $botid . '] Message: ' . $e->getMessage());
                     }
                 }
             }
@@ -523,7 +503,7 @@ class Server
             try {
                 call_user_func_array($function, $args);
             } catch (TypeError $e) {
-                $this->logger->critical('Error dispatch, message: ' . $e->getMessage());
+                Logger::getLogger()->critical('Error dispatch, message: ' . $e->getMessage());
             }
         }
 
@@ -539,7 +519,7 @@ class Server
             $bot->save();
             $this->xatBots[$botid] = $Ocean;
         } catch (Exception $e) {
-            $this->logger->critical('Error start, message: ' . $e->getMessage());
+            Logger::getLogger()->critical('Error start, message: ' . $e->getMessage());
             return false;
         }
         return true;

@@ -2,11 +2,19 @@
 
 namespace OceanProject\Bot;
 
+use OceanProject\Logger;
+
 class XatSocket
 {
     private $socket;
     private $buffer;
+    private $botid;
     public $connected = false;
+
+    public function __construct($botid)
+    {
+        $this->botid = $botid;
+    }
 
     public function __destruct()
     {
@@ -93,7 +101,7 @@ class XatSocket
             $this->disconnect();
             return false;
         } else {
-            echo '--> ' . $packet . PHP_EOL;
+            Logger::getLogger()->info('[' . $this->botid . '] --> ' . $packet);
             return true;
         }
     }
@@ -108,7 +116,7 @@ class XatSocket
         $packet       = substr($this->buffer, 0, $pos);
         $this->buffer = substr($this->buffer, $pos + 1);
 
-        echo '<-- ' . $packet . PHP_EOL;
+        Logger::getLogger()->info('[' . $this->botid . '] <-- ' . $packet);
         
         return $this->parsePacket($packet);
     }
