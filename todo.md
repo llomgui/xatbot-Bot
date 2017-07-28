@@ -14,7 +14,7 @@
 * [x] autotemp
 * [ ] moderation on/off
 * [x] custom commands
-* [ ] radio
+* [x] radio
 * [ ] autoban
 
 ### Commands
