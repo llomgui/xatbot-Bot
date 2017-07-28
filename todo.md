@@ -40,7 +40,7 @@
 * [ ] edit language [en/fr/pt/es/...]
 * [x] premium [freeze/unfreeze/time]
 * [ ] snitch [add/remove/list] [regname/xatid]
-* [ ] autotemp [add/remove] [regname/xatid]
+* [x] autotemp [add/remove] [regname/xatid]
 * [ ] customcommand [add/remove]
 * [ ] radio [scroll/chat/on/off]
 * [ ] autoban [add/remove/list] [regname/xatid] [hours]
