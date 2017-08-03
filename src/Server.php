@@ -149,18 +149,14 @@ class Server
                     }
 
                     Logger::getLogger()->notice('From socket: ' . $packet);
-                    $packet  = explode(' ', trim($packet));
-                    $command = $packet[0];
-                    $args    = [];
+                    $args    = explode(' ', trim($packet));
+                    $command = $args[0];
+                    $botid   = $args[1];
                     $return  = null;
-
-                    for ($i = 1; $i < sizeof($packet); $i++) {
-                        $args[] = $packet[$i];
-                    }
 
                     switch ($command) {
                         case 'start':
-                            if ($this->start($args[0]) === true) {
+                            if ($this->start($botid) === true) {
                                 $return = 'Success';
                             } else {
                                 $return = 'Error';
@@ -168,7 +164,7 @@ class Server
                             break;
 
                         case 'restart':
-                            if ($this->restart($args[0]) === true) {
+                            if ($this->restart($botid) === true) {
                                 $return = 'Success';
                             } else {
                                 $return = 'Error';
@@ -176,7 +172,17 @@ class Server
                             break;
 
                         case 'stop':
-                            if ($this->stop($args[0]) === true) {
+                            if ($this->stop($botid) === true) {
+                                $return = 'Success';
+                            } else {
+                                $return = 'Error';
+                            }
+                            break;
+
+                        case 'refresh':
+                            unset($args[0]);
+                            unset($args[1]);
+                            if ($this->refresh($botid, implode(' ', $args)) === true) {
                                 $return = 'Success';
                             } else {
                                 $return = 'Error';
@@ -541,6 +547,17 @@ class Server
             $bot->save();
 
             unset($this->xatBots[$botid]);
+            return true;
+        }
+
+        return false;
+    }
+
+    public function refresh($botid, $message)
+    {
+        if (isset($this->xatBots[$botid])) {
+            $this->xatBots[$botid]->refresh();
+            $this->xatBots[$botid]->network->sendMessage($message);
             return true;
         }
 
