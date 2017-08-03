@@ -5,7 +5,7 @@ use OceanProject\Bot\XatVariables;
 $onRankMessage = function (int $who, string $message, string $reason, array $array) {
     $bot = OceanProject\API\ActionAPI::getBot();
     
-    if ($message[0] == "/") {
+    if ($message[0] == '/') {
         $action = str_replace(range(0, 9), '', $message);
         $duration = substr($message, strlen($action) - 1);
         switch (substr($action, 0, 2)) {
