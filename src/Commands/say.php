@@ -16,7 +16,7 @@ $say = function (int $who, array $message, int $type) {
     } else {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            in_array($message[0], ['/', '#']) ? '_' . $message : $message,
+            in_array($message, ['/', '#']) ? '_' . $message : $message,
             $type
         );
     }
