@@ -1,5 +1,6 @@
 <?php
 
+use OceanProject\Models\Log;
 use OceanProject\API\DataAPI;
 use OceanProject\Bot\XatVariables;
 
@@ -7,13 +8,21 @@ $onMessage = function (int $who, string $message) {
 
     $bot = OceanProject\API\ActionAPI::getBot();
 
+    $regname = $bot->users[$who]->getRegname();
+
+    $log = new Log;
+    $log->chatid = $bot->data->chatid;
+    $log->chatname = $bot->data->chatname;
+    $log->typemessage = 1;
+    $log->message = '[Main] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . $message . '"';
+    $log->save();
+
     if ($bot->isPremium && $bot->data->premium < time()) {
         $bot->network->sendMessage('Ah! My premium time is over (cry2)');
         return $bot->refresh();
     }
 
     $message = strtolower($message);
-    $regname = $bot->users[$who]->getRegname();
     $message2 = explode(' ', $message);
 
     if (!DataAPI::isSetVariable('lastMessage')) {

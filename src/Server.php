@@ -476,6 +476,7 @@ class Server
                                     $args[2] = 3;
                                 }
 
+                                $this->dispatch('Modules', 'onCommand', $args);
                                 $isDispatched = $this->dispatch('Commands', $command, $args);
 
                                 if (!$isDispatched) {
