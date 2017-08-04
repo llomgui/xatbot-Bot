@@ -6,7 +6,7 @@ use OceanProject\Bot\XatVariables;
 
 $onMessage = function (int $who, string $message) {
 
-    if (in_array(substr($message, 0 , 2), ['/d', '/m'])) {
+    if (in_array(substr($message, 0, 2), ['/d', '/m'])) {
         return;
     }
 
