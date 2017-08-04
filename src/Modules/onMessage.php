@@ -14,7 +14,8 @@ $onMessage = function (int $who, string $message) {
     $log->chatid = $bot->data->chatid;
     $log->chatname = $bot->data->chatname;
     $log->typemessage = 1;
-    $log->message = '[Main] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . $message . '"';
+    $log->message = '[Main] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
+        $message . '"';
     $log->save();
 
     if ($bot->isPremium && $bot->data->premium < time()) {
