@@ -117,7 +117,7 @@ $edit = function (int $who, array $message, int $type) {
                 default:
                     $bot->network->sendMessageAutoDetection(
                         $who,
-                        'Usage: !edit moderation [on/off] | Moderation is ' . ($bot->data->togglemoderation ? 'enabled' : 'disabled') . '.',
+                        'Usage: !edit moderation [on/off]',
                         $type
                     );
                     break;
