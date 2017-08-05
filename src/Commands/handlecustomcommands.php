@@ -26,6 +26,18 @@ $handlecustomcommands = function (int $who, array $message, int $type) {
 
                 $search[] = '{randomname}';
                 $replace[] = $randomuser[rand(0, sizeof($randomuser) - 1)]->getNick();
+                $search[] = '{name}';
+                $replace[] = $bot->users[$who]->getNick();
+                $search[] = '{status}';
+                $replace[] = $bot->users[$who]->getStatus();
+                $search[] = '{regname}';
+                $replace[] = $bot->users[$who]->getRegname() ?? $bot->users[$who]->getID();
+                $search[] = '{users}';
+                $replace[] = sizeof($bot->users);
+                $search[] = '{cmdcode}';
+                $replace[] = $bot->data->customcommand;
+                $search[] = '{id}';
+                $replace[] = $bot->users[$who]->getID();
                 
                 $response = str_replace($search, $replace, $cc['response']);
                 return $bot->network->sendMessageAutoDetection($who, $response, $type);
