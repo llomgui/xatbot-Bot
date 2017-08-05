@@ -2,6 +2,7 @@
 
 use OceanProject\Bot\XatUser;
 use OceanProject\API\DataAPI;
+use OceanProject\Models\Mail;
 use OceanProject\Bot\XatVariables;
 
 $onUserJoined = function (int $who, array $array) {
@@ -288,6 +289,11 @@ $onUserJoined = function (int $who, array $array) {
                 $bot->network->tempRank($who, 'moderator', $bot->autotemps[$key]['hours']);
             }
         }
+    }
+
+    $mails = Mail::where(['touser' => $who, 'read' => false, 'store' => false])->get()->toArray();
+    if (sizeof($mails) > 0) {
+        $bot->network->sendPrivateMessage($who, 'You have ' . sizeof($mails) . ' new message(s).');
     }
     
     return;
