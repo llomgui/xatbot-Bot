@@ -77,7 +77,7 @@ $onUserJoined = function (int $who, array $array) {
             $powers = XatVariables::getPowers();
             $bot->network->unban($who);
             $bot->network->sendMessage(
-                $user->getRegname() . ' signed out and in twice to get unbanned from the gameban ' .
+                $user->getRegname() ?? $user->getID() . ' signed out and in twice to get unbanned from the gameban ' .
                 $powers[$array['w']]['name'] . '.'
             );
         }
