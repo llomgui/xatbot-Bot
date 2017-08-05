@@ -25,6 +25,6 @@ $onCommand = function (int $who, array $message, int $type) {
         $log->message = '[PC] ';
     }
 
-    $log->message .= (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . $message . '"';
+    $log->message .= (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . implode(' ', $message) . '"';
     $log->save();
 };

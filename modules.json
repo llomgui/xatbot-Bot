@@ -23,5 +23,6 @@
     "onPools",
     "onRedirect",
     "onKick",
-    "onRankMessage"
+    "onRankMessage",
+    "onCommand"
 ]
