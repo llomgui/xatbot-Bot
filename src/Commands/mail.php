@@ -74,7 +74,8 @@ $mail = function (int $who, array $message, int $type) {
 
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'You have ' . sizeof($mails['new']) . ' unread messages, ' . sizeof($mails['old']) . ' read messages and ' . sizeof($mails['stored']) . ' stored messages!',
+                'You have ' . sizeof($mails['new']) . ' unread messages, ' . sizeof($mails['old']) .
+                    ' read messages and ' . sizeof($mails['stored']) . ' stored messages!',
                 $type
             );
             break;
@@ -90,7 +91,11 @@ $mail = function (int $who, array $message, int $type) {
                 $mail->delete();
                 return $bot->network->sendMessageAutoDetection($who, 'Mail deleted!', $type);
             } else {
-                return $bot->network->sendMessageAutoDetection($who, 'This mail does not exist or does not belong to you!', $type);
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'This mail does not exist or does not belong to you!',
+                    $type
+                );
             }
             break;
 
@@ -106,7 +111,11 @@ $mail = function (int $who, array $message, int $type) {
                 $mail->save();
                 return $bot->network->sendMessageAutoDetection($who, 'Mail deleted!', $type);
             } else {
-                return $bot->network->sendMessageAutoDetection($who, 'This mail does not exist or does not belong to you!', $type);
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'This mail does not exist or does not belong to you!',
+                    $type
+                );
             }
             break;
 
@@ -122,7 +131,11 @@ $mail = function (int $who, array $message, int $type) {
                 $mail->save();
                 return $bot->network->sendMessageAutoDetection($who, 'Mail deleted!', $type);
             } else {
-                return $bot->network->sendMessageAutoDetection($who, 'This mail does not exist or does not belong to you!', $type);
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'This mail does not exist or does not belong to you!',
+                    $type
+                );
             }
             break;
 
