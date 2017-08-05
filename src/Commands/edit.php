@@ -11,7 +11,7 @@ $edit = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/moderation/customcommand] [info]',
+            'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]',
             $type,
             true
         );
@@ -117,7 +117,7 @@ $edit = function (int $who, array $message, int $type) {
                 default:
                     $bot->network->sendMessageAutoDetection(
                         $who,
-                        'Usage: !edit moderation [on/off] | Moderation is currently ' . ($bot->data->togglemoderation ? 'enabled' : 'disabled') . '.',
+                        'Usage: !edit moderation [on/off] | Moderation is ' . ($bot->data->togglemoderation ? 'enabled' : 'disabled') . '.',
                         $type
                     );
                     break;
