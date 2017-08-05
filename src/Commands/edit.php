@@ -11,7 +11,7 @@ $edit = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]',
+            'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/moderation/customcommand] [info]',
             $type,
             true
         );
@@ -76,6 +76,52 @@ $edit = function (int $who, array $message, int $type) {
             $bot->data->ticklemessage = $message;
             $bot->data->save();
             $bot->network->sendMessageAutoDetection($who, 'Tickle Message is updated!', $type, true);
+            break;
+            
+        case 'moderation':
+            switch (strtolower($message[2])) {
+                case 'on':
+                    if ($bot->data->togglemoderation == true) {
+                        return $bot->network->sendMessageAutoDetection(
+                            $who,
+                            'Moderation is already enabled!',
+                            $type
+                        );
+                    }
+                    $bot->data->togglemoderation = true;
+                    $bot->data->save();
+                    $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Moderation has been turned on!',
+                        $type
+                    );
+                    break;
+              
+                case 'off':
+                    if ($bot->data->togglemoderation == false) {
+                        return $bot->network->sendMessageAutoDetection(
+                            $who,
+                            'Moderation is already disabled!',
+                            $type
+                        );
+                    }
+                    $bot->data->togglemoderation = false;
+                    $bot->data->save();
+                    $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Moderation has been turned off!',
+                        $type
+                    );
+                    break;
+                
+                default:
+                    $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Usage: !edit moderation [on/off] | Moderation is currently ' . ($bot->data->togglemoderation ? 'enabled' : 'disabled') . '.',
+                        $type
+                    );
+                    break;
+            }
             break;
 
         case 'customcommand':
