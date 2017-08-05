@@ -31,7 +31,7 @@ $onUserJoined = function (int $who, array $array) {
             $search[] = '{status}';
             $replace[] = $bot->users[$who]->getStatus();
             $search[] = '{regname}';
-            $replace[] = $bot->users[$who]->getRegname();
+            $replace[] = $bot->users[$who]->getRegname() ?? $bot->users[$who]->getID();
             $search[] = '{users}';
             $replace[] = sizeof($bot->users);
             $search[] = '{cmdcode}';
@@ -78,7 +78,7 @@ $onUserJoined = function (int $who, array $array) {
             $powers = XatVariables::getPowers();
             $bot->network->unban($who);
             $bot->network->sendMessage(
-                $user->getRegname() . ' signed out and in twice to get unbanned from the gameban ' .
+                $user->getRegname() ?? $user->getID() . ' signed out and in twice to get unbanned from the gameban ' .
                 $powers[$array['w']]['name'] . '.'
             );
         }

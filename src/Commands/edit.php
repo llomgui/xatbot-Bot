@@ -77,6 +77,52 @@ $edit = function (int $who, array $message, int $type) {
             $bot->data->save();
             $bot->network->sendMessageAutoDetection($who, 'Tickle Message is updated!', $type, true);
             break;
+            
+        case 'moderation':
+            switch (strtolower($message[2])) {
+                case 'on':
+                    if ($bot->data->togglemoderation == true) {
+                        return $bot->network->sendMessageAutoDetection(
+                            $who,
+                            'Moderation is already enabled!',
+                            $type
+                        );
+                    }
+                    $bot->data->togglemoderation = true;
+                    $bot->data->save();
+                    $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Moderation has been turned on!',
+                        $type
+                    );
+                    break;
+              
+                case 'off':
+                    if ($bot->data->togglemoderation == false) {
+                        return $bot->network->sendMessageAutoDetection(
+                            $who,
+                            'Moderation is already disabled!',
+                            $type
+                        );
+                    }
+                    $bot->data->togglemoderation = false;
+                    $bot->data->save();
+                    $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Moderation has been turned off!',
+                        $type
+                    );
+                    break;
+                
+                default:
+                    $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Usage: !edit moderation [on/off]',
+                        $type
+                    );
+                    break;
+            }
+            break;
 
         case 'customcommand':
             if (strlen($message[2]) > 1) {
