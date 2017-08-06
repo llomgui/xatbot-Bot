@@ -14,7 +14,7 @@ $autoban = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1]) || !in_array($message[1], ['add', 'remove', 'rm', 'ls', 'list'])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !autoban [add/remove] [xatid] [method] [hours]',
+            'Usage: !autoban [add/remove/list] [xatid] [method] [hours]',
             $type
         );
     }
