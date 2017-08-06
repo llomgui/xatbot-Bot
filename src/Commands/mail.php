@@ -30,7 +30,7 @@ $mail = function (int $who, array $message, int $type) {
             } elseif ($message[2] == 'new') {
                 $infos = ['touser' => $who, 'read' => false, 'store' => false];
             } else {
-                $infos = ['touser' => $who, 'read' => false, 'store' => true];
+                $infos = ['touser' => $who, 'read' => true, 'store' => true];
             }
 
             $mails = Mail::where($infos)->get();
@@ -46,8 +46,8 @@ $mail = function (int $who, array $message, int $type) {
                 $user = Userinfo::where('xatid', $mail['fromuser'])->first();
                 $bot->network->sendMessageAutoDetection(
                     $who,
-                    'Time: ' . gmdate('d/m/Y', $mail['create_at']) . ' ID: ' . $mail['id'] . ' From: ' .
-                    $user->regname . '(' . $user->xatid . ') Message: ' . $mail['message'],
+                    'Time: ' . gmdate('d/m/Y', $mail->created_at->timestamp) . ' ID: ' . $mail->id . ' From: ' .
+                    $user->regname . '(' . $user->xatid . ') Message: ' . $mail->message,
                     $type
                 );
 
