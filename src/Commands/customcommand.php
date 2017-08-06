@@ -90,7 +90,11 @@ $customcommand = function (int $who, array $message, int $type) {
                         );
                     }
                 }
-                return $bot->network->sendMessageAutoDetection($who, 'I could not find this custom command in the list.', $type);
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'I could not find this custom command in the list.',
+                    $type
+                );
             }
             break;
         case 'list':
@@ -99,7 +103,11 @@ $customcommand = function (int $who, array $message, int $type) {
             foreach ($bot->customcommands as $cc) {
                 $cmdList[] = $cc['command'];
             }
-            return $bot->network->sendMessageAutoDetection($who, 'Current list : ' . implode(', ', $cmdList) . '.', $type);
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                'Current list : ' . implode(', ', $cmdList) . '.',
+                $type
+            );
             break;
     }
 };
