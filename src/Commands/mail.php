@@ -35,7 +35,7 @@ $mail = function (int $who, array $message, int $type) {
 
             $mails = Mail::where($infos)->get();
             if (sizeof($mails) == 0) {
-                return $bot->network->sendMessageAutoDetection($who, 'You have no old messages!', $type);
+                return $bot->network->sendMessageAutoDetection($who, 'You have no messages!', $type);
             }
 
             if ($type == 1) {
@@ -43,13 +43,19 @@ $mail = function (int $who, array $message, int $type) {
             }
 
             foreach ($mails as $mail) {
-                $user = Userinfo::where($mail['fromuser'], 'xatid')->get()->toArray();
+                $user = Userinfo::where('xatid', $mail['fromuser'])->first();
                 $bot->network->sendMessageAutoDetection(
                     $who,
                     'Time: ' . gmdate('d/m/Y', $mail['create_at']) . ' ID: ' . $mail['id'] . ' From: ' .
-                    $user['regname'] . '(' . $user['xatid'] . ') Message: ' . $mail['message'],
+                    $user->regname . '(' . $user->xatid . ') Message: ' . $mail['message'],
                     $type
                 );
+
+                if ($message[2] == 'new') {
+                    $mail->read = true;
+                    $mail->save();
+                }
+
                 usleep(750000);
             }
             return $bot->network->sendMessageAutoDetection($who, 'End of messages.', $type);
@@ -86,7 +92,7 @@ $mail = function (int $who, array $message, int $type) {
             }
 
             $id = (int)$message[2];
-            $mail = Mail::where(['touser' => $who, 'id' => $id])->get();
+            $mail = Mail::where(['touser' => $who, 'id' => $id])->first();
             if (!empty($mail)) {
                 $mail->delete();
                 return $bot->network->sendMessageAutoDetection($who, 'Mail deleted!', $type);
@@ -105,11 +111,11 @@ $mail = function (int $who, array $message, int $type) {
             }
 
             $id = (int)$message[2];
-            $mail = Mail::where(['touser' => $who, 'id' => $id])->get();
+            $mail = Mail::where(['touser' => $who, 'id' => $id])->first();
             if (!empty($mail)) {
                 $mail->store = true;
                 $mail->save();
-                return $bot->network->sendMessageAutoDetection($who, 'Mail deleted!', $type);
+                return $bot->network->sendMessageAutoDetection($who, 'Mail stored!', $type);
             } else {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
@@ -125,11 +131,11 @@ $mail = function (int $who, array $message, int $type) {
             }
 
             $id = (int)$message[2];
-            $mail = Mail::where(['touser' => $who, 'id' => $id])->get();
+            $mail = Mail::where(['touser' => $who, 'id' => $id])->first();
             if (!empty($mail)) {
                 $mail->store = false;
                 $mail->save();
-                return $bot->network->sendMessageAutoDetection($who, 'Mail deleted!', $type);
+                return $bot->network->sendMessageAutoDetection($who, 'Mail unstored!', $type);
             } else {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
@@ -193,7 +199,7 @@ $mail = function (int $who, array $message, int $type) {
             ];
 
             if (in_array(strtolower($toUser), $xatAdmins)) {
-                $bot->network->sendMessageAutoDetection(
+                return $bot->network->sendMessageAutoDetection(
                     $who,
                     'You are not allowed to send a mail to this account.',
                     $type
@@ -202,31 +208,31 @@ $mail = function (int $who, array $message, int $type) {
 
             if (is_numeric($toUser)) {
                 $toUser = (int)$toUser;
-                $user = Userinfo::where($toUser, 'xatid')->toArray();
+                $user = Userinfo::where('xatid', $toUser)->first();
             } else {
-                $user = Userinfo::where($toUser, 'regname')->toArray();
+                $user = Userinfo::where('regname', $toUser)->first();
             }
 
             if (sizeof($user) > 0) {
-                if ($who != $user['xatid']) {
-                    $mails = Mail::where(['touser' => $who, 'read' => false])->get()->toArray();
+                if ($who != $user->xatid) {
+                    $mails = Mail::where(['touser' => $user->xatid, 'read' => false])->get()->toArray();
 
                     if (sizeof($mails) > 10) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'Sorry, ' . $user['regname'] . ' has too many unread messages.',
+                            'Sorry, ' . $user->regname . ' has too many unread messages.',
                             $type
                         );
                     }
 
                     $mail = new Mail;
-                    $mail->touser   = $user['xatid'];
+                    $mail->touser   = $user->xatid;
                     $mail->fromuser = $who;
                     $mail->message  = $message;
                     $mail->save();
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'Message sent to ' . $user['regname'] . '(' . $user['xatid'] . ')!',
+                        'Message sent to ' . $user->regname . '(' . $user->xatid . ')!',
                         $type
                     );
                 } else {
