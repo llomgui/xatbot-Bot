@@ -44,7 +44,12 @@ $customcommand = function (int $who, array $message, int $type) {
                             );
                         }
                         
-                        if (!in_array(ucfirst($message[3]), Minrank::pluck('name')->toArray())) {
+                          $rank = strtolower($message[3]);
+                        if ($rank == "botowner") {
+                            $rank = "Bot Owner";
+                        }
+                        
+                        if (!in_array(ucfirst($rank), Minrank::pluck('name')->toArray())) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
                                 'The minrank is not valid!',
@@ -52,7 +57,7 @@ $customcommand = function (int $who, array $message, int $type) {
                             );
                         }
                         
-                        $minrankID = Minrank::where('name', ucfirst($message[3]))->first();
+                        $minrankID = Minrank::where('name', ucfirst($rank))->first();
                         
                         $customCmd = new CustomCommand;
                         $customCmd->bot_id = $bot->data->id;
