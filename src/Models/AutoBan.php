@@ -21,7 +21,7 @@ class AutoBan extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
-    public function autotempBot()
+    public function autobanBot()
     {
         return $this->hasOne(Bot::class, 'id', 'bot_id');
     }
