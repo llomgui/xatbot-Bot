@@ -23,7 +23,7 @@ $customcommand = function (int $who, array $message, int $type) {
         case 'add':
             if (isset($message[2]) && !empty($message[2])) {
                 if (isset($message[3]) && !empty($message[3])) {
-                    if (isset($message[3]) && !empty($message[4])) {
+                    if (isset($message[4]) && !empty($message[4])) {
                         $command = ctype_alnum($message[2][0]) ? $message[2] : substr($message[2], 1);
                         $command = strtolower($command);
                         foreach ($bot->customcommands as $cc) {
