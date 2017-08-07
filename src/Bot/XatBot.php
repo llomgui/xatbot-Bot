@@ -183,7 +183,7 @@ class XatBot
         $list = [];
         for ($i = 0; $i < sizeof($results); $i++) {
             $list[$i]['xatid']   = $results[$i]->xatid;
-            $list[$i]['regname'] = $results[$i]->method;
+            $list[$i]['regname'] = $results[$i]->regname;
             $list[$i]['hours']   = $results[$i]->hours;
             $list[$i]['method']  = $results[$i]->method;
         }
