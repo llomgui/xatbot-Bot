@@ -128,7 +128,7 @@ $autoban = function (int $who, array $message, int $type) {
             
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'Autoban list: ' . implode(', ', $autobanList) . '.',
+                'Autoban list: ' . (sizeof($autobanList) == 0 ? "None" : implode(', ', $autobanList)) . '.',
                 $type
             );
             break;
