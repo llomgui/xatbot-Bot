@@ -18,19 +18,19 @@
 * [x] radio
 
 ### Commands
-* [ ] alias [add/edit/remove] [command] [alias]
+* [x] alias [add/edit/remove] [command] [alias]
 * [ ] Responses
-* [ ] minrank [command] [rank]
-* [ ] Staff [add/remove] [regname/xatid] [rank]
-* [ ] customcommand [add/remove] [alias] [command]
+* [x] minrank [command] [rank]
+* [x] Staff [add/remove] [regname/xatid] [rank]
+* [x] customcommand [add/remove] [alias] [command]
 * [ ] snitch [add/remove/list] [regname/xatid]
-* [ ] autoban [add/remove/list] [regname/xatid] [hours]
+* [x] autoban [add/remove/list] [regname/xatid] [hours]
 * [ ] allmissing [null/regname/xatid] - waiting for website view
 * [ ] everymissing [null/regname/xatid] - waiting for website view
 * [ ] history
 * [ ] scramble
 * [ ] hangman
-* [ ] mail [send/read/check/empty/delete/store/unstore/blockall/staff] [info]
+* [x] mail [send/read/check/empty/delete/store/unstore/blockall/staff] [info]
 * [ ] typerace [start/repeat/end]
 * [ ] edit language [en/fr/pt/es/...]
 * [x] hasmost [powerid]
