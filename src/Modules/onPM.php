@@ -18,4 +18,16 @@ $onPM = function (int $who, string $message) {
     $log->typemessage = 2;
     $log->message = '[PM] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . $message . '"';
     $log->save();
+
+    if (empty($message)) {
+        return;
+    }
+
+    if (!empty($bot->snitchlist)) {
+        foreach($bot->snitchlist as $snitch) {
+            if (isset($bot->users[$snitch['xatid']])) {
+                $bot->network->sendPrivateConversation($snitch['xatid'], 'PM - [' . $who . '] ' . $message);
+            }
+        }
+    }
 };

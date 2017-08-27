@@ -26,6 +26,14 @@ $onPC = function (int $who, string $message) {
         return;
     }
 
+    if (!empty($bot->snitchlist)) {
+        foreach($bot->snitchlist as $snitch) {
+            if (isset($bot->users[$snitch['xatid']])) {
+                $bot->network->sendPrivateConversation($snitch['xatid'], 'PC - [' . $who . '] ' . implode($message));
+            }
+        }
+    }
+
     if ($bot->data->automember == 'maths' && DataAPI::isSetVariable('automember_' . $who)) {
         if (DataAPI::get('automember_' . $who) == $message[0]) {
             $bot->network->sendPrivateConversation($who, 'You are now a member');
