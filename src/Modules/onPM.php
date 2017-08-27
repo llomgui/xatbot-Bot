@@ -24,7 +24,7 @@ $onPM = function (int $who, string $message) {
     }
 
     if (!empty($bot->snitchlist)) {
-        foreach($bot->snitchlist as $snitch) {
+        foreach ($bot->snitchlist as $snitch) {
             if (isset($bot->users[$snitch['xatid']])) {
                 $bot->network->sendPrivateConversation($snitch['xatid'], 'PM - [' . $who . '] ' . $message);
             }
