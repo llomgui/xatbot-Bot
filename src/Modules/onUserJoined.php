@@ -291,7 +291,7 @@ $onUserJoined = function (int $who, array $array) {
         }
     }
 
-    $mails = Mail::where(['touser' => $who, 'read' => false, 'store' => false])->get()->toArray();
+    $mails = Mail::where(['touser' => $who, 'read' => false, 'store' => false])->get();
     if (sizeof($mails) > 0) {
         $bot->network->sendPrivateMessage($who, 'You have ' . sizeof($mails) . ' new message(s).');
     }
