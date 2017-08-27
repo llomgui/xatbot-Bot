@@ -67,8 +67,6 @@ class XatBot
                     ->get()
                     ->toArray();
 
-        var_dump($results);
-
         for ($i = 0; $i < sizeof($results); $i++) {
             if (empty($results[$i]->level)) {
                 $results[$i]->level = $results[$i]->default_level;
