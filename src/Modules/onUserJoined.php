@@ -3,6 +3,7 @@
 use OceanProject\Bot\XatUser;
 use OceanProject\API\DataAPI;
 use OceanProject\Models\Mail;
+use OceanProject\Models\Autoban;
 use OceanProject\Bot\XatVariables;
 
 $onUserJoined = function (int $who, array $array) {
@@ -266,6 +267,68 @@ $onUserJoined = function (int $who, array $array) {
 
         if ($member) {
             $bot->network->changeRank($who, 'member');
+        }
+    }
+    
+    if (!empty($bot->autobans)) {
+        foreach ($bot->autobans as $autoban) {
+            if ($bot->flagToRank($who) < $bot->stringToRank($bot->chatInfo['rank'])) {
+                if ($autoban['xatid'] == $who && !$user->isBanned() && !$user->isGamebanned()) {
+                    AutoBan::where([
+                      ['xatid', '=', $autoban['xatid']],
+                      ['bot_id', '=', $bot->data->id]
+                    ])->delete();
+                    $bot->autobans = $bot->setAutobanList();
+                    if ($autoban['method'] == 'ban') {
+                        $bot->network->ban(
+                            $who,
+                            $autoban['hours'],
+                            'Autoban'
+                        );
+                    } else {
+                        switch (strtolower($autoban['method'])) {
+                            case 'snakeban':
+                                $gamebanid = 134;
+                                break;
+                    
+                            case 'spaceban':
+                                $gamebanid = 136;
+                                break;
+                    
+                            case 'matchban':
+                                $gamebanid = 140;
+                                break;
+                    
+                            case 'mazeban':
+                                $gamebanid = 152;
+                                break;
+                    
+                            case 'codeban':
+                                $gamebanid = 162;
+                                break;
+                    
+                            case 'slotban':
+                                $gamebanid = 236;
+                                break;
+                        }
+                        if ($bot->botHasPower($gamebanid)) {
+                            return $bot->network->ban(
+                                $who,
+                                $autoban['method'],
+                                'Autoban',
+                                'g',
+                                $gamebanid
+                            );
+                        } else {
+                            $bot->network->ban(
+                                $who,
+                                $autoban['hours'],
+                                'Autoban - I don\'t have the specific power to ' . $autoban['method'] . ' the user.'
+                            );
+                        }
+                    }
+                }
+            }
         }
     }
 
