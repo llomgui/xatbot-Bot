@@ -3,6 +3,7 @@
 use OceanProject\Utilities;
 use OceanProject\Models\Minrank;
 use OceanProject\Models\Command;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 $minrank = function (int $who, array $message, int $type) {
 
@@ -76,15 +77,24 @@ $minrank = function (int $who, array $message, int $type) {
             }
             
             // Get minrank id
-            $minrankID = Minrank::where('name', ucfirst($newMinrank))->first();
+            $minrank = Minrank::where('name', ucfirst($newMinrank))->first();
             
             // Get command ID
-            $commandID = Command::where('name', $command)->first();
-            
-            // Update minrank from the command ID
-            $commandFind = Command::find($commandID->id);
-            $commandFind->default_level = $minrankID->level;
-            $commandFind->update();
+            $command = Command::where('name', $command)->first();
+
+            $req = Capsule::table('bot_command_minrank')
+                        ->where([
+                            ['command_id', '=', $command->id],
+                            ['bot_id', '=', $bot->data->id]
+                        ])
+                        ->get()
+                        ->toArray();
+
+            if (sizeof($req) > 0) {
+                $bot->data->commands()->updateExistingPivot($command->id, ['minrank_id' => $minrank->id]);
+            } else {
+                $bot->data->commands()->save($command, ['minrank_id' => $minrank->id]);
+            }
             
             // Refresh new minranks
             $bot->minranks = $bot->setMinranks();
