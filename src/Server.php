@@ -249,7 +249,7 @@ class Server
                         while (1) {
                             if (!$Ocean->network->socket->isConnected()) {
                                 Logger::getLogger()->critical('[' . $botid . '] Socket not connected!');
-                                exit('You have an error in your code or socket died.');
+                                $Ocean->refresh();
                                 break;
                             }
 
