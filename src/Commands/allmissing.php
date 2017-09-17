@@ -37,9 +37,10 @@ $allmissing = function (int $who, array $message, int $type) {
 
     if (!empty($info)) {
         $info = $info[0];
+        $message = 'Allmissing for ' . $info->regname . ' can be viewed here : ';
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Allmissing for ' . $info->regname . ' can be viewed here : https://oceanproject.fr/page/allmissing/' . $info->regname,
+            $message . ' https://oceanproject.fr/page/allmissing/' . $info->regname,
             $type
         );
     } else {

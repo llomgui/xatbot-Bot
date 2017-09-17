@@ -37,9 +37,10 @@ $everymissing = function (int $who, array $message, int $type) {
 
     if (!empty($info)) {
         $info = $info[0];
+        $message = 'Everymissing for ' . $info->regname . ' can be viewed here : ';
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Everymissing for ' . $info->regname . ' can be viewed here : https://oceanproject.fr/page/everymissing/' . $info->regname,
+            $message . 'https://oceanproject.fr/page/everymissing/' . $info->regname,
             $type
         );
     } else {
