@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 $everymissing = function (int $who, array $message, int $type) {
 
     $bot = OceanProject\API\ActionAPI::getBot();
@@ -8,26 +10,40 @@ $everymissing = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    if (isset($message[1]) || !empty($message[1])) {
-        if (is_numeric($message[1]) && isset($bot->users[$message[1]])) {
-            $user = $bot->users[$message[1]];
-        } else {
-            foreach ($bot->users as $id => $object) {
-                if (is_object($object) && strtolower($object->getRegname()) == strtolower($message[1])) {
-                    $user = $object;
-                    break;
-                }
-            }
-        }
-    } else {
-        $user = $bot->users[$who];
+    if (empty($message[1])) {
+        $message[1] = $who;
     }
-    
-    if (isset($user)) {
-        $base64 = base64_encode(implode('.', array_values($user->getPowers())));
-        $link = 'https://oceanproject.fr/pages/powersmissing/everyp/' . $base64 . '/';
-        $bot->network->sendMessageAutoDetection($who, $link, $type);
+
+    $info = null;
+    if (is_numeric($message[1])) {
+        $message[1] = (int)$message[1];
+
+        if ($message[1] == 9223372036854775807) {
+            return $bot->network->sendMessageAutoDetection($who, 'I am in a 64-bit environment.', $type, true);
+        }
+        
+        $info = Capsule::table('userinfo')
+                ->where('xatid', $message[1])
+                ->orderBy('updated_at', 'desc')
+                ->get()
+                ->toArray();
     } else {
-        $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type, true);
+        $info = Capsule::table('userinfo')
+                ->whereRaw('LOWER(regname) = ?', [strtolower($message[1])])
+                ->orderBy('updated_at', 'desc')
+                ->get()
+                ->toArray();
+    }
+
+    if (!empty($info)) {
+        $info = $info[0];
+        $message = 'Everymissing for ' . $info->regname . ' can be viewed here : ';
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            $message . 'https://oceanproject.fr/page/everymissing/' . $info->regname,
+            $type
+        );
+    } else {
+        return $bot->network->sendMessageAutoDetection($who, 'Sorry, I don\'t have this user in my database.', $type);
     }
 };
