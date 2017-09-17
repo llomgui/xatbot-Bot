@@ -1,5 +1,7 @@
 <?php
 
+use OceanProject\Models\Log;
+
 $onTransfer = function (int $from, string $type, string $message, int $to, int $xats, int $days) {
 
     if ($type != 'T') {
@@ -11,9 +13,9 @@ $onTransfer = function (int $from, string $type, string $message, int $to, int $
     $regname1 = '';
     $regname2 = '';
 
-    if (isset($bot->users[$who])) {
-        $regname1 = $bot->users[$who]->getRegname();
-    } elseif ($who == 10101) {
+    if (isset($bot->users[$from])) {
+        $regname1 = $bot->users[$from]->getRegname();
+    } elseif ($from == 10101) {
         $regname1 = 'Ocean';
     }
 
@@ -27,7 +29,7 @@ $onTransfer = function (int $from, string $type, string $message, int $to, int $
     $log->chatid = $bot->data->chatid;
     $log->chatname = $bot->data->chatname;
     $log->typemessage = 6;
-    $log->message = ((!is_null($regname1)) ? $regname1 . ' (' . $who . ')' : $who) . ' sent ' . $xats .
+    $log->message = ((!is_null($regname1)) ? $regname1 . ' (' . $from . ')' : $from) . ' sent ' . $xats .
         ' xat(s) and ' . $days . ' day(s) to ' . ((!is_null($regname2)) ? $regname2 . ' (' . $to . ')' : $to);
     $log->save();
 
