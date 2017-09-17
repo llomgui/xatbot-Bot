@@ -151,7 +151,7 @@ class Server
                     Logger::getLogger()->notice('From socket: ' . $packet);
                     $args    = explode(' ', trim($packet));
                     $command = $args[0];
-                    $botid   = $args[1];
+                    $botid   = $args[1] ?? null;
                     $return  = null;
 
                     switch ($command) {
@@ -193,7 +193,7 @@ class Server
                             $return = json_encode([
                                 'bots'        => sizeof($this->xatBots),
                                 'memory'      => round(memory_get_usage(true) / 1024 / 1024),
-                                'cpu'         => trim(exec('ps -p ' . getmyid() . ' -o %cpu')),
+                                'cpu'         => trim(exec('ps -p ' . getmypid() . ' -o %cpu')),
                                 'timestarted' => $this->started
                             ]);
                             break;
