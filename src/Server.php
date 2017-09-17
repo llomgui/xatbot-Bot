@@ -198,6 +198,14 @@ class Server
                             ]);
                             break;
 
+                        case 'users_count':
+                            if (isset($this->xatBots[$botid])) {
+                                $return = sizeof($this->xatBots[$botid]->users);
+                            } else {
+                                $return = 0;
+                            }
+                            break;
+
                         case 'reload':
                             $this->readExtensions();
                             $return = 'Extension reloaded!';
