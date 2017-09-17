@@ -102,7 +102,6 @@ abstract class XatVariables
     {
         $volunteers = [
             ['regname' => 'Brandon', 'xatid' => 1010208],
-            ['regname' => 'Chelly',  'xatid' => 19032000],
             ['regname' => 'Cupim',   'xatid' => 10000690],
             ['regname' => 'Cyan',    'xatid' => 283021491],
             ['regname' => 'Guinho',  'xatid' => 2300000],
@@ -111,7 +110,6 @@ abstract class XatVariables
             ['regname' => 'Mihay',   'xatid' => 1700000],
             ['regname' => 'Mike',    'xatid' => 7000000],
             ['regname' => 'Muffins', 'xatid' => 209642885],
-            ['regname' => 'Nick',    'xatid' => 6960969],
             ['regname' => 'Vale',    'xatid' => 32646043]
         ];
 
@@ -1790,7 +1788,6 @@ abstract class XatVariables
             $page = json_decode($page, true);
         }
 
-        $powers = [];
         $pssa   = null;
         $topsh  = null;
 
@@ -1807,50 +1804,48 @@ abstract class XatVariables
         }
 
         foreach ($page[$pssa][1] as $power => $id) {
-            $powers[$id]['name']       = $power;
-            $powers[$id]['minCost']    = 0;
-            $powers[$id]['maxCost']    = 0;
-            $powers[$id]['isLimited']  = false;
-            $powers[$id]['isAllPower'] = false;
-            $powers[$id]['isEpic']     = false;
-            $powers[$id]['isGroup']    = false;
-            $powers[$id]['isGame']     = false;
-            $powers[$id]['isNew']      = false;
-            $powers[$id]['smilies']    = [$power];
+            self::$powers[$id]['name']       = $power;
+            self::$powers[$id]['minCost']    = 0;
+            self::$powers[$id]['maxCost']    = 0;
+            self::$powers[$id]['isLimited']  = false;
+            self::$powers[$id]['isAllPower'] = false;
+            self::$powers[$id]['isEpic']     = false;
+            self::$powers[$id]['isGroup']    = false;
+            self::$powers[$id]['isGame']     = false;
+            self::$powers[$id]['isNew']      = false;
+            self::$powers[$id]['smilies']    = [$power];
         }
 
         foreach ($page[$topsh][1] as $smiley => $id) {
-            $powers[$id]['smilies'][] = $smiley;
+            self::$powers[$id]['smilies'][] = $smiley;
         }
         
         foreach ($page[7][1] as $name => $value) {
             if ($name != 'time' && $name != "!") {
-                $powers[$value[0]]['pawns'][] = 'h' . $name;
+                self::$powers[$value[0]]['pawns'][] = 'h' . $name;
             }
         }
         
-        $id = end($page[6][1]) >= $page[0][1]['id'] ? end($page[6][1]):$page[0][1]['id']; //check for highest id
-        $id = count(array_keys($page[4][1], $id + 1)) > 0 ? $id + 1:$id;//check for higher id
-        $id = count(array_keys($page[4][1], $id + 2)) > 0 ? $id + 2:$id;//check for higher id again
-        $keys = array_keys($powers); // cant do end(array_keys($powers)) causes error
+        $id = end($page[6][1]) >= $page[0][1]['id'] ? end($page[6][1]) : $page[0][1]['id'];
+        $id = count(array_keys($page[4][1], $id + 1)) > 0 ? ($id + 1) : $id;
+        $id = count(array_keys($page[4][1], $id + 2)) > 0 ? ($id + 2) : $id;
+        $keys = array_keys(self::$powers);
         $last = end($keys);
         
         if ($id != $last) {
             $lastName = array_search($id, $page[6][1]) == false ? $id : array_search($id, $page[6][1]);
-            $powers[$id]['name']       = $lastName;
-            $powers[$id]['minCost']    = 0;
-            $powers[$id]['maxCost']    = 0;
-            $powers[$id]['storeCost']  = "unknown";
-            $powers[$id]['isLimited']  = false;
-            $powers[$id]['isAllPower'] = false;
-            $powers[$id]['isEpic']     = false;
-            $powers[$id]['isGroup']    = false;
-            $powers[$id]['isGame']     = false;
-            $powers[$id]['isNew']      = false;
-            $powers[$id]['smilies']    = array_merge([$lastName], array_keys($page[4][1], $id));
+            self::$powers[$id]['name']       = $lastName;
+            self::$powers[$id]['minCost']    = 0;
+            self::$powers[$id]['maxCost']    = 0;
+            self::$powers[$id]['storeCost']  = "unknown";
+            self::$powers[$id]['isLimited']  = false;
+            self::$powers[$id]['isAllPower'] = false;
+            self::$powers[$id]['isEpic']     = false;
+            self::$powers[$id]['isGroup']    = false;
+            self::$powers[$id]['isGame']     = false;
+            self::$powers[$id]['isNew']      = false;
+            self::$powers[$id]['smilies']    = array_merge([$lastName], array_keys($page[4][1], $id));
         }
-
-        self::$powers = $powers + self::$powers;
 
         $cpt = 0;
 
@@ -1870,9 +1865,11 @@ abstract class XatVariables
             if ($id === 0) {
                 continue;
             }
+
             if (!in_array($power['s'], self::$powers[$id]['smilies'])) {
                 array_unshift(self::$powers[$id]['smilies'], $power['s']);
             }
+
             self::$powers[$id]['name']       = $power['s'];
             self::$powers[$id]['isNew']      = isset($power['f']) && $power['f'] & 0x1000 ? true : false;
             self::$powers[$id]['isLimited']  = isset($power['f']) && $power['f'] & 0x2000 ? true : false;
