@@ -386,6 +386,10 @@ class Server
                                             $Ocean->messageCount++;
                                         }
 
+                                        if (empty($packet['elements']['t'])) {
+                                            continue;
+                                        }
+
                                         if ($packet['elements']['t'] == '/RTypeOn' ||
                                             $packet['elements']['t'] == '/RTypeOff') {
                                             continue;
