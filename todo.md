@@ -4,7 +4,7 @@
 * [ ] google
 * [ ] raid protection
 * [ ] moderation on/off
-* [ ] autoban
+* [x] autoban
 * [x] twitter
 * [x] weather
 * [x] flood filter
@@ -19,14 +19,14 @@
 
 ### Commands
 * [x] alias [add/edit/remove] [command] [alias]
-* [ ] Responses
+* [x] Responses
 * [x] minrank [command] [rank]
 * [x] Staff [add/remove] [regname/xatid] [rank]
 * [x] customcommand [add/remove] [alias] [command]
-* [ ] snitch [add/remove/list] [regname/xatid]
+* [x] snitch [add/remove/list] [regname/xatid]
 * [x] autoban [add/remove/list] [regname/xatid] [hours]
-* [ ] allmissing [null/regname/xatid] - waiting for website view
-* [ ] everymissing [null/regname/xatid] - waiting for website view
+* [x] allmissing [null/regname/xatid] - waiting for website view
+* [x] everymissing [null/regname/xatid] - waiting for website view
 * [ ] history
 * [ ] scramble
 * [ ] hangman
