@@ -30,4 +30,4 @@ Docker-compose:
 
 Make your tests on your computer, then send a pull request.
 
-This has been tested on Windows PC and dosen't seem to work as intended.
+This has been tested on Windows PC and doesn't seem to work as intended.
