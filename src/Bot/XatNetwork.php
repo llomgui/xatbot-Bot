@@ -251,6 +251,10 @@ class XatNetwork
             }
         }
 
+        if ($this->data->was_connected == false && isset($j2['m1']) && ($j2['m1'] & (1 << (32 % 32)))) {
+            $j2['m1'] -= pow(2, 32 % 32);
+        }
+
         $j2['d0'] = $this->logininfo['d0'] ?? $this->logininfo['d0'];
 
         for ($i = 2; $i <= ($maxPowerIndex + 3); $i++) {
