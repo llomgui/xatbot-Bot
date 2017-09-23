@@ -400,11 +400,8 @@ class Server
                                                 $hook   = 'onMessage'; // onMessage($who, $message)
                                                 $args[] = $packet['elements']['u'];
                                                 $args[] = $packet['elements']['t'];
-                                            } elseif (isset($packet['elements']['p'])) {
-                                                $hook   = 'onRankMessage'; //onRankMessage($who,$message,$reason,$array)
-                                                $args[] = $packet['elements']['u'];
-                                                $args[] = $packet['elements']['t'];
-                                                $args[] = $packet['elements']['p'];
+                                            } else {
+                                                $hook   = 'onRankMessage'; // onRankMessage($array)
                                                 $args[] = $packet['elements'];
                                             }
                                         } elseif ($packet['elements']['s'] & 1) {
