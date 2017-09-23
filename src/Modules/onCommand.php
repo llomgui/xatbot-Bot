@@ -10,22 +10,24 @@ $onCommand = function (int $who, array $message, int $type) {
         return;
     }
 
-    $regname = $bot->users[$who]->getRegname();
+    if (strpos($message, 'getmain') === false) {
+        $regname = $bot->users[$who]->getRegname();
 
-    $log = new Log;
-    $log->chatid = $bot->data->chatid;
-    $log->chatname = $bot->data->chatname;
-    $log->typemessage = 5;
+        $log = new Log;
+        $log->chatid = $bot->data->chatid;
+        $log->chatname = $bot->data->chatname;
+        $log->typemessage = 5;
 
-    if ($type == 1) {
-        $log->message = '[Main] ';
-    } elseif ($type == 2) {
-        $log->message = '[PM] ';
-    } elseif ($type == 3) {
-        $log->message = '[PC] ';
+        if ($type == 1) {
+            $log->message = '[Main] ';
+        } elseif ($type == 2) {
+            $log->message = '[PM] ';
+        } elseif ($type == 3) {
+            $log->message = '[PC] ';
+        }
+
+        $log->message .= (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
+            implode(' ', $message) . '"';
+        $log->save();
     }
-
-    $log->message .= (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
-        implode(' ', $message) . '"';
-    $log->save();
 };
