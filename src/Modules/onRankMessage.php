@@ -6,19 +6,29 @@ use OceanProject\Models\Log;
 $onRankMessage = function (array $array) {
     $bot = OceanProject\API\ActionAPI::getBot();
 
+    if (isset($array['d']))
+
     $log = new Log;
     $log->chatid = $bot->data->chatid;
     $log->chatname = $bot->data->chatname;
     $log->typemessage = 4;
 
     if (isset($array['u'])) {
-        $regname = $bot->users[$array['u']]->getRegname();
-        $user1 = (!is_null($regname) ? $regname . ' (' . $array['u'] . ')' : $array['u']);
+        if (isset($bot->users[$array['u']])) {
+            $regname = $bot->users[$array['u']]->getRegname();
+            $user1 = (!is_null($regname) ? $regname . ' (' . $array['u'] . ')' : $array['u']);
+        } else {
+            $user1 = $array['u'];
+        }
     }
 
     if (isset($array['d'])) {
-        $regname2 = $bot->users[$array['d']]->getRegname();
-        $user2 = (!is_null($regname2) ? $regname2 . ' (' . $array['d'] . ')' : $array['d']);
+        if (isset($bot->users[$array['d']])) {
+            $regname2 = $bot->users[$array['d']]->getRegname();
+            $user2 = (!is_null($regname2) ? $regname2 . ' (' . $array['d'] . ')' : $array['d']);
+        } else {
+            $user2 = $array['d'];
+        }
     }
     
     if ($array['t'][0] == '/') {
