@@ -6,9 +6,9 @@ use OceanProject\Models\Log;
 $onRankMessage = function (array $array) {
     $bot = OceanProject\API\ActionAPI::getBot();
 
-    if (isset($array['d']))
-
-    $log = new Log;
+    if (isset($array['d'])) {
+        $log = new Log;
+    }
     $log->chatid = $bot->data->chatid;
     $log->chatname = $bot->data->chatname;
     $log->typemessage = 4;
