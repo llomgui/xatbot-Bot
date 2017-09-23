@@ -262,7 +262,7 @@ class Server
                             }
 
                             if ($Ocean->stopped) {
-                                stop($botid);
+                                $this->stop($botid);
                                 break;
                             }
 
@@ -555,6 +555,8 @@ class Server
     public function stop($botid)
     {
         if (isset($this->xatBots[$botid])) {
+            $this->xatBots[$botid]->network->socket->disconnect();
+
             $bot = Models\Bot::find($botid);
             $bot->bot_status_id = Models\BotStatus::where('name', 'Offline')->first()->id;
             $bot->save();
