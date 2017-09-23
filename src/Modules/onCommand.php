@@ -10,6 +10,8 @@ $onCommand = function (int $who, array $message, int $type) {
         return;
     }
 
+    $message = implode(' ', $message);
+
     if (strpos($message, 'getmain') === false) {
         $regname = $bot->users[$who]->getRegname();
 
@@ -27,7 +29,7 @@ $onCommand = function (int $who, array $message, int $type) {
         }
 
         $log->message .= (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
-            implode(' ', $message) . '"';
+            $message . '"';
         $log->save();
     }
 };
