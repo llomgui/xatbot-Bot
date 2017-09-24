@@ -100,7 +100,7 @@ $value = function (int $who, array $message, int $type) {
 
                         $minprice += $powers[$id]['minCost'] * $amount;
                         $maxprice += $powers[$id]['maxCost'] * $amount;
-                        $count    += $amount;
+                        //$count    += $amount;
                         $cdoubles += $amount;
                     }
                 }
@@ -110,7 +110,7 @@ $value = function (int $who, array $message, int $type) {
                         continue;
                     }
 
-                    if ($user->hasPower($id)) {
+                    if ($user->hasPower($id) || $user->hasPower($id, true)) {
                         if (isset($array['storeCost'])) {
                             if (!$array['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
                                 $storeprice += $array['storeCost'];
@@ -141,7 +141,16 @@ $value = function (int $who, array $message, int $type) {
         $minUSD   = round($mineuros * 1.10, 2);
         $maxUSD   = round($maxeuros * 1.10, 2);
 
-        $message = $regname . ' [' . $count . '] powers are worth ' . number_format($minprice) . ' - ' .
+        if (($count == 0) && (sizeof($xatusers == 1))) {
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                $regname . ' has no powers.',
+                $type
+            );
+        }
+
+        $message = $regname . ' [' . ($count + $cdoubles) . '] powers, [' .  $cdoubles . '] doubles are worth ' .
+            number_format($minprice) . ' - ' .
             number_format($maxprice) . ' xats or ' . number_format($mindays) . ' - ' . number_format($maxdays) .
             ' days or in cash worth ' . $mineuros . ' - ' . $maxeuros . ' euros or ' . $minUSD . ' - ' . $maxUSD .
             ' USD. Auction: ' . number_format($storeprice) . ' xats.';
