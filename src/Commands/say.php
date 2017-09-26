@@ -14,7 +14,7 @@ $say = function (int $who, array $message, int $type) {
     if (empty($message)) {
         return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type);
     } else {
-        $message = str_replace('/', '_/', $message);
-        return $bot->network->sendMessageAutoDetection($who, $message, $type);
+        //$message = str_replace('/', '_/', $message);
+        return $bot->network->sendMessageAutoDetection($who, '_' . $message, $type);
     }
 };

@@ -469,7 +469,7 @@ class Server
                             if (in_array($hook, ['onMessage', 'onPM', 'onPC']) &&
                                 $args[1][0] == $Ocean->data->customcommand) {
                                 $args[1] = explode(' ', trim($args[1]));
-                                $command = substr($args[1][0], 1);
+                                $command = strtolower(substr($args[1][0], 1));
 
                                 if (isset($Ocean->aliases[$command])) {
                                     $args[1][0] = $Ocean->data->customcommand . $Ocean->aliases[$command];

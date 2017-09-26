@@ -11,6 +11,13 @@ $mail = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
+    if (isset($message[2]) && (isset($message[3]))) {
+        if (empty($message[2]) && (in_array(substr($message[3], 0, 1), ['(', ':', ')']))) {
+            unset($message[2]);
+            $message = array_values($message);
+        }
+    }
+
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
