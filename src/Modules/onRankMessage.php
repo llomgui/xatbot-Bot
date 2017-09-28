@@ -37,48 +37,58 @@ $onRankMessage = function (array $array) {
                 // <m  t="/u" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' unbanned ' . $user2 . '!';
                 break;
-                
+
             case '/g':
                 //<m  p="" t="/g3600" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' banned ' . $user2 . ' for ' .
                     round(substr($array['t'], 2) / 3600, 2) . ' hours reason: "' . $array['p'] . '"';
                 break;
-                
+
             case '/m':
-                switch ($array['p']) {
+                $type = substr($array['p'], 0, 1);
+                $hours = '';
+                if (strlen($array['p']) > 1) {
+                    $hours = round(substr($array['p'], 1) / 3600, 2);
+                }
+
+                switch ($type) {
                     case 'M':
                         // <m u="412345607" d="586552" t="/m" p="M"  />
-                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' an owner!';
+                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' an owner' .
+                            (!empty($hours) ? ' for ' . $hours . ' hour(s)!' : '!');
                         break;
-                        
+
                     case 'm':
                         // <m u="412345607" d="586552" t="/m" p="m"  />
-                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' a moderator!';
+                        // <m u="10101" d="1497708246" t="/m" p="m3600" />
+                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' a moderator' .
+                            (!empty($hours) ? ' for ' . $hours . ' hour(s)!' : '!');
                         break;
 
                     case 'e':
                         // <m u="412345607" d="586552" t="/m" p="e"  />
-                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' a member!';
+                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' a member' .
+                            (!empty($hours) ? ' for ' . $hours . ' hour(s)!' : '!');
                         break;
 
                     case 'r':
                         // <m u="412345607" d="586552" t="/m" p="r"  />
-                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' a guest!';
+                        $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' a guest' .
+                            (!empty($hours) ? ' for ' . $hours . ' hour(s)!' : '!');
                         break;
                 }
                 break;
-                
+
             case '/k':
                 // <m  p="test" t="/k" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' kicked ' . $user2 . ' reason: "' . $array['p'] . '"';
                 break;
-                
+
             default:
                 return;
                 break;
         }
 
-        var_dump($log->message);
         $log->save();
     }
 };
