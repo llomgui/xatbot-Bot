@@ -10,7 +10,7 @@ $misc = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !misc [reserve/chatid/chatname/xatid/regname/hug/kiss/slap/promo] [info]',
+            'Usage: !misc [reserve/chatid/chatname/xatid/regname/promo] [info]',
             $type,
             true
         );
