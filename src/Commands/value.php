@@ -73,7 +73,6 @@ $value = function (int $who, array $message, int $type) {
                 }
 
                 $doubles = $user->getDoubles();
-                var_dump($doubles);
 
                 if (!empty($doubles)) {
                     $pO = explode('|', $doubles);
