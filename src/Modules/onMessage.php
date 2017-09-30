@@ -304,7 +304,7 @@ $onMessage = function (int $who, string $message) {
         }
     }
 
-    if (in_array($bot->data->toggleradio, ['scroll', 'main'])) {
+    if (in_array($bot->data->toggleradio, ['scroll', 'chat'])) {
         $bool = false;
         if (!DataAPI::isSetVariable('radio')) {
             DataAPI::set('radio', ['lastCheck' => 0]);
@@ -315,8 +315,8 @@ $onMessage = function (int $who, string $message) {
 
                 if ($song == false) {
                     return $bot->network->sendMessage(
-                        'You have an error with the radio!
-                        If you don\'t want to use this feature, set it to OFF in panel.'
+                        'You have an error with the radio! If you don\'t want to use this feature, set it to OFF in
+                        panel.'
                     );
                 }
 
