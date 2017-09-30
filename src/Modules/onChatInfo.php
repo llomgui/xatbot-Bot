@@ -8,8 +8,8 @@ $onChatInfo = function (array $array) {
     $info  = explode(';=', $array['b']);
 
     $bot->chatInfo['background']   = explode('#', $info[0])[0];
-    $bot->chatInfo['tabbedChat']   = $info[1];
-    $bot->chatInfo['tabbedChatID'] = $info[2];
+    $bot->chatInfo['tabbedChat']   = @$info[1];
+    $bot->chatInfo['tabbedChatID'] = @$info[2];
     $bot->chatInfo['language']     = $info[3] ?? 'en';
     $bot->chatInfo['radio']        = isset($info[4]) ? str_replace(';', '', $info[4]) : '';
     $bot->chatInfo['buttons']      = $info[5] ?? 'None';
