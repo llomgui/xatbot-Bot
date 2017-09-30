@@ -43,6 +43,7 @@ $spotify = function (int $who, array $message, int $type) {
                 $currentTrack = $api->getMyCurrentTrack();
             } else {
                 var_dump($e->getMessage());
+                return $bot->network->sendMessageAutoDetection($who, $e->getMessage(), $type);
             }
         }
 
