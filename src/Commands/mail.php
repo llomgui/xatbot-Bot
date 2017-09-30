@@ -21,7 +21,7 @@ $mail = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !mail [xatid/regname/read/check/store/unstore/staff/delete] [?info]',
+            'Usage: !mail [xatid/regname/read/check/store/unstore/staff/delete] [info]',
             $type
         );
     }
