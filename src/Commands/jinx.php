@@ -10,8 +10,16 @@ $jinx = function (int $who, array $message, int $type) {
     if (!$bot->minrank($who, 'jinx')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
+
+    if (!isset($message[1])) {
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !jinx [reverse/mix/ends/middle/hang/egg/space/rspace] [value]',
+            $type
+        );
+    }
     
-    $jinxType = strtolower($message[1] ?? "mix");
+    $jinxType = strtolower($message[1]) ?? "mix";
     unset($message[0], $message[1]);
     
     $message = implode(' ', $message);

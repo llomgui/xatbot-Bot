@@ -34,7 +34,7 @@ $bump = function (int $who, array $message, int $type) {
             $reason = implode(' ', array_slice($message, 2));
         }
 
-        $bot->network->sendPrivateConversation($user->getID(), '(bump) ' . ($message2 ?? ''));
+        $bot->network->sendPrivateConversation($user->getID(), '(bump) ' . ($reason ?? ''));
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
