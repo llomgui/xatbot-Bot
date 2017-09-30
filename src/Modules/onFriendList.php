@@ -45,12 +45,6 @@ $onFriendList = function (array $array) {
             $foo = ['B', 'M'];
             $bar = ['000000000', '000000'];
 
-            $sort = function ($a, $b) {
-                return strcmp($a['isAvailable'], $a['isAvailable']);
-            };
-
-            usort($online, $sort);
-
             $isAvailableString = false;
             $string            = '';
             $cpt               = 0;
@@ -59,23 +53,25 @@ $onFriendList = function (array $array) {
                 if ($u['isAvailable']) {
                     $cpt++;
                     $isAvailableString = true;
+                    $string .= $u['regname'] . ' [' . str_replace($bar, $foo, $u['xatid']) . '] ';
                 }
 
-                $string .= $u['regname'] . ' [' . str_replace($bar, $foo, $u['xatid']) . '] ';
-
-                if ($isAvailableString && !$u['isAvailable']) {
+                if ($isAvailableString && (!$u['isAvailable'] || sizeof($online) == $cpt)) {
                     if ($cpt > 1) {
-                        $string .= 'are available!';
+                        $string .= 'are available! ';
                     } else {
-                        $string .= 'is available!';
+                        $string .= 'is available! ';
                     }
+                    $string .= $u['regname'] . ' [' . str_replace($bar, $foo, $u['xatid']) . '] ';
                 }
             }
 
-            if (sizeof($online) - $cpt > 1) {
-                $string .= 'are online!';
-            } else {
-                $string .= 'is online!';
+            if (sizeof($online) != $cpt) {
+                if (sizeof($online) - $cpt > 1) {
+                    $string .= 'are online!';
+                } else {
+                    $string .= 'is online!';
+                }
             }
 
             $bot->network->sendMessageAutoDetection(
