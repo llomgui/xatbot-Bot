@@ -35,5 +35,8 @@
             "secret_id": "",
             "redirect_uri": ""
         }
+    },
+    "config": {
+        "website_url": "https://example.fr"
     }
 }

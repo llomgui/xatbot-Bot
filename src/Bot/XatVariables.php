@@ -30,6 +30,7 @@ abstract class XatVariables
     private static $defaultName;
     
     private static $apikeys;
+    private static $config;
 
     public static function init()
     {
@@ -45,6 +46,7 @@ abstract class XatVariables
         self::initDefaultName();
         self::initDevelopers();
         self::initAPIKeys();
+        self::initConfig();
 
         return self::$init = true;
     }
@@ -1705,6 +1707,13 @@ abstract class XatVariables
         self::$apikeys = $data['apikeys'];
     }
 
+    private static function initConfig()
+    {
+        $data = json_decode(file_get_contents('./config.json', true), true);
+
+        self::$config = $data['config'];
+    }
+
     public static function update()
     {
         self::$update = time();
@@ -1714,6 +1723,7 @@ abstract class XatVariables
         self::updatePowers();
         self::updateAd();
         self::updateAPIKeys();
+        self::updateConfig();
     }
 
     public static function updateAPIKeys()
@@ -1721,6 +1731,13 @@ abstract class XatVariables
         $data = json_decode(file_get_contents('./config.json', true), true);
 
         self::$apikeys = $data['apikeys'];
+    }
+
+    public static function updateConfig()
+    {
+        $data = json_decode(file_get_contents('./config.json', true), true);
+
+        self::$config = $data['config'];
     }
 
     private static function updateIP2()
@@ -2046,6 +2063,11 @@ abstract class XatVariables
     public static function getAPIKeys()
     {
         return self::$apikeys;
+    }
+
+    public static function getConfig()
+    {
+        return self::$config;
     }
 
     public static function getFreeSmilies()
