@@ -20,6 +20,10 @@ $onUserLeave = function (int $who) {
         DataAPI::unSetVariable('joined_' . $who);
     }
 
+    if (DataAPI::isSetVariable('spotify_' . $who)) {
+        DataAPI::unSetVariable('spotify_' . $who);
+    }
+
     DataAPI::set('left_' . $who, time());
 
     return;

@@ -29,6 +29,11 @@
             "oauth_token": "",
             "oauth_token_secret": ""
         },
-        "weather": ""
+        "weather": "",
+        "spotify": {
+            "client_id": "",
+            "secret_id": "",
+            "redirect_uri": ""
+        }
     }
 }

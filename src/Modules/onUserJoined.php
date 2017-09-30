@@ -5,6 +5,7 @@ use OceanProject\API\DataAPI;
 use OceanProject\Models\Mail;
 use OceanProject\Models\Autoban;
 use OceanProject\Bot\XatVariables;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 $onUserJoined = function (int $who, array $array) {
 
@@ -23,6 +24,19 @@ $onUserJoined = function (int $who, array $array) {
 
     if ($user->isRegistered() && !$user->wasHere() && !DataAPI::isSetVariable('away_' . $who)) {
         $bot->network->sendTickle($who);
+
+        if (!DataAPI::isSetVariable('spotify_' . $who)) {
+            $spotify = Capsule::table('users')
+                ->where('xatid', $who)
+                ->select('spotify')
+                ->get();
+
+            if (sizeof($spotify) > 0) {
+                $spotify = json_decode($spotify[0]->spotify, true);
+            }
+
+            DataAPI::set('spotify_' . $who, $spotify);
+        }
     }
 
     if (!$user->wasHere() && !DataAPI::isSetVariable('away_' . $who) && !DataAPI::isSetVariable('joined_' . $who)) {
