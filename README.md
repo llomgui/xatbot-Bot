@@ -2,7 +2,7 @@
 
 ## What do i need to run it?
 
-- PHP7
+- PHP7.1
 - A xat account to use it as bot
 
 ## How does it work?
