@@ -1781,7 +1781,7 @@ abstract class XatVariables
         foreach ($cell[1] as $key => $value) {
             if ($key & 1) {
                 $value = explode(' ', strip_tags($value));// reg id
-                $volunteers[] = ['regname' => $value[1], 'xatid' => str_replace(['(', ')'], '', $value[2])];
+                $volunteers[] = ['regname' => $value[1], 'xatid' => trim(str_replace(['(', ')'], '', $value[2]))];
             }
         }
         
