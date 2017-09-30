@@ -83,7 +83,7 @@ $richest = function (int $who, array $message, int $type) {
     $bot->network->sendMessageAutoDetection(
         $who,
         'The richest user in this room is ' . $res[sizeof($res) - 1]['user']->getRegname().'('.
-        	$res[sizeof($res) - 1]['user']->getID().').',
+            $res[sizeof($res) - 1]['user']->getID().').',
         $type
     );
 };
