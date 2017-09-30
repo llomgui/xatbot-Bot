@@ -1,5 +1,6 @@
 <?php
 
+use OceanProject\Bot\XatVariables;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 $allmissing = function (int $who, array $message, int $type) {
@@ -40,7 +41,7 @@ $allmissing = function (int $who, array $message, int $type) {
         $message = 'Allmissing for ' . $info->regname . ' can be viewed here : ';
         return $bot->network->sendMessageAutoDetection(
             $who,
-            $message . ' https://oceanproject.fr/page/allmissing/' . $info->regname,
+            $message . XatVariables::getConfig()['website_url'] . '/panel/allmissing/' . $info->regname,
             $type
         );
     } else {

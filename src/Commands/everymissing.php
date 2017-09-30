@@ -1,5 +1,6 @@
 <?php
 
+use OceanProject\Bot\XatVariables;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 $everymissing = function (int $who, array $message, int $type) {
@@ -40,7 +41,7 @@ $everymissing = function (int $who, array $message, int $type) {
         $message = 'Everymissing for ' . $info->regname . ' can be viewed here : ';
         return $bot->network->sendMessageAutoDetection(
             $who,
-            $message . 'https://oceanproject.fr/page/everymissing/' . $info->regname,
+            $message . XatVariables::getConfig()['website_url'] . '/panel/everymissing/' . $info->regname,
             $type
         );
     } else {

@@ -1,6 +1,6 @@
 <?php
 
-use OceanProject\Bot\xatVariables;
+use OceanProject\Bot\XatVariables;
 
 $hasmost = function (int $who, array $message, int $type) {
 
@@ -14,7 +14,7 @@ $hasmost = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage !hasmost [power]', $type);
     }
 
-    $powers    = xatVariables::getPowers();
+    $powers    = XatVariables::getPowers();
     $powerName = strtolower($message[1]);
     $exists    = false;
 
@@ -30,5 +30,9 @@ $hasmost = function (int $who, array $message, int $type) {
         return;
     }
 
-    return $bot->network->sendMessageAutoDetection($who, 'https://oceanproject.fr/hasmost/' . $id, $type);
+    return $bot->network->sendMessageAutoDetection(
+        $who,
+        XatVariables::getConfig()['website_url'] . '/panel/hasmost/' . $id,
+        $type
+    );
 };

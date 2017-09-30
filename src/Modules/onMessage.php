@@ -70,7 +70,7 @@ $onMessage = function (int $who, string $message) {
   
             if ($bot->data->togglelinkfilter === true) {
                 $bool = false;
-                $allowedWebsites = (sizeof($bot->linksfilter) > 0) ? $bot->linksfilter :  ['oceanproject.fr'];
+                $allowedWebsites = (sizeof($bot->linksfilter) > 0) ? $bot->linksfilter :  ['xatbot.fr'];
                 $pattern = "/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?/";
                 foreach ($message2 as $value) {
                     if (preg_match($pattern, $value)) {

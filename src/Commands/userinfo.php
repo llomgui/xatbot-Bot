@@ -60,7 +60,7 @@ $userinfo = function (int $who, array $message, int $type) {
         if ($info->optout !== true) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'https://oceanproject.fr/userinfo/' . $info->regname,
+                OceanProject\Bot\XatVariables::getConfig()['website_url'] . '/panel/userinfo/' . $info->regname,
                 $type
             );
         } else {
