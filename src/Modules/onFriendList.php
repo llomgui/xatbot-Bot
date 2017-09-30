@@ -62,7 +62,9 @@ $onFriendList = function (array $array) {
                     } else {
                         $string .= 'is available! ';
                     }
-                    $string .= $u['regname'] . ' [' . str_replace($bar, $foo, $u['xatid']) . '] ';
+                    if (sizeof($online) != $cpt) {
+                        $string .= $u['regname'] . ' [' . str_replace($bar, $foo, $u['xatid']) . '] ';
+                    }
                 }
             }
 
