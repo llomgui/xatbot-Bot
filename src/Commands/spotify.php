@@ -65,7 +65,11 @@ $spotify = function (int $who, array $message, int $type) {
             $artistsArray[] = $artists[$i]->name;
         }
 
-        $artist = substr(implode(', ', $artistsArray), 0, -2);
+        if (sizeof($artistsArray) == 1) {
+            $artist = $artistsArray[0];
+        } else {
+            $artist = implode(', ', $artistsArray);
+        }
 
         $song = $currentTrack->item->name;
 
