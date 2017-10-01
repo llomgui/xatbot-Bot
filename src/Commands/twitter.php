@@ -60,6 +60,14 @@ $twitter = function (int $who, array $message, int $type) {
         ];
     }
 
+    if (empty($TweetInfos)) {
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'This user was not found!',
+            $type
+        );
+    }
+
     $bot->network->sendMessageAutoDetection(
         $who,
         'Last tweet for [' . $TweetInfos['name'] . '] with ' . $TweetInfos['followCount'] . ' followers : ' .
