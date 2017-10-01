@@ -288,11 +288,6 @@ $onUserJoined = function (int $who, array $array) {
         foreach ($bot->autobans as $autoban) {
             if ($bot->flagToRank($who) < $bot->stringToRank($bot->chatInfo['rank'])) {
                 if ($autoban['xatid'] == $who && !$user->isBanned() && !$user->isGamebanned()) {
-                    AutoBan::where([
-                      ['xatid', '=', $autoban['xatid']],
-                      ['bot_id', '=', $bot->data->id]
-                    ])->delete();
-                    $bot->autobans = $bot->setAutobanList();
                     if ($autoban['method'] == 'ban') {
                         $bot->network->ban(
                             $who,
