@@ -27,6 +27,10 @@ $spotify = function (int $who, array $message, int $type) {
             $currentTrack = $api->getMyCurrentTrack();
         } catch (\SpotifyWebAPI\SpotifyWebAPIException $e) {
             if ($e->getMessage() == 'The access token expired') {
+                if (empty($spotify['refreshToken'])) {
+                    return $bot->network->sendMessageAutoDetection($who, 'Please relogin to Spotify on panel.', $type);
+                }
+
                 $client_id = XatVariables::getAPIKeys()['spotify']['client_id'];
                 $secret_id = XatVariables::getAPIKeys()['spotify']['secret_id'];
                 $redirect_uri = XatVariables::getAPIKeys()['spotify']['redirect_uri'];
@@ -45,6 +49,14 @@ $spotify = function (int $who, array $message, int $type) {
                 var_dump($e->getMessage());
                 return $bot->network->sendMessageAutoDetection($who, $e->getMessage(), $type);
             }
+        }
+
+        if (is_null($currentTrack)) {
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->users[$who]->getRegname() . ' is not listening to Spotify.',
+                $type
+            );
         }
 
         $artistsArray = [];
