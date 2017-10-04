@@ -319,6 +319,14 @@ $onUserJoined = function (int $who, array $array) {
                             case 'slotban':
                                 $gamebanid = 236;
                                 break;
+
+                            case 'reverseban':
+                                $gamebanid = 176;
+                                break;
+
+                            case 'zipban':
+                                $gamebanid = 184;
+                                break;
                         }
                         if ($bot->botHasPower($gamebanid)) {
                             return $bot->network->ban(
