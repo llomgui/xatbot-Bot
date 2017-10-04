@@ -26,7 +26,9 @@ $autoban = function (int $who, array $message, int $type) {
         'matchban'    => 'Matchban',
         'codeban'     => 'Codeban',
         'mazeban'     => 'Mazeban',
-        'slotban'     => 'Slotban'
+        'slotban'     => 'Slotban',
+        'reverseban'  => 'Reverseban',
+        'zipban'      => 'Zipban'
     ];
     
     switch ($message[1]) {
