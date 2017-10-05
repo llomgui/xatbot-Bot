@@ -51,21 +51,44 @@ $mail = function (int $who, array $message, int $type) {
 
             foreach ($mails as $mail) {
                 $user = Userinfo::where('xatid', $mail['fromuser'])->first();
-                $bot->network->sendMessageAutoDetection(
-                    $who,
-                    'Time: ' . gmdate('d/m/Y', $mail->created_at->timestamp) . ' ID: ' . $mail->id . ' From: ' .
-                    $user->regname . '(' . $user->xatid . ') Message: ' . $mail->message,
-                    $type
-                );
+
+                $newMessage = 'Time: ' . gmdate('d/m/Y', $mail->created_at->timestamp) . ' ID: ' . $mail->id .
+                    ' From: ' . $user->regname . '(' . $user->xatid . ') Message: ' . $mail->message;
 
                 if ($message[2] == 'new') {
                     $mail->read = true;
                     $mail->save();
                 }
 
-                usleep(750000);
+                if (sizeof($bot->packetsinqueue) > 0) {
+                    $bot->packetsinqueue[max(array_keys($bot->packetsinqueue)) + 2000] = [
+                        'who' => $who,
+                        'message' => $newMessage,
+                        'type' => $type
+                    ];
+                } else {
+                    $bot->packetsinqueue[round(microtime(true) * 1000) + 2000] = [
+                        'who' => $who,
+                        'message' => $newMessage,
+                        'type' => $type
+                    ];
+                }
             }
-            return $bot->network->sendMessageAutoDetection($who, 'End of messages.', $type);
+
+            if (sizeof($bot->packetsinqueue) > 0) {
+                $bot->packetsinqueue[max(array_keys($bot->packetsinqueue)) + 2000] = [
+                    'who' => $who,
+                    'message' => 'End of messages.',
+                    'type' => $type
+                ];
+            } else {
+                $bot->packetsinqueue[round(microtime(true) * 1000) + 2000] = [
+                    'who' => $who,
+                    'message' => 'End of messages.',
+                    'type' => $type
+                ];
+            }
+            return;
             break;
 
         case 'empty':

@@ -27,6 +27,7 @@ class XatBot
     public $isPremium;
     public $stopped;
     public $done;
+    public $packetsinqueue;
 
     public function __construct(Bot $data)
     {
@@ -44,6 +45,7 @@ class XatBot
         $this->linksfilter    = $this->setLinksfilter();
         $this->customcommands = $this->setCustomCommands();
         $this->snitchlist     = $this->setSnitchList();
+        $this->packetsinqueue = [];
 
         if ($this->data->premium > time() && $this->data->premiumfreeze == 1) {
             $this->isPremium = true;
@@ -223,6 +225,20 @@ class XatBot
         }
 
         return $list;
+    }
+
+    public function sendPacketsInQueue()
+    {
+        if (sizeof($this->packetsinqueue) > 0) {
+            foreach ($this->packetsinqueue as $key => $value) {
+                if (($key < round(microtime(true) * 1000))) {
+                    $this->network->sendMessageAutoDetection($value['who'], $value['message'], $value['type']);
+                    unset($this->packetsinqueue[$key]);
+                }
+            }
+        } else {
+            return false;
+        }
     }
 
     public function botHasPower($id)

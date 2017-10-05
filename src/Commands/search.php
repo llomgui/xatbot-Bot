@@ -36,21 +36,39 @@ $search = function (int $who, array $message, int $type) {
 
     if (sizeof($array) >= 3) {
         for ($i = 0; $i < 3; $i++) {
-            $bot->network->sendMessageAutoDetection(
-                $who,
-                '['.$array[$i][0] . '] - ' . $array[$i][1]. ' at ' . $array[$i][2],
-                $type
-            );
-            usleep(500000);
+            $newMessage = '['.$array[$i][0] . '] - ' . $array[$i][1]. ' at ' . $array[$i][2];
+
+            if (sizeof($bot->packetsinqueue) > 0) {
+                $bot->packetsinqueue[max(array_keys($bot->packetsinqueue)) + 2000] = [
+                    'who' => $who,
+                    'message' => $newMessage,
+                    'type' => $type
+                ];
+            } else {
+                $bot->packetsinqueue[round(microtime(true) * 1000) + 2000] = [
+                    'who' => $who,
+                    'message' => $newMessage,
+                    'type' => $type
+                ];
+            }
         }
     } elseif (sizeof($array) > 0) {
         for ($i = 0; $i < sizeof($array); $i++) {
-            $bot->network->sendMessageAutoDetection(
-                $who,
-                '['.$array[$i][0] . '] - ' . $array[$i][1] . ' at ' . $array[$i][2],
-                $type
-            );
-            usleep(50000);
+            $newMessage = '['.$array[$i][0] . '] - ' . $array[$i][1] . ' at ' . $array[$i][2];
+
+            if (sizeof($bot->packetsinqueue) > 0) {
+                $bot->packetsinqueue[max(array_keys($bot->packetsinqueue)) + 2000] = [
+                    'who' => $who,
+                    'message' => $newMessage,
+                    'type' => $type
+                ];
+            } else {
+                $bot->packetsinqueue[round(microtime(true) * 1000) + 2000] = [
+                    'who' => $who,
+                    'message' => $newMessage,
+                    'type' => $type
+                ];
+            }
         }
     } else {
         $bot->network->sendMessageAutoDetection($who, 'Sorry, I don\'t have any message about this.', $type);

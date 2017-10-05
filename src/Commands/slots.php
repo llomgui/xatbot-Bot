@@ -41,10 +41,24 @@ $slots = function (int $who, array $message, int $type) {
         'Spinning: ' . implode('|', array_fill(0, $smilieCount, '(rolling#)')),
         $type
     );
-    usleep(50000); //prevent "Limit" (possible better way to do this?)
+
     if (count(array_unique($spun)) == 1) {
-        $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and won (clap#)', $type);
+        $newMessage = $response . implode('|', $spun) . ' and won (clap#)';
     } else {
-        $bot->network->sendMessageAutoDetection($who, $response . implode('|', $spun) . ' and lost :P', $type);
+        $newMessage = $response . implode('|', $spun) . ' and lost :P';
+    }
+
+    if (sizeof($bot->packetsinqueue) > 0) {
+        $bot->packetsinqueue[max(array_keys($bot->packetsinqueue)) + 1000] = [
+            'who' => $who,
+            'message' => $newMessage,
+            'type' => $type
+        ];
+    } else {
+        $bot->packetsinqueue[round(microtime(true) * 1000) + 1000] = [
+            'who' => $who,
+            'message' => $newMessage,
+            'type' => $type
+        ];
     }
 };

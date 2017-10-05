@@ -274,6 +274,8 @@ class Server
                                 break;
                             }
 
+                            $Ocean->sendPacketsInQueue();
+
                             if (empty($packet)) {
                                 break;
                             }

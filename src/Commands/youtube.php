@@ -46,11 +46,20 @@ $youtube = function (int $who, array $message, int $type) {
     }
 
     foreach ($response['items'] as $result) {
-        $bot->network->sendMessageAutoDetection(
-            $who,
-            $result['snippet']['title'].' - http://youtube.com/watch?v='.$result['id']['videoId'],
-            $type
-        );
-        sleep(1);
+        $newMessage = $result['snippet']['title'].' - http://youtube.com/watch?v='.$result['id']['videoId'];
+
+        if (sizeof($bot->packetsinqueue) > 0) {
+            $bot->packetsinqueue[max(array_keys($bot->packetsinqueue)) + 1000] = [
+                'who' => $who,
+                'message' => $newMessage,
+                'type' => $type
+            ];
+        } else {
+            $bot->packetsinqueue[round(microtime(true) * 1000) + 1000] = [
+                'who' => $who,
+                'message' => $newMessage,
+                'type' => $type
+            ];
+        }
     }
 };
