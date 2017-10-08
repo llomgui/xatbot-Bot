@@ -72,7 +72,7 @@ $autotemp = function (int $who, array $message, int $type) {
                 foreach ($bot->autotemps as $autotemp) {
                     if ($autotemp['xatid'] == $message[2]) {
                         AutoTemp::where([
-                            ['xatid', '=', $message[2]],
+                            ['xatid', '=', (int)$message[2]],
                             ['bot_id', '=', $bot->data->id]
                         ])->delete();
                         $bot->autotemps = $bot->setAutotempList();

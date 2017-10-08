@@ -103,7 +103,7 @@ $autoban = function (int $who, array $message, int $type) {
                 foreach ($bot->autobans as $autoban) {
                     if ($autoban['xatid'] == $message[2]) {
                         AutoBan::where([
-                          ['xatid', '=', $message[2]],
+                          ['xatid', '=', (int)$message[2]],
                           ['bot_id', '=', $bot->data->id]
                         ])->delete();
                         $bot->autobans = $bot->setAutobanList();

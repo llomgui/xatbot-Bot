@@ -12,83 +12,112 @@ $onFriendList = function (array $array) {
 
     $bot  = OceanProject\API\ActionAPI::getBot();
     $list = explode(',', $array['v']);
+    $list = array_diff($list, ['10101']);
+
+    if (sizeof($list) == 0) {
+        return $bot->network->sendMessageAutoDetection(
+            DataAPI::get('online_command')['who'],
+            'Offline',
+            DataAPI::get('online_command')['type']
+        );
+    }
+
     $ctx  = stream_context_create(['http' => ['timeout' => 1]]);
 
     $volunteers = XatVariables::getVolunteers();
+    $onlines = [];
+    $availables = [];
 
     $volids = [];
     for ($i = 0; $i < sizeof($volunteers); $i++) {
         $volids[] = $volunteers[$i]['xatid'];
     }
 
-    if (sizeof($list) > 1) {
-        unset($list[0]);
-        foreach ($list as $id) {
-            if (in_array($id, $volids)) {
-                for ($i = 0; $i < sizeof($volunteers); $i++) {
-                    if ($id == $volunteers[$i]['xatid']) {
-                        $regname = $volunteers[$i]['regname'];
+    foreach ($list as $user) {
+        if (substr($user, 0, 1) == '0') {
+            $availables[] = $user;
+        } else {
+            $onlines[] = $user;
+        }
+    }
+
+    $list = [];
+    $list['online'] = [];
+    $list['available'] = [];
+
+    if (sizeof($availables) > 0) {
+        foreach ($availables as $available) {
+            $available = substr($available, 1);
+            if (in_array($available, $volids)) {
+                foreach ($volunteers as $volunteer) {
+                    if ($available == $volunteer['xatid']) {
+                        $regname = $volunteer['regname'];
                     }
                 }
             }
 
-            $regname = (!empty($regname) ? $regname : file_get_contents('http://xat.me/x?id=' . $id, false, $ctx));
+            $regname = (!empty($regname) ? $regname : file_get_contents(
+                'http://xat.me/x?id=' . $available,
+                false,
+                $ctx
+            )
+            );
 
-            $online[] = [
-                'regname'     => $regname,
-                'xatid'       => $id[0] == '0' ? substr($id, 1) : $id,
-                'isAvailable' => ($id[0] == '0') ? true : false
-            ];
+            $list['available'][$regname] = $available;
         }
+    }
 
-        if (sizeof($online) > 0) {
+    if (sizeof($onlines) > 0) {
+        foreach ($onlines as $online) {
+            if (in_array($online, $volids)) {
+                foreach ($volunteers as $volunteer) {
+                    if ($online == $volunteer['xatid']) {
+                        $regname = $volunteer['regname'];
+                    }
+                }
+            }
+
+            $regname = (!empty($regname) ? $regname : file_get_contents('http://xat.me/x?id=' . $online, false, $ctx));
+
+            $list['online'][$regname] = $online;
+        }
+    }
+
+    $string = '';
+
+    if (sizeof($list['available']) > 0) {
+        foreach ($list['available'] as $reg => $id) {
             $foo = ['B', 'M'];
             $bar = ['000000000', '000000'];
-
-            $isAvailableString = false;
-            $string            = '';
-            $cpt               = 0;
-
-            foreach ($online as $u) {
-                if ($u['isAvailable']) {
-                    $cpt++;
-                    $isAvailableString = true;
-                    $string .= $u['regname'] . ' [' . str_replace($bar, $foo, $u['xatid']) . '] ';
-                }
-
-                if ($isAvailableString && (!$u['isAvailable'] || sizeof($online) == $cpt)) {
-                    if ($cpt > 1) {
-                        $string .= 'are available! ';
-                    } else {
-                        $string .= 'is available! ';
-                    }
-                    if (sizeof($online) != $cpt) {
-                        $string .= $u['regname'] . ' [' . str_replace($bar, $foo, $u['xatid']) . '] ';
-                    }
-                }
-            }
-
-            if (sizeof($online) != $cpt) {
-                if (sizeof($online) - $cpt > 1) {
-                    $string .= 'are online!';
-                } else {
-                    $string .= 'is online!';
-                }
-            }
-
-            $bot->network->sendMessageAutoDetection(
-                DataAPI::get('online_command')['who'],
-                $string,
-                DataAPI::get('online_command')['type']
-            );
+            $string .= $reg . ' [' . str_replace($bar, $foo, $id) . '] ';
         }
-    } else {
-        $bot->network->sendMessageAutoDetection(
-            DataAPI::get('online_command')['who'],
-            'Offline',
-            DataAPI::get('online_command')['type']
-        );
+
+        if (sizeof($list['available']) > 1) {
+            $string .= 'are available!';
+        } else {
+            $string .= 'is available!';
+        }
     }
+
+    if (sizeof($list['online']) > 0) {
+        foreach ($list['online'] as $reg => $id) {
+            $foo = ['B', 'M'];
+            $bar = ['000000000', '000000'];
+            $string .= $reg . ' [' . str_replace($bar, $foo, $id) . '] ';
+        }
+
+        if (sizeof($list['online']) > 1) {
+            $string .= 'are online!';
+        } else {
+            $string .= 'is online!';
+        }
+    }
+
+    $bot->network->sendMessageAutoDetection(
+        DataAPI::get('online_command')['who'],
+        $string,
+        DataAPI::get('online_command')['type']
+    );
 
     DataAPI::unSetVariable('online_command');
 };

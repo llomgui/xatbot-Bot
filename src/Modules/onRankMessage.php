@@ -32,6 +32,25 @@ $onRankMessage = function (array $array) {
     }
     
     if ($array['t'][0] == '/') {
+        if (substr($array['t'], 0, 3) == '/ka') {
+            $log->message = '[Rank] ' . $user1 . ' used kickall. (' . $array['t'] . ')';
+            $log->save();
+            return;
+        }
+
+        if (substr($array['t'], 0, 3) == '/gd') {
+            $log->message = '[Rank] ' . $user1 . ' badged ' . $user2 . '!';
+            $log->save();
+            return;
+        }
+
+        if (substr($array['t'], 0, 3) == '/gn') {
+            $log->message = '[Rank] ' . $user1 . ' banned ' . $user2 . ' for ' .
+                    round(substr($array['t'], 3) / 3600, 2) . ' hours reason: "' . (!empty($array['p']) ?? '') . '"';
+            $log->save();
+            return;
+        }
+
         switch (substr($array['t'], 0, 2)) {
             case '/u':
                 // <m  t="/u" u="412345607" d="586552"  />
@@ -41,7 +60,7 @@ $onRankMessage = function (array $array) {
             case '/g':
                 //<m  p="" t="/g3600" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' banned ' . $user2 . ' for ' .
-                    round(substr($array['t'], 2) / 3600, 2) . ' hours reason: "' . $array['p'] . '"';
+                    round(substr($array['t'], 2) / 3600, 2) . ' hours reason: "' . (!empty($array['p']) ?? '') . '"';
                 break;
 
             case '/m':

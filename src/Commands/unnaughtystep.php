@@ -35,6 +35,7 @@ $unnaughtystep = function (int $who, array $message, int $type) {
         }
 
         $bot->network->ban($user->getID(), 0, $reason ?? '', 'gn');
+        $bot->network->sendMessageAutoDetection($who, 'The user is now unnaughtystepped.', $type);
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }

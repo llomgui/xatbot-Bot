@@ -35,6 +35,7 @@ $undunce = function (int $who, array $message, int $type) {
         }
 
         $bot->network->ban($user->getID(), 0, $reason ?? '', 'gd');
+        $bot->network->sendMessageAutoDetection($who, 'The user is now undunced.', $type);
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }

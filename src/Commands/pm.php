@@ -46,4 +46,6 @@ $pm = function (int $who, array $message, int $type) {
         $user->getID(),
         $message ?? 'Hello'
     );
+
+    $bot->network->sendMessageAutoDetection($who, 'The user got the pm!', $type);
 };

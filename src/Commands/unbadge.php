@@ -35,6 +35,7 @@ $unbadge = function (int $who, array $message, int $type) {
         }
 
         $bot->network->sendPrivateConversation($user->getID(), '/nb');
+        $bot->network->sendMessageAutoDetection($who, 'The user is now unbadged.', $type);
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }

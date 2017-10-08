@@ -19,11 +19,13 @@ $scroll = function (int $who, array $message, int $type) {
     switch (strtolower($message[1])) {
         case 'clear':
             $bot->network->sendMessage('/s');
+            $bot->network->sendMessageAutoDetection($who, 'The scroll is now cleared!', $type);
             break;
         
         default:
             unset($message[0]);
             $bot->network->sendMessage('/s' . implode(' ', $message));
+            $bot->network->sendMessageAutoDetection($who, 'The scroll is now set to ' . implode(' ', $message), $type);
             break;
     }
 };

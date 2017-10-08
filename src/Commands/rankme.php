@@ -11,7 +11,12 @@ $rankme = function (int $who, array $message, int $type) {
     
     switch (strtolower($message[1])) {
         case 'guest':
-            if (!$bot->minrank($who, 'guestme')) {
+            if ($bot->flagToRank($who) < 1) {
+                if (isset($bot->stafflist[$who])) {
+                    if ($bot->stafflist[$who] >= 1) {
+                        return true;
+                    }
+                }
                 return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 
@@ -21,7 +26,12 @@ $rankme = function (int $who, array $message, int $type) {
             break;
             
         case 'member':
-            if (!$bot->minrank($who, 'memberme')) {
+            if ($bot->flagToRank($who) < 2) {
+                if (isset($bot->stafflist[$who])) {
+                    if ($bot->stafflist[$who] >= 2) {
+                        return true;
+                    }
+                }
                 return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 
@@ -32,7 +42,12 @@ $rankme = function (int $who, array $message, int $type) {
             
         case 'mod':
         case 'moderator':
-            if (!$bot->minrank($who, 'modme')) {
+            if ($bot->flagToRank($who) < 3) {
+                if (isset($bot->stafflist[$who])) {
+                    if ($bot->stafflist[$who] >= 3) {
+                        return true;
+                    }
+                }
                 return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 
@@ -42,7 +57,12 @@ $rankme = function (int $who, array $message, int $type) {
             break;
             
         case 'owner':
-            if (!$bot->minrank($who, 'ownerme')) {
+            if ($bot->flagToRank($who) < 4) {
+                if (isset($bot->stafflist[$who])) {
+                    if ($bot->stafflist[$who] >= 4) {
+                        return true;
+                    }
+                }
                 return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
             }
 

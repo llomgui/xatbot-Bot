@@ -14,6 +14,15 @@ $kickall = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('missing.power', ['kickall']), $type);
     }
 
+    if (empty($message[1])) {
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !kickall [all/register/toon/banned/raid]',
+            $type,
+            true
+        );
+    }
+
     switch (strtolower($message[1])) {
         case 'all':
             $bot->network->socket->write('m', ['t' => '/ka', 'u' => XatVariables::getXatid()]);

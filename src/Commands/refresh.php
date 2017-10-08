@@ -8,7 +8,7 @@ $refresh = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    $bot->refresh();
-
     $bot->network->sendMessageAutoDetection($who, 'Refreshing...', $type);
+    $bot->refresh();
+    $bot->network->sendMessageAutoDetection($who, 'I am ready!', $type);
 };

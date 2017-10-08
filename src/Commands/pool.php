@@ -30,5 +30,6 @@ $pool = function (int $who, array $message, int $type) {
             break;
     }
 
-    $bot->network->socket->write('w'.$pool);
+    $bot->network->sendMessageAutoDetection($who, 'I am moving to ' . $message[1] . ' pool!', $type);
+    $bot->network->socket->write('w' . $pool);
 };

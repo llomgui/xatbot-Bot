@@ -35,6 +35,7 @@ $bump = function (int $who, array $message, int $type) {
         }
 
         $bot->network->sendPrivateConversation($user->getID(), '(bump) ' . ($reason ?? ''));
+        $bot->network->sendMessageAutoDetection($who, 'The user got a bump!', $type);
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }
