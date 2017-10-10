@@ -14,7 +14,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            "Usage: !shortname [name]",
+            'Usage: !shortname [name]',
             $type,
             true
         );
@@ -23,7 +23,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (!ctype_alnum($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            "Shortname contains bad characters.",
+            'Shortname contains bad characters.',
             $type
         );
     }
@@ -31,7 +31,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (strlen($message[1]) < 4) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            "Too short for a shortname. Minimum 4 letters.",
+            'Too short for a shortname. Minimum 4 letters.',
             $type
         );
     }
@@ -39,7 +39,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (strlen($message[1]) > 9) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            "Too long for a shortname. Maximum 9 letters.",
+            'Too long for a shortname. Maximum 9 letters.',
             $type
         );
     }
@@ -47,7 +47,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (is_numeric($message[1][0])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            "Shortnames can't start with a number.",
+            'Shortnames can\'t start with a number.',
             $type
         );
     }

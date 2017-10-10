@@ -30,9 +30,9 @@ $wikipedia = function (int $who, array $message, int $type) {
 
     $json = json_decode($page);
     if (!empty($json[1])) {
-        $wiki = "Wikipedia page: http://en.wikipedia.org/wiki/" . $json[1][0];
+        $wiki = 'Wikipedia page: http://en.wikipedia.org/wiki/' . $json[1][0];
     } else {
-        $wiki = "Wikipedia page could not be found.";
+        $wiki = 'Wikipedia page could not be found.';
     }
     $bot->network->sendMessageAutoDetection($who, $wiki, $type);
 };

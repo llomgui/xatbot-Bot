@@ -9,7 +9,7 @@ $price = function (int $who, array $message, int $type) {
     }
 
     if (!isset($message[1]) || empty($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, "Usage: !price [power]", $type, true);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !price [power]', $type, true);
     }
 
     $powers = OceanProject\Bot\XatVariables::getPowers();
@@ -23,7 +23,7 @@ $price = function (int $who, array $message, int $type) {
     $powerID = $match[0];
 
     if (!$powerID) {
-        return $bot->network->sendMessageAutoDetection($who, "Power not found.", $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Power not found.', $type);
     }
 
     if ($powerID == 95) {
@@ -34,12 +34,12 @@ $price = function (int $who, array $message, int $type) {
     }
     
     if ($powers[$powerID]['minCost'] == 0 || $powers[$powerID]['maxCost'] == 0) {
-        return $bot->network->sendMessageAutoDetection($who, "Power has not been priced yet.", $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Power has not been priced yet.', $type);
     }
     $dym = $match[1] === false ? 'Did you mean "' . $powers[$powerID]['name'] . '"? ' : '';
     $bot->network->sendMessageAutoDetection(
         $who,
-        $dym . "["  . $powerID . "] " .ucfirst($powers[$powerID]['name']) . ' costs ' .
+        $dym . '['  . $powerID . '] ' .ucfirst($powers[$powerID]['name']) . ' costs ' .
             number_format($powers[$powerID]['minCost']) . ' - ' . number_format($powers[$powerID]['maxCost']) .
             ' xats OR ' . number_format(round($powers[$powerID]['minCost'] / 13.5)) . ' - ' .
             number_format(round($powers[$powerID]['maxCost'] / 13.5)) . ' days.',

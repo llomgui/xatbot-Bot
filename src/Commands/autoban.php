@@ -40,7 +40,7 @@ $autoban = function (int $who, array $message, int $type) {
                             if ($autoban['xatid'] == $message[2]) {
                                 return $bot->network->sendMessageAutoDetection(
                                     $who,
-                                    'The user is already added!',
+                                    $bot->botlang('user.alreadyadded'),
                                     $type
                                 );
                             }
@@ -51,14 +51,14 @@ $autoban = function (int $who, array $message, int $type) {
                             if (!$regname) {
                                 return $bot->network->sendMessageAutoDetection(
                                     $who,
-                                    'The xatid does not exist!',
+                                    $bot->botlang('xatid.notexist'),
                                     $type
                                 );
                             }
                         } else {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'The xatid is not valid!',
+                                $bot->botlang('xatid.notvalid'),
                                 $type
                             );
                         }
@@ -66,7 +66,7 @@ $autoban = function (int $who, array $message, int $type) {
                         if (!array_key_exists(strtolower($message[3]), $methods)) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'The method is invalid!',
+                                $bot->botlang('method.notvalid'),
                                 $type
                             );
                         }
@@ -74,7 +74,7 @@ $autoban = function (int $who, array $message, int $type) {
                         if ($message[4] < 0 || !is_numeric($message[4])) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'The number of hours is invalid!',
+                                $bot->botlang('hours.notvalid'),
                                 $type
                             );
                         }
@@ -90,15 +90,15 @@ $autoban = function (int $who, array $message, int $type) {
                         $bot->autobans = $bot->setAutobanList();
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $regname . '(' . $message[2] . ')has been added to the list!',
+                            $bot->botlang('user.addedtolist', [$regname, $message[2]]),
                             $type
                         );
                     }
                 }
             }
             break;
-        case "rm":
-        case "remove":
+        case 'rm':
+        case 'remove':
             if (isset($message[2]) && !empty($message[2]) && is_int((int)$message[2])) {
                 foreach ($bot->autobans as $autoban) {
                     if ($autoban['xatid'] == $message[2]) {
@@ -109,20 +109,20 @@ $autoban = function (int $who, array $message, int $type) {
                         $bot->autobans = $bot->setAutobanList();
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $message[2] . ' has been removed from the list!',
+                            $bot->botlang('user.removedtolist', [$message[2]]),
                             $type
                         );
                     }
                 }
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'I could not find this user in the list.',
+                    $bot->botlang('user.notinlist'),
                     $type
                 );
             }
             break;
-        case "ls":
-        case "list":
+        case 'ls':
+        case 'list':
             $autobanList = [];
             foreach ($bot->autobans as $autoban) {
                 $autobanList[] = $autoban['regname'] . ' [' . $autoban['xatid'] . ']';

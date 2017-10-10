@@ -32,7 +32,7 @@ $alias = function (int $who, array $message, int $type) {
                         if (strtolower($alias) == $key) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'This alias is already in use!',
+                                $bot->botlang('cmd.alias.alreadyused'),
                                 $type
                             );
                         }
@@ -51,7 +51,7 @@ $alias = function (int $who, array $message, int $type) {
                     if (isset($bot->minranks[$alias])) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'This alias is already a command!',
+                            $bot->botlang('cmd.alias.alreadycommand'),
                             $type
                         );
                     }
@@ -60,7 +60,7 @@ $alias = function (int $who, array $message, int $type) {
                     if (!isset($bot->minranks[$currentcommand])) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'The current command is not a command!',
+                            $bot->botlang('cmd.alias.notcommand'),
                             $type
                         );
                     }
@@ -75,7 +75,7 @@ $alias = function (int $who, array $message, int $type) {
                     
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'The alias has been added!',
+                        $bot->botlang('cmd.alias.added'),
                         $type
                     );
                 }
@@ -95,14 +95,14 @@ $alias = function (int $who, array $message, int $type) {
                         
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $message[2] . ' has been removed from the list!',
+                            $bot->botlang('cmd.alias.removed', [$message[2]]),
                             $type
                         );
                     }
                 }
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'I could not find this alias in the list.',
+                    $bot->botlang('cmd.alias.notinlist'),
                     $type
                 );
             }

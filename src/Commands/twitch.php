@@ -16,7 +16,7 @@ $twitch = function (int $who, array $message, int $type) {
     $key = OceanProject\Bot\XatVariables::getAPIKeys()['twitch'];
 
     if (empty($key)) {
-        return $bot->network->sendMessageAutoDetection($who, "Twitch API Key needs to be setup", $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Twitch API Key needs to be setup', $type);
     }
 
     if (empty($message[1])) {
