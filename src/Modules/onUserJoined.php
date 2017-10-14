@@ -331,7 +331,7 @@ $onUserJoined = function (int $who, array $array) {
                         if ($bot->botHasPower($gamebanid)) {
                             return $bot->network->ban(
                                 $who,
-                                $autoban['method'],
+                                $autoban['hours'],
                                 'Autoban',
                                 'g',
                                 $gamebanid
