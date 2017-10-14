@@ -307,7 +307,7 @@ class Server
                                     $args[] = $packet['elements']['u'];
                                     $args[] = $packet['elements']['k'];
                                     $args[] = $packet['elements']['t'] ?? '';
-                                    $args[] = $packet['elements']['b'];
+                                    $args[] = $packet['elements']['b'] ?? 0;
                                     $args[] = $packet['elements']['x'] ?? 0;
                                     $args[] = $packet['elements']['s'] ?? 0;
                                     break;
