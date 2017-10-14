@@ -80,8 +80,9 @@ class XatBot
     public function setBotlangs()
     {
         $results = Capsule::table('botlang')
-                    ->join('botlang_sentences', 'botlang.botlang_sentences_id', '=', 'botlang_sentences.id')
+                    ->rightJoin('botlang_sentences', 'botlang.botlang_sentences_id', '=', 'botlang_sentences.id')
                     ->where('botlang.bot_id', $this->data->id)
+                    ->orWhereNull('botlang.bot_id')
                     ->select('botlang_sentences.name', 'botlang.value', 'botlang_sentences.default_value')
                     ->get()
                     ->toArray();
