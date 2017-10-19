@@ -34,7 +34,7 @@ $onPC = function (int $who, string $message) {
         }
     }
 
-    if ($bot->data->automember == 'maths' && DataAPI::isSetVariable('automember_' . $who)) {
+    if ($bot->data->automember == 'math' && DataAPI::isSetVariable('automember_' . $who)) {
         if (DataAPI::get('automember_' . $who) == $message[0]) {
             $bot->network->sendPrivateConversation($who, 'You are now a member');
             DataAPI::unSetVariable('automember_' . $who);

@@ -260,7 +260,7 @@ $onUserJoined = function (int $who, array $array) {
                 }
                 break;
 
-            case 'maths':
+            case 'math':
                 $foo = rand(5, 20);
                 $bar = rand(4, 19);
                 DataAPI::set('automember_' . $who, $foo + $bar);
