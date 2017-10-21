@@ -10,6 +10,15 @@ $onUserLeave = function (int $who) {
         return;
     }
 
+    // Auto gamebot?
+    if ($who == 804) {
+        if (DataAPI::isSetVariable('bot') && (DataAPI::get('bot') == true)) {
+            $bot->network->sendMessage('!bot');
+            usleep(500000);
+            $bot->network->sendMessage('!start');
+        }
+    }
+
     unset($bot->users[$who]);
 
     if (DataAPI::isSetVariable('away_' . $who)) {
