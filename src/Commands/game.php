@@ -19,76 +19,35 @@ $game = function (int $who, array $message, int $type) {
         );
     }
 
-    $gameList = 'doodlerace, matchrace, snakerace, spacewar, hearts, switch, darts, zwhack';
+    $list = [
+        'doodlerace' => 60189,
+        'matchrace' => 60193,
+        'snakerace' => 60195,
+        'spacewar' => 60201,
+        'hearts' => 60225,
+        'switch' => 60239,
+        'darts' => 60247,
+        'zwhack' => 60257
+    ];
 
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !game [' . $gameList . ', bot, start, time, stop, bye]',
+            'Usage: !game [' . implode(', ', array_keys($list)) . ', bot, start, time, stop, bye]',
             $type
         );
     }
-
     switch (strtolower($message[1])) {
         case 'doodlerace':
-            $bot->network->socket->write('x', [
-                'i' => 60189,
-                'u' => XatVariables::getXatid(),
-                't' => 'j'
-            ]);
-            break;
-
         case 'matchrace':
-            $bot->network->socket->write('x', [
-                'i' => 60193,
-                'u' => XatVariables::getXatid(),
-                't' => 'j'
-            ]);
-            break;
-
         case 'snakerace':
-            $bot->network->socket->write('x', [
-                'i' => 60195,
-                'u' => XatVariables::getXatid(),
-                't' => 'j'
-            ]);
-            break;
-
         case 'spacewar':
-            $bot->network->socket->write('x', [
-                'i' => 60201,
-                'u' => XatVariables::getXatid(),
-                't' => 'j'
-            ]);
-            break;
-
         case 'hearts':
-            $bot->network->socket->write('x', [
-                'i' => 60225,
-                'u' => XatVariables::getXatid(),
-                't' => 'j'
-            ]);
-            break;
-
         case 'switch':
-            $bot->network->socket->write('x', [
-                'i' => 60239,
-                'u' => XatVariables::getXatid(),
-                't' => 'j'
-            ]);
-            break;
-
         case 'darts':
-            $bot->network->socket->write('x', [
-                'i' => 60247,
-                'u' => XatVariables::getXatid(),
-                't' => 'j'
-            ]);
-            break;
-
         case 'zwhack':
             $bot->network->socket->write('x', [
-                'i' => 60257,
+                'i' => $list[strtolower($message[1])],
                 'u' => XatVariables::getXatid(),
                 't' => 'j'
             ]);
@@ -99,12 +58,9 @@ $game = function (int $who, array $message, int $type) {
             $bot->network->sendMessage('!bot');
             break;
 
-        case 'start':
-            $bot->network->sendMessage('!start');
-            break;
-
         case 'stop':
-            $bot->network->sendMessage('!stop');
+        case 'start':
+            $bot->network->sendMessage('!' . strtolower($message[1]));
             break;
 
         case 'bye':
@@ -114,23 +70,15 @@ $game = function (int $who, array $message, int $type) {
             break;
 
         case 'times':
-            unset($message[0]);
-            unset($message[1]);
-            $message = implode(' ', $message);
-            $bot->network->sendMessage('!times ' . $message);
-            break;
-
         case 'prize':
-            unset($message[0]);
-            unset($message[1]);
-            $message = implode(' ', $message);
-            $bot->network->sendMessage('!prize ' . $message);
+            $message = implode(' ', array_slice($message, 2));
+            $bot->network->sendMessage('!' . strtolower($message[1]) . ' ' . $message);
             break;
 
         default:
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'Usage: !game [' . $gameList . ', bot, start, time, stop, bye]',
+                'Usage: !game [' .  implode(', ', array_keys($list)) . ', bot, start, time, stop, bye]',
                 $type
             );
             break;
