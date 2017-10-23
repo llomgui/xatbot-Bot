@@ -83,13 +83,20 @@ class XatBot
                     ->rightJoin('botlang_sentences', 'botlang.botlang_sentences_id', '=', 'botlang_sentences.id')
                     ->where('botlang.bot_id', $this->data->id)
                     ->orWhereNull('botlang.bot_id')
-                    ->select('botlang_sentences.name', 'botlang.value', 'botlang_sentences.default_value')
+                    ->select('botlang_sentences.name', 'botlang.value', 'botlang_sentences.sentences')
                     ->get()
                     ->toArray();
 
+        $currentLanguage = $this->data->language->code;
+
         for ($i = 0; $i < sizeof($results); $i++) {
             if (empty($results[$i]->value)) {
-                $results[$i]->value = $results[$i]->default_value;
+                $sentences = json_decode($results[$i]->sentences);
+                if (!isset($sentences->$currentLanguage) || empty($sentences->$currentLanguage)) {
+                    $currentLanguage = 'en';
+                }
+
+                $results[$i]->value = $sentences->$currentLanguage;
             }
         }
 

@@ -46,6 +46,15 @@ class Bot extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
+    public function language()
+    {
+        return $this->hasOne(Language::class, 'id', 'language_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
     public function server()
     {
         return $this->hasOne(Server::class, 'id', 'server_id');

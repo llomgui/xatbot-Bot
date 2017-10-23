@@ -38,7 +38,7 @@ $onPC = function (int $who, string $message) {
         if (DataAPI::get('automember_' . $who) == $message[0]) {
             $bot->network->sendPrivateConversation($who, 'You are now a member');
             DataAPI::unSetVariable('automember_' . $who);
-            $bot->network->ChangeRank($who, 'member');
+            $bot->network->changeRank($who, 'member');
         } else {
             $bot->network->sendPrivateConversation($who, 'Wrong answer!');
         }
