@@ -12,5 +12,5 @@ $clear = function (int $who, array $message, int $type) {
         $bot->network->sendMessage('/d' . ($i + 1));
     }
 
-    $bot->network->sendMessageAutoDetection($who, 'Chat is now cleared!', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.clear.clearedmessages'), $type);
 };

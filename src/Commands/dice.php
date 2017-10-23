@@ -8,5 +8,5 @@ $dice = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
     
-    $bot->network->sendMessageAutoDetection($who, 'I rolled ' . rand(1, 6), $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.dice.rolled', [rand(1, 6)]), $type);
 };

@@ -22,5 +22,5 @@ $choose = function (int $who, array $message, int $type) {
     }
 
     $choice = rand(0, 100) > 50 ? $message[0] : $message[1];
-    $bot->network->sendMessageAutoDetection($who, 'I have chosen \'' . $choice. '\'.', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.choose.haschosen', [$choice]), $type);
 };

@@ -31,7 +31,7 @@ $calc = function (int $who, array $message, int $type) {
         */
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Sorry i can\'t solve any equation\'s at this time, please try again later.',
+            $bot->botlang('cmd.calc.cantsolve'),
             $type
         );
     }
