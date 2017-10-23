@@ -30,7 +30,7 @@ $customcommand = function (int $who, array $message, int $type) {
                             if ($command == $cc['command']) {
                                 return $bot->network->sendMessageAutoDetection(
                                     $who,
-                                    'This custom command is already added!',
+                                    $bot->botlang('cmd.customcommand.alreadyadded'),
                                     $type
                                 );
                             }
@@ -39,7 +39,7 @@ $customcommand = function (int $who, array $message, int $type) {
                         if (isset($bot->minranks[$command])) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'This is already a command! (d)',
+                                $bot->botlang('cmd.customcommand.alreadycommand'),
                                 $type
                             );
                         }
@@ -52,7 +52,7 @@ $customcommand = function (int $who, array $message, int $type) {
                         if (!in_array(ucfirst($rank), Minrank::pluck('name')->toArray())) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'The minrank is not valid!',
+                                $bot->botlang('cmd.customcommand.minranknotvalid'),
                                 $type
                             );
                         }
@@ -69,7 +69,7 @@ $customcommand = function (int $who, array $message, int $type) {
                         $bot->customcommands = $bot->setCustomCommands();
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'The custom command "' . $command . '" has been added!',
+                            $bot->botlang('cmd.customcommand.added', [$command]),
                             $type
                         );
                     }
@@ -90,14 +90,14 @@ $customcommand = function (int $who, array $message, int $type) {
                         $bot->customcommands = $bot->setCustomCommands();
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'The custom command "' . $command . '" has been removed!',
+                            $bot->botlang('cmd.customcommand.removed', [$command]),
                             $type
                         );
                     }
                 }
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'I could not find this custom command in the list.',
+                    $bot->botlang('cmd.customcommand.notfound'),
                     $type
                 );
             }
@@ -110,7 +110,7 @@ $customcommand = function (int $who, array $message, int $type) {
             }
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'Current list : ' . implode(', ', $cmdList) . '.',
+                $bot->botlang('cmd.customcommand.currentlist', [implode(', ', $cmdList)]),
                 $type
             );
             break;

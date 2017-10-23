@@ -25,21 +25,21 @@ $edit = function (int $who, array $message, int $type) {
             $message = str_replace(' ', '', $message);
             $bot->data->nickname = $message;
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Nickname is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.nickname'), $type, true);
             $bot->refresh();
             break;
 
         case 'avatar':
             $bot->data->avatar = $message[2];
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Avatar is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.avatar'), $type, true);
             $bot->refresh();
             break;
 
         case 'homepage':
             $bot->data->homepage = $message[2];
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Homepage is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.homepage'), $type, true);
             $bot->refresh();
             break;
 
@@ -49,14 +49,14 @@ $edit = function (int $who, array $message, int $type) {
             $message = implode(' ', $message);
             $bot->data->status = $message;
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Status is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.status'), $type, true);
             $bot->refresh();
             break;
 
         case 'pcback':
             $bot->data->pcback = $message[2];
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'PcBack is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.pcback'), $type, true);
             $bot->refresh();
             break;
 
@@ -66,7 +66,7 @@ $edit = function (int $who, array $message, int $type) {
             $message = implode(' ', $message);
             $bot->data->autowelcome = $message;
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Autowelcome is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.autowelcome'), $type, true);
             break;
 
         case 'ticklemessage':
@@ -75,7 +75,7 @@ $edit = function (int $who, array $message, int $type) {
             $message = implode(' ', $message);
             $bot->data->ticklemessage = $message;
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Tickle Message is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.ticklemessage'), $type, true);
             break;
             
         case 'moderation':
@@ -84,7 +84,7 @@ $edit = function (int $who, array $message, int $type) {
                     if ($bot->data->togglemoderation == true) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'Moderation is already enabled!',
+                            $bot->botlang('cmd.edit.modalreadyenabled')
                             $type
                         );
                     }
@@ -92,7 +92,7 @@ $edit = function (int $who, array $message, int $type) {
                     $bot->data->save();
                     $bot->network->sendMessageAutoDetection(
                         $who,
-                        'Moderation has been turned on!',
+                        $bot->botlang('cmd.edit.modenabled')
                         $type
                     );
                     break;
@@ -101,7 +101,7 @@ $edit = function (int $who, array $message, int $type) {
                     if ($bot->data->togglemoderation == false) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'Moderation is already disabled!',
+                            $bot->botlang('cmd.edit.modalreadydisabled')
                             $type
                         );
                     }
@@ -109,7 +109,7 @@ $edit = function (int $who, array $message, int $type) {
                     $bot->data->save();
                     $bot->network->sendMessageAutoDetection(
                         $who,
-                        'Moderation has been turned off!',
+                        $bot->botlang('cmd.edit.moddisabled')
                         $type
                     );
                     break;
@@ -128,14 +128,14 @@ $edit = function (int $who, array $message, int $type) {
             if (strlen($message[2]) > 1) {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'The max length of customcommand is 1.',
+                    $bot->botlang('cmd.edit.customcommandmaxlength'),
                     $type,
                     true
                 );
             }
             $bot->data->customcommand = $message[2];
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Custom Command is updated!', $type, true);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.customcommand'), $type, true);
             break;
         
         default:

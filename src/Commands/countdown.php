@@ -11,9 +11,9 @@ $countdown = function (int $who, array $message, int $type) {
     $releaseTime = OceanProject\Bot\XatVariables::getReleaseTime();
 
     if ($releaseTime > 1) {
-        $message = 'The new power will be sold in ' . gmdate("H:i:s", $releaseTime - time()) . '.';
+        $message = $bot->botlang('cmd.countdown.releasein', [gmdate("H:i:s", $releaseTime - time())]);
     } else {
-        $message = 'There is no countdown at the moment.';
+        $message = $bot->botlang('cmd.countdown.nocountdown');
     }
 
     $bot->network->sendMessageAutoDetection($who, $message, $type);
