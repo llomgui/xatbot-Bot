@@ -84,7 +84,7 @@ $edit = function (int $who, array $message, int $type) {
                     if ($bot->data->togglemoderation == true) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $bot->botlang('cmd.edit.modalreadyenabled')
+                            $bot->botlang('cmd.edit.modalreadyenabled'),
                             $type
                         );
                     }
@@ -92,7 +92,7 @@ $edit = function (int $who, array $message, int $type) {
                     $bot->data->save();
                     $bot->network->sendMessageAutoDetection(
                         $who,
-                        $bot->botlang('cmd.edit.modenabled')
+                        $bot->botlang('cmd.edit.modenabled'),
                         $type
                     );
                     break;
@@ -101,7 +101,7 @@ $edit = function (int $who, array $message, int $type) {
                     if ($bot->data->togglemoderation == false) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $bot->botlang('cmd.edit.modalreadydisabled')
+                            $bot->botlang('cmd.edit.modalreadydisabled'),
                             $type
                         );
                     }
@@ -109,7 +109,7 @@ $edit = function (int $who, array $message, int $type) {
                     $bot->data->save();
                     $bot->network->sendMessageAutoDetection(
                         $who,
-                        $bot->botlang('cmd.edit.moddisabled')
+                        $bot->botlang('cmd.edit.moddisabled'),
                         $type
                     );
                     break;
