@@ -43,7 +43,7 @@ $hush = function (int $who, array $message, int $type) {
             $rank = 'o';
             break;
         default:
-            return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid rank.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.notvalidrank'), $type);
     }
 
     $bot->network->sendMessage('/h' . $rank . $seconds . ' ' . $reason);

@@ -13,5 +13,5 @@ $guestself = function (int $who, array $message, int $type) {
     }
 
     $bot->network->sendMessage('/g');
-    $bot->network->sendMessageAutoDetection($who, 'I am now a guest!', $type, true);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.guestself'), $type, true);
 };

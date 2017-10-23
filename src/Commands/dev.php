@@ -2,6 +2,7 @@
 
 use OceanProject\Extensions;
 use OceanProject\Bot\XatVariables;
+use OceanProject\API\DataAPI;
 
 $dev = function (int $who, array $message, int $type) {
 
@@ -20,6 +21,11 @@ $dev = function (int $who, array $message, int $type) {
         case 'update':
             XatVariables::update();
             $bot->network->sendMessageAutoDetection($who, 'Config updated!', $type);
+            break;
+
+        case 'test':
+            $data = DataAPI::dumpVars();
+            print_r($data);
             break;
  
         case 'memory':
