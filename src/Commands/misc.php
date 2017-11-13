@@ -98,13 +98,11 @@ $misc = function (int $who, array $message, int $type) {
                     $lang = $promo->en;
                     $language = "English";
                     break;
-
                 case "spanish":
                 case "es":
                     $lang = $promo->es;
                     $language = "Spanish";
                     break;
-
                 case "italian":
                 case "it":
                     $lang = $promo->it;
@@ -119,6 +117,21 @@ $misc = function (int $who, array $message, int $type) {
                 case "fr":
                     $lang = $promo->fr;
                     $language = "French";
+                    break;
+                case "portuguese":
+                case "pt":
+                    $lang = $promo->pt;
+                    $language = "Portuguese";
+                    break;
+                case "romanian":
+                case "ro":
+                    $lang = $promo->ro;
+                    $language = "Romanian";
+                    break;
+                case "thai":
+                case "th":
+                    $lang = $promo->th;
+                    $language = "Thai";
                     break;
                 default:
                     $lang = $promo->en;
