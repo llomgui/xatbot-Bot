@@ -380,9 +380,6 @@ class Server
                                     break;
 
                                 case 'm':
-                                    if ($packet['elements']['t'] == 'Failed to connect. Try signing in again.' && 
-                                        $packet['elements']['u'] == '0') {
-                                    }
                                     if (isset($packet['elements']['u'])) {
                                         if (!$Ocean->done) {
                                             if (isset($packet['elements']['i'])) {
