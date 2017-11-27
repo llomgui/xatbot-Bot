@@ -247,7 +247,7 @@ $onUserJoined = function (int $who, array $array) {
 
         switch ($bot->data->automember) {
             case 'sub':
-                $member = ($user->hadDays());
+                $member = ($user->hasDays());
                 break;
 
             case 'reg':
