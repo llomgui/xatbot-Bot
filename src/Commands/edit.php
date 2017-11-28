@@ -173,6 +173,23 @@ $edit = function (int $who, array $message, int $type) {
             $bot->data->save();
             $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.customcommand'), $type, true);
             break;
+
+        case 'kickafk':
+            if (!is_numeric($message[2]) || (int) $message[2] < 5 || (int) $message[2] > 120) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'Usage: !edit kickafk [time] (Min: 5 minutes - Max: 120 minutes)',
+                    $type
+                );
+            }
+            $bot->data->kickafk_minutes = (int) $message[2];
+            $bot->data->save();
+            $bot->network->sendMessageAutoDetection(
+                $who, 
+                'The kickafk time has been changed to ' . (int) $message[2] . ' minutes.',
+                $type
+            );
+            break;
         
         default:
             return $bot->network->sendMessageAutoDetection(

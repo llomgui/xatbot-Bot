@@ -14,7 +14,7 @@ class Bot extends Eloquent
         'chatid', 'chatname', 'chatpw', 'nickname', 'avatar', 'homepage',
         'status', 'pcback', 'autowelcome', 'ticklemessage', 'maxkick',
         'maxkickban', 'maxflood', 'maxchar', 'maxsmilies', 'automessage',
-        'automessagetime', 'autorestart'
+        'automessagetime', 'autorestart', 'kickafk_minutes'
     ];
 
     /**
