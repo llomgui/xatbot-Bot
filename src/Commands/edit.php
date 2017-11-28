@@ -185,7 +185,7 @@ $edit = function (int $who, array $message, int $type) {
             $bot->data->kickafk_minutes = (int) $message[2];
             $bot->data->save();
             $bot->network->sendMessageAutoDetection(
-                $who, 
+                $who,
                 'The kickafk time has been changed to ' . (int) $message[2] . ' minutes.',
                 $type
             );
