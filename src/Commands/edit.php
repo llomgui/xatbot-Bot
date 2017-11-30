@@ -1,5 +1,7 @@
 <?php
 
+use OceanProject\Models\Language;
+
 $edit = function (int $who, array $message, int $type) {
 
     $bot = OceanProject\API\ActionAPI::getBot();
@@ -8,12 +10,25 @@ $edit = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
+    if (isset($message[1]) && ($message[1] == 'language') && (empty($message[2]))) {
+        $languagesList = Language::all();
+        $languages = [];
+        foreach ($languagesList as $langue) {
+            $languages[$langue->code] = $langue->id;
+        }
+
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Usage: !edit language [' . implode('/', array_keys($languages)) . ']',
+            $type
+        );
+    }
+
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
             'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]',
-            $type,
-            true
+            $type
         );
     }
 
@@ -77,6 +92,27 @@ $edit = function (int $who, array $message, int $type) {
             $bot->data->save();
             $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.ticklemessage'), $type, true);
             break;
+
+        case 'language':
+            $languagesList = Language::all();
+            foreach ($languagesList as $langue) {
+                if ($langue->code == strtolower($message[2]) ||
+                        strtolower($langue->name) == strtolower($message[2])) {
+                    $bot->data->language_id = $langue->id;
+                    $bot->data->save();
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.edit.languageupdated'),
+                        $type
+                    );
+                }
+            }
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.edit.languagenotfound'),
+                $type
+            );
+            break;
             
         case 'moderation':
             switch (strtolower($message[2])) {
@@ -137,13 +173,29 @@ $edit = function (int $who, array $message, int $type) {
             $bot->data->save();
             $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.edit.customcommand'), $type, true);
             break;
+
+        case 'kickafk':
+            if (!is_numeric($message[2]) || (int) $message[2] < 5 || (int) $message[2] > 120) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'Usage: !edit kickafk [time] (Min: 5 minutes - Max: 120 minutes)',
+                    $type
+                );
+            }
+            $bot->data->kickafk_minutes = (int) $message[2];
+            $bot->data->save();
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                'The kickafk time has been changed to ' . (int) $message[2] . ' minutes.',
+                $type
+            );
+            break;
         
         default:
             return $bot->network->sendMessageAutoDetection(
                 $who,
                 'Usage: !edit [nickname/avatar/homepage/status/pcback/autowelcome/ticklemessage/customcommand] [info]',
-                $type,
-                true
+                $type
             );
             break;
     }

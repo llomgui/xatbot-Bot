@@ -46,6 +46,6 @@ $handlecustomcommands = function (int $who, array $message, int $type) {
     }
 
     if (!$bool) {
-        return $bot->network->sendMessageAutoDetection($who, 'This command does not exist!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.doesnotexist'), $type);
     }
 };

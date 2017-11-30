@@ -38,13 +38,13 @@ $everymissing = function (int $who, array $message, int $type) {
 
     if (!empty($info)) {
         $info = $info[0];
-        $message = 'Everymissing for ' . $info->regname . ' can be viewed here : ';
+        $message = $bot->botlang('cmd.everymissing.canbeseen', [$info->regname]);
         return $bot->network->sendMessageAutoDetection(
             $who,
             $message . XatVariables::getConfig()['website_url'] . '/panel/everymissing/' . $info->regname,
             $type
         );
     } else {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry, I don\'t have this user in my database.', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.notindatabase'), $type);
     }
 };

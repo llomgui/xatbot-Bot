@@ -303,6 +303,9 @@ class Server
                                     break;
                                     
                                 case 'a':
+                                    if (isset($packet['elements']['h'])) {
+                                        continue;
+                                    }
                                     $hook   = 'onTransfer'; // onTransfer($from, $type, $message, $to, $xats, $days)
                                     $args[] = $packet['elements']['u'];
                                     $args[] = $packet['elements']['k'];
@@ -551,13 +554,14 @@ class Server
         $this->start($botid);
     }
 
-    public function stop($botid)
+    public function stop($botid, $status)
     {
         if (isset($this->xatBots[$botid])) {
+            $status = empty($status) ? 'Offline' : $status;
             $this->xatBots[$botid]->network->socket->disconnect();
 
             $bot = Models\Bot::find($botid);
-            $bot->bot_status_id = Models\BotStatus::where('name', 'Offline')->first()->id;
+            $bot->bot_status_id = Models\BotStatus::where('name', $status)->first()->id;
             $bot->save();
 
             unset($this->xatBots[$botid]);

@@ -53,7 +53,7 @@ $gamebanme = function (int $who, array $message, int $type) {
             break;
 
         default:
-            return $bot->network->sendMessageAutoDetection($who, 'That\'s not a valid gameban', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('gameban.notvalid'), $type);
             break;
     }
 

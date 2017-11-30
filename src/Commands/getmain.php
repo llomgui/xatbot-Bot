@@ -9,7 +9,7 @@ $getmain = function (int $who, array $message, int $type) {
     }
 
     if ($type != 3) {
-        return $bot->network->sendMessageAutoDetection($who, 'Use this command in PC.', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.doinpc'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
@@ -33,18 +33,18 @@ $getmain = function (int $who, array $message, int $type) {
     $res = file_get_contents('https://xat.com/web_gear/chat/editgroup.php', false, stream_context_create($stream));
 
     if (strpos($res, '**<span data-localize=buy.wrongpassword>Wrong password</span>')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Wrong password!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.wrongpass'), $type);
     } elseif (strpos($res, '**Error. Try again in 10 minutes.**')) {
-        return $bot->network->sendMessageAutoDetection($who, 'Error. Try again in 10 minutes.', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.getmain.tryin10'), $type);
     }
 
     $pw = $bot->stribet($res, '<input name="pw" type="hidden" value="', '">');
     if (!is_numeric($pw)) {
-        return $bot->network->sendPrivateConversation($who, 'Oh I cannot get main :(');
+        return $bot->network->sendPrivateConversation($who, $bot->botlang('cmd.getmain.cantget'));
     }
 
     $bot->data->chatpw = $pw;
     $bot->data->save();
-    $bot->network->sendPrivateConversation($who, 'Oh I am Main Owner now (cool#).');
+    $bot->network->sendPrivateConversation($who, $bot->botlang('cmd.getmain.gotmain'));
     $bot->refresh();
 };

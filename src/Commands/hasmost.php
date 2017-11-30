@@ -26,7 +26,7 @@ $hasmost = function (int $who, array $message, int $type) {
     }
 
     if (!$exists) {
-        $bot->network->sendMessageAutoDetection($who, 'This power does not exist!', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.powernotexist'), $type);
         return;
     }
 
