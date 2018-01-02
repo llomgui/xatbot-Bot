@@ -9,6 +9,5 @@ $refresh = function (int $who, array $message, int $type) {
     }
 
     $bot->network->sendMessageAutoDetection($who, 'Refreshing...', $type);
-    $bot->refresh();
-    $bot->network->sendMessageAutoDetection($who, 'I am ready!', $type);
+    $bot->refresh(true);
 };

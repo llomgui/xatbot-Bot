@@ -28,8 +28,9 @@ class XatBot
     public $stopped;
     public $done;
     public $packetsinqueue;
+    public $refreshing;
 
-    public function __construct(Bot $data)
+    public function __construct(Bot $data, $refreshing = false)
     {
         $this->data           = $data;
         $this->started        = time();
@@ -46,6 +47,7 @@ class XatBot
         $this->customcommands = $this->setCustomCommands();
         $this->snitchlist     = $this->setSnitchList();
         $this->packetsinqueue = [];
+        $this->refreshing     = $refreshing;
 
         if ($this->data->premium > time() && $this->data->premiumfreeze == 1) {
             $this->isPremium = true;
@@ -95,7 +97,6 @@ class XatBot
                 if (!isset($sentences->$currentLanguage) || empty($sentences->$currentLanguage)) {
                     $currentLanguage = 'en';
                 }
-
                 $results[$i]->value = $sentences->$currentLanguage;
             }
         }
@@ -388,10 +389,10 @@ class XatBot
         return $this->stribet($fgc, "uname='", "';");
     }
 
-    public function refresh()
+    public function refresh($refreshing = false)
     {
         $bot = Bot::find($this->data->id);
-        $this->__construct($bot);
+        $this->__construct($bot, $refreshing);
     }
 
     public function stop()

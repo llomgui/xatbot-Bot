@@ -14,4 +14,8 @@ $onDone = function (array $array) {
         $bot->data->was_connected = true;
         $bot->data->save();
     }
+
+    if ($bot->refreshing === true) {
+        $bot->network->sendMessage('I am ready to serve!');
+    }
 };
