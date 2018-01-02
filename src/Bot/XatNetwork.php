@@ -4,6 +4,7 @@ namespace OceanProject\Bot;
 
 use OceanProject\Logger;
 use OceanProject\Models\Bot;
+use OceanProject\API\DataAPI;
 
 class XatNetwork
 {
@@ -431,8 +432,23 @@ class XatNetwork
         $this->write($node);
     }
 
-    public function kick($uid, $reason, $sound = '')
+    public function kick($uid, $reason = '', $sound = '')
     {
+        if (!is_null($this->data->maxkick) && $this->data->maxkick > 0
+            && !is_null($this->data->maxkickban) && $this->data->maxkickban > 0) {
+            if (!DataAPI::isSetVariable('kicks_' . $uid)) {
+                DataAPI::set('kicks_' . $uid, 1);
+            } else {
+                DataAPI::set('kicks_' . $uid, DataAPI::get('kicks_' . $uid) + 1);
+            }
+            $reason .= ' [' . DataAPI::get('kicks_' . $uid) . '/' . $this->data->maxkick . ']';
+
+            if (DataAPI::get('kicks_' . $uid) >= $this->data->maxkick) {
+                DataAPI::set('kicks_' . $uid, 0);
+                return $this->ban($uid, $this->data->maxkickban, $reason);
+            }
+        }
+
         $this->write(
             'c',
             [

@@ -1,6 +1,7 @@
 <?php
 
 use OceanProject\Bot\XatVariables;
+use OceanProject\API\DataAPI;
 use OceanProject\Models\Log;
 
 $onRankMessage = function (array $array) {
@@ -102,6 +103,13 @@ $onRankMessage = function (array $array) {
             case '/k':
                 // <m  p="test" t="/k" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' kicked ' . $user2 . ' reason: "' . $array['p'] . '"';
+                if ($array['u'] != XatVariables::getXatid()) {
+                    if (!DataAPI::isSetVariable('kicks_' . $who)) {
+                        DataAPI::set('kicks_' . $who, 1);
+                    } else {
+                        DataAPI::set('kicks_' . $who, DataAPI::get('kicks_' . $who) + 1);
+                    }
+                }
                 break;
 
             default:
