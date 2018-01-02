@@ -15,7 +15,7 @@ $active = function (int $who, array $message, int $type) {
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        $bot->botlang('active.string', [$displayName, $bot->secondsToTime($userTime)]),
+        $bot->botlang('cmd.active.string', [$displayName, $bot->secondsToTime($userTime)]),
         $type
     );
 };
