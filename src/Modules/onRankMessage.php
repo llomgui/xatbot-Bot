@@ -72,6 +72,7 @@ $onRankMessage = function (array $array) {
 
                 switch ($type) {
                     case 'M':
+                    case 'o':
                         // <m u="412345607" d="586552" t="/m" p="M"  />
                         $log->message = '[Rank] ' . $user1 . ' made ' . $user2 . ' an owner' .
                             (!empty($hours) ? ' for ' . $hours . ' hour(s)!' : '!');
