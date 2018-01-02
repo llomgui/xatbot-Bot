@@ -13,7 +13,7 @@ $xd = function (int $who, array $message, int $type) {
     }
 
     $xats = round($message[1]);
-    $days = round($message[1] / 13);
+    $days = floor($message[1] / 13);
 
     $bot->network->sendMessageAutoDetection(
         $who,
