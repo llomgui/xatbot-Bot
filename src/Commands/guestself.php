@@ -13,5 +13,7 @@ $guestself = function (int $who, array $message, int $type) {
     }
 
     $bot->network->sendMessage('/g');
+    $bot->data->chatpw = '123';
+    $bot->data->save();
     $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.guestself'), $type, true);
 };
