@@ -554,7 +554,7 @@ class Server
         $this->start($botid);
     }
 
-    public function stop($botid, $status)
+    public function stop($botid, $status = '')
     {
         if (isset($this->xatBots[$botid])) {
             $status = empty($status) ? 'Offline' : $status;
