@@ -38,6 +38,36 @@ $onMessage = function (int $who, string $message) {
             DataAPI::set('countMessage', 1);
         }
     }
+
+    DataAPI::set('lastMessage_' . $who, time());
+
+    // Check if user (moderator) sent a message in the last x minutes
+    if (is_int($bot->data->kickafk_minutes) && $bot->data->kickafk_minutes >= 5) {
+        foreach ($bot->users as $id => $user) {
+            if ($user->isMod() && DataAPI::isSetVariable('lastMessage_' . $id)) {
+                $time = DataAPI::get('lastMessage_' . $id);
+                if ($time + ($bot->data->kickafk_minutes * 60) < time()) {
+                    if (!DataAPI::isSetVariable('kickAFK_' . $id)) {
+                        $bot->network->sendPrivateConversation(
+                            $id,
+                            'You need to answer this message or you will be kicked in the next 30 seconds. (bump)'
+                        );
+                        DataAPI::set('kickAFK_' . $id, time() + 30);
+                    }
+                }
+            }
+
+            if (DataAPI::isSetVariable('kickAFK_' . $id)) {
+                if (DataAPI::get('kickAFK_' . $id) < time()) {
+                    DataAPI::unSetVariable('kickAFK_' . $id);
+                    $bot->network->kick(
+                        $id,
+                        'You did not send any message in the last ' . $bot->data->kickafk_minutes . ' minutes.'
+                    );
+                }
+            }
+        }
+    }
     
     if ($bot->data->togglemoderation) {
         if ($bot->flagToRank($who) < $bot->stringToRank($bot->chatInfo['rank'])) {
@@ -71,7 +101,7 @@ $onMessage = function (int $who, string $message) {
             if ($bot->data->togglelinkfilter === true) {
                 $bool = false;
                 $allowedWebsites = (sizeof($bot->linksfilter) > 0) ? $bot->linksfilter :  ['xatbot.fr'];
-                $pattern = "/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?/";
+                $pattern = "/([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,4}(\/\S*)?)/";
                 foreach ($message2 as $value) {
                     if (preg_match($pattern, $value)) {
                         foreach ($allowedWebsites as $website) {
@@ -94,6 +124,7 @@ $onMessage = function (int $who, string $message) {
                 $count = 0;
                 $count += preg_match_all('/\([^ ]+\)/', $message, $matches);
                 $count += preg_match_all('/:-?(P|p|S|s|O|o|D|d|@|\[|\$|\)|\(|\'\(|\||\*)/', $message, $matches);
+                $count += preg_match_all('/;-?(P|p|S|s|O|o|D|d|@|\[|\$|\)|\(|\'\(|\||\*)/', $message, $matches);
                 if ($count > $bot->data->maxsmilies) {
                     return $bot->network->kick(
                         $who,

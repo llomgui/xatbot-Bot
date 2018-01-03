@@ -81,6 +81,8 @@ $onUserJoined = function (int $who, array $array) {
     if (DataAPI::isSetVariable('gamebanrelog_' . $who) && !$user->isGamebanned()) {
         DataAPI::unSetVariable('gamebanrelog_' . $who);
     }
+
+    DataAPI::set('lastMessage_' . $who, time());
         
     if ($user->isGamebanned() && $bot->data->gameban_unban == 2) {
         if (!DataAPI::isSetVariable('gamebanrelog_' . $who)) {

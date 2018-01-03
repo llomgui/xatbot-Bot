@@ -5,6 +5,7 @@ namespace OceanProject\Bot;
 use OceanProject\Logger;
 use OceanProject\Models\Bot;
 use OceanProject\API\DataAPI;
+use OceanProject\API\ActionAPI;
 
 class XatNetwork
 {
@@ -434,8 +435,9 @@ class XatNetwork
 
     public function kick($uid, $reason = '', $sound = '')
     {
+        $bot = ActionAPI::getBot();
         if (!is_null($this->data->maxkick) && $this->data->maxkick > 0
-            && !is_null($this->data->maxkickban) && $this->data->maxkickban > 0) {
+            && !is_null($this->data->maxkickban) && $this->data->maxkickban > 0 && !$bot->users[$uid]->isMod()) {
             if (!DataAPI::isSetVariable('kicks_' . $uid)) {
                 DataAPI::set('kicks_' . $uid, 1);
             } else {
