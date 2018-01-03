@@ -32,6 +32,7 @@ class XatSocket
         socket_set_nonblock($this->socket);
         $time = microtime(true) + $timeout;
         socket_connect($this->socket, $ip, $port);
+        socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, ['sec' => 5,'usec'=> 0]);
 
         do {
             if (@socket_getpeername($this->socket, $ip, $port) && $ip != '0.0.0.0') {
@@ -68,12 +69,29 @@ class XatSocket
 
         socket_clear_error($this->socket);
 
+        $timeout = time() + 10;
+
         do {
             $packet = socket_read($this->socket, 1460);
 
             if ($packet === false && (socket_last_error($this->socket) !== 0)
                 && (socket_last_error($this->socket) !== 11)
             ) {
+                $this->disconnect();
+                return false;
+            }
+
+            if (!$this->socket) {
+                $this->disconnect();
+                return false;
+            }
+
+            if (socket_last_error($this->socket) !== 0 && (socket_last_error($this->socket) !== 11)) {
+                $this->disconnect();
+                return false;
+            }
+
+            if ($timeout < time()) {
                 $this->disconnect();
                 return false;
             }
