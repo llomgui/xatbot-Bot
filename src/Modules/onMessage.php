@@ -39,6 +39,17 @@ $onMessage = function (int $who, string $message) {
         }
     }
 
+    if (!DataAPI::isSetVariable('lastAutoMessage') && !is_null($bot->data->automessagetime)
+        && $bot->data->automessagetime > 0 && !empty($bot->data->automessage)) {
+        DataAPI::set('lastAutoMessage', time() + $bot->data->automessagetime * 60);
+    }
+
+    if (DataAPI::isSetVariable('lastAutoMessage') && DataAPI::get('lastAutoMessage') < time()
+        && !empty($bot->data->automessage)) {
+        $bot->network->sendMessage($bot->data->automessage);
+        DataAPI::set('lastAutoMessage', time() + $bot->data->automessagetime * 60);
+    }
+
     DataAPI::set('lastMessage_' . $who, time());
 
     // Check if user (moderator) sent a message in the last x minutes
