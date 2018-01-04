@@ -54,8 +54,8 @@ $price = function (int $who, array $message, int $type) {
     
     if ($powers[$powerID]['minCost'] == 0 || $powers[$powerID]['maxCost'] == 0) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 
-            '[' . $powerID . '] ' . ucfirst($powers[$powerID]['name']) . ' has not been priced yet.', 
+            $who,
+            '[' . $powerID . '] ' . ucfirst($powers[$powerID]['name']) . ' has not been priced yet.',
             $type
         );
     }
