@@ -33,6 +33,14 @@ $onUserLeave = function (int $who) {
         DataAPI::unSetVariable('spotify_' . $who);
     }
 
+    if (DataAPI::isSetVariable('kickAFK_' . $who)) {
+        DataAPI::unSetVariable('kickAFK_' . $who);
+    }
+
+    if (DataAPI::isSetVariable('lastMessage_' . $who)) {
+        DataAPI::unSetVariable('lastMessage_' . $who);
+    }
+
     DataAPI::set('left_' . $who, time());
 
     return;
