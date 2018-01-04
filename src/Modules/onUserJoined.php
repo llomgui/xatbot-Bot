@@ -17,6 +17,7 @@ $onUserJoined = function (int $who, array $array) {
 
     $bot->users[$who] = new XatUser($array);
     $user = $bot->users[$who];
+    $regname = $user->getRegname();
 
     if ($user->isAway()) {
         DataAPI::set('away_' . $who, true);
@@ -115,7 +116,8 @@ $onUserJoined = function (int $who, array $array) {
 
     if (sizeof($bot->badwords) > 0) {
         for ($i = 0; $i < sizeof($bot->badwords); $i++) {
-            if (strpos(strtolower($user->getNick()), strtolower($bot->badwords[$i]['badword']))) {
+            if (strpos(strtolower($user->getNick()), strtolower($bot->badwords[$i]['badword'])) !== false
+                || strpos(strtolower($user->getStatus()), strtolower($bot->badwords[$i]['badword'])) !== false) {
                 DataAPI::set(
                     'modproof',
                     'User: ' . ((!is_null($regname)) ? $regname . ' (' . $who . ')' : $who) . ' Nick: ' .
@@ -351,32 +353,45 @@ $onUserJoined = function (int $who, array $array) {
         }
     }
 
-    $moderators = 0;
-    foreach ($bot->users as $id => $xatuser) {
-        if (is_numeric($id) && is_object($xatuser)) {
-            if ($xatuser->isMod() || $xatuser->isOwner() || $xatuser->isMain()) {
-                $moderators++;
-            }
-        }
-    }
-
-    if (!isset($bot->data->minstaffautotemp)) {
-        $bot->data->minstaffautotemp = 0;
-    }
-
-    if ($moderators <= $bot->data->minstaffautotemp) {
-        $key = array_search($who, array_column($bot->autotemps, 'xatid'));
-        if (isset($key) && is_numeric($key)) {
-            if (!$bot->users[$who]->isMod() && !$bot->users[$who]->isOwner() && !$bot->users[$who]->isMain()) {
-                $bot->network->tempRank($who, 'moderator', $bot->autotemps[$key]['hours']);
-            }
-        }
-    }
-
     $mails = Mail::where(['touser' => $who, 'read' => false, 'store' => false])->get();
     if (sizeof($mails) > 0) {
         $bot->network->sendPrivateMessage($who, 'You have ' . sizeof($mails) . ' new message(s).');
     }
+
+    if (sizeof($bot->autotemps) > 0) {
+        $moderators = 0;
+        foreach ($bot->users as $id => $xatuser) {
+            if (is_numeric($id) && is_object($xatuser)) {
+                if ($xatuser->isMod() || $xatuser->isOwner() || $xatuser->isMain()) {
+                    $moderators++;
+                }
+            }
+        }
+
+        if (!isset($bot->data->minstaffautotemp)) {
+            $bot->data->minstaffautotemp = 0;
+        }
+
+        if ($moderators < $bot->data->minstaffautotemp) {
+            foreach ($bot->autotemps as $key => $value) {
+                if (array_key_exists($value['xatid'], $bot->users)) {
+                    if (DataAPI::isSetVariable('isAutotemp_' . $value['xatid'])
+                        && DataAPI::get('isAutotemp_' . $value['xatid']) < time()) {
+                        DataAPI::unSetVariable('isAutotemp_' . $value['xatid']);
+                    }
+
+                    if (!$bot->users[$value['xatid']]->isMod() && !$bot->users[$value['xatid']]->isOwner()
+                        && !$bot->users[$value['xatid']]->isMain()) {
+                        if (!DataAPI::isSetVariable('isAutotemp_' . $value['xatid'])) {
+                            DataAPI::set('isAutotemp_' . $value['xatid'], time() + ($value['hours'] * 3600));
+                            $bot->network->tempRank($value['xatid'], 'moderator', $value['hours']);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     
     return;
 };
