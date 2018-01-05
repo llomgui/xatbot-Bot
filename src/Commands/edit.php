@@ -24,6 +24,16 @@ $edit = function (int $who, array $message, int $type) {
         );
     }
 
+    if (isset($message[1]) && (strtolower($message[1]) == 'kickafk')) {
+        if (!isset($message[2]) || !is_numeric($message[2]) || (int) $message[2] < 5 || (int) $message[2] > 120) {
+            return $bot->network->sendMessageAutoDetection(
+                $who,
+                'Usage: !edit kickafk [time] (Min: 5 minutes - Max: 120 minutes)',
+                $type
+            );
+        }
+    }
+
     if (!isset($message[1]) || empty($message[1]) || !isset($message[2]) || empty($message[2])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
@@ -175,18 +185,11 @@ $edit = function (int $who, array $message, int $type) {
             break;
 
         case 'kickafk':
-            if (!is_numeric($message[2]) || (int) $message[2] < 5 || (int) $message[2] > 120) {
-                return $bot->network->sendMessageAutoDetection(
-                    $who,
-                    'Usage: !edit kickafk [time] (Min: 5 minutes - Max: 120 minutes)',
-                    $type
-                );
-            }
             $bot->data->kickafk_minutes = (int) $message[2];
             $bot->data->save();
             $bot->network->sendMessageAutoDetection(
                 $who,
-                'The kickafk time has been changed to ' . (int) $message[2] . ' minutes.',
+                $bot->botlang('cmd.edit.kickafkok', [(int) $message[2]]),
                 $type
             );
             break;
