@@ -13,7 +13,26 @@ $price = function (int $who, array $message, int $type) {
     }
 
     $powers = OceanProject\Bot\XatVariables::getPowers();
-    
+
+    if (isset($message[2])) {
+        $minCost = $maxCost = 0;
+        for ($i = 1; $i < sizeof($message); $i++) {
+            $match = $bot->network->findPowerMatch($message[$i]);
+            if (isset($match[0])) {
+                $powerID = $match[0];
+                $minCost += $powers[$powerID]['minCost'];
+                $maxCost += $powers[$powerID]['maxCost'];
+            }
+        }
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'Those powers cost ' . number_format($minCost) . ' - ' . number_format($maxCost) .
+            ' xats OR ' . number_format(round($minCost / 13.5)) . ' - ' .
+            number_format(round($maxCost / 13.5)) . ' days.',
+            $type
+        );
+    }
+
     if (strtolower($message[1]) == 'latest') {
         $message[1] = end($powers)['name'];
     }
