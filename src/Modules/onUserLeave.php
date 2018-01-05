@@ -41,6 +41,10 @@ $onUserLeave = function (int $who) {
         DataAPI::unSetVariable('lastMessage_' . $who);
     }
 
+    if (DataAPI::isSetVariable('isAutotemp_' . $who)) {
+        DataAPI::unSetVariable('isAutotemp_' . $who);
+    }
+
     DataAPI::set('left_' . $who, time());
 
     return;
