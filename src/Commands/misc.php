@@ -27,8 +27,12 @@ $misc = function (int $who, array $message, int $type) {
 
             $bot->network->sendMessageAutoDetection(
                 $who,
-                $message[2] . ' reserved ' . ($xats > 1 ? 'xats' : 'xat') . ' is ' . (ceil($message[2] / 50)) . ' ' .
-                    ($days > 1 ? 'days' : 'day') . ' of being reserved.',
+                $bot->botlang('cmd.misc.reserve', [
+                    $message[2],
+                    ($xats > 1 ? 'xats' : 'xat'),
+                    (ceil($message[2] / 50)),
+                    ($days > 1 ? 'days' : 'day')
+                ]),
                 $type
             );
             break;
@@ -41,10 +45,17 @@ $misc = function (int $who, array $message, int $type) {
             $json = json_decode(file_get_contents('https://xat.com/web_gear/chat/roomid.php?d=' . $message[2].'&v2'));
 
             if (!$json) {
-                return $bot->network->sendMessageAutoDetection($who, 'That chat doesn\'t exist.', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('chat.notfound'), $type);
             }
 
-            $bot->network->sendMessageAutoDetection($who, 'Chat ID for ' . $json->g . ' is ' . $json->id, $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.misc.chatid.result', [
+                    $json->g,
+                    $json->id
+                ]),
+                $type
+            );
             break;
 
         case 'chatname':
@@ -55,10 +66,17 @@ $misc = function (int $who, array $message, int $type) {
             $json = json_decode(file_get_contents('https://xat.com/web_gear/chat/roomid.php?i=' . $message[2].'&v2'));
 
             if (!$json) {
-                return $bot->network->sendMessageAutoDetection($who, 'That chat doesn\'t exist.', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('chat.notfound'), $type);
             }
 
-            $bot->network->sendMessageAutoDetection($who, 'Chat name for ' . $json->id . ' is ' . $json->g, $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.misc.chatname.result', [
+                    $json->id,
+                    $json->g
+                ]),
+                $type
+            );
             break;
 
         case 'xatid':
@@ -69,10 +87,17 @@ $misc = function (int $who, array $message, int $type) {
             $id = file_get_contents('https://xat.me/x?name=' . $message[2]);
 
             if (!$id) {
-                return $bot->network->sendMessageAutoDetection($who, 'That user doesn\'t exist.', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.notfound'), $type);
             }
 
-            $bot->network->sendMessageAutoDetection($who, 'ID for user ' . ucfirst($message[2]) . ' is ' . $id, $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.misc.xatid', [
+                    ucfirst($message[2]),
+                    $id
+                ]),
+                $type
+            );
             break;
 
         case 'regname':
@@ -83,10 +108,17 @@ $misc = function (int $who, array $message, int $type) {
             $reg = file_get_contents('https://xat.me/x?id=' . $message[2]);
 
             if (!$reg) {
-                return $bot->network->sendMessageAutoDetection($who, 'That user doesn\'t exist.', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.notfound'), $type);
             }
 
-            $bot->network->sendMessageAutoDetection($who, 'Regname for user ' . $message[2] . ' is ' . $reg, $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.misc.regname', [
+                    $message[2],
+                    $reg
+                ]),
+                $type
+            );
             break;
 
         case 'promo':
@@ -158,11 +190,14 @@ $misc = function (int $who, array $message, int $type) {
 
             $bot->network->sendMessageAutoDetection(
                 $who,
-                '[' . $count . '] promoted ' . $language . ' ' .($count > 1 ? 'chats' : 'chat') . ':' .
-                    rtrim($promoMessage, ', '),
+                $bot->botlang('cmd.misc.promoted', [
+                    $count,
+                    $language,
+                    ($count > 1 ? 'chats' : 'chat'),
+                    rtrim($promoMessage, ', ')
+                ]),
                 $type
             );
             break;
-            //TODO hug, kiss, slap
     }
 };

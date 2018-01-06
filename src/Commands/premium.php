@@ -17,26 +17,26 @@ $premium = function (int $who, array $message, int $type) {
             if ($bot->isPremium) {
                 $bot->network->sendMessageAutoDetection(
                     $who,
-                    'I am premium for the next ' . $bot->sec2hms($bot->data->premium - time()) . '.',
+                    $bot->botlang('cmd.premium.ispremiumfor', [$bot->sec2hms($bot->data->premium - time())]),
                     $type
                 );
             } elseif ($bot->data->premiumfreeze > 1) {
-                $bot->network->sendMessageAutoDetection($who, 'I am frozen.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.premium.isfrozen'), $type);
             } else {
-                $bot->network->sendMessageAutoDetection($who, 'I am not premium!', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.premium.notpremium'), $type);
             }
             break;
 
         case 'freeze':
             if ($bot->data->premium < time()) {
-                $bot->network->sendMessageAutoDetection($who, 'I am not premium, you cannot freeze me.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.premium.notpremium'), $type);
             } elseif ($bot->data->premiumfreeze > 1) {
-                $bot->network->sendMessageAutoDetection($who, 'I am already frozen.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.premium.alreadyfrozen'), $type);
             } else {
                 $bot->data->premiumfreeze = $bot->data->premium - time();
                 $bot->data->save();
                 $bot->refresh();
-                $bot->network->sendMessageAutoDetection($who, 'I am now frozen.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botLang('cmd.premium.nowfrozen'), $type);
             }
             break;
 
@@ -46,9 +46,9 @@ $premium = function (int $who, array $message, int $type) {
                 $bot->data->premiumfreeze = 1;
                 $bot->data->save();
                 $bot->refresh();
-                $bot->network->sendMessageAutoDetection($who, 'I am now un-frozen.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.premium.nowunfrozen'), $type);
             } else {
-                $bot->network->sendMessageAutoDetection($who, 'I am not frozen.', $type);
+                $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.premium.notfrozen'), $type);
             }
             break;
 

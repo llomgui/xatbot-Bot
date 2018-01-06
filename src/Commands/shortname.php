@@ -23,7 +23,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (!ctype_alnum($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Shortname contains bad characters.',
+            $bot->botlang('cmd.shortname.badchars'),
             $type
         );
     }
@@ -31,7 +31,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (strlen($message[1]) < 4) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Too short for a shortname. Minimum 4 letters.',
+            $bot->botlang('cmd.shortname.tooshort'),
             $type
         );
     }
@@ -39,7 +39,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (strlen($message[1]) > 9) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Too long for a shortname. Maximum 9 letters.',
+            $bot->botlang('cmd.shortname.toolong'),
             $type
         );
     }
@@ -47,7 +47,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (is_numeric($message[1][0])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Shortnames can\'t start with a number.',
+            $bot->botlang('cmd.shortname.cantstartwithanumber'),
             $type
         );
     }
@@ -63,7 +63,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (!$res) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Cannot access page right now.',
+            $bot->botlang('cmd.shortname.cantaccess'),
             $type
         );
     }
@@ -73,7 +73,7 @@ $shortname = function (int $who, array $message, int $type) {
     if (strpos($res, 'Name is not allowed.') !== false) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'The shortname ' . $message[1] . ' is not allowed.',
+            $bot->botlang('cmd.shortname.notallowed', [$message[1]]),
             $type
         );
     }
@@ -82,13 +82,13 @@ $shortname = function (int $who, array $message, int $type) {
         if (strpos($res, '(1)')!== false) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'The shortname ' . $message[1] . ' is taken but can be released via ticket.',
+                $bot->botlang('cmd.shortname.istakenrelease', [$message[1]]),
                 $type
             );
         } else {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'The shortname ' . $message[1] . ' is taken and cannot be released via ticket.',
+                $bot->botlang('cmd.shortname.istaken', [$message[1]]),
                 $type
             );
         }
@@ -97,10 +97,13 @@ $shortname = function (int $who, array $message, int $type) {
     if (preg_match('<input type="hidden" name="Xats" value="(.*?)">', $res, $matches)) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            $message[1] . ' costs ' . number_format($matches[1]) .' xats.',
+            $bot->botlang('cmd.shortname.costs', [
+                $message[1],
+                number_format($matches[1])
+            ]),
             $type
         );
     }
 
-    $bot->network->sendMessageAutoDetection($who, 'Unknown error.', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.shortname.unknownerror'), $type);
 };

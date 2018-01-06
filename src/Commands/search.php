@@ -71,6 +71,6 @@ $search = function (int $who, array $message, int $type) {
             }
         }
     } else {
-        $bot->network->sendMessageAutoDetection($who, 'Sorry, I don\'t have any message about this.', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.search.nothing'), $type);
     }
 };

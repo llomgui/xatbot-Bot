@@ -52,7 +52,7 @@ $customcommand = function (int $who, array $message, int $type) {
                         if (!in_array(ucfirst($rank), Minrank::pluck('name')->toArray())) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                $bot->botlang('cmd.customcommand.minranknotvalid'),
+                                $bot->botlang('minrank.minranknotvalid'),
                                 $type
                             );
                         }

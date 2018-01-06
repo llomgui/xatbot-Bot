@@ -36,14 +36,14 @@ $snitch = function (int $who, array $message, int $type) {
                     if (!$regname) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'The xatid does not exist!',
+                            $bot->botlang('xatid.notexist'),
                             $type
                         );
                     }
                 } else {
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'The xatid is not valid!',
+                        $bot->botlang('xatid.notvalid'),
                         $type
                     );
                 }
@@ -54,11 +54,14 @@ $snitch = function (int $who, array $message, int $type) {
                   $snitch->regname = $regname;
                   $snitch->save();
                   $bot->snitchlist = $bot->setSnitchList();
-                  return $bot->network->sendMessageAutoDetection(
-                      $who,
-                      $regname . '(' . $message[2] . ')has been added to the list!',
-                      $type
-                  );
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.snitch.added', [
+                        $regname,
+                        $message[2]
+                    ]),
+                    $type
+                );
             }
             break;
         case 'remove':
@@ -73,12 +76,12 @@ $snitch = function (int $who, array $message, int $type) {
                         $bot->snitchlist = $bot->setSnitchList();
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $message[2] . ' has been removed from the list!',
+                            $bot->botlang('cmd.snitch.removed', [$message[2]]),
                             $type
                         );
                     }
                 }
-                return $bot->network->sendMessageAutoDetection($who, 'I could not find this user in the list.', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.snitch.notfound'), $type);
             }
             break;
     }

@@ -31,7 +31,7 @@ $mostactive = function (int $who, array $message, int $type) {
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        'The current most active user is ' . $displayName . ' with a time of ' . $bot->secondsToTime($userTime),
+        $bot->botlang('cmd.mostactive', [$displayName, $bot->secondsToTime($userTime)]),
         $type
     );
 };

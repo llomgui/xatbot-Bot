@@ -30,6 +30,6 @@ $pool = function (int $who, array $message, int $type) {
             break;
     }
 
-    $bot->network->sendMessageAutoDetection($who, 'I am moving to ' . $message[1] . ' pool!', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botLang('cmd.pool.movingto', [$message[1]]), $type);
     $bot->network->socket->write('w' . $pool);
 };

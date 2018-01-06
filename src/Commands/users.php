@@ -11,11 +11,14 @@ $users = function (int $who, array $message, int $type) {
     $ucount = count($bot->users);
 
     if ($ucount <= 0) {
-        $bot->network->sendMessageAutoDetection($who, 'Why is there nobody here?', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.users.nobodyhere'), $type);
     } else {
         $bot->network->sendMessageAutoDetection(
             $who,
-            'There is ' . $ucount . ' user' . ($ucount > 1 ? 's' : '') . ' online in this chatroom',
+            $bot->botlang('cmd.users.count', [
+                $ucount,
+                ($ucount > 1 ? 's' : '')
+            ]),
             $type
         );
     }

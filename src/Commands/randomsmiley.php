@@ -22,7 +22,7 @@ $randomsmiley = function (int $who, array $message, int $type) {
     }
 
     if (!is_numeric($message[1]) || $message[1] > 25 || $message[1] < 1) {
-        return $bot->network->sendMessageAutoDetection($who, 'Must be 1 - 25.', $type, true);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.randomsmiley.mustbe'), $type, true);
     }
 
     $powers = OceanProject\Bot\XatVariables::getPowers();
@@ -40,7 +40,7 @@ $randomsmiley = function (int $who, array $message, int $type) {
         }
 
         if (!$exist) {
-            return $bot->network->sendMessageAutoDetection($who, 'This power does not exist!', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.powernotexist'), $type);
         }
 
         if (!$bot->botHasPower($array['name'])) {
@@ -56,5 +56,5 @@ $randomsmiley = function (int $who, array $message, int $type) {
     }
 
     shuffle($rand);
-    $bot->network->sendMessageAutoDetection($who, 'Randomly generated Smiley: (' . implode('#', $rand) . ')', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.randomsmiley.generated', [implode('#', $rand)]), $type);
 };

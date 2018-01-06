@@ -47,11 +47,11 @@ $listsmilies = function (int $who, array $message, int $type) {
         } else {
             $bot->network->sendMessageAutoDetection(
                 $who,
-                ucfirst($array['name']) . ' currently doesn\'t have smilies',
+                $bot->botlang('cmd.listsmilies.nosmilies', [ucfirst($array['name'])]),
                 $type
             );
         }
     } else {
-        $bot->network->sendMessageAutoDetection($who, '_' . $message[1] . ' is not a power.', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.listsmilies.notpower', [$message[1]]), $type);
     }
 };

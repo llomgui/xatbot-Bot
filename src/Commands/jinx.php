@@ -218,7 +218,7 @@ $jinx = function (int $who, array $message, int $type) {
     $message = implode(" ", $message);
 
     if (empty($message)) {
-        return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('message.cannotbeempty'), $type);
     } else {
         return $bot->network->sendMessageAutoDetection(
             $who,

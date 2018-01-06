@@ -14,10 +14,10 @@ $online = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !online [regname/xatid/volunteers]', $type, true);
     }
 
-    if ($message[1] == 'xat' || $message[1] == '42') {
+    if (strtolower($message[1]) == 'xat' || $message[1] == '42') {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            '42 does not appear online on friendlists, so it is impossible to determine if he is online or not.',
+            $bot->botlang('cmd.online.42'),
             $type
         );
     }

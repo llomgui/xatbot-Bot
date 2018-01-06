@@ -26,7 +26,9 @@ $store = function (int $who, array $message, int $type) {
 
         $bot->network->sendMessageAutoDetection(
             $who,
-            '"Allpowers" cost ' . number_format($storePrice) . ' xats in store.',
+            $bot->botlang('cmd.store.allpowers', [
+                number_format($storePrice)
+            ]),
             $type
         );
     } elseif (in_array($message[1], ['everypower', 'everypowers'])) {
@@ -40,7 +42,9 @@ $store = function (int $who, array $message, int $type) {
 
         $bot->network->sendMessageAutoDetection(
             $who,
-            '"Everypower" costs ' . number_format($storePrice) . ' xats in store.',
+            $bot->botlang('cmd.store.everypower', [
+                number_format($storePrice)
+            ]),
             $type
         );
     } else {
@@ -58,12 +62,12 @@ $store = function (int $who, array $message, int $type) {
             }
 
             if (!$exist) {
-                return $bot->network->sendMessageAutoDetection($who, 'This power does not exist!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.powernotexist'), $type);
             }
 
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'Those powers cost ' . $storePrice . ' xats in store.',
+                $bot->botlang('cmd.store.thosepowers', [$storePrice]),
                 $type
             );
         } else {
@@ -71,16 +75,17 @@ $store = function (int $who, array $message, int $type) {
             $powerID = $match[0];
 
             if (!$powerID) {
-                return $bot->network->sendMessageAutoDetection($who, 'This power does not exist!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.powernotexist'), $type);
             }
 
             if (!isset($powers[$powerID]['storeCost'])) {
-                $powers[$powerID]['storeCost'] = 'is unknown in store. (This power is not added yet).';
+                $powers[$powerID]['storeCost'] = $bot->botlang('cmd.store.isunknown');
             } else {
-                $powers[$powerID]['storeCost'] = 'costs ' . number_format($powers[$powerID]['storeCost']) .
-                    ' xats in store.';
+                $powers[$powerID]['storeCost'] = $bot->botlang('cmd.store.message', [
+                    number_format($powers[$powerID]['storeCost'])
+                ]);
             }
-            $dym = $match[1] === false ? 'Did you mean "' . $powers[$powerID]['name'] . '"? ' : '';
+            $dym = $match[1] === false ? $bot->botlang('cmd.didyoumean', [$powers[$powerID]['name']]) : '';
             return $bot->network->sendMessageAutoDetection(
                 $who,
                 $dym . '"'.ucfirst($powers[$powerID]['name']).'" ' . $powers[$powerID]['storeCost'],

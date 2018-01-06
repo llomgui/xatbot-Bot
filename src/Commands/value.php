@@ -47,7 +47,7 @@ $value = function (int $who, array $message, int $type) {
                 if (!$user->isRegistered()) {
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'You cannot value an unregistered account!',
+                        $bot->botlang('cmd.value.cantvalueunregister'),
                         $type
                     );
                 }
@@ -55,7 +55,7 @@ $value = function (int $who, array $message, int $type) {
                 if (!$user->hasDays()) {
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'You cannot value an account without days!',
+                        $bot->botlang('cmd.value.cantvaluewithoutdays'),
                         $type
                     );
                 }
@@ -143,16 +143,25 @@ $value = function (int $who, array $message, int $type) {
         if (($count == 0) && (sizeof($xatusers == 1))) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                $regname . ' has no powers.',
+                $bot->botlang('cmd.value.nopowers', [$regname]),
                 $type
             );
         }
 
-        $message = $regname . ' [' . ($count + $cdoubles) . '] powers, [' .  $cdoubles . '] doubles are worth ' .
-            number_format($minprice) . ' - ' .
-            number_format($maxprice) . ' xats or ' . number_format($mindays) . ' - ' . number_format($maxdays) .
-            ' days or in cash worth ' . $mineuros . ' - ' . $maxeuros . ' euros or ' . $minUSD . ' - ' . $maxUSD .
-            ' USD. Auction: ' . number_format($storeprice) . ' xats.';
+        $message = $bot->botlang('cmd.value.message', [
+            $regname,
+            ($count + $cdoubles),
+            $cdoubles,
+            number_format($minprice),
+            number_format($maxprice),
+            number_format($mindays),
+            number_format($maxdays),
+            $mineuros,
+            $maxeuros,
+            $minUSD,
+            $maxUSD,
+            number_format($storeprice)
+        ]);
 
         $bot->network->sendMessageAutoDetection($who, $message, $type);
     }

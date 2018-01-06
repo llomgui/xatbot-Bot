@@ -31,11 +31,11 @@ $undunce = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if (!$user->isDunced()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is not dunced.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.unbadge.notdunced'), $type);
         }
 
         $bot->network->ban($user->getID(), 0, $reason ?? '', 'gd');
-        $bot->network->sendMessageAutoDetection($who, 'The user is now undunced.', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.unbadge.nowundunced'), $type);
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }

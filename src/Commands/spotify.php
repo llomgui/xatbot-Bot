@@ -14,7 +14,7 @@ $spotify = function (int $who, array $message, int $type) {
     }
 
     if (!DataAPI::isSetVariable('spotify_' . $who)) {
-        return $bot->network->sendMessageAutoDetection($who, 'Please refresh!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.spotify.pleaserefresh'), $type);
     }
 
     $spotify = DataAPI::get('spotify_' . $who);
@@ -28,7 +28,7 @@ $spotify = function (int $who, array $message, int $type) {
         } catch (\SpotifyWebAPI\SpotifyWebAPIException $e) {
             if ($e->getMessage() == 'The access token expired') {
                 if (empty($spotify['refreshToken'])) {
-                    return $bot->network->sendMessageAutoDetection($who, 'Please relogin to Spotify on panel.', $type);
+                    return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.spotify.pleaserelogin'), $type);
                 }
 
                 $client_id = XatVariables::getAPIKeys()['spotify']['client_id'];
@@ -54,7 +54,7 @@ $spotify = function (int $who, array $message, int $type) {
         if (is_null($currentTrack)) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                $bot->users[$who]->getRegname() . ' is not listening to Spotify.',
+                $bot->botlang('cmd.spotify.notlistening', [$bot->users[$who]->getRegname()]),
                 $type
             );
         }
@@ -74,13 +74,13 @@ $spotify = function (int $who, array $message, int $type) {
         $song = $currentTrack->item->name;
 
         if ($currentTrack->is_playing) {
-            $string = $bot->users[$who]->getRegname() . ' is listening to: ';
+            $string = $bot->botlang('cmd.spotify.islistening', [$bot->users[$who]->getRegname()]);
         } else {
-            $string = $bot->users[$who]->getRegname() . ' was listening to: ';
+            $string = $bot->botlang('cmd.spotify.waslistening', [$bot->users[$who]->getRegname()]);
         }
 
         return $bot->network->sendMessageAutoDetection($who, $string . $artist . ' - ' . $song, $type);
     }
 
-    return $bot->network->sendMessageAutoDetection($who, 'You don\'t have spotify linked to your account.', $type);
+    return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.spotify.nospotify'), $type);
 };

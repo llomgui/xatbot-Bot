@@ -31,11 +31,11 @@ $unbadge = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if (!$user->isBadged()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is not badged.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.unbadge.notbadged'), $type);
         }
 
         $bot->network->sendPrivateConversation($user->getID(), '/nb');
-        $bot->network->sendMessageAutoDetection($who, 'The user is now unbadged.', $type);
+        $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.unbadge.nowunbadged'), $type);
     } else {
         $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
     }

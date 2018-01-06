@@ -13,7 +13,7 @@ $test = function (int $who, array $message, int $type) {
     $message = implode(' ', $message);
     
     if (empty($message)) {
-        return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type, true);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('message.cannotbeempty'), $type, true);
     }
     //remove parentheses, replace all #'s & alt255 with a space
     //not using regex because people like to use emojis/symbols with num
@@ -22,7 +22,7 @@ $test = function (int $who, array $message, int $type) {
     $message = array_filter($message, 'strlen');
     
     if (count($message) < 1) {
-        return $bot->network->sendMessageAutoDetection($who, 'The message cannot be empty.', $type, true);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('message.cannotbeempty'), $type, true);
     }
     
     $bot->network->sendMessageAutoDetection($who, 'Test: (' . implode('#', $message) . '#)', $type);
