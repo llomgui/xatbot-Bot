@@ -9,7 +9,7 @@ $xatbot = function (int $who, array $message, int $type) {
     $bot = OceanProject\API\ActionAPI::getBot();
 
     if (!in_array($who, ['412345607'])) {
-        $bot->network->sendMessageAutoDetection($who, 'Only xatbot staff can use this command.', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Only xatbot staff can use this command.', $type);
     }
 
     if (!isset($message[1])) {
