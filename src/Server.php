@@ -216,7 +216,7 @@ class Server
                             break;
                     }
 
-                    socket_write($client, $return);
+                    @socket_write($client, $return);
                     unset($clients);
                 }
             } else {

@@ -10,10 +10,11 @@ class IPC
     {
         $socket = socket_create(AF_UNIX, SOCK_STREAM, 0);
         if (!$socket) {
-            return $socket;
+            return false;
         }
         
         self::$socket = $socket;
+        return true;
     }
     
     public static function connect($fileName)
@@ -21,14 +22,18 @@ class IPC
         $fileName = '/opt/OceanProject-Bot/sockets/'.$fileName;
 
         if (!file_exists($fileName)) {
-            return -1;
+            return false;
         }
 
         $ret = socket_connect(self::$socket, $fileName);
 
         if (!$ret) {
-            return;
+            return false;
         }
+
+        socket_set_option(self::$socket, SOL_SOCKET, SO_RCVTIMEO, ['sec' => 5, 'usec'=> 0]);
+
+        return true;
     }
     
     public static function read($size)

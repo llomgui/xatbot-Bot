@@ -47,4 +47,11 @@ class Utilities
             return $fgc['id'];
         }
     }
+
+    public static function getBetween($data, $start, $end)
+    {
+        $data = explode($start, $data);
+        $data = explode($end, @$data[1]);
+        return @$data[0];
+    }
 }
