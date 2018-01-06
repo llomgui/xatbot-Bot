@@ -14,8 +14,8 @@ $xatbot = function (int $who, array $message, int $type) {
 
     if (!isset($message[1])) {
         return $bot->network->sendMessageAutoDetection(
-            $who,
-            'Usage: !xatbot [start/stop/restart/check/botid/getpaid]',
+            $who, 
+            'Usage: !xatbot [start/stop/restart/check/botid/getpaid]', 
             $type
         );
     }
@@ -131,7 +131,7 @@ $xatbot = function (int $who, array $message, int $type) {
             break;
         
         default:
-            $bot->network->sendMessageAutoDetection($who, '!xatbot [start/stop/restart/check/botid/getpaid]', $type);
+            $bot->network->sendMessageAutoDetection($who, 'Usage: !xatbot [start/stop/restart/check/botid/getpaid]', $type);
             break;
     }
 };
