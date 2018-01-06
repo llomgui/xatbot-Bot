@@ -43,7 +43,11 @@ $twitch = function (int $who, array $message, int $type) {
     if (isset($twitch->error)) {
         return $bot->network->sendMessageAutoDetection($who, $twitch->message, $type, true);
     } elseif (!$page) {
-        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.twitch.channelnotfound', [$message[1]]), $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            $bot->botlang('cmd.twitch.channelnotfound', [$message[1]]),
+            $type
+        );
     } elseif ($twitch->stream == null) {
         return $bot->network->sendMessageAutoDetection(
             $who,

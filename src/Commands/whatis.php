@@ -37,7 +37,11 @@ $whatis = function (int $who, array $message, int $type) {
     }
     
     if (in_array($message[1], OceanProject\Bot\XatVariables::getFreeSmilies())) {
-        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.whatis.isfreesmiley', [$message[1]]), $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            $bot->botlang('cmd.whatis.isfreesmiley', [$message[1]]),
+            $type
+        );
     }
     
     $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.whatis.notfound', [$message[1]]), $type);

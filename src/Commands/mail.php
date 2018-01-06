@@ -269,7 +269,11 @@ $mail = function (int $who, array $message, int $type) {
                         $type
                     );
                 } else {
-                    return $bot->network->sendMessageAutoDetection($who, $bot->botLang('cmd.mail.cantmailyourself'), $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botLang('cmd.mail.cantmailyourself'),
+                        $type
+                    );
                 }
             } else {
                 return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.notindatabase'), $type);

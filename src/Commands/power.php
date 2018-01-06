@@ -61,7 +61,11 @@ $power = function (int $who, array $message, int $type) {
                     $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.powerenabled'), $type);
                     return $bot->refresh();
                 } else {
-                    return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.isnotdisabled'), $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.power.isnotdisabled'),
+                        $type
+                    );
                 }
             }
             break;
@@ -102,7 +106,11 @@ $power = function (int $who, array $message, int $type) {
                     $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.powerdisabled'), $type);
                     return $bot->refresh();
                 } else {
-                    return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.isnotenabled'), $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.power.isnotenabled'),
+                        $type
+                    );
                 }
             }
             break;

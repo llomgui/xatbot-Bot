@@ -56,5 +56,9 @@ $randomsmiley = function (int $who, array $message, int $type) {
     }
 
     shuffle($rand);
-    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.randomsmiley.generated', [implode('#', $rand)]), $type);
+    $bot->network->sendMessageAutoDetection(
+        $who,
+        $bot->botlang('cmd.randomsmiley.generated', [implode('#', $rand)]),
+        $type
+    );
 };

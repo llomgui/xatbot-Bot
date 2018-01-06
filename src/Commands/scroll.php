@@ -25,7 +25,11 @@ $scroll = function (int $who, array $message, int $type) {
         default:
             unset($message[0]);
             $bot->network->sendMessage('/s' . implode(' ', $message));
-            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.scroll.isnow', [implode(' ', $message)]), $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.scroll.isnow', [implode(' ', $message)]),
+                $type
+            );
             break;
     }
 };

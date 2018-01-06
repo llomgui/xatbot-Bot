@@ -28,7 +28,11 @@ $spotify = function (int $who, array $message, int $type) {
         } catch (\SpotifyWebAPI\SpotifyWebAPIException $e) {
             if ($e->getMessage() == 'The access token expired') {
                 if (empty($spotify['refreshToken'])) {
-                    return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.spotify.pleaserelogin'), $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.spotify.pleaserelogin'),
+                        $type
+                    );
                 }
 
                 $client_id = XatVariables::getAPIKeys()['spotify']['client_id'];
