@@ -8,11 +8,11 @@ $start = function (int $who, array $message, int $type) {
     $bot = OceanProject\API\ActionAPI::getBot();
 
     if ($bot->data->chatid != '2594913') {
-    	return $bot->network->sendMessageAutoDetection(
-    		$who,
-    		'You cannot use this command on this chat, please go to xat.com/xat164871174',
-    		$type
-    	);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            'You cannot use this command on this chat, please go to xat.com/xat164871174',
+            $type
+        );
     }
 
     if (empty($message[1]) || !is_numeric($message[1])) {
@@ -30,12 +30,12 @@ $start = function (int $who, array $message, int $type) {
 
     $authorized = [];
     for ($i = 0; $i < sizeof($foo->users); $i++) {
-    	$authorized[] = $foo->users[$i]->xatid;
+        $authorized[] = $foo->users[$i]->xatid;
     }
     var_dump($authorized);
 
     if (!in_array($who, $authorized)) {
-    	return $bot->network->sendMessageAutoDetection($who, 'You are not able to start this bot!', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'You are not able to start this bot!', $type);
     }
 
     $server = $foo->server->name;
