@@ -1,12 +1,12 @@
 <?php
 
-use OceanProject\API\DataAPI;
-use OceanProject\Bot\XatVariables;
-use OceanProject\Userinfo;
+use xatbot\API\DataAPI;
+use xatbot\Bot\XatVariables;
+use xatbot\Userinfo;
 
 $onTickle = function (int $who, array $array) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!isset($array['t'])) {
         return;

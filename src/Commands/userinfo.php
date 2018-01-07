@@ -4,7 +4,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 $userinfo = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'userinfo')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -60,7 +60,7 @@ $userinfo = function (int $who, array $message, int $type) {
         if ($info->optout !== true) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                OceanProject\Bot\XatVariables::getConfig()['website_url'] . '/panel/userinfo/' . $info->regname,
+                xatbot\Bot\XatVariables::getConfig()['website_url'] . '/panel/userinfo/' . $info->regname,
                 $type
             );
         } else {

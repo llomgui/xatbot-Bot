@@ -2,7 +2,7 @@
 
 $youtube = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'youtube')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -12,7 +12,7 @@ $youtube = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !youtube [search]', $type, true);
     }
 
-    $key = OceanProject\Bot\XatVariables::getAPIKeys()['youtube'];
+    $key = xatbot\Bot\XatVariables::getAPIKeys()['youtube'];
 
     if (empty($key)) {
         return $bot->network->sendMessageAutoDetection($who, "Youtube API Key needs to be setup", $type);

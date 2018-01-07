@@ -2,7 +2,7 @@
 
 $store = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'store')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -13,7 +13,7 @@ $store = function (int $who, array $message, int $type) {
     }
 
     $message = str_replace(['(', ')'], '', $message);
-    $powers = OceanProject\Bot\XatVariables::getPowers();
+    $powers = xatbot\Bot\XatVariables::getPowers();
     $exist  = false;
     $storePrice = 0;
 

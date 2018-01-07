@@ -1,12 +1,12 @@
 <?php
 
-use OceanProject\Models\Bot;
-use OceanProject\IPC;
-use OceanProject\Utilities;
+use xatbot\Models\Bot;
+use xatbot\IPC;
+use xatbot\Utilities;
 
 $xatbot = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!in_array($who, ['412345607'])) {
         return $bot->network->sendMessageAutoDetection($who, 'Only xatbot staff can use this command.', $type);

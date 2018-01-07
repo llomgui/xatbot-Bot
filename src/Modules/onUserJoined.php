@@ -1,15 +1,15 @@
 <?php
 
-use OceanProject\Bot\XatUser;
-use OceanProject\API\DataAPI;
-use OceanProject\Models\Mail;
-use OceanProject\Models\Autoban;
-use OceanProject\Bot\XatVariables;
+use xatbot\Bot\XatUser;
+use xatbot\API\DataAPI;
+use xatbot\Models\Mail;
+use xatbot\Models\Autoban;
+use xatbot\Bot\XatVariables;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 $onUserJoined = function (int $who, array $array) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if ($who >= 1900000000) {
         return;

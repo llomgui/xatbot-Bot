@@ -1,11 +1,11 @@
 <?php
 
-namespace OceanProject\Bot;
+namespace xatbot\Bot;
 
-use OceanProject\Logger;
-use OceanProject\Models\Bot;
-use OceanProject\API\DataAPI;
-use OceanProject\API\ActionAPI;
+use xatbot\Logger;
+use xatbot\Models\Bot;
+use xatbot\API\DataAPI;
+use xatbot\API\ActionAPI;
 
 class XatNetwork
 {
@@ -182,15 +182,17 @@ class XatNetwork
             return false;
         }
 
-        $this->write(
-            'y',
-            [
-                'r' => $this->data->chatid,
-                'v' => '0',
-                'u' => XatVariables::getXatid(),
-                'z' => '8335799305056508195'
-            ]
-        );
+        $attributs = [
+            'r' => $this->data->chatid,
+            'v' => '0',
+            'u' => XatVariables::getXatid()
+        ];
+
+        if ($this->data->creator_user_id == 1) {
+            $attributs['z'] = '8335799305056508195';
+        }
+
+        $this->write('y', $attributs);
 
         $packetY = $this->socket->read(true);
 

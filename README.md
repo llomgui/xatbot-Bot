@@ -1,4 +1,4 @@
-# OceanProject - xatBot [![Build Status](https://travis-ci.org/llomgui/OceanProject-Bot.svg?branch=master)](https://travis-ci.org/llomgui/OceanProject-Bot)
+# xatbot - xatBot [![Build Status](https://travis-ci.org/llomgui/xatbot-Bot.svg?branch=master)](https://travis-ci.org/llomgui/xatbot-Bot)
 
 ## What do i need to run it?
 
@@ -10,7 +10,7 @@
 First, edit config.json.example with your data, rename it to config.json.
 If you want to add modules or commands, don't forget to update modules.json or commands.json.
 
-This project is linked to [OceanProject Website](https://github.com/llomgui/OceanProject-Website)
+This project is linked to [xatbot Website](https://github.com/llomgui/xatbot-Website)
 You need to clone this projet to make it work (It has the database).
 
 Once everything is cloned, you can launch bots servers with: php start.php

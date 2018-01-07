@@ -1,8 +1,8 @@
 <?php
 
-use OceanProject\Models\Log;
-use OceanProject\API\DataAPI;
-use OceanProject\Bot\XatVariables;
+use xatbot\Models\Log;
+use xatbot\API\DataAPI;
+use xatbot\Bot\XatVariables;
 
 $onMessage = function (int $who, string $message) {
 
@@ -10,7 +10,7 @@ $onMessage = function (int $who, string $message) {
         return;
     }
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     $regname = $bot->users[$who]->getRegname();
 

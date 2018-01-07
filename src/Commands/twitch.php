@@ -2,7 +2,7 @@
 
 $twitch = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'twitch')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -13,7 +13,7 @@ $twitch = function (int $who, array $message, int $type) {
     }
 
     $message[1] = preg_replace("/[^a-zA-Z0-9_]/", "", $message[1]);
-    $key = OceanProject\Bot\XatVariables::getAPIKeys()['twitch'];
+    $key = xatbot\Bot\XatVariables::getAPIKeys()['twitch'];
 
     if (empty($key)) {
         return $bot->network->sendMessageAutoDetection($who, 'Twitch API Key needs to be setup', $type);

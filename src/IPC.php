@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject;
+namespace xatbot;
 
 class IPC
 {
@@ -19,7 +19,7 @@ class IPC
     
     public static function connect($fileName)
     {
-        $fileName = '/opt/OceanProject-Bot/sockets/'.$fileName;
+        $fileName = '/opt/xatbot-Bot/sockets/'.$fileName;
 
         if (!file_exists($fileName)) {
             return false;

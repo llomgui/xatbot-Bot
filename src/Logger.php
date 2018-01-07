@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject;
+namespace xatbot;
 
 use Monolog\Logger as mLogger;
 use Monolog\ErrorHandler;

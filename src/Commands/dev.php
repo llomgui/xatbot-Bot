@@ -1,8 +1,9 @@
 <?php
 
-use OceanProject\Extensions;
-use OceanProject\Bot\XatVariables;
-use OceanProject\API\DataAPI;
+use xatbot\Extensions;
+use xatbot\Bot\XatVariables;
+use xatbot\API\DataAPI;
+use xatbot\Logger;
 
 $dev = function (int $who, array $message, int $type) {
 
@@ -10,7 +11,7 @@ $dev = function (int $who, array $message, int $type) {
         return;
     }
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     switch ($message[1]) {
         case 'reload':
@@ -24,8 +25,10 @@ $dev = function (int $who, array $message, int $type) {
             break;
 
         case 'test':
-            $data = DataAPI::dumpVars();
-            print_r($data);
+            for ($i=0; $i < 500; $i++) {
+                Logger::getLogger()->debug($i);
+                $bot->network->tempRank(220711, 'moderator', 6);
+            }
             break;
  
         case 'memory':

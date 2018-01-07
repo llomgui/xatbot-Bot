@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\API\DataAPI;
+use xatbot\API\DataAPI;
 
 $leastactive = function (int $who, array $message, int $type) {
 
-    $bot  = OceanProject\API\ActionAPI::getBot();
+    $bot  = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'leastactive')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

@@ -2,12 +2,13 @@
 
 require_once 'vendor/autoload.php';
 
-use OceanProject\Server;
+use xatbot\Server;
+use xatbot\Models;
 
-$servers = ['Saturn'];
+$servers = [['name' =>'Sun']];
 
-for ($i = 0; $i < sizeof($servers); $i++) {
-    $server = new Server($servers[$i]);
+foreach ($servers as $server) {
+    $server = new Server($server['name']);
     $server->handle();
     sleep(5);
 }

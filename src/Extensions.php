@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject;
+namespace xatbot;
 
 class Extensions
 {

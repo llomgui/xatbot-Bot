@@ -2,6 +2,6 @@
 
 $onDup = function () {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
     $bot->stop();
 };

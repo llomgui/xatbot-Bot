@@ -1,11 +1,11 @@
 <?php
 
-use OceanProject\Utilities;
-use OceanProject\Models\AutoTemp;
+use xatbot\Utilities;
+use xatbot\Models\AutoTemp;
 
 $autotemp = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'autotemp')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

@@ -2,7 +2,7 @@
 
 $price = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'price')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -12,7 +12,7 @@ $price = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !price [power]', $type, true);
     }
 
-    $powers = OceanProject\Bot\XatVariables::getPowers();
+    $powers = xatbot\Bot\XatVariables::getPowers();
 
     if (isset($message[2])) {
         $minCost = $maxCost = 0;

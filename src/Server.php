@@ -1,13 +1,13 @@
 <?php
 
-namespace OceanProject;
+namespace xatbot;
 
-use OceanProject\Models;
-use OceanProject\Logger;
-use OceanProject\Bot\XatBot;
-use OceanProject\Extensions;
-use OceanProject\API\BaseAPI;
-use OceanProject\Bot\XatVariables;
+use xatbot\Models;
+use xatbot\Logger;
+use xatbot\Bot\XatBot;
+use xatbot\Extensions;
+use xatbot\API\BaseAPI;
+use xatbot\Bot\XatVariables;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -261,8 +261,8 @@ class Server
                                 break;
                             }
 
-                            if ($Ocean->stopped) {
-                                $this->stop($botid);
+                            if ($Ocean->stopped != false) {
+                                $this->stop($botid, $Ocean->stopped);
                                 break;
                             }
 
@@ -554,10 +554,10 @@ class Server
         $this->start($botid);
     }
 
-    public function stop($botid, $status = '')
+    public function stop($botid, $status = 'stop')
     {
         if (isset($this->xatBots[$botid])) {
-            $status = empty($status) ? 'Offline' : $status;
+            $status = ($status == 'stop') ? 'Offline' : $status;
             $this->xatBots[$botid]->network->socket->disconnect();
 
             $bot = Models\Bot::find($botid);

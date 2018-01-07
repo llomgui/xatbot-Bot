@@ -1,11 +1,11 @@
 <?php
 
-use OceanProject\Bot\XatVariables;
-use OceanProject\API\DataAPI;
-use OceanProject\Models\Log;
+use xatbot\Bot\XatVariables;
+use xatbot\API\DataAPI;
+use xatbot\Models\Log;
 
 $onRankMessage = function (array $array) {
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (isset($array['d'])) {
         $log = new Log;

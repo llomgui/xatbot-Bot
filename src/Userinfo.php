@@ -1,8 +1,8 @@
 <?php
 
-namespace OceanProject;
+namespace xatbot;
 
-use OceanProject\Models\Userinfo as UI;
+use xatbot\Models\Userinfo as UI;
 
 class Userinfo
 {

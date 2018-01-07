@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\Models\Log;
+use xatbot\Models\Log;
 
 $onCommand = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!isset($bot->users[$who])) {
         return;

@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\API\DataAPI;
+use xatbot\API\DataAPI;
 
 $onUserLeave = function (int $who) {
 
-    $bot  = OceanProject\API\ActionAPI::getBot();
+    $bot  = xatbot\API\ActionAPI::getBot();
 
     if ($who >= 1900000000) {
         return;

@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\Bot\XatVariables;
+use xatbot\Bot\XatVariables;
 
 $hasmost = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'hasmost')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

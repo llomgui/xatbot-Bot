@@ -1,11 +1,11 @@
 <?php
 
-use OceanProject\Utilities;
-use OceanProject\Models\AutoBan;
+use xatbot\Utilities;
+use xatbot\Models\AutoBan;
 
 $autoban = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'autoban')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

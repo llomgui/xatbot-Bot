@@ -2,7 +2,7 @@
 
 $whatis = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'whatis')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -12,7 +12,7 @@ $whatis = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, 'Usage: !whatis [smiley]', $type, true);
     }
     
-    $powers = OceanProject\Bot\XatVariables::getPowers();
+    $powers = xatbot\Bot\XatVariables::getPowers();
     
     foreach ($powers as $power) {
         if ($power['name'] == strtolower($message[1])) {
@@ -36,7 +36,7 @@ $whatis = function (int $who, array $message, int $type) {
         }
     }
     
-    if (in_array($message[1], OceanProject\Bot\XatVariables::getFreeSmilies())) {
+    if (in_array($message[1], xatbot\Bot\XatVariables::getFreeSmilies())) {
         return $bot->network->sendMessageAutoDetection(
             $who,
             $bot->botlang('cmd.whatis.isfreesmiley', [$message[1]]),

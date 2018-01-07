@@ -1,12 +1,12 @@
 <?php
 
-use OceanProject\Utilities;
-use OceanProject\Models\Staff;
-use OceanProject\Models\Minrank;
+use xatbot\Utilities;
+use xatbot\Models\Staff;
+use xatbot\Models\Minrank;
 
 $staff = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'staff')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

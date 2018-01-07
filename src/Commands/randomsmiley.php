@@ -2,7 +2,7 @@
 
 $randomsmiley = function (int $who, array $message, int $type) {
     
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'randomsmiley')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -25,7 +25,7 @@ $randomsmiley = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.randomsmiley.mustbe'), $type, true);
     }
 
-    $powers = OceanProject\Bot\XatVariables::getPowers();
+    $powers = xatbot\Bot\XatVariables::getPowers();
     $exist  = false;
 
     $rand = [];

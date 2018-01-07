@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\Bot\XatVariables;
+use xatbot\Bot\XatVariables;
 
 $kickall = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'kickall')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

@@ -15,13 +15,13 @@ $latestpower = function (int $who, array $message, int $type) {
         9 = pawns2 (temp)
     */
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'latestpower')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
     
-    $powers = OceanProject\Bot\XatVariables::getPowers();
+    $powers = xatbot\Bot\XatVariables::getPowers();
     $keys = array_keys($powers);
     $latestID = end($keys);
     $power = $powers[$latestID];

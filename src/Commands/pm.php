@@ -1,7 +1,7 @@
 <?php
 $pm = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'pm')) {
         return $bot->network->sendMessageAutoDetection(

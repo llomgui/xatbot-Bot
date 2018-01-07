@@ -4,7 +4,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 $twitter = function (int $who, array $message, int $type) {
 
-    $bot  = OceanProject\API\ActionAPI::getBot();
+    $bot  = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'twitter')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -18,10 +18,10 @@ $twitter = function (int $who, array $message, int $type) {
         );
     }
 
-    $consumerKey = OceanProject\Bot\XatVariables::getAPIKeys()['twitter']['consumer_key'];
-    $consumerSecret = OceanProject\Bot\XatVariables::getAPIKeys()['twitter']['consumer_secret'];
-    $accessToken = OceanProject\Bot\XatVariables::getAPIKeys()['twitter']['oauth_token'];
-    $accessTokenSecret = OceanProject\Bot\XatVariables::getAPIKeys()['twitter']['oauth_token_secret'];
+    $consumerKey = xatbot\Bot\XatVariables::getAPIKeys()['twitter']['consumer_key'];
+    $consumerSecret = xatbot\Bot\XatVariables::getAPIKeys()['twitter']['consumer_secret'];
+    $accessToken = xatbot\Bot\XatVariables::getAPIKeys()['twitter']['oauth_token'];
+    $accessTokenSecret = xatbot\Bot\XatVariables::getAPIKeys()['twitter']['oauth_token_secret'];
 
     if (empty($consumerKey) || empty($consumerSecret) || empty($accessToken) || empty($accessTokenSecret)) {
         return $bot->network->sendMessageAutoDetection(

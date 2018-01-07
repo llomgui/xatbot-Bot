@@ -2,13 +2,13 @@
 
 $countdown = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'countdown')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    $releaseTime = OceanProject\Bot\XatVariables::getReleaseTime();
+    $releaseTime = xatbot\Bot\XatVariables::getReleaseTime();
 
     if ($releaseTime > 1) {
         $message = $bot->botlang('cmd.countdown.releasein', [gmdate("H:i:s", $releaseTime - time())]);

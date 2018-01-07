@@ -1,6 +1,6 @@
 <?php
 
-use OceanProject\Models\Log;
+use xatbot\Models\Log;
 
 $onTransfer = function (int $from, string $type, string $message, int $to, int $xats, int $days) {
 
@@ -8,7 +8,7 @@ $onTransfer = function (int $from, string $type, string $message, int $to, int $
         return;
     }
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     $regname1 = '';
     $regname2 = '';

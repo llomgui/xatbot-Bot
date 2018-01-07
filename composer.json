@@ -1,6 +1,6 @@
 {
-    "name": "oceanproject/bot",
-    "description": "OceanProject Bot",
+    "name": "xatbot/bot",
+    "description": "xatbot Bot",
     "require": {
         "php": ">=7.1.0",
         "illuminate/database": "^5.4",
@@ -14,7 +14,7 @@
     },
     "autoload":{
         "psr-4": {
-            "OceanProject\\": "src/"
+            "xatbot\\": "src/"
         }
     }
 }

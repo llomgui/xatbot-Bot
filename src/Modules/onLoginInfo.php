@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\Bot\XatVariables;
+use xatbot\Bot\XatVariables;
 
 $onLoginInfo = function (array $array) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (isset($array['RL']) && $array['RL'] == '1') {
         XatVariables::setLoginPacket($array);

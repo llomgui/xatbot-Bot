@@ -1,9 +1,9 @@
 <?php
 
-namespace OceanProject\Bot;
+namespace xatbot\Bot;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use OceanProject\Models\Bot;
+use xatbot\Models\Bot;
 
 class XatBot
 {
@@ -395,9 +395,9 @@ class XatBot
         $this->__construct($bot, $refreshing);
     }
 
-    public function stop()
+    public function stop($message = 'stop')
     {
-        $this->stopped = true;
+        $this->stopped = $message;
     }
 
     public function sec2hms($sec, $padHours = false)

@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\API\DataAPI;
+use xatbot\API\DataAPI;
 
 $online = function (int $who, array $message, int $type) {
     
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'online')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -34,7 +34,7 @@ $online = function (int $who, array $message, int $type) {
         return;
     } elseif (!isset($res)) {
         if ($message[1] == 'volunteers') {
-            $volunteers = OceanProject\Bot\XatVariables::getVolunteers();
+            $volunteers = xatbot\Bot\XatVariables::getVolunteers();
 
             $ids = [];
             for ($i = 0; $i < sizeof($volunteers); $i++) {

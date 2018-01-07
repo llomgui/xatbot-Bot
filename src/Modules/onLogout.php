@@ -2,7 +2,7 @@
 
 $onLogout = function (array $array) {
     
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
     if (!isset($array['e'])) {
         return;
     }
@@ -18,6 +18,10 @@ $onLogout = function (array $array) {
 
         case 'E43': // Some args are missing in j2
             $bot->network->join();
+            break;
+
+        case 'E25':
+            $bot->stop('xat server offline');
             break;
     }
 };

@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject\Bot;
+namespace xatbot\Bot;
 
 class XatUser
 {

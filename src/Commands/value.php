@@ -2,7 +2,7 @@
 
 $value = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'value')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -19,7 +19,7 @@ $value = function (int $who, array $message, int $type) {
         }
     }
 
-    $powers = OceanProject\Bot\XatVariables::getPowers();
+    $powers = xatbot\Bot\XatVariables::getPowers();
 
     if (sizeof($xatusers) > 0) {
         $regname    = '';

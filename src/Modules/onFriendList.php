@@ -1,7 +1,7 @@
 <?php
 
-use OceanProject\API\DataAPI;
-use OceanProject\Bot\XatVariables;
+use xatbot\API\DataAPI;
+use xatbot\Bot\XatVariables;
 
 $onFriendList = function (array $array) {
 
@@ -10,7 +10,7 @@ $onFriendList = function (array $array) {
         return;
     }
 
-    $bot  = OceanProject\API\ActionAPI::getBot();
+    $bot  = xatbot\API\ActionAPI::getBot();
     $list = explode(',', $array['v']);
     $list = array_diff($list, ['10101']);
 

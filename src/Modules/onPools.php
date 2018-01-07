@@ -2,7 +2,7 @@
 
 $onPools = function (array $array) {
     
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     $pools = explode(' ', $array['v']);
     array_shift($pools);

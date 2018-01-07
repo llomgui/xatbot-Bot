@@ -1,8 +1,8 @@
 <?php
 
-namespace OceanProject\Bot;
+namespace xatbot\Bot;
 
-use OceanProject\Logger;
+use xatbot\Logger;
 
 class XatSocket
 {

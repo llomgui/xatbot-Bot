@@ -1,11 +1,11 @@
 <?php
 
-use OceanProject\Models\Bot;
-use OceanProject\IPC;
+use xatbot\Models\Bot;
+use xatbot\IPC;
 
 $start = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if ($bot->data->chatid != '2594913') {
         return $bot->network->sendMessageAutoDetection(

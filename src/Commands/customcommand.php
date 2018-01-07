@@ -1,11 +1,11 @@
 <?php
 
-use OceanProject\Models\CustomCommand;
-use OceanProject\Models\Minrank;
+use xatbot\Models\CustomCommand;
+use xatbot\Models\Minrank;
 
 $customcommand = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'customcommand')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

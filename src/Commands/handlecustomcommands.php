@@ -2,7 +2,7 @@
 
 $handlecustomcommands = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
     $customcommand = substr($message[0], 1);
     $bool = false;
 

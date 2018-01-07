@@ -1,6 +1,6 @@
 <?php
 
-namespace OceanProject\API;
+namespace xatbot\API;
 
 class ActionAPI extends BaseAPI
 {

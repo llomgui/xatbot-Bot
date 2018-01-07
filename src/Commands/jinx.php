@@ -5,7 +5,7 @@ $jinx = function (int $who, array $message, int $type) {
         Work In Progress
         Contains a few errors
     */
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'jinx')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

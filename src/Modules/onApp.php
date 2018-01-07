@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\API\DataAPI;
-use OceanProject\Bot\XatVariables;
+use xatbot\API\DataAPI;
+use xatbot\Bot\XatVariables;
 
 $onApp = function (int $who, string $app, array $array) {
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
     switch ($app) {
         case '10000':
             break;

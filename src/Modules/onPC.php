@@ -1,11 +1,11 @@
 <?php
 
-use OceanProject\API\DataAPI;
-use OceanProject\Models\Log;
+use xatbot\API\DataAPI;
+use xatbot\Models\Log;
 
 $onPC = function (int $who, string $message) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!isset($bot->users[$who])) {
         return;

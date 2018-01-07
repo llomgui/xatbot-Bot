@@ -2,7 +2,7 @@
 
 $logs = function (int $who, array $message, int $type) {
 
-    $bot  = OceanProject\API\ActionAPI::getBot();
+    $bot  = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'logs')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
@@ -17,7 +17,7 @@ $logs = function (int $who, array $message, int $type) {
     }
 
     $amount = (int) $message[1];
-    $logsLink = 'https://oceanproject.fr/panel/bot/logs/' . $bot->data->id . '/' . $amount;
+    $logsLink = 'https://xatbot.fr/panel/bot/logs/' . $bot->data->id . '/' . $amount;
 
     return $bot->network->sendMessageAutoDetection(
         $who,

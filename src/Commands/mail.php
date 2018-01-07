@@ -1,11 +1,11 @@
 <?php
 
-use OceanProject\Models\Mail;
-use OceanProject\Models\Userinfo;
+use xatbot\Models\Mail;
+use xatbot\Models\Userinfo;
 
 $mail = function (int $who, array $message, int $type) {
 
-    $bot  = OceanProject\API\ActionAPI::getBot();
+    $bot  = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'mail')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);

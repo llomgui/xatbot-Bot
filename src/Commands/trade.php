@@ -1,10 +1,10 @@
 <?php
 
-use OceanProject\Bot\XatVariables;
+use xatbot\Bot\XatVariables;
 
 $trade = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if ($who != 1000000000) {
         return $bot->network->sendMessageAutoDetection($who, 'Nope! :)', $type);
@@ -70,7 +70,7 @@ $trade = function (int $who, array $message, int $type) {
     }
 
     if (!empty($powerstring)) {
-        OceanProject\API\DataAPI::set('sent_trade_' . $who, '0;0;' . $powerstring);
+        xatbot\API\DataAPI::set('sent_trade_' . $who, '0;0;' . $powerstring);
     }
 
     $buildPacket = ['i' => 30008, 'u' => XatVariables::getXatid(), 'd' => $who, 't' => 'O,0,0,' . $powerstring];

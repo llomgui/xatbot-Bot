@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use OceanProject\Bot\XatVariables;
+use xatbot\Bot\XatVariables;
 
 $power = function (int $who, array $message, int $type) {
 
-    $bot = OceanProject\API\ActionAPI::getBot();
+    $bot = xatbot\API\ActionAPI::getBot();
 
     if (!$bot->minrank($who, 'power')) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
