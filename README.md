@@ -1,4 +1,4 @@
-# xatbot - xatBot [![Build Status](https://travis-ci.org/llomgui/xatbot-Bot.svg?branch=master)](https://travis-ci.org/llomgui/xatbot-Bot)
+# xatbot - Bot [![Build Status](https://travis-ci.org/llomgui/xatbot-Bot.svg?branch=master)](https://travis-ci.org/llomgui/xatbot-Bot)
 
 ## What do i need to run it?
 
