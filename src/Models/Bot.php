@@ -36,6 +36,14 @@ class Bot extends Eloquent
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
     public function botStatus()
