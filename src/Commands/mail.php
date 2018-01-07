@@ -42,7 +42,7 @@ $mail = function (int $who, array $message, int $type) {
 
             $mails = Mail::where($infos)->get();
             if (sizeof($mails) == 0) {
-                return $bot->network->sendMessageAutoDetection($who, 'You have no messages!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.mail.nomessage'), $type);
             }
 
             if ($type == 1) {
@@ -78,13 +78,13 @@ $mail = function (int $who, array $message, int $type) {
             if (sizeof($bot->packetsinqueue) > 0) {
                 $bot->packetsinqueue[max(array_keys($bot->packetsinqueue)) + 2000] = [
                     'who' => $who,
-                    'message' => 'End of messages.',
+                    'message' => $bot->botlang('cmd.mail.endmessage'),
                     'type' => $type
                 ];
             } else {
                 $bot->packetsinqueue[round(microtime(true) * 1000) + 2000] = [
                     'who' => $who,
-                    'message' => 'End of messages.',
+                    'message' => $bot->botlang('cmd.mail.endmessage'),
                     'type' => $type
                 ];
             }
@@ -96,7 +96,7 @@ $mail = function (int $who, array $message, int $type) {
             foreach ($mails as $mail) {
                 $mail->delete();
             }
-            return $bot->network->sendMessageAutoDetection($who, 'Mail inbox emptied!', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.mail.inboxempty'), $type);
             break;
 
         case 'check':
@@ -105,13 +105,16 @@ $mail = function (int $who, array $message, int $type) {
             $mails['stored'] = Mail::where(['touser' => $who, 'read' => false, 'store' => true])->get();
 
             if (sizeof($mails['old']) == 0 && sizeof($mails['new']) == 0 && sizeof($mails['stored']) == 0) {
-                return $bot->network->sendMessageAutoDetection($who, 'You have no messages!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.mail.nomessage'), $type);
             }
 
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'You have ' . sizeof($mails['new']) . ' unread messages, ' . sizeof($mails['old']) .
-                    ' read messages and ' . sizeof($mails['stored']) . ' stored messages!',
+                $bot->botlang('cmd.mail.youhave', [
+                    sizeof($mails['new']),
+                    sizeof($mails['old']),
+                    sizeof($mails['stored'])
+                ]),
                 $type
             );
             break;
@@ -125,11 +128,11 @@ $mail = function (int $who, array $message, int $type) {
             $mail = Mail::where(['touser' => $who, 'id' => $id])->first();
             if (!empty($mail)) {
                 $mail->delete();
-                return $bot->network->sendMessageAutoDetection($who, 'Mail deleted!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.mail.maildeleted'), $type);
             } else {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'This mail does not exist or does not belong to you!',
+                    $bot->botlang('cmd.mail.doesnotexit'),
                     $type
                 );
             }
@@ -149,7 +152,7 @@ $mail = function (int $who, array $message, int $type) {
             } else {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'This mail does not exist or does not belong to you!',
+                    $bot->botlang('cmd.mail.doesnotexit'),
                     $type
                 );
             }
@@ -165,11 +168,11 @@ $mail = function (int $who, array $message, int $type) {
             if (!empty($mail)) {
                 $mail->store = false;
                 $mail->save();
-                return $bot->network->sendMessageAutoDetection($who, 'Mail unstored!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.mail.mailunstored'), $type);
             } else {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'This mail does not exist or does not belong to you!',
+                    $bot->botlang('cmd.mail.doesnotexit'),
                     $type
                 );
             }
@@ -186,7 +189,7 @@ $mail = function (int $who, array $message, int $type) {
             }
 
             if (!$bot->users[$who]->isMain()) {
-                return $bot->network->sendMessageAutoDetection($who, 'Only main owners can use this command!', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.mail.onlymain'), $type);
             }
 
             foreach ($bot->stafflist as $id => $level) {
@@ -198,7 +201,7 @@ $mail = function (int $who, array $message, int $type) {
                     $mail->save();
                 }
             }
-            return $bot->network->sendMessageAutoDetection($who, 'Message sent to all staff.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.mail.sentstaff'), $type);
             break;
         
         default:
@@ -231,7 +234,7 @@ $mail = function (int $who, array $message, int $type) {
             if (in_array(strtolower($toUser), $xatAdmins)) {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'You are not allowed to send a mail to this account.',
+                    $bot->botlang('cmd.mail.notallowed'),
                     $type
                 );
             }
@@ -250,7 +253,7 @@ $mail = function (int $who, array $message, int $type) {
                     if (sizeof($mails) > 10) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'Sorry, ' . $user->regname . ' has too many unread messages.',
+                            $bot->botlang('cmd.mail.toomanyunread', [$user->regname]),
                             $type
                         );
                     }
@@ -262,14 +265,18 @@ $mail = function (int $who, array $message, int $type) {
                     $mail->save();
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'Message sent to ' . $user->regname . '(' . $user->xatid . ')!',
+                        $bot->botLang('cmd.mail.messagesent', [$user->regname, $user->xatid]),
                         $type
                     );
                 } else {
-                    return $bot->network->sendMessageAutoDetection($who, 'You cannot send a mail to yourself!', $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botLang('cmd.mail.cantmailyourself'),
+                        $type
+                    );
                 }
             } else {
-                return $bot->network->sendMessageAutoDetection($who, 'This user is not in the database.', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.notindatabase'), $type);
             }
             break;
     }

@@ -18,7 +18,7 @@ $whatis = function (int $who, array $message, int $type) {
         if ($power['name'] == strtolower($message[1])) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                ucfirst($power['name']) . ' is a power, not a smiley.',
+                $bot->botlang('cmd.whatis.notasmiley', [ucfirst($power['name'])]),
                 $type
             );
         }
@@ -26,7 +26,10 @@ $whatis = function (int $who, array $message, int $type) {
             if ($smiley == strtolower($message[1])) {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    '('. $smiley . ') is from the power (' . $power['name'] . ')',
+                    $bot->botlang('cmd.whatis.message', [
+                        $smiley,
+                        $power['name']
+                    ]),
                     $type
                 );
             }
@@ -34,8 +37,12 @@ $whatis = function (int $who, array $message, int $type) {
     }
     
     if (in_array($message[1], OceanProject\Bot\XatVariables::getFreeSmilies())) {
-        return $bot->network->sendMessageAutoDetection($who, '"' . $message[1] . '" is a free smiley.', $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            $bot->botlang('cmd.whatis.isfreesmiley', [$message[1]]),
+            $type
+        );
     }
     
-    $bot->network->sendMessageAutoDetection($who, '"' . $message[1] . '" was not found as a smiley.', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.whatis.notfound', [$message[1]]), $type);
 };

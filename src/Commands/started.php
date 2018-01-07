@@ -10,5 +10,5 @@ $started = function (int $who, array $message, int $type) {
     
     $started = time() - $bot->started;
     
-    $bot->network->sendMessageAutoDetection($who, 'I was started ' . $bot->secondsToTime($started) . ' ago.', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.started', [$bot->secondsToTime($started)]), $type);
 };

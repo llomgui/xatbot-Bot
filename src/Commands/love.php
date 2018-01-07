@@ -45,13 +45,13 @@ $love = function (int $who, array $message, int $type) {
         if ($love == 101) {
             $bot->network->sendMessageAutoDetection(
                 $who,
-                ' ['.$who.'] - Woooow ! ' . $lover[0] . ' + ' . $lover[1] . ' = (L#) !',
+                $bot->botLang('cmd.love.100percent', [$who, $lover[0], $lover[1]]),
                 $type
             );
         } else {
             $bot->network->sendMessageAutoDetection(
                 $who,
-                ' ['.$who.'] - Love test: ' . $lover[0] . ' and ' . $lover[1] . ' are ' . $love . '% compatible.',
+                $bot->botLang('cmd.love.result', [$who, $lover[0], $lover[1], $love]),
                 $type
             );
         }

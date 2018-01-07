@@ -47,5 +47,5 @@ $pc = function (int $who, array $message, int $type) {
         $message ?? 'Hello'
     );
 
-    $bot->network->sendMessageAutoDetection($who, 'The user got the pc!', $type);
+    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.pc.gotpc'), $type);
 };

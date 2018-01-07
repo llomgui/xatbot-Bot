@@ -21,7 +21,7 @@ $logs = function (int $who, array $message, int $type) {
 
     return $bot->network->sendMessageAutoDetection(
         $who,
-        'Logs can be seen here: ' . $logsLink,
+        $bot->botlang('cmd.logs.seenhere', [$logsLink]),
         $type
     );
 };

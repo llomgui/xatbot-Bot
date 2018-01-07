@@ -17,12 +17,12 @@ $xatwiki = function (int $who, array $message, int $type) {
     );
 
     if (!$response) {
-        return $bot->network->sendMessageAutoDetection($who, 'Wiki page was not found!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.xatwiki.notfound'), $type);
     }
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        'Wiki page for ' . $message[1] . ' : https://xat.wiki/' . $message[1],
+        $bot->botlang('cmd.xatwiki.wikifor', [$message[1]]),
         $type
     );
 };

@@ -20,7 +20,7 @@ $twitch = function (int $who, array $message, int $type) {
     }
 
     if (empty($message[1])) {
-        return $bot->network->sendMessageAutoDetection($who, 'Invalid twitch username', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.twitch.invalidusername'), $type);
     }
 
     $stream = stream_context_create([
@@ -43,12 +43,18 @@ $twitch = function (int $who, array $message, int $type) {
     if (isset($twitch->error)) {
         return $bot->network->sendMessageAutoDetection($who, $twitch->message, $type, true);
     } elseif (!$page) {
-        return $bot->network->sendMessageAutoDetection($who, 'Channel \'' . $message[1] . '\' does not exist.', $type);
+        return $bot->network->sendMessageAutoDetection(
+            $who,
+            $bot->botlang('cmd.twitch.channelnotfound', [$message[1]]),
+            $type
+        );
     } elseif ($twitch->stream == null) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            '[' . ucfirst(strtolower($message[1])) .
-                '] is not streaming right now. [Channel : https://twitch.tv/' . $message[1] . ' ]',
+            $bot->botlang('cmd.twitch.notstreaming', [
+                ucfirst(strtolower($message[1])),
+                $message[1]
+            ]),
             $type
         );
     }

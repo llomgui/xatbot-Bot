@@ -32,7 +32,7 @@ $youtube = function (int $who, array $message, int $type) {
     if (isset($response['error'])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Sorry i can\'t search youtube at this time, please try again later.',
+            $bot->botlang('cmd.youtube.cantsearch'),
             $type
         );
     }
@@ -40,7 +40,7 @@ $youtube = function (int $who, array $message, int $type) {
     if ($response['pageInfo']['totalResults'] < 1) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'I found nothing for that search. :(',
+            $bot->botlang('cmd.youtube.nothingfound'),
             $type
         );
     }

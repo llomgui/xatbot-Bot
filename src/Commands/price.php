@@ -26,9 +26,12 @@ $price = function (int $who, array $message, int $type) {
         }
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Those powers cost ' . number_format($minCost) . ' - ' . number_format($maxCost) .
-            ' xats OR ' . number_format(round($minCost / 13.5)) . ' - ' .
-            number_format(round($maxCost / 13.5)) . ' days.',
+            $bot->botlang('cmd.price.thosepowers', [
+                number_format($minCost),
+                number_format($maxCost),
+                number_format(round($minCost / 13.5)),
+                number_format(round($maxCost / 13.5))
+            ]),
             $type
         );
     }
@@ -42,7 +45,7 @@ $price = function (int $who, array $message, int $type) {
     $powerID = $match[0];
 
     if (!$powerID) {
-        return $bot->network->sendMessageAutoDetection($who, 'Power not found.', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.powernotexist'), $type);
     }
 
     if ($powerID == 95) {
@@ -55,17 +58,25 @@ $price = function (int $who, array $message, int $type) {
     if ($powers[$powerID]['minCost'] == 0 || $powers[$powerID]['maxCost'] == 0) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            '[' . $powerID . '] ' . ucfirst($powers[$powerID]['name']) . ' has not been priced yet.',
+            $bot->botlang('cmd.price.notpriced', [
+                $powerID,
+                ucfirst($powers[$powerID]['name'])
+            ]),
             $type
         );
     }
-    $dym = $match[1] === false ? 'Did you mean "' . $powers[$powerID]['name'] . '"? ' : '';
+    $dym = $match[1] === false ? $bot->botlang('cmd.didyoumean', [ucfirst($powers[$powerID]['name'])]) : '';
     $bot->network->sendMessageAutoDetection(
         $who,
-        $dym . '['  . $powerID . '] ' .ucfirst($powers[$powerID]['name']) . ' costs ' .
-            number_format($powers[$powerID]['minCost']) . ' - ' . number_format($powers[$powerID]['maxCost']) .
-            ' xats OR ' . number_format(round($powers[$powerID]['minCost'] / 13.5)) . ' - ' .
-            number_format(round($powers[$powerID]['maxCost'] / 13.5)) . ' days.',
+        $bot->botlang('cmd.price.result', [
+            $dym,
+            $powerID,
+            ucfirst($powers[$powerID]['name']),
+            number_format($powers[$powerID]['minCost']),
+            number_format($powers[$powerID]['maxCost']),
+            number_format(round($powers[$powerID]['minCost'] / 13.5)),
+            number_format(round($powers[$powerID]['maxCost'] / 13.5))
+        ]),
         $type
     );
 };

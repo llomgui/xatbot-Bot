@@ -46,7 +46,7 @@ $response = function (int $who, array $message, int $type) {
                 if ($responses == strtolower($response)) {
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'This response is currently in use!',
+                        $bot->botlang('cmd.response.inuse'),
                         $type
                     );
                 }
@@ -62,7 +62,7 @@ $response = function (int $who, array $message, int $type) {
 
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'The response has been added!',
+                $bot->botlang('cmd.response.added'),
                 $type
             );
         break;
@@ -90,14 +90,14 @@ $response = function (int $who, array $message, int $type) {
 
                     return $bot->network->sendMessageAutoDetection(
                         $who,
-                        'The response has been removed!',
+                        $bot->botlang('cmd.response.removed'),
                         $type
                     );
                 }
             }
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'I could not find this response in the list.',
+                $bot->botlang('cmd.response.notfound'),
                 $type
             );
         break;

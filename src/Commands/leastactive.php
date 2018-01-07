@@ -42,7 +42,7 @@ $leastactive = function (int $who, array $message, int $type) {
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        'The current least active user is ' . $displayName . ' with a time of ' . $bot->secondsToTime($userTime),
+        $bot->botlang('cmd.leastactive', [$displayName, $bot->secondsToTime($userTime)]),
         $type
     );
 };

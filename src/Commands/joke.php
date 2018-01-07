@@ -13,7 +13,7 @@ $joke = function (int $who, array $message, int $type) {
     if (!$page) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'I am unable to grab a joke at this moment, please try again later.',
+            $bot->botlang('cmd.joke.errorgrab'),
             $type
         );
     }

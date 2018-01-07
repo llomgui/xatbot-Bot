@@ -28,7 +28,7 @@ $minrank = function (int $who, array $message, int $type) {
             if (!isset($bot->minranks[$command])) {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'This command is not a command!',
+                    $bot->botlang('cmd.doesnotexist'),
                     $type
                 );
             }
@@ -37,7 +37,7 @@ $minrank = function (int $who, array $message, int $type) {
             $minrankName = Minrank::where('level', $bot->minranks[$command])->first();
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'The minrank for ' . strtoupper($message[1]) . ' is ' . strtoupper($minrankName->name) . '.',
+                $bot->botlang('cmd.minrank.minrankfor', [strtoupper($message[1]), strtoupper($minrankName->name)]),
                 $type
             );
         } else {
@@ -52,7 +52,7 @@ $minrank = function (int $who, array $message, int $type) {
             if (!isset($bot->minranks[$command])) {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'This command is not a command!',
+                    $bot->botlang('cmd.doesnotexist'),
                     $type
                 );
             }
@@ -61,7 +61,7 @@ $minrank = function (int $who, array $message, int $type) {
             if (!in_array(ucfirst($newMinrank), Minrank::pluck('name')->toArray())) {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'The minrank is not valid!',
+                    $bot->botlang('minrank.minranknotvalid'),
                     $type
                 );
             }
@@ -71,7 +71,7 @@ $minrank = function (int $who, array $message, int $type) {
             if (strtolower($minrankName->name) == $newMinrank) {
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'The minrank is already set to ' . strtoupper($newMinrank) . '.',
+                    $bot->botlang('cmd.minrank.isalready', [strtoupper($newMinrank)]),
                     $type
                 );
             }
@@ -101,7 +101,7 @@ $minrank = function (int $who, array $message, int $type) {
             
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'The new minrank for ' . strtoupper($message[1]) . ' is ' . strtoupper($newMinrank) . '.',
+                $bot->botlang('cmd.minrank.newminrank', [strtoupper($message[1], strtoupper($newMinrank))]),
                 $type
             );
         }

@@ -9,7 +9,7 @@ $scroll = function (int $who, array $message, int $type) {
     }
 
     if (in_array(strtolower($bot->chatInfo['rank']), ['guest', 'member', 'moderator'])) {
-        return $bot->network->sendMessageAutoDetection($who, 'I need to be owner+ to set a scroller. :(', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botLang('cmd.scroll.ownerplus'), $type);
     }
 
     if (!isset($message[1]) || empty($message[1])) {
@@ -19,13 +19,17 @@ $scroll = function (int $who, array $message, int $type) {
     switch (strtolower($message[1])) {
         case 'clear':
             $bot->network->sendMessage('/s');
-            $bot->network->sendMessageAutoDetection($who, 'The scroll is now cleared!', $type);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.scroll.nowcleared'), $type);
             break;
         
         default:
             unset($message[0]);
             $bot->network->sendMessage('/s' . implode(' ', $message));
-            $bot->network->sendMessageAutoDetection($who, 'The scroll is now set to ' . implode(' ', $message), $type);
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.scroll.isnow', [implode(' ', $message)]),
+                $type
+            );
             break;
     }
 };

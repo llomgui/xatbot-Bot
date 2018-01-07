@@ -29,7 +29,7 @@ $weather = function (int $who, array $message, int $type) {
    
     // api returns 404 if city not found
     if (!($response['cod'] == 200)) {
-        return $bot->network->sendMessageAutoDetection($who, 'This city was not found or something went wrong!', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.weather.notfound'), $type);
     }
 
     $smilies = [
@@ -61,10 +61,16 @@ $weather = function (int $who, array $message, int $type) {
  
     return $bot->network->sendMessageAutoDetection(
         $who,
-        'Weather for ' . $weatherInfos['cityname'] . '(' . $weatherInfos['country'] . ') : ' .
-        $weatherInfos['description'] . $smilies[$weatherInfos['smiley']] . ' | Temperature : [' .
-        $weatherTemp['fahrenheit'] . '°F | ' . $weatherTemp['celsius'] . '°C | ' . $weatherTemp['kelvin'] .
-        'K] | Humidity : ' . $weatherTemp['humidity'] . '%',
+        $bot->botlang('cmd.weather.message', [
+            $weatherInfos['cityname'],
+            $weatherInfos['country'],
+            $weatherInfos['description'],
+            $smilies[$weatherInfos['smiley']],
+            $weatherTemp['fahrenheit'],
+            $weatherTemp['celsius'],
+            $weatherTemp['kelvin'],
+            $weatherTemp['humidity']
+        ]),
         $type
     );
 };

@@ -49,7 +49,7 @@ $twitter = function (int $who, array $message, int $type) {
         if (!is_object($tweet)) {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'This user was not found!',
+                $bot->botlang('cmd.twitter.notfound'),
                 $type
             );
         }
@@ -63,15 +63,18 @@ $twitter = function (int $who, array $message, int $type) {
     if (empty($TweetInfos)) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'This user was not found!',
+            $bot->botlang('cmd.twitter.notfound'),
             $type
         );
     }
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        'Last tweet for [' . $TweetInfos['name'] . '] with ' . $TweetInfos['followCount'] . ' followers : ' .
-        $TweetInfos['text'],
+        $bot->botlang('cmd.twitter.message', [
+            $TweetInfos['name'],
+            $TweetInfos['followCount'],
+            $TweetInfos['text']
+        ]),
         $type
     );
 };

@@ -29,14 +29,14 @@ $staff = function (int $who, array $message, int $type) {
                         if (!$regname) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'The xatid does not exist!',
+                                $bot->botlang('xatid.notexist'),
                                 $type
                             );
                         }
                     } else {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'The xatid is not valid!',
+                            $bot->botlang('xatid.notvalid'),
                             $type
                         );
                     }
@@ -48,7 +48,7 @@ $staff = function (int $who, array $message, int $type) {
                     if (!in_array(ucfirst($rank), Minrank::pluck('name')->toArray())) {
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            'The minrank is not valid!',
+                            $bot->botlang('minrank.minranknotvalid'),
                             $type
                         );
                     }
@@ -57,7 +57,7 @@ $staff = function (int $who, array $message, int $type) {
                         if ($key == $message[2]) {
                             return $bot->network->sendMessageAutoDetection(
                                 $who,
-                                'The user is already added!',
+                                $bot->botlang('cmd.staff.alreadyadded'),
                                 $type
                             );
                         }
@@ -73,11 +73,15 @@ $staff = function (int $who, array $message, int $type) {
                       $staff->save();
                       
                       $bot->stafflist = $bot->setStafflist();
-                      return $bot->network->sendMessageAutoDetection(
-                          $who,
-                          $regname . '(' . $message[2] . ')has been added as ' . strtoupper($rank) . '.',
-                          $type
-                      );
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.snitch.added', [
+                            $regname,
+                            $message[2],
+                            strtoupper($rank)
+                        ]),
+                        $type
+                    );
                 }
             }
             break;
@@ -93,14 +97,16 @@ $staff = function (int $who, array $message, int $type) {
                         $bot->stafflist = $bot->setStafflist();
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $message[2] . ' has been removed from the list!',
+                            $bot->botlang('cmd.snitch.added', [
+                                $message[2]
+                            ]),
                             $type
                         );
                     }
                 }
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'I could not find this user in the list.',
+                    $bot->botlang('cmd.staff.notfound'),
                     $type
                 );
             }

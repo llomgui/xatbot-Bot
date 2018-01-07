@@ -12,7 +12,7 @@ $wikipedia = function (int $who, array $message, int $type) {
     $message = implode(' ', $message);
 
     if (empty($message)) {
-        return $bot->network->sendMessageAutoDetection($who, 'You didn\'t give me anything to search.', $type);
+        return $bot->network->sendMessageAutoDetection($who, 'Usage: !wikipedia [search]', $type);
     }
     $stream = stream_context_create(['http'=> ['timeout' => 1]]);
     $page = file_get_contents(
@@ -23,7 +23,7 @@ $wikipedia = function (int $who, array $message, int $type) {
     if (!$page) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'I can\'t reach wikipedia.org at this monent, please try again later.',
+            $bot->botlang('cmd.wikipedia.cantsearch'),
             $type
         );
     }
@@ -32,7 +32,7 @@ $wikipedia = function (int $who, array $message, int $type) {
     if (!empty($json[1])) {
         $wiki = 'Wikipedia page: http://en.wikipedia.org/wiki/' . $json[1][0];
     } else {
-        $wiki = 'Wikipedia page could not be found.';
+        $wiki = $bot->botlang('cmd.wikipedia.nothingfound');
     }
     $bot->network->sendMessageAutoDetection($who, $wiki, $type);
 };

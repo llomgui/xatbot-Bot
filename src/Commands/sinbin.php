@@ -32,7 +32,7 @@ $sinbin = function (int $who, array $message, int $type) {
 
     if (isset($user)) {
         if (!$user->isMod()) {
-            return $bot->network->sendMessageAutoDetection($who, 'That user is not a moderator.', $type);
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.sinbin.notmod'), $type);
         }
 
         $hours = $message[2];

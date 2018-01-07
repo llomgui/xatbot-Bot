@@ -77,12 +77,15 @@ $poorest = function (int $who, array $message, int $type) {
     }
 
     if (empty($res)) {
-        return $bot->network->sendMessageAutoDetection($who, 'There is no user with days in this chat :(.', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('users.nodays'), $type);
     }
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        'The poorest user in this room is ' . $res[0]['user']->getRegname().'('.$res[0]['user']->getID().').',
+        $bot->botlang('cmd.poorest', [
+            $res[0]['user']->getRegname(),
+            $res[0]['user']->getID()
+        ]),
         $type
     );
 };

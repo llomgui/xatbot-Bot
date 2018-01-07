@@ -33,7 +33,7 @@ $power = function (int $who, array $message, int $type) {
             $powerid = null;
             if (is_numeric($message[2])) {
                 if (!array_key_exists($message[2], $powers)) {
-                    return $bot->network->sendMessageAutoDetection($who, 'This powerID does not exist', $type);
+                    return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.poweridnotexit'), $type);
                 } else {
                     $powerid = $message[2];
                 }
@@ -47,21 +47,25 @@ $power = function (int $who, array $message, int $type) {
             }
 
             if ($powerid == 93) {
-                return $bot->network->sendMessageAutoDetection($who, 'Sorry you can\'t enable MINT power.', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.cantenablemint'), $type);
             }
 
             if (empty($powerid)) {
-                return $bot->network->sendMessageAutoDetection($who, 'This power does not exist', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.powernotexist'), $type);
             } else {
                 $powersDisabled = json_decode($bot->data->powersdisabled, true);
                 if (in_array($powerid, $powersDisabled)) {
                     unset($powersDisabled[array_search($powerid, $powersDisabled)]);
                     $bot->data->powersdisabled = json_encode($powersDisabled);
                     $bot->data->save();
-                    $bot->network->sendMessageAutoDetection($who, 'Power enabled!', $type);
+                    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.powerenabled'), $type);
                     return $bot->refresh();
                 } else {
-                    return $bot->network->sendMessageAutoDetection($who, 'This power is not disabled!', $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.power.isnotdisabled'),
+                        $type
+                    );
                 }
             }
             break;
@@ -78,7 +82,7 @@ $power = function (int $who, array $message, int $type) {
             $powerid = null;
             if (is_numeric($message[2])) {
                 if (!array_key_exists($message[2], $powers)) {
-                    return $bot->network->sendMessageAutoDetection($who, 'This powerID does not exist', $type);
+                    return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.poweridnotexit'), $type);
                 } else {
                     $powerid = $message[2];
                 }
@@ -92,17 +96,21 @@ $power = function (int $who, array $message, int $type) {
             }
 
             if (empty($powerid)) {
-                return $bot->network->sendMessageAutoDetection($who, 'This power does not exist', $type);
+                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.powernotexist'), $type);
             } else {
                 $powersDisabled = json_decode($bot->data->powersdisabled, true);
                 if (!in_array($powerid, $powersDisabled)) {
                     $powersDisabled[] = $powerid;
                     $bot->data->powersdisabled = json_encode($powersDisabled);
                     $bot->data->save();
-                    $bot->network->sendMessageAutoDetection($who, 'Power disabled!', $type);
+                    $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.powerdisabled'), $type);
                     return $bot->refresh();
                 } else {
-                    return $bot->network->sendMessageAutoDetection($who, 'This power is not enabled!', $type);
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.power.isnotenabled'),
+                        $type
+                    );
                 }
             }
             break;
@@ -110,7 +118,7 @@ $power = function (int $who, array $message, int $type) {
         case 'clear':
             $bot->data->powersdisabled = json_encode([93]);
             $bot->data->save();
-            $bot->network->sendMessageAutoDetection($who, 'Every Powers enabled!', $type);
+            $bot->network->sendMessageAutoDetection($who, $bot->botlang('cmd.power.every'), $type);
             return $bot->refresh();
             break;
 
@@ -123,7 +131,7 @@ $power = function (int $who, array $message, int $type) {
 
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'List of disabled powers: ' . implode(', ', $powerNames) . '.',
+                $bot->botlang('cmd.power.powerslist', [implode(', ', $powerNames)]),
                 $type
             );
             break;

@@ -43,9 +43,9 @@ $slots = function (int $who, array $message, int $type) {
     );
 
     if (count(array_unique($spun)) == 1) {
-        $newMessage = $response . implode('|', $spun) . ' and won (clap#)';
+        $newMessage = $bot->botlang('cmd.slots.won', [$response, implode('|', $spun)]);
     } else {
-        $newMessage = $response . implode('|', $spun) . ' and lost :P';
+        $newMessage = $bot->botlang('cmd.slots.lost', [$response, implode('|', $spun)]);
     }
 
     if (sizeof($bot->packetsinqueue) > 0) {

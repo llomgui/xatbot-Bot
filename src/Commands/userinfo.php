@@ -33,7 +33,7 @@ $userinfo = function (int $who, array $message, int $type) {
                 Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 1]);
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'You have successfully opted out of userinfo.',
+                    $bot->botlang('user.haveoptoutwithsuccess'),
                     $type
                 );
                 break;
@@ -42,7 +42,7 @@ $userinfo = function (int $who, array $message, int $type) {
                 Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 0]);
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    'You have successfully opted into userinfo.',
+                    $bot->botlang('user.haveoptedinto'),
                     $type
                 );
                 break;
@@ -66,11 +66,11 @@ $userinfo = function (int $who, array $message, int $type) {
         } else {
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                $info->regname . ' has chosen to opt out of userinfo.',
+                $bot->botlang('user.optoutuserinfo', [$info->regname]),
                 $type
             );
         }
     } else {
-        return $bot->network->sendMessageAutoDetection($who, 'Sorry, I don\'t have this user in my database.', $type);
+        return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.notindatabase'), $type);
     }
 };

@@ -26,7 +26,7 @@ $horoscope = function (int $who, array $message, int $type) {
 
     return $bot->network->sendMessageAutoDetection(
         $who,
-        'Love: ' . $love . '%, health: ' . $health . '%, luck: ' . $luck . '%, money: ' . $money . '%.',
+        $bot->botlang('cmd.horoscope', [$love, $health, $luck, $money]),
         $type
     );
 };
