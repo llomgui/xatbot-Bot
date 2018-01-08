@@ -392,7 +392,7 @@ class XatNetwork
     public function sendMessageAutoDetection($uid, $message, $type, $sensitive = false)
     {
         //$sensitive - if type is Main but you dont want to send info to Main
-        if ($sensitive && $type == 1) {
+        if (($sensitive && $type == 1) || $this->data->togglemessages == 'pm') {
             $type = 2;
         }
 
