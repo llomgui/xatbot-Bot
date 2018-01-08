@@ -104,10 +104,10 @@ $onRankMessage = function (array $array) {
                 // <m  p="test" t="/k" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' kicked ' . $user2 . ' reason: "' . $array['p'] . '"';
                 if ($array['u'] != XatVariables::getXatid()) {
-                    if (!DataAPI::isSetVariable('kicks_' . $who)) {
-                        DataAPI::set('kicks_' . $who, 1);
+                    if (!DataAPI::isSetVariable('kicks_' . $array['d'])) {
+                        DataAPI::set('kicks_' . $array['d'], 1);
                     } else {
-                        DataAPI::set('kicks_' . $who, DataAPI::get('kicks_' . $who) + 1);
+                        DataAPI::set('kicks_' . $array['d'], DataAPI::get('kicks_' . $array['d']) + 1);
                     }
                 }
                 break;
