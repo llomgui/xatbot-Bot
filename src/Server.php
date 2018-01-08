@@ -7,6 +7,7 @@ use xatbot\Logger;
 use xatbot\Bot\XatBot;
 use xatbot\Extensions;
 use xatbot\API\BaseAPI;
+use xatbot\API\DataAPI;
 use xatbot\Bot\XatVariables;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -474,6 +475,13 @@ class Server
                                     break;
                             }
 
+                            if ($hook == 'onMessage') {
+                                $this->dispatch('Modules', 'onModeration', $args);
+                                if (DataAPI::get('moderated_' . $args[0]) === true) {
+                                    continue;
+                                }
+                            }
+
                             if (in_array($hook, ['onMessage', 'onPM', 'onPC']) &&
                                 $args[1][0] == $Ocean->data->customcommand) {
                                 $args[1] = explode(' ', trim($args[1]));
@@ -494,8 +502,8 @@ class Server
                                 }
 
                                 $this->dispatch('Modules', 'onCommand', $args);
-                                $isDispatched = $this->dispatch('Commands', $command, $args);
 
+                                $isDispatched = $this->dispatch('Commands', $command, $args);
                                 if (!$isDispatched) {
                                     $this->dispatch('Commands', 'handlecustomcommands', $args);
                                 }

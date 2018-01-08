@@ -24,5 +24,6 @@
     "onRedirect",
     "onKick",
     "onRankMessage",
-    "onCommand"
+    "onCommand",
+    "onModeration"
 ]
