@@ -8,5 +8,5 @@ $commands = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
     
-    $bot->network->sendMessageAutoDetection($who, 'https://xatbot.fr/panel/commands/' . $bot->data->id, $type);
+    $bot->network->sendMessageAutoDetection($who, XatVariables::getConfig()['website_url'] . '/panel/commands/' . $bot->data->id, $type);
 };

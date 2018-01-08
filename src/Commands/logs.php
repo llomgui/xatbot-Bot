@@ -17,7 +17,7 @@ $logs = function (int $who, array $message, int $type) {
     }
 
     $amount = (int) $message[1];
-    $logsLink = 'https://xatbot.fr/panel/bot/logs/' . $bot->data->id . '/' . $amount;
+    $logsLink = XatVariables::getConfig()['website_url'] . '/panel/bot/logs/' . $bot->data->id . '/' . $amount;
 
     return $bot->network->sendMessageAutoDetection(
         $who,
