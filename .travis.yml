@@ -19,4 +19,4 @@ before_script:
 
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then vendor/bin/phpunit; fi"
-  - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=PSR2 --ignore=*/vendor/* .; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=PSR2 ./src; fi"

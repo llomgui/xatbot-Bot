@@ -1,5 +1,7 @@
 <?php
 
+use xatbot\Bot\XatVariables;
+
 $logs = function (int $who, array $message, int $type) {
 
     $bot  = xatbot\API\ActionAPI::getBot();

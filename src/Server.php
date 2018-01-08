@@ -226,6 +226,7 @@ class Server
                         ->join('servers', 'bots.server_id', '=', 'servers.id')
                         ->where('bots.autorestart', true)
                         ->where('bots.bot_status_id', '1')
+                        ->where('servers.name', $this->name)
                         ->orderBy('bots.id', 'ASC')
                         ->select('bots.id')
                         ->get();
