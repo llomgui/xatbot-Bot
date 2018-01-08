@@ -224,9 +224,11 @@ class Server
                 if ($this->lastAutorestart < time()) {
                     $results = Capsule::table('bots')
                         ->join('servers', 'bots.server_id', '=', 'servers.id')
-                        ->where('bots.autorestart', true)
-                        ->where('bots.bot_status_id', '1')
-                        ->where('servers.name', $this->name)
+                        ->where([
+                            ['bots.autorestart', true],
+                            ['bots.bot_status_id', '1'],
+                            ['servers.name', $this->name]
+                        ])
                         ->orderBy('bots.id', 'ASC')
                         ->select('bots.id')
                         ->get();
