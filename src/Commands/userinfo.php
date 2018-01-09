@@ -27,8 +27,8 @@ $userinfo = function (int $who, array $message, int $type) {
                 ->orderBy('updated_at', 'desc')
                 ->get()
                 ->toArray();
-    } elseif (in_array(strtolower($message[0]), ['on', 'off'])) {
-        switch (strtolower($message[0])) {
+    } elseif (in_array(strtolower($message[1]), ['on', 'off'])) {
+        switch (strtolower($message[1])) {
             case 'on':
                 Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 1]);
                 return $bot->network->sendMessageAutoDetection(
