@@ -12,9 +12,9 @@ $online = function (int $who, array $message, int $type) {
 
     if (empty($message[1]) || !isset($message[1])) {
         return $bot->network->sendMessageAutoDetection(
-            $who, 
-            'Usage: !online [regname/xatid/volunteers/chatstaff]', 
-            $type, 
+            $who,
+            'Usage: !online [regname/xatid/volunteers/chatstaff]',
+            $type,
             true
         );
     }
@@ -51,12 +51,12 @@ $online = function (int $who, array $message, int $type) {
             $bot->network->sendFriendList('10101 ' . $string);
             DataAPI::set('online_command', ['who' => $who, 'type' => $type]);
             return;
-        } else if ($message[1] == 'chatstaff') {
+        } elseif ($message[1] == 'chatstaff') {
             $ids = [];
             if (sizeof($bot->stafflist) == 0) {
                 return $bot->network->sendMessageAutoDetection(
-                    $who, 
-                    'There is no staff added on your bot.', 
+                    $who,
+                    'There is no staff added on your bot.',
                     $type
                 );
             }
