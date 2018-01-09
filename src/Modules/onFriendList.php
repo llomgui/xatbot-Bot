@@ -25,12 +25,18 @@ $onFriendList = function (array $array) {
     $ctx  = stream_context_create(['http' => ['timeout' => 1]]);
 
     $volunteers = XatVariables::getVolunteers();
+    $staffList = $bot->stafflist;
     $onlines = [];
     $availables = [];
 
     $volids = [];
     for ($i = 0; $i < sizeof($volunteers); $i++) {
         $volids[] = $volunteers[$i]['xatid'];
+    }
+
+    $staffids = [];
+    foreach ($staffList as $id => $value) {
+        $staffids[] = $id;
     }
 
     foreach ($list as $user) {
@@ -55,6 +61,13 @@ $onFriendList = function (array $array) {
                     }
                 }
             }
+            if (in_array($available, $staffids)) {
+                foreach ($staffList as $id => $key) {
+                    if ($available == $id) {
+                        $regname = $key['regname'];
+                    }
+                }
+            }
 
             $regname = (!empty($regname) ? $regname : file_get_contents(
                 'http://xat.me/x?id=' . $available,
@@ -76,6 +89,13 @@ $onFriendList = function (array $array) {
                     }
                 }
             }
+            if (in_array($online, $staffids)) {
+                foreach ($staffList as $id => $key) {
+                    if ($online == $id) {
+                        $regname = $key['regname'];
+                    }
+                }
+            }
 
             $regname = (!empty($regname) ? $regname : file_get_contents('http://xat.me/x?id=' . $online, false, $ctx));
 
@@ -93,9 +113,9 @@ $onFriendList = function (array $array) {
         }
 
         if (sizeof($list['available']) > 1) {
-            $string .= 'are available!';
+            $string .= 'are available! ';
         } else {
-            $string .= 'is available!';
+            $string .= 'is available! ';
         }
     }
 
@@ -107,9 +127,9 @@ $onFriendList = function (array $array) {
         }
 
         if (sizeof($list['online']) > 1) {
-            $string .= 'are online!';
+            $string .= 'are online! ';
         } else {
-            $string .= 'is online!';
+            $string .= 'is online! ';
         }
     }
 

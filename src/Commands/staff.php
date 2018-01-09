@@ -97,7 +97,7 @@ $staff = function (int $who, array $message, int $type) {
                         $bot->stafflist = $bot->setStafflist();
                         return $bot->network->sendMessageAutoDetection(
                             $who,
-                            $bot->botlang('cmd.snitch.added', [
+                            $bot->botlang('cmd.snitch.removed', [
                                 $message[2]
                             ]),
                             $type
