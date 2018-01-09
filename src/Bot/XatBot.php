@@ -361,9 +361,19 @@ class XatBot
         if (!isset($this->botlangs[$name])) {
             return 'Invalid sentence';
         }
+
+        $search = [];
+        $replace = [];
         $args = array_map('strval', $args);
-        $args = array_flip(preg_filter('/^/', '$', array_flip($args)));
-        $response = str_replace(array_keys($args), array_values($args), $this->botlangs[$name]);
+        for ($i = 0; $i < sizeof($args); $i++) {
+            $search[] = '$' . $i;
+            $replace[] = $args[$i];
+        }
+
+        $search = array_reverse($search);
+        $replace = array_reverse($replace);
+        $response = str_replace($search, $replace, $this->botlangs[$name]);
+
         return is_string($response) ? htmlspecialchars_decode($response) : 'Invalid sentence';
     }
 
