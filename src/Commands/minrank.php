@@ -101,7 +101,7 @@ $minrank = function (int $who, array $message, int $type) {
             
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                $bot->botlang('cmd.minrank.newminrank', [strtoupper($message[1]), strtoupper($newMinrank)]),
+                $bot->botlang('cmd.minrank.newminrank', [strtoupper($command->name), strtoupper($newMinrank)]),
                 $type
             );
         }

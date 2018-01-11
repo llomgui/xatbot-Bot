@@ -30,19 +30,19 @@ $userinfo = function (int $who, array $message, int $type) {
     } elseif (in_array(strtolower($message[1]), ['on', 'off'])) {
         switch (strtolower($message[1])) {
             case 'on':
-                Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 1]);
+                Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 0]);
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    $bot->botlang('user.haveoptoutwithsuccess'),
+                    $bot->botlang('user.haveoptedinto'),
                     $type
                 );
                 break;
             
             case 'off':
-                Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 0]);
+                Capsule::table('userinfo')->where('xatid', $who)->update(['optout' => 1]);
                 return $bot->network->sendMessageAutoDetection(
                     $who,
-                    $bot->botlang('user.haveoptedinto'),
+                    $bot->botlang('user.haveoptoutwithsuccess'),
                     $type
                 );
                 break;

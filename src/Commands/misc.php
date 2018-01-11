@@ -123,7 +123,7 @@ $misc = function (int $who, array $message, int $type) {
 
         case 'promo':
             $promo = json_decode(file_get_contents("https://xat.com/json/promo.php"));
-
+            $message[2] = isset($message[2]) ? $message[2] : 'en';
             switch (strtolower(trim($message[2]))) {
                 case "english":
                 case "en":
@@ -182,7 +182,7 @@ $misc = function (int $who, array $message, int $type) {
                     $seconds = $timeLeft % 60;
                 }
 
-                $promoMessage .= ' ' . $group->n . ' [' . (isset($group->t) ?
+                $promoMessage .= $group->n . ' [' . (isset($group->t) ?
                     sprintf("%02d hours, %02d minutes and %02d seconds", $hours, $minutes, $seconds) . ' left' :
                     "Auto promoted") . '], ';
                 $count++;
