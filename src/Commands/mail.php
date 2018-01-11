@@ -51,9 +51,9 @@ $mail = function (int $who, array $message, int $type) {
 
             foreach ($mails as $mail) {
                 $user = Userinfo::where('xatid', $mail['fromuser'])->first();
-
+                $displayInfo = is_object($user) ? $user->regname . '(' . $user->xatid . ')' : $mail['fromuser'];
                 $newMessage = 'Time: ' . gmdate('d/m/Y', $mail->created_at->timestamp) . ' ID: ' . $mail->id .
-                    ' From: ' . $user->regname . '(' . $user->xatid . ') Message: ' . $mail->message;
+                    ' From: ' . $displayInfo . ' Message: ' . $mail->message;
 
                 if ($message[2] == 'new') {
                     $mail->read = true;
