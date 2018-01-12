@@ -11,7 +11,8 @@ $customcommand = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    if (!isset($message[1]) || empty($message[1]) || !in_array($message[1], ['add', 'remove', 'rm', 'list', 'ls'])) {
+    if (!isset($message[1]) || empty($message[1])
+        || !in_array(strtolower($message[1]), ['add', 'remove', 'rm', 'list', 'ls'])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
             'Usage: !customcommand [add/remove] [newcommand] [rank] [message]',
@@ -19,7 +20,7 @@ $customcommand = function (int $who, array $message, int $type) {
         );
     }
     
-    switch ($message[1]) {
+    switch (strtolower($message[1])) {
         case 'add':
             if (!isset($message[2], $message[3], $message[4])  || empty($message[2]) || empty($message[3])
                 || empty($message[4])) {
