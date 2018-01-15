@@ -6,7 +6,7 @@ class Utilities
 {
     public static function isValidXatID($xatid)
     {
-        return ($xatid & 0xFFFFFFFF);
+        return ((int) $xatid & 0xFFFFFFFF);
     }
 
     public static function isXatIDExist($xatid)
