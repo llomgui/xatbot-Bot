@@ -1,9 +1,11 @@
 <?php
 
-use xatbot\Extensions;
-use xatbot\Bot\XatVariables;
-use xatbot\API\DataAPI;
+use xatbot\IPC;
 use xatbot\Logger;
+use xatbot\Extensions;
+use xatbot\API\DataAPI;
+use xatbot\Models\Server;
+use xatbot\Bot\XatVariables;
 
 $dev = function (int $who, array $message, int $type) {
 
@@ -23,13 +25,6 @@ $dev = function (int $who, array $message, int $type) {
             XatVariables::update();
             $bot->network->sendMessageAutoDetection($who, 'Config updated!', $type);
             break;
-
-        case 'test':
-            for ($i=0; $i < 500; $i++) {
-                Logger::getLogger()->debug($i);
-                $bot->network->tempRank(220711, 'moderator', 6);
-            }
-            break;
  
         case 'memory':
             $usage = memory_get_usage(true);
@@ -41,6 +36,29 @@ $dev = function (int $who, array $message, int $type) {
             ];
             
             $bot->network->sendMessageAutoDetection($who, implode(' | ', $memory), $type);
+            break;
+
+        case 'reload_servers':
+            $servers = Server::all()->toArray();
+            for ($i = 0; $i < sizeof($servers); $i++) {
+                if (IPC::init() !== false) {
+                    if (IPC::connect(strtolower($servers[$i] . '.sock')) !== false) {
+                        IPC::write(sprintf("%s", 'reload'));
+                        IPC::close();
+                    } else {
+                        $bot->network->sendMessageAutoDetection(
+                            $who,
+                            'Cannot connect to server ' . $servers[$i],
+                            $type
+                        );
+                } else {
+                    $bot->network->sendMessageAutoDetection(
+                        $who,
+                        'Cannot init connection for server ' . $servers[$i],
+                        $type
+                    );
+                }
+            }
             break;
 
         default:
