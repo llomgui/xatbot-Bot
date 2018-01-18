@@ -1,4 +1,7 @@
 <?php
+
+use xatbot\Bot\XatVariables;
+
 $misc = function (int $who, array $message, int $type) {
 
     $bot = xatbot\API\ActionAPI::getBot();
@@ -10,7 +13,7 @@ $misc = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !misc [reserve/chatid/chatname/xatid/regname/promo] [info]',
+            'Usage: !misc [reserve/chatid/chatname/xatid/regname/promo/delistcheck] [info]',
             $type,
             true
         );
@@ -196,6 +199,86 @@ $misc = function (int $who, array $message, int $type) {
                     ($count > 1 ? 'chats' : 'chat'),
                     rtrim($promoMessage, ', ')
                 ]),
+                $type
+            );
+            break;
+        case 'delistcheck':
+            if (!isset($message[2]) || empty($message[2])) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'Usage: !misc delistcheck [chat name]',
+                    $type
+                );
+            }
+            $stream = [];
+            $blank = '';
+            $POST['l_k2'] = $blank;
+            $POST['l_dt'] = $blank;
+            $POST['Xats'] = '100';
+            $POST['YourEmail'] = XatVariables::getRegname();
+            $POST['password'] = XatVariables::getPassword();
+            $POST['GroupName'] = $message[2];
+            $POST['Hours'] = '1';
+            $POST['XatsDays'] = $blank;
+            $POST['Promote'] = $blank;
+            $stream['http']['method'] = 'POST';
+            $stream['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
+            $stream['http']['content'] = http_build_query($POST);
+            $stream['http']['timeout'] = 1;
+            
+            $res = file_get_contents(
+                'https://xat.com/web_gear/chat/promotion.php',
+                false,
+                stream_context_create($stream)
+            );
+
+            if (!$res) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.misc.delistcheck.failurl'),
+                    $type
+                );
+            }
+            $message[2] = ucfirst($message[2]);
+            if (strpos($res, '**<span data-localize=buy.membersonly>Chat is members only')) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.misc.delistcheck.membersonly', [$message[2]]),
+                    $type
+                );
+            }
+            if (strpos($res, '**<span data-localize=buy.promona>Sorry, promotion not available')) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.misc.delistcheck.notavailable', [$message[2]]),
+                    $type
+                );
+            }
+            if (strpos($res, '**<span data-localize=buy.langnotset>Group language is not set.')) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.misc.delistcheck.langnotset', [$message[2]]),
+                    'The chat "' . $message[2] . '" has no lang set. Please edit group to set language.',
+                    $type
+                );
+            }
+            if (strpos($res, '**<span data-localize=buy.groupnoexist>That group doesn\'t exist')) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.misc.delistcheck.notfound', [$message[2]]),
+                    $type
+                );
+            }
+            if (strpos($res, '**<span data-localize=buy.delisted>Chat is delisted. Please re-list.')) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.misc.delistcheck.delisted', [$message[2]]),
+                    $type
+                );
+            }
+            $bot->network->sendMessageAutoDetection(
+                $who,
+                $bot->botlang('cmd.misc.delistcheck.canpromote', [$message[2]]),
                 $type
             );
             break;
