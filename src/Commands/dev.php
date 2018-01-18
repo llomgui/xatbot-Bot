@@ -51,6 +51,7 @@ $dev = function (int $who, array $message, int $type) {
                             'Cannot connect to server ' . $servers[$i],
                             $type
                         );
+                    }
                 } else {
                     $bot->network->sendMessageAutoDetection(
                         $who,
