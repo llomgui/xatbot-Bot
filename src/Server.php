@@ -208,7 +208,7 @@ class Server
                             break;
 
                         case 'reload':
-                            $this->readExtensions();
+                            Extensions::readExtensions();
                             $return = 'Extension reloaded!';
                             break;
 
