@@ -42,20 +42,20 @@ $dev = function (int $who, array $message, int $type) {
             $servers = Server::all()->toArray();
             for ($i = 0; $i < sizeof($servers); $i++) {
                 if (IPC::init() !== false) {
-                    if (IPC::connect(strtolower($servers[$i] . '.sock')) !== false) {
+                    if (IPC::connect(strtolower($servers[$i]['name'] . '.sock')) !== false) {
                         IPC::write(sprintf("%s", 'reload'));
                         IPC::close();
                     } else {
                         $bot->network->sendMessageAutoDetection(
                             $who,
-                            'Cannot connect to server ' . $servers[$i],
+                            'Cannot connect to server ' . $servers[$i]['name'],
                             $type
                         );
                     }
                 } else {
                     $bot->network->sendMessageAutoDetection(
                         $who,
-                        'Cannot init connection for server ' . $servers[$i],
+                        'Cannot init connection for server ' . $servers[$i]['name'],
                         $type
                     );
                 }
