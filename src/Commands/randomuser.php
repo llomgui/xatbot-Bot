@@ -9,5 +9,9 @@ $randomuser = function (int $who, array $message, int $type) {
     }
 
     $random = array_rand($bot->users);
-    $bot->network->sendMessageAutoDetection($who, $bot->users[$random]->getNick(), $type);
+    $bot->network->sendMessageAutoDetection(
+        $who,
+	$bot->users[$random]->getRegname() . '(' . $bot->users[$random]->getID() . ')',
+	$type
+    );
 };

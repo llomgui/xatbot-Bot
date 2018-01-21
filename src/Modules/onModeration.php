@@ -90,6 +90,9 @@ $onModeration = function (int $who, string $message) {
                 if (isset($bot->data->maxchar) && $bot->data->maxchar > 0) {
                     if (strpos($value, 'ffffff') || strpos($value, '------') || strpos($value, '000000')) {
                     } else {
+                        if ($bot->data->maxchar > 1000) {
+                                $bot->data->maxchar = 1000;
+                        }
                         if (preg_match_all('/(.)\1{' . $bot->data->maxchar . ',}/iu', $value)) {
                             DataAPI::set('moderated_' . $who, true);
                             return $bot->network->kick(

@@ -154,7 +154,7 @@ class XatNetwork
             $this->write(
                 'y',
                 [
-                    'r' => 8,
+                    'r' => '8',
                     'v' => '0',
                     'u' => XatVariables::getXatid()
                 ]
@@ -236,7 +236,7 @@ class XatNetwork
             $j2['m2'] = 4294836223;
             $j2['m3'] = 4294967295;
 
-            for ($i = 4; $i < $maxPowerIndex; $i++) {
+            for ($i = 4; $i < 15; $i++) {
                 $j2['m' . $i] = 2147483647;
             }
         } else {
@@ -261,7 +261,7 @@ class XatNetwork
 
         $j2['d0'] = $this->logininfo['d0'] ?? $this->logininfo['d0'];
 
-        for ($i = 2; $i <= ($maxPowerIndex + 3); $i++) {
+        for ($i = 2; $i <= 25; $i++) {
             if (isset($this->logininfo['d' . $i])) {
                 $j2['d' . $i] = $this->logininfo['d' . $i];
             }
@@ -283,7 +283,7 @@ class XatNetwork
         $j2['n'] = $this->data->nickname . '##' . $this->data->status;
         $j2['a'] = $this->data->avatar . '#' . $this->data->pcback;
         $j2['h'] = $this->data->homepage;
-        $j2['v'] = 'xat Community Project';
+        $j2['v'] = '';
 
         $this->write('j2', $j2);
     }
