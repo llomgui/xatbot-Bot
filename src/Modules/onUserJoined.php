@@ -67,9 +67,7 @@ $onUserJoined = function (int $who, array $array) {
         DataAPI::set('joined_' . $who, true);
     }
 
-    if (!DataAPI::isSetVariable('moderated_' . $who)) {
-        DataAPI::unSetVariable('moderated_' . $who);
-    }
+    DataAPI::set('moderated_' . $who, false);
 
     if (!DataAPI::isSetVariable('active_' . $who)) {
         DataAPI::set('active_' . $who, time());

@@ -16,9 +16,7 @@ $onModeration = function (int $who, string $message) {
 
     $regname = $bot->users[$who]->getRegname();
 
-    if (!DataAPI::isSetVariable('moderated_' . $who)) {
-        DataAPI::set('moderated_' . $who, false);
-    }
+    DataAPI::set('moderated_' . $who, false);
     
     if (!DataAPI::isSetVariable('lastMessage')) {
         DataAPI::set('lastMessage', $who);
