@@ -45,6 +45,10 @@ $onUserLeave = function (int $who) {
         DataAPI::unSetVariable('isAutotemp_' . $who);
     }
 
+    if (!DataAPI::isSetVariable('moderated_' . $who)) {
+        DataAPI::unSetVariable('moderated_' . $who);
+    }
+
     DataAPI::set('left_' . $who, time());
 
     return;
