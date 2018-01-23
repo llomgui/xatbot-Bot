@@ -460,7 +460,7 @@ class Server
                                 case 'x':
                                     $hook   = 'onApp'; // onApp($who, $app, $elements)
                                     $args[] = $packet['elements']['u'];
-                                    $args[] = $packet['elements']['i'];
+                                    $args[] = $packet['elements']['i'] ?? '';
                                     $args[] = $packet['elements'];
                                     break;
 
