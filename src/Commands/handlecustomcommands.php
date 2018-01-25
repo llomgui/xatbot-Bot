@@ -27,7 +27,11 @@ $handlecustomcommands = function (int $who, array $message, int $type) {
                 $search[] = '{randomname}';
                 $replace[] = $randomuser[rand(0, sizeof($randomuser) - 1)]->getNick();
                 $search[] = '{name}';
-                $replace[] = $bot->users[$who]->getNick();
+                $replace[] = $string = preg_replace(
+                    ['/\(glow[^)]+\)/', '/\(hat[^)]+\)/'],
+                    ['', ''],
+                    $bot->users[$who]->getNick()
+                );
                 $search[] = '{status}';
                 $replace[] = $bot->users[$who]->getStatus();
                 $search[] = '{regname}';

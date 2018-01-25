@@ -43,7 +43,11 @@ $onUserJoined = function (int $who, array $array) {
     if (!$user->wasHere() && !DataAPI::isSetVariable('away_' . $who) && !DataAPI::isSetVariable('joined_' . $who)) {
         if (!empty($bot->data->autowelcome)) {
             $search[] = '{name}';
-            $replace[] = $bot->users[$who]->getNick();
+            $replace[] = $string = preg_replace(
+                ['/\(glow[^)]+\)/', '/\(hat[^)]+\)/'],
+                ['', ''],
+                $bot->users[$who]->getNick()
+            );
             $search[] = '{status}';
             $replace[] = $bot->users[$who]->getStatus();
             $search[] = '{regname}';
