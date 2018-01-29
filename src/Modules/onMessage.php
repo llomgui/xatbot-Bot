@@ -12,7 +12,8 @@ $onMessage = function (int $who, string $message) {
 
     $bot = xatbot\API\ActionAPI::getBot();
 
-    $regname = $bot->users[$who]->getRegname();
+    $user = $bot->users[$who];
+    $regname = is_object($user) ? $user->getRegname() : $who;
 
     $log = new Log;
     $log->chatid = $bot->data->chatid;
@@ -21,6 +22,10 @@ $onMessage = function (int $who, string $message) {
     $log->message = '[Main] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
         $message . '"';
     $log->save();
+
+    if (!is_object($regname)) {
+        return;
+    }
 
     $message = strtolower($message);
     $message2 = explode(' ', $message);

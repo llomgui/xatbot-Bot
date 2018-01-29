@@ -14,7 +14,8 @@ $onModeration = function (int $who, string $message) {
     $message = strtolower($message);
     $message2 = explode(' ', $message);
 
-    $regname = $bot->users[$who]->getRegname();
+    $user = $bot->users[$who];
+    $regname = is_object($user) ? $user->getRegname() : $who;
 
     DataAPI::set('moderated_' . $who, false);
     
