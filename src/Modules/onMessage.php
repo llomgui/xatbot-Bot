@@ -23,7 +23,7 @@ $onMessage = function (int $who, string $message) {
         $message . '"';
     $log->save();
 
-    if (!is_object($regname)) {
+    if (empty($regname)) {
         return;
     }
 
