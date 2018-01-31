@@ -63,19 +63,27 @@ $value = function (int $who, array $message, int $type) {
             }
 
             if (!$user->isRegistered()) {
-                return $bot->network->sendMessageAutoDetection(
-                    $who,
-                    $bot->botlang('cmd.value.cantvalueunregister'),
-                    $type
-                );
+                if (sizeof($xatusers) <= 1) {
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.value.cantvalueunregister'),
+                        $type
+                    );
+                } else {
+                    continue;
+                }
             }
 
             if (!$user->hasDays()) {
-                return $bot->network->sendMessageAutoDetection(
-                    $who,
-                    $bot->botlang('cmd.value.cantvaluewithoutdays'),
-                    $type
-                );
+                if (sizeof($xatusers) <= 1) {
+                    return $bot->network->sendMessageAutoDetection(
+                        $who,
+                        $bot->botlang('cmd.value.cantvaluewithoutdays'),
+                        $type
+                    );
+                } else {
+                    continue;
+                }
             }
 
             if (sizeof($xatusers) > 1) {
