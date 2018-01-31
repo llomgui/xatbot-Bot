@@ -1,5 +1,8 @@
 <?php
 
+use xatbot\Bot\XatUser;
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 $value = function (int $who, array $message, int $type) {
 
     $bot = xatbot\API\ActionAPI::getBot();
@@ -43,88 +46,99 @@ $value = function (int $who, array $message, int $type) {
                 }
             }
 
-            if (isset($user)) {
-                if (!$user->isRegistered()) {
-                    return $bot->network->sendMessageAutoDetection(
-                        $who,
-                        $bot->botlang('cmd.value.cantvalueunregister'),
-                        $type
-                    );
+            if (!isset($user)) {
+                if (is_numeric($xatuser)) {
+                    $data = Capsule::table('userinfo')->where('xatid', $xatuser)->get()[0];
+                } else {
+                    $data = Capsule::table('userinfo')->where('regname', $xatuser)->get()[0];
                 }
 
-                if (!$user->hasDays()) {
-                    return $bot->network->sendMessageAutoDetection(
-                        $who,
-                        $bot->botlang('cmd.value.cantvaluewithoutdays'),
-                        $type
-                    );
-                }
-
-                if (!isset($users[$user->getId()])) {
-                    $users[$user->getId()] = $user;
+                if (is_object($data)) {
+                    $packet = json_decode($data->packet, true);
+                    $user = new XatUser($packet);
+                    $user->setDoubles($packet['po']);
                 } else {
                     continue;
                 }
+            }
 
-                if (sizeof($xatusers) > 1) {
-                    $regname .= $user->getRegname() . ', ';
-                } else {
-                    $regname .= $user->getRegname();
-                }
+            if (!$user->isRegistered()) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.value.cantvalueunregister'),
+                    $type
+                );
+            }
 
-                $doubles = $user->getDoubles();
+            if (!$user->hasDays()) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    $bot->botlang('cmd.value.cantvaluewithoutdays'),
+                    $type
+                );
+            }
 
-                if (!empty($doubles)) {
-                    $pO = explode('|', $doubles);
+            if (sizeof($xatusers) > 1) {
+                $regname .= $user->getRegname() . ', ';
+            } else {
+                $regname .= $user->getRegname();
+            }
 
-                    for ($i = 0; $i < sizeof($pO); $i++) {
-                        $pos = strpos($pO[$i], '=');
-                        if ($pos !== false) {
-                            $id     = (int)substr($pO[$i], 0, $pos);
-                            $amount = (int)substr($pO[$i], $pos + 1);
-                        } else {
-                            $id     = (int)$pO[$i];
-                            $amount = 1;
-                        }
+            $doubles = $user->getDoubles();
 
-                        if ($id == 0) {
-                            continue;
-                        }
+            if (!empty($doubles)) {
+                $pO = explode('|', $doubles);
 
-                        if (isset($powers[$id]['storeCost'])) {
-                            if (!$powers[$id]['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
-                                $storeprice += $powers[$id]['storeCost'] * $amount;
-                            }
-                        }
-
-                        $minprice += $powers[$id]['minCost'] * $amount;
-                        $maxprice += $powers[$id]['maxCost'] * $amount;
-                        //$count    += $amount;
-                        $cdoubles += $amount;
+                for ($i = 0; $i < sizeof($pO); $i++) {
+                    $pos = strpos($pO[$i], '=');
+                    if ($pos !== false) {
+                        $id     = (int)substr($pO[$i], 0, $pos);
+                        $amount = (int)substr($pO[$i], $pos + 1);
+                    } else {
+                        $id     = (int)$pO[$i];
+                        $amount = 1;
                     }
-                }
 
-                foreach ($powers as $id => $array) {
-                    if ($id == 95) {
+                    if ($id == 0) {
                         continue;
                     }
 
-                    if ($user->hasPower($id) || $user->hasPower($id, true)) {
-                        if (isset($array['storeCost'])) {
-                            if (!$array['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
-                                $storeprice += $array['storeCost'];
-                            }
+                    if (isset($powers[$id]['storeCost'])) {
+                        if (!$powers[$id]['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
+                            $storeprice += $powers[$id]['storeCost'] * $amount;
                         }
-
-                        $minprice += $array['minCost'];
-                        $maxprice += $array['maxCost'];
-                        $count++;
                     }
+
+                    $minprice += $powers[$id]['minCost'] * $amount;
+                    $maxprice += $powers[$id]['maxCost'] * $amount;
+                    $cdoubles += $amount;
                 }
-            } else {
-                return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
-                // TODO if user empty -> get data from userinfo
             }
+
+            foreach ($powers as $id => $array) {
+                if ($id == 95) {
+                    continue;
+                }
+
+                if ($user->hasPower($id) || $user->hasPower($id, true)) {
+                    if (isset($array['storeCost'])) {
+                        if (!$array['isLimited'] || $id == 260 || $id == 153 || $id == 248) {
+                            $storeprice += $array['storeCost'];
+                        }
+                    }
+
+                    $minprice += $array['minCost'];
+                    $maxprice += $array['maxCost'];
+                    $count++;
+                }
+            }
+
+            unset($user);
+            unset($data);
+        }
+
+        if (empty($regname)) {
+            return $bot->network->sendMessageAutoDetection($who, $bot->botlang('user.not.here'), $type);
         }
 
         if (sizeof($xatusers) > 1) {
