@@ -33,6 +33,9 @@ $value = function (int $who, array $message, int $type) {
         $cdoubles   = 0;
 
         foreach ($xatusers as $xatuser) {
+            unset($user);
+            unset($data);
+
             if (is_numeric($xatuser) && isset($bot->users[$xatuser])) {
                 $user = $bot->users[$xatuser];
             } else {
@@ -56,7 +59,9 @@ $value = function (int $who, array $message, int $type) {
                 if (is_object($data)) {
                     $packet = json_decode($data->packet, true);
                     $user = new XatUser($packet);
-                    $user->setDoubles($packet['po']);
+                    if (isset($packet['po'])) {
+                        $user->setDoubles($packet['po']);
+                    }
                 } else {
                     continue;
                 }
@@ -140,9 +145,6 @@ $value = function (int $who, array $message, int $type) {
                     $count++;
                 }
             }
-
-            unset($user);
-            unset($data);
         }
 
         if (empty($regname)) {
