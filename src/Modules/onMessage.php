@@ -23,7 +23,7 @@ $onMessage = function (int $who, string $message) {
         $message . '"';
     $log->save();
 
-    if (empty($regname)) {
+    if (empty($user)) {
         return;
     }
 
@@ -32,12 +32,12 @@ $onMessage = function (int $who, string $message) {
 
     if (!empty($bot->responses)) {
         $replace = [
-            '{name}'    => $bot->users[$who]->getNick(),
-            '{status}'  => $bot->users[$who]->getStatus(),
-            '{regname}' => $bot->users[$who]->getRegname() ?? $bot->users[$who]->getID(),
+            '{name}'    => $user->getNick(),
+            '{status}'  => $user->getStatus(),
+            '{regname}' => $user->getRegname() ?? $user->getID(),
             '{users}'   => sizeof($bot->users),
             '{cmdcode}' => $bot->data->customcommand,
-            '{id}'      => $bot->users[$who]->getID(),
+            '{id}'      => $user->getID(),
         ];
 
         $responses = $bot->responses;
