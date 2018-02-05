@@ -15,7 +15,7 @@ $xatbot = function (int $who, array $message, int $type) {
     if (!isset($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !xatbot [start/stop/restart/check/botid/getpaid]',
+            'Usage: !xatbot [start/stop/restart/check/botid/chat/getuser]',
             $type
         );
     }
@@ -128,14 +128,61 @@ $xatbot = function (int $who, array $message, int $type) {
 
             break;
 
-        case 'getpaid':
-            return $bot->network->sendMessageAutoDetection($who, 'Not available yet!', $type);
+        case 'chat':
+            if (empty($message[2])) {
+                return $bot->network->sendMessageAutoDetection($who, 'Usage: !xatbot chat [botid]', $type);
+            }
+
+            $message[2] = (int)$message[2];
+            $foo = Bot::where('id', $message[2])->get();
+
+            if (sizeof($foo) > 0) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'The chat of this bot is xat.com/' . $foo[0]->chatname,
+                    $type
+                );
+            } else {
+                return $bot->network->sendMessageAutoDetection($who, 'This botid does not exist.', $type);
+            }
+            break;
+
+        case 'getuser':
+            if (empty($message[2])) {
+                return $bot->network->sendMessageAutoDetection($who, 'Usage: !xatbot getuser [botid]', $type);
+            }
+
+            $message[2] = (int)$message[2];
+            $foo = Bot::find($message[2]);
+            if (!empty($foo)) {
+                $users = $foo->users;
+                if (sizeof($users) > 0) {
+                    $users = array_column($users->toArray(), 'name', 'id');
+                    $string = '';
+                    foreach ($users as $userid => $name) {
+                        $string .= ' [' . $userid . '] ' . $name;
+                    }
+                    return $bot->network->sendMessageAutoDetection($who, $string, $type);
+                }
+            }
+
+            return $bot->network->sendMessageAutoDetection($who, 'This botid does not exist.', $type);
+
+            /*if (sizeof($foo) > 0) {
+                return $bot->network->sendMessageAutoDetection(
+                    $who,
+                    'The chat of this bot is xat.com/' . $foo[0]->chatname,
+                    $type
+                );
+            } else {
+                return $bot->network->sendMessageAutoDetection($who, 'This botid does not exist.', $type);
+            }*/
             break;
         
         default:
             $bot->network->sendMessageAutoDetection(
                 $who,
-                'Usage: !xatbot [start/stop/restart/check/botid/getpaid]',
+                'Usage: !xatbot [start/stop/restart/check/botid/chat/getuser]',
                 $type
             );
             break;
