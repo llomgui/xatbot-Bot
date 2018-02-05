@@ -33,7 +33,7 @@ $game = function (int $who, array $message, int $type) {
     if (!isset($message[1]) || empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage: !game [' . implode(', ', array_keys($list)) . ', bot, start, time, stop, bye]',
+            'Usage: !game [' . implode(', ', array_keys($list)) . ', bot, start, times, prize, stop, bye]',
             $type
         );
     }
@@ -55,7 +55,7 @@ $game = function (int $who, array $message, int $type) {
 
         case 'bot':
             DataAPI::set('bot', true);
-            $bot->network->sendMessage('!bot');
+            $bot->network->sendMessage('!bot ' . (!empty($message[2]) ? $message[2] : ''));
             break;
 
         case 'stop':
@@ -71,14 +71,14 @@ $game = function (int $who, array $message, int $type) {
 
         case 'times':
         case 'prize':
-            $message = implode(' ', array_slice($message, 2));
-            $bot->network->sendMessage('!' . strtolower($message[1]) . ' ' . $message);
+            $message =  '!' . strtolower($message[1]) . ' ' . implode(' ', array_slice($message, 2));
+            $bot->network->sendMessage($message);
             break;
 
         default:
             return $bot->network->sendMessageAutoDetection(
                 $who,
-                'Usage: !game [' .  implode(', ', array_keys($list)) . ', bot, start, time, stop, bye]',
+                'Usage: !game [' .  implode(', ', array_keys($list)) . ', bot, start, times, prize, stop, bye]',
                 $type
             );
             break;
