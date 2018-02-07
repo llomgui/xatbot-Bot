@@ -1742,7 +1742,7 @@ abstract class XatVariables
 
     private static function updateIP2()
     {
-        $ctx = stream_context_create(['http' => ['timeout' => 1]]);
+        $ctx = stream_context_create(['http' => ['timeout' => 5]]);
         $cpt = 0;
 
         do {
@@ -1758,7 +1758,7 @@ abstract class XatVariables
     
     private static function updateVolunteers()
     {
-        $ctx = stream_context_create(['http' => ['timeout' => 1]]);
+        $ctx = stream_context_create(['http' => ['timeout' => 2]]);
         $cpt = 0;
 
         do {
@@ -1790,7 +1790,7 @@ abstract class XatVariables
     
     private static function updatePowers()
     {
-        $ctx = stream_context_create(['http' => ['timeout' => 1]]);
+        $ctx = stream_context_create(['http' => ['timeout' => 2]]);
         $cpt = 0;
 
         do {
