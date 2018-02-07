@@ -70,7 +70,7 @@ class XatNetwork
         $this->xFlag = XatVariables::getIP2()['xFlag'];
         $ip2         = XatVariables::getIP2();
 
-        if ($this->attempt >= sizeof($ip2['order'])) {
+        if (!isset($ip2['order'][$this->attempt])) {
             $return = [0, 0, 0];
         }
 
@@ -121,7 +121,11 @@ class XatNetwork
 
     public function connectToChat($chatid)
     {
-        $infos      = $this->pickIP($chatid);
+        $infos = $this->pickIP($chatid);
+        if ($infos == [0, 0, 0]) {
+            return false;
+        }
+
         $sockdomain = $infos[0];
         $useport    = $infos[1];
         $ctimeout   = 1; // $infos[2];
@@ -147,14 +151,14 @@ class XatNetwork
 
         if (empty(XatVariables::getLoginPacket()) || (time() - XatVariables::getLoginTime()) > 900) {
             XatVariables::update();
-            if (!$this->connectToChat(8)) {
+            if (!$this->connectToChat(2)) {
                 return false;
             }
 
             $this->write(
                 'y',
                 [
-                    'r' => '8',
+                    'r' => '2',
                     'v' => '0',
                     'u' => XatVariables::getXatid()
                 ]
