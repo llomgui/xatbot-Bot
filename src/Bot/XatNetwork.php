@@ -71,7 +71,7 @@ class XatNetwork
         $ip2         = XatVariables::getIP2();
 
         if (!isset($ip2['order'][$this->attempt])) {
-            $return = [0, 0, 0];
+            return [0, 0, 0];
         }
 
         $local2 = $ip2['order'][$this->attempt][0];
