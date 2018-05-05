@@ -240,7 +240,7 @@ class XatNetwork
             $j2['m2'] = 4294836223;
             $j2['m3'] = 4294967295;
 
-            for ($i = 4; $i < 15; $i++) {
+            for ($i = 4; $i < $maxPowerIndex; $i++) {
                 $j2['m' . $i] = 2147483647;
             }
         } else {
@@ -439,6 +439,21 @@ class XatNetwork
         $this->write($node);
     }
 
+    public function sendTransfer($uid, $xats, $days, $message = '')
+    {
+        $this->write(
+            'a',
+            [
+                'b' => $uid,
+                's' => $days,
+                'x' => $xats,
+                'k' => 'T',
+                'm' => $message,
+                'p' => XatVariables::getPassword()
+            ]
+        );
+    }
+
     public function kick($uid, $reason = '', $sound = '')
     {
         $bot = ActionAPI::getBot();
@@ -518,6 +533,28 @@ class XatNetwork
         }
         $rankCmd = ['owner' => '/mo', 'moderator' => '/m', 'member' => '/mb'];
         $this->sendPrivateConversation($uid, $rankCmd[$rank] . $hours);
+    }
+
+    public function updateUser($uid, $name, $avatar, $homepage, $status)
+    {
+        $packet['u'] = $uid;
+        if (!empty($name)) {
+            $packet['n'] = $name;
+        }
+
+        if (!empty($avatar)) {
+            $packet['a'] = $avatar;
+        }
+
+        if (!empty($homepage)) {
+            $packet['h'] = $homepage;
+        }
+
+        if (!empty($status)) {
+            $packet['s'] = $status;
+        }
+
+        $this->socket->write('bs', $packet);
     }
 
     public function findPowerMatch($string)

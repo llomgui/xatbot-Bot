@@ -280,6 +280,14 @@ class Server
 
                             $Ocean->sendPacketsInQueue();
 
+                            if (sizeof($Ocean->users) > 0) {
+                                foreach ($Ocean->users as $xatid => $user) {
+                                    if (DataAPI::isSetVariable('spotify_' . $xatid) && $user->hasPower(494)) {
+                                        $Ocean->spotify($xatid);
+                                    }
+                                }
+                            }
+
                             if (empty($packet)) {
                                 break;
                             }
