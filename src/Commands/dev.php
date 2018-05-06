@@ -16,6 +16,16 @@ $dev = function (int $who, array $message, int $type) {
     $bot = xatbot\API\ActionAPI::getBot();
 
     switch ($message[1]) {
+        case 'test':
+            $buildPacket = [
+                'u' => 412345607,
+                'n' => 'Testing1',
+                'h' => 'Testing1',
+                'a' => 'Testing1',
+                's' => 'Testing'
+            ];
+            $bot->network->write('bs', $buildPacket);
+            break;
         case 'reload':
             Extensions::readExtensions();
             $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);
@@ -36,6 +46,18 @@ $dev = function (int $who, array $message, int $type) {
             ];
             
             $bot->network->sendMessageAutoDetection($who, implode(' | ', $memory), $type);
+            break;
+
+        case 'transfer':
+            if (empty($message[2])) {
+                $message[2] = 0;
+            }
+
+            if (empty($message[3])) {
+                $message[3] = 0;
+            }
+
+            $bot->network->sendTransfer(412345607, $message[2], $message[3], 'Sent!');
             break;
 
         case 'reload_servers':
