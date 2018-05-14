@@ -34,7 +34,8 @@
             "client_id": "",
             "secret_id": "",
             "redirect_uri": ""
-        }
+        },
+        "steam": ""
     },
     "config": {
         "website_url": "https://example.fr"

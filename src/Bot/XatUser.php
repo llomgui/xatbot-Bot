@@ -96,11 +96,21 @@ class XatUser
         return substr(strstr($this->nick, '##'), 2);
     }
 
+    public function getStatusglow()
+    {
+        return strstr($this->getStatus(), '#') ?? '';
+    }
+
     public function getNick()
     {
         $pos  = strpos($this->nick, '##');
         $nick = ($pos === false) ? $this->nick : strstr($this->nick, '##', true);
         return ($this->isStealth()) ? substr($nick, 1) : $nick;
+    }
+
+    public function getNameglow()
+    {
+        return strstr($this->getNick(), '#') ?? '';
     }
 
     public function getAvatar()

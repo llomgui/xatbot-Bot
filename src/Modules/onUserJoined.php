@@ -26,17 +26,25 @@ $onUserJoined = function (int $who, array $array) {
     if ($user->isRegistered() && !$user->wasHere() && !DataAPI::isSetVariable('away_' . $who)) {
         $bot->network->sendTickle($who);
 
-        if (!DataAPI::isSetVariable('spotify_' . $who)) {
-            $spotify = Capsule::table('users')
+        if (!DataAPI::isSetVariable('botstat_' . $who)) {
+            $infos = Capsule::table('users')
                 ->where('xatid', $who)
-                ->select('spotify')
-                ->get();
+                ->select('spotify', 'steam', 'botstat')
+                ->get()[0];
 
-            if (sizeof($spotify) > 0) {
-                $spotify = json_decode($spotify[0]->spotify, true);
+            if (isset($infos->botstat) && !empty($infos->botstat)) {
+                $botstat = json_decode($infos->botstat, true);
+                DataAPI::set('botstat_' . $who, $botstat);
             }
 
-            DataAPI::set('spotify_' . $who, $spotify);
+            if (isset($infos->spotify) && !empty($infos->spotify)) {
+                $spotify = json_decode($infos->spotify, true);
+                DataAPI::set('spotify_' . $who, $spotify);
+            }
+
+            if (isset($infos->steam) && !empty($infos->steam)) {
+                DataAPI::set('steam_' . $who, ['steamid' => $infos->steam]);
+            }
         }
     }
 

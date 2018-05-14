@@ -463,6 +463,79 @@ class XatBot
         return ['lastCheck' => time() + 120, 'song' => $song, 'listeners' => $listeners, 'max' => $max];
     }
 
+    public function steam($uid, $type = null)
+    {
+        $steam = DataAPI::get('steam_' . $uid);
+        if (empty($type)) {
+            if (!isset($steam['nextCheck'])) {
+                $steam['nextCheck'] = '';
+            }
+
+            if (!empty($steam['nextCheck'])) {
+                if (time() <= $steam['nextCheck']) {
+                    return;
+                }
+            }
+        }
+
+        if (!empty($steam['steamid'])) {
+            $ctx = stream_context_create(['http' => ['timeout' => 1]]);
+            $json = json_decode(file_get_contents(
+                'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=' .
+                    XatVariables::getAPIKeys()['steam'] . '&steamids=' . $steam['steamid'],
+                false,
+                $ctx
+            ), true);
+
+            if (empty($json['response']['players'])) {
+                if (!empty($type)) {
+                    return $this->network->sendMessageAutoDetection($uid, 'Wrong steamid set in panel!', $type);
+                } else {
+                    $steam['nextCheck'] = time() + 120;
+                    DataAPI::set('steam_' . $uid, $steam);
+                    return;
+                }
+            }
+
+            $gameTitle = @$json['response']['players'][0]['gameextrainfo'];
+            if (isset($gameTitle)
+                && !empty($gameTitle)) {
+                if (!empty($type)) {
+                    return $this->network->sendMessageAutoDetection(
+                        $uid,
+                        $this->users[$uid]->getRegname() . ' is playing to ' . $gameTitle,
+                        $type
+                    );
+                } else {
+                    $steam['nextCheck'] = time() + 120;
+                    DataAPI::set('steam_' . $uid, $steam);
+                    return $this->network->updateUser(
+                        $uid,
+                        '',
+                        '',
+                        '',
+                        '🎮 ' . $gameTitle . $this->users[$uid]->getStatusglow()
+                    )
+                    ;
+                }
+            } else {
+                if (!empty($type)) {
+                    return $this->network->sendMessageAutoDetection($uid, 'You are not playing.', $type);
+                } else {
+                    $steam['nextCheck'] = time() + 120;
+                    DataAPI::set('steam_' . $uid, $steam);
+                    return;
+                }
+            }
+        } else {
+            if (!empty($type)) {
+                return $this->network->sendMessageAutoDetection($uid, 'No steamid set in panel!', $type);
+            } else {
+                return;
+            }
+        }
+    }
+
     public function spotify($uid, $type = null)
     {
         $spotify = DataAPI::get('spotify_' . $uid);
@@ -572,7 +645,7 @@ class XatBot
                     '',
                     '',
                     $currentTrack->item->preview_url,
-                    $artist . ' - ' . $song
+                    '🎵 ' . $artist . ' - ' . $song . $this->users[$uid]->getStatusglow()
                 )
                 ;
             }

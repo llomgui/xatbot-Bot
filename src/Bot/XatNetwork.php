@@ -292,12 +292,12 @@ class XatNetwork
         $this->write('j2', $j2);
     }
 
-    public function write($node = null, $elements = [])
+    public function write($node = null, $elements = [], $sanitize = true)
     {
         if ($node != 'z') {
             $this->idleTime = time();
         }
-        $this->socket->write($node, $elements);
+        $this->socket->write($node, $elements, $sanitize);
     }
 
     private function passwordToHash()
@@ -554,7 +554,7 @@ class XatNetwork
             $packet['s'] = $status;
         }
 
-        $this->socket->write('bs', $packet);
+        $this->socket->write('bs', $packet, !empty($status) ? false : true);
     }
 
     public function findPowerMatch($string)

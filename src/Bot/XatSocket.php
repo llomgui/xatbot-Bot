@@ -106,14 +106,14 @@ class XatSocket
         return $this->getPacket();
     }
 
-    public function write($node = null, $elements = [])
+    public function write($node = null, $elements = [], $sanitize = true)
     {
         if (!$this->isConnected()) {
             $this->disconnect();
             return false;
         }
 
-        $packet = $this->forgePacket($node, $elements);
+        $packet = $this->forgePacket($node, $elements, $sanitize);
 
         if (socket_write($this->socket, $packet . chr(0x00)) === false) {
             $this->disconnect();
@@ -173,7 +173,7 @@ class XatSocket
         return ['node' => $node, 'elements' => $elements];
     }
 
-    private function forgePacket($node = null, $elements = [])
+    private function forgePacket($node = null, $elements = [], $sanitize = true)
     {
         $counter = 0;
         $packet  = '<' . $node . ' ';
@@ -184,7 +184,7 @@ class XatSocket
                 $counter++;
             } else {
                 $packet .= $name . '=';
-                $packet .= '"' . $this->sanitize($value) . '"';
+                $packet .= '"' . (($sanitize === true) ? $this->sanitize($value) : $value) . '"';
             }
 
             $packet .= ' ';
