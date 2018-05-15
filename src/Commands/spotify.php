@@ -2,8 +2,6 @@
 
 use xatbot\API\ActionAPI;
 use xatbot\API\DataAPI;
-use xatbot\Bot\XatVariables;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 $spotify = function (int $who, array $message, int $type) {
 

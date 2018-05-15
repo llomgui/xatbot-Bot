@@ -489,7 +489,11 @@ class XatBot
 
             if (empty($json['response']['players'])) {
                 if (!empty($type)) {
-                    return $this->network->sendMessageAutoDetection($uid, 'Wrong steamid set in panel!', $type);
+                    return $this->network->sendMessageAutoDetection(
+                        $uid,
+                        $this->botlang('cmd.steam.wrongsteamid'),
+                        $type
+                    );
                 } else {
                     $steam['nextCheck'] = time() + 120;
                     DataAPI::set('steam_' . $uid, $steam);
@@ -503,7 +507,7 @@ class XatBot
                 if (!empty($type)) {
                     return $this->network->sendMessageAutoDetection(
                         $uid,
-                        $this->users[$uid]->getRegname() . ' is playing to ' . $gameTitle,
+                        $this->botlang('cmd.steam.isplaying', [$this->users[$uid]->getRegname(), $gameTitle]),
                         $type
                     );
                 } else {
@@ -520,7 +524,11 @@ class XatBot
                 }
             } else {
                 if (!empty($type)) {
-                    return $this->network->sendMessageAutoDetection($uid, 'You are not playing.', $type);
+                    return $this->network->sendMessageAutoDetection(
+                        $uid,
+                        $this->botlang('cmd.steam.notplaying'),
+                        $type
+                    );
                 } else {
                     $steam['nextCheck'] = time() + 120;
                     DataAPI::set('steam_' . $uid, $steam);
@@ -529,7 +537,7 @@ class XatBot
             }
         } else {
             if (!empty($type)) {
-                return $this->network->sendMessageAutoDetection($uid, 'No steamid set in panel!', $type);
+                return $this->network->sendMessageAutoDetection($uid, $this->botlang('cmd.steam.nosteamid'), $type);
             } else {
                 return;
             }
