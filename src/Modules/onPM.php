@@ -16,7 +16,7 @@ $onPM = function (int $who, string $message) {
     $log->chatid = $bot->data->chatid;
     $log->chatname = $bot->data->chatname;
     $log->typemessage = 2;
-    $log->message = '[PM] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . $message . '"';
+    $log->message = '[PM] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . utf8_encode($message) . '"';
     $log->save();
 
     if (empty($message)) {

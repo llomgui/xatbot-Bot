@@ -29,7 +29,7 @@ $onCommand = function (int $who, array $message, int $type) {
         }
 
         $log->message .= (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
-            $message . '"';
+            utf8_encode($message) . '"';
         $log->save();
     }
 };

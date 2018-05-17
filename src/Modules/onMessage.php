@@ -20,7 +20,7 @@ $onMessage = function (int $who, string $message) {
     $log->chatname = $bot->data->chatname;
     $log->typemessage = 1;
     $log->message = '[Main] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
-        $message . '"';
+        utf8_encode($message) . '"';
     $log->save();
 
     if (empty($user)) {

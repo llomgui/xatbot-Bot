@@ -17,7 +17,7 @@ $onPC = function (int $who, string $message) {
     $log->chatid = $bot->data->chatid;
     $log->chatname = $bot->data->chatname;
     $log->typemessage = 3;
-    $log->message = '[PC] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . $message . '"';
+    $log->message = '[PC] ' . (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' . utf8_encode($message) . '"';
     $log->save();
 
     $message = explode(' ', $message);
