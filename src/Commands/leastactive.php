@@ -10,29 +10,17 @@ $leastactive = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    $now  = time();
-    $least = [
-        'user' => null,
-        'time' => 0
-    ];
+    $least = ['user' => null, 'time' => 0];
 
     foreach ($bot->users as $user) {
         if (!is_object($user) || !DataAPI::isSetVariable('active_' . $user->getID())) {
             continue;
         }
 
-        $userTime = $now - DataAPI::get('active_' . $user->getID());
+        $userTime = DataAPI::get('active_' . $user->getID());
 
-        if ($least['time'] == 0) {
-            $least = [
-                'user' => $user,
-                'time' => $userTime
-            ];
-        } elseif ($userTime < $least['time']) {
-            $least = [
-                'user' => $user,
-                'time' => $userTime
-            ];
+        if ($least['time'] == 0 || $userTime > $least['time']) {
+            $least = ['user' => $user, 'time' => $userTime];
         }
     }
 
@@ -42,7 +30,7 @@ $leastactive = function (int $who, array $message, int $type) {
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        $bot->botlang('cmd.leastactive', [$displayName, $bot->secondsToTime($userTime)]),
+        $bot->botlang('cmd.leastactive', [$displayName, $bot->secondsToTime(time() - $userTime)]),
         $type
     );
 };

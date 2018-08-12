@@ -10,7 +10,6 @@ $mostactive = function (int $who, array $message, int $type) {
         return $bot->network->sendMessageAutoDetection($who, $bot->botlang('not.enough.rank'), $type);
     }
 
-    $now  = time();
     $most = ['user' => null, 'time' => 0];
 
     foreach ($bot->users as $user) {
@@ -18,9 +17,9 @@ $mostactive = function (int $who, array $message, int $type) {
             continue;
         }
 
-        $userTime = $now - DataAPI::get('active_' . $user->getID());
+        $userTime = DataAPI::get('active_' . $user->getID());
 
-        if ($userTime > $most['time']) {
+        if ($most['time'] == 0 || $userTime < $most['time']) {
             $most = ['user' => $user, 'time' => $userTime];
         }
     }
@@ -31,7 +30,7 @@ $mostactive = function (int $who, array $message, int $type) {
 
     $bot->network->sendMessageAutoDetection(
         $who,
-        $bot->botlang('cmd.mostactive', [$displayName, $bot->secondsToTime($userTime)]),
+        $bot->botlang('cmd.mostactive', [$displayName, $bot->secondsToTime(time() - $userTime)]),
         $type
     );
 };
