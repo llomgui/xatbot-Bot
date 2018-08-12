@@ -435,8 +435,10 @@ class XatNetwork
 
     public function sendFriendList($ids)
     {
+        $foo = ['B', 'M'];
+        $bar = ['000000000', '000000'];
         $node = 'f ' . $ids;
-        $this->write($node);
+        $this->write(str_replace($foo, $bar, $node));
     }
 
     public function sendTransfer($uid, $xats, $days, $message = '')

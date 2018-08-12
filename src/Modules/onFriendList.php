@@ -10,6 +10,9 @@ $onFriendList = function (array $array) {
         return;
     }
 
+    $foo = ['B', 'M'];
+    $bar = ['000000000', '000000'];
+
     $bot  = xatbot\API\ActionAPI::getBot();
     $list = explode(',', $array['v']);
     $list = array_diff($list, ['10101']);
@@ -31,7 +34,7 @@ $onFriendList = function (array $array) {
 
     $volids = [];
     for ($i = 0; $i < sizeof($volunteers); $i++) {
-        $volids[] = $volunteers[$i]['xatid'];
+        $volids[] = str_replace($foo, $bar, $volunteers[$i]['xatid']);
     }
 
     $staffids = [];
@@ -56,7 +59,7 @@ $onFriendList = function (array $array) {
             $available = substr($available, 1);
             if (in_array($available, $volids)) {
                 foreach ($volunteers as $volunteer) {
-                    if ($available == $volunteer['xatid']) {
+                    if ($available == str_replace($foo, $bar, $volunteer['xatid'])) {
                         $regname = $volunteer['regname'];
                     }
                 }
@@ -84,7 +87,7 @@ $onFriendList = function (array $array) {
         foreach ($onlines as $online) {
             if (in_array($online, $volids)) {
                 foreach ($volunteers as $volunteer) {
-                    if ($online == $volunteer['xatid']) {
+                    if ($online == str_replace($foo, $bar, $volunteer['xatid'])) {
                         $regname = $volunteer['regname'];
                     }
                 }
@@ -107,8 +110,6 @@ $onFriendList = function (array $array) {
 
     if (sizeof($list['available']) > 0) {
         foreach ($list['available'] as $reg => $id) {
-            $foo = ['B', 'M'];
-            $bar = ['000000000', '000000'];
             $string .= $reg . ' [' . str_replace($bar, $foo, $id) . '] ';
         }
 
@@ -121,8 +122,6 @@ $onFriendList = function (array $array) {
 
     if (sizeof($list['online']) > 0) {
         foreach ($list['online'] as $reg => $id) {
-            $foo = ['B', 'M'];
-            $bar = ['000000000', '000000'];
             $string .= $reg . ' [' . str_replace($bar, $foo, $id) . '] ';
         }
 
