@@ -26,7 +26,7 @@ $onUserJoined = function (int $who, array $array) {
     if ($user->isRegistered() && !$user->wasHere() && !DataAPI::isSetVariable('away_' . $who)) {
         $bot->network->sendTickle($who);
 
-        if (!DataAPI::isSetVariable('botstat_' . $who)) {
+        if (!DataAPI::isSetVariable('botstat_' . $who) && $user->hasPower(494)) {
             $infos = Capsule::table('users')
                 ->where('xatid', $who)
                 ->select('spotify', 'steam', 'botstat')
@@ -80,6 +80,26 @@ $onUserJoined = function (int $who, array $array) {
 
     if (!DataAPI::isSetVariable('joined_' . $who)) {
         DataAPI::set('joined_' . $who, true);
+
+        DataAPI::set('userEvent_' . $who, [
+            'xatid' => $who,
+            'rank' => $bot->flagToRank($who),
+            'chatid' => $bot->data->chatid,
+            'chatname' => $bot->data->chatname,
+            'amount_commands' => 0,
+            'amount_messages' => 0,
+            'amount_kicks' => 0,
+            'amount_bans' => 0,
+            'amount_ranks' => 0,
+            'connected_at' => date('Y/m/d H:i:s', time()),
+            'left_at' => 0
+        ]);
+    }
+
+    if (DataAPI::isSetVariable('userEvent_' . $who)) {
+        $event = DataAPI::get('userEvent_' . $who);
+        $event['rank'] = $bot->flagToRank($who);
+        DataAPI::set('userEvent_' . $who, $event);
     }
 
     DataAPI::set('moderated_' . $who, false);

@@ -23,6 +23,12 @@ $onMessage = function (int $who, string $message) {
         utf8_encode($message) . '"';
     $log->save();
 
+    if (DataAPI::isSetVariable('userEvent_' . $who)) {
+        $event = DataAPI::get('userEvent_' . $who);
+        $event['amount_messages'] += 1;
+        DataAPI::set('userEvent_' . $who, $event);
+    }
+
     if (empty($user)) {
         return;
     }

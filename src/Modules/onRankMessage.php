@@ -39,8 +39,14 @@ $onRankMessage = function (array $array) {
             return;
         }
 
+        if (substr($array['t'], 0, 3) == '/gy') {
+            $log->message = '[Rank] ' . $user1 . ' yellowcarded ' . $user2 . '!';
+            $log->save();
+            return;
+        }
+
         if (substr($array['t'], 0, 3) == '/gd') {
-            $log->message = '[Rank] ' . $user1 . ' badged ' . $user2 . '!';
+            $log->message = '[Rank] ' . $user1 . ' dunced/badged ' . $user2 . '!';
             $log->save();
             return;
         }
@@ -52,16 +58,35 @@ $onRankMessage = function (array $array) {
             return;
         }
 
+        if (substr($array['t'], 0, 3) == '/gr') {
+            $log->message = '[Rank] ' . $user1 . ' redcarded ' . $user2 . ' for ' .
+                    round(substr($array['t'], 3) / 3600, 2) . ' hours reason: "' . (!empty($array['p']) ?? '') . '"';
+            $log->save();
+            return;
+        }
+
         switch (substr($array['t'], 0, 2)) {
             case '/u':
                 // <m  t="/u" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' unbanned ' . $user2 . '!';
+
+                if (DataAPI::isSetVariable('userEvent_' . $array['u'])) {
+                    $event = DataAPI::get('userEvent_' . $array['u']);
+                    $event['amount_bans'] += 1;
+                    DataAPI::set('userEvent_' . $array['u'], $event);
+                }
                 break;
 
             case '/g':
                 //<m  p="" t="/g3600" u="412345607" d="586552"  />
                 $log->message = '[Rank] ' . $user1 . ' banned ' . $user2 . ' for ' .
                     round(substr($array['t'], 2) / 3600, 2) . ' hours reason: "' . (!empty($array['p']) ?? '') . '"';
+
+                if (DataAPI::isSetVariable('userEvent_' . $array['u'])) {
+                    $event = DataAPI::get('userEvent_' . $array['u']);
+                    $event['amount_bans'] += 1;
+                    DataAPI::set('userEvent_' . $array['u'], $event);
+                }
                 break;
 
             case '/m':
@@ -98,6 +123,12 @@ $onRankMessage = function (array $array) {
                             (!empty($hours) ? ' for ' . $hours . ' hour(s)!' : '!');
                         break;
                 }
+
+                if (DataAPI::isSetVariable('userEvent_' . $array['u'])) {
+                    $event = DataAPI::get('userEvent_' . $array['u']);
+                    $event['amount_ranks'] += 1;
+                    DataAPI::set('userEvent_' . $array['u'], $event);
+                }
                 break;
 
             case '/k':
@@ -109,6 +140,12 @@ $onRankMessage = function (array $array) {
                     } else {
                         DataAPI::set('kicks_' . $array['d'], DataAPI::get('kicks_' . $array['d']) + 1);
                     }
+                }
+
+                if (DataAPI::isSetVariable('userEvent_' . $array['u'])) {
+                    $event = DataAPI::get('userEvent_' . $array['u']);
+                    $event['amount_kicks'] += 1;
+                    DataAPI::set('userEvent_' . $array['u'], $event);
                 }
                 break;
 

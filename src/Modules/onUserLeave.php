@@ -1,6 +1,7 @@
 <?php
 
 use xatbot\API\DataAPI;
+use xatbot\Models\UserEvents;
 
 $onUserLeave = function (int $who) {
 
@@ -55,6 +56,18 @@ $onUserLeave = function (int $who) {
 
     if (!DataAPI::isSetVariable('moderated_' . $who)) {
         DataAPI::unSetVariable('moderated_' . $who);
+    }
+
+    if (DataAPI::isSetVariable('userEvent_' . $who)) {
+        $event = DataAPI::get('userEvent_' . $who);
+        $event['left_at'] = date('Y/m/d H:i:s', time());
+
+        $UserEvents = new UserEvents;
+        foreach ($event as $key => $value) {
+            $UserEvents->$key = $value;
+        }
+        $UserEvents->save();
+        DataAPI::unSetVariable('userEvent_' . $who);
     }
 
     DataAPI::set('left_' . $who, time());

@@ -1,6 +1,7 @@
 <?php
 
 use xatbot\Models\Log;
+use xatbot\API\DataAPI;
 
 $onCommand = function (int $who, array $message, int $type) {
 
@@ -31,5 +32,11 @@ $onCommand = function (int $who, array $message, int $type) {
         $log->message .= (!is_null($regname) ? $regname . ' (' . $who . ')' : $who) . ' sent: "' .
             utf8_encode($message) . '"';
         $log->save();
+
+        if (DataAPI::isSetVariable('userEvent_' . $who)) {
+            $event = DataAPI::get('userEvent_' . $who);
+            $event['amount_commands'] += 1;
+            DataAPI::set('userEvent_' . $who, $event);
+        }
     }
 };
