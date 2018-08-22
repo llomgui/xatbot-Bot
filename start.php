@@ -15,6 +15,8 @@ $servers = [
 
 foreach ($servers as $server) {
     forkOff('system', ['php slave.php ' . $server['name']]);
+    echo $server['name'] . ' started!' . PHP_EOL;
+    sleep(5);
 }
 
 function forkOff($lambda, $args)
