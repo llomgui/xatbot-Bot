@@ -282,7 +282,7 @@ class Server
 
                             if (sizeof($Ocean->users) > 0) {
                                 foreach ($Ocean->users as $xatid => $user) {
-                                    if (DataAPI::isSetVariable('botstat_' . $xatid) && $user->hasPower(494)) {
+                                    if (DataAPI::isSetVariable('botstat_' . $xatid)) {
                                         if (DataAPI::get('botstat_' . $xatid)['toggle'] == 'spotify') {
                                             if (DataAPI::isSetVariable('spotify_' . $xatid)) {
                                                 $Ocean->spotify($xatid);

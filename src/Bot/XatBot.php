@@ -548,6 +548,13 @@ class XatBot
     {
         $spotify = DataAPI::get('spotify_' . $uid);
         if (empty($type)) {
+            if (DataAPI::isSetVariable('spotify_retryAfter')) {
+                if (time() <= DataAPI::get('spotify_retryAfter')) {
+                    return;
+                }
+                DataAPI::unSetVariable('spotify_retryAfter');
+            }
+
             if (!isset($spotify['nextCheck'])) {
                 $spotify['nextCheck'] = '';
             }
@@ -565,9 +572,43 @@ class XatBot
             try {
                 $api->setAccessToken($spotify['accessToken']);
                 $currentTrack = $api->getMyCurrentTrack();
-            } catch (\SpotifyWebAPI\SpotifyWebAPIException $e) {
-                if ($e->getMessage() == 'The access token expired') {
-                    if (empty($spotify['refreshToken'])) {
+            } catch (\Exception $e) {
+                switch ($e->getMessage()) {
+                    case 'The access token expired':
+                        if (empty($spotify['refreshToken'])) {
+                            if (!empty($type)) {
+                                return $this->network->sendMessageAutoDetection(
+                                    $uid,
+                                    $this->botlang('cmd.spotify.pleaserelogin'),
+                                    $type
+                                );
+                            } else {
+                                return;
+                            }
+                        } else {
+                            $client_id = XatVariables::getAPIKeys()['spotify']['client_id'];
+                            $secret_id = XatVariables::getAPIKeys()['spotify']['secret_id'];
+                            $redirect_uri = XatVariables::getAPIKeys()['spotify']['redirect_uri'];
+
+                            $session = new \SpotifyWebAPI\Session($client_id, $secret_id, $redirect_uri);
+                            $session->refreshAccessToken($spotify['refreshToken']);
+                            $spotify['accessToken'] = $session->getAccessToken();
+                            $spotify['refreshToken'] = $session->getRefreshToken();
+
+                            Capsule::table('users')->where('xatid', $uid)->update(['spotify' => json_encode($spotify)]);
+
+                            $api->setAccessToken($spotify['accessToken']);
+                            $currentTrack = $api->getMyCurrentTrack();
+                        }
+                        break;
+
+                    case 'API rate limit exceeded':
+                        $lastResponse = $api->getRequest()->getLastResponse();
+                        $retryAfter = $lastResponse['headers']['Retry-After'];
+                        DataAPI::set('spotify_retryAfter', time() + $retryAfter)
+                        break;
+
+                    case 'Refresh token revoked':
                         if (!empty($type)) {
                             return $this->network->sendMessageAutoDetection(
                                 $uid,
@@ -577,33 +618,16 @@ class XatBot
                         } else {
                             return;
                         }
-                    }
+                        break;
 
-                    $client_id = XatVariables::getAPIKeys()['spotify']['client_id'];
-                    $secret_id = XatVariables::getAPIKeys()['spotify']['secret_id'];
-                    $redirect_uri = XatVariables::getAPIKeys()['spotify']['redirect_uri'];
-
-                    $session = new \SpotifyWebAPI\Session($client_id, $secret_id, $redirect_uri);
-                    $session->refreshAccessToken($spotify['refreshToken']);
-
-                    $spotify['accessToken'] = $session->getAccessToken();
-                    $spotify['refreshToken'] = $session->getRefreshToken();
-
-                    Capsule::table('users')->where('xatid', $uid)->update(['spotify' => json_encode($spotify)]);
-
-                    $api->setAccessToken($spotify['accessToken']);
-                    $currentTrack = $api->getMyCurrentTrack();
-                } elseif ($e->getMessage() == 'API rate limit exceeded') {
-                    $spotify['nextCheck'] = time() + 120;
-                    DataAPI::set('spotify_' . $uid, $spotify);
-                    return;
-                } else {
-                    var_dump($e->getMessage());
-                    if (!empty($type)) {
-                        return $this->network->sendMessageAutoDetection($uid, $e->getMessage(), $type);
-                    } else {
-                        return;
-                    }
+                    default:
+                        var_dump($e->getMessage());
+                        if (!empty($type)) {
+                            return $this->network->sendMessageAutoDetection($uid, $e->getMessage(), $type);
+                        } else {
+                            return;
+                        }
+                        break;
                 }
             }
 
@@ -620,8 +644,7 @@ class XatBot
             }
 
             $spotify['nextCheck'] = time() + (int)ceil(
-                ($currentTrack->item->duration_ms - $currentTrack->progress_ms)
-                / 1000
+                ($currentTrack->item->duration_ms - $currentTrack->progress_ms) / 1000
             );
             DataAPI::set('spotify_' . $uid, $spotify);
 
