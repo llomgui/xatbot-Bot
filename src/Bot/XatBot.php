@@ -605,7 +605,7 @@ class XatBot
                     case 'API rate limit exceeded':
                         $lastResponse = $api->getRequest()->getLastResponse();
                         $retryAfter = $lastResponse['headers']['Retry-After'];
-                        DataAPI::set('spotify_retryAfter', time() + $retryAfter)
+                        DataAPI::set('spotify_retryAfter', time() + $retryAfter);
                         break;
 
                     case 'Refresh token revoked':
