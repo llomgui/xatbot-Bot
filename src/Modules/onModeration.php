@@ -11,6 +11,10 @@ $onModeration = function (int $who, string $message) {
         return $bot->refresh();
     }
 
+    if (!isset($bot->users[$who])) {
+        return;
+    }
+
     $message = strtolower($message);
     $message2 = explode(' ', $message);
 
