@@ -1,6 +1,7 @@
 <?php
 
 use xatbot\API\DataAPI;
+use xatbot\Bot\XatConnect4;
 use xatbot\Bot\XatVariables;
 
 $onApp = function (int $who, string $app, array $array) {
@@ -18,7 +19,7 @@ $onApp = function (int $who, string $app, array $array) {
                 }
                 if ((DataAPI::isSetVariable('boards_' . $who) && (strlen($array['t']) == 0 ||
                     strlen($array['t'] == 1))) || !DataAPI::isSetVariable('boards_' . $who)) {
-                    DataAPI::set('boards_' . $who, new Connect4());
+                    DataAPI::set('boards_' . $who, new XatConnect4());
                 }
                 $last = substr($array['t'], -1);
                 if (is_numeric($last)) {
