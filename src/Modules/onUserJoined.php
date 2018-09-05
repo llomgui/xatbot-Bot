@@ -39,7 +39,7 @@ $onUserJoined = function (int $who, array $array) {
                     DataAPI::set('botstat_' . $who, $botstat);
                 }
 
-                if (isset($infos->spotify) && !empty($infos->spotify)) {
+                if (isset($infos->spotify) && !empty($infos->spotify) && strlen($infos->spotify) > 20) {
                     $spotify = json_decode($infos->spotify, true);
                     DataAPI::set('spotify_' . $who, $spotify);
                 }
