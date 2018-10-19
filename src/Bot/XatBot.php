@@ -5,6 +5,7 @@ namespace xatbot\Bot;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use xatbot\Models\Bot;
 use xatbot\API\DataAPI;
+use xatbot\Logger;
 
 class XatBot
 {
@@ -547,14 +548,8 @@ class XatBot
     public function spotify($uid, $type = null)
     {
         $spotify = DataAPI::get('spotify_' . $uid);
-        if (empty($type)) {
-            if (DataAPI::isSetVariable('spotify_retryAfter')) {
-                if (time() <= DataAPI::get('spotify_retryAfter')) {
-                    return;
-                }
-                DataAPI::unSetVariable('spotify_retryAfter');
-            }
 
+        if (empty($type)) {
             if (!isset($spotify['nextCheck'])) {
                 $spotify['nextCheck'] = '';
             }
@@ -566,72 +561,32 @@ class XatBot
             }
         }
 
-        if (!empty($spotify['accessToken'])) {
-            $api = new \SpotifyWebAPI\SpotifyWebAPI();
+        $ctx = stream_context_create(['http' => ['timeout' => 1]]);
+        $page = file_get_contents('https://xatbot.fr/spotify.php?xatid=' . $uid, false, $ctx);
+        if (!empty($page)) {
+            $currentTrack = json_decode($page, true);
+        } else {
+            $spotify['nextCheck'] = time() + 600;
+            DataAPI::set('spotify_' . $uid, $spotify);
 
-            try {
-                $api->setAccessToken($spotify['accessToken']);
-                $currentTrack = $api->getMyCurrentTrack();
-            } catch (\Exception $e) {
-                switch ($e->getMessage()) {
-                    case 'The access token expired':
-                        if (empty($spotify['refreshToken'])) {
-                            if (!empty($type)) {
-                                return $this->network->sendMessageAutoDetection(
-                                    $uid,
-                                    $this->botlang('cmd.spotify.pleaserelogin'),
-                                    $type
-                                );
-                            } else {
-                                return;
-                            }
-                        } else {
-                            $client_id = XatVariables::getAPIKeys()['spotify']['client_id'];
-                            $secret_id = XatVariables::getAPIKeys()['spotify']['secret_id'];
-                            $redirect_uri = XatVariables::getAPIKeys()['spotify']['redirect_uri'];
-
-                            $session = new \SpotifyWebAPI\Session($client_id, $secret_id, $redirect_uri);
-                            $session->refreshAccessToken($spotify['refreshToken']);
-                            $spotify['accessToken'] = $session->getAccessToken();
-                            $spotify['refreshToken'] = $session->getRefreshToken();
-
-                            Capsule::table('users')->where('xatid', $uid)->update(['spotify' => json_encode($spotify)]);
-
-                            $api->setAccessToken($spotify['accessToken']);
-                            $currentTrack = $api->getMyCurrentTrack();
-                        }
-                        break;
-
-                    case 'API rate limit exceeded':
-                        $lastResponse = $api->getRequest()->getLastResponse();
-                        $retryAfter = $lastResponse['headers']['Retry-After'];
-                        DataAPI::set('spotify_retryAfter', time() + $retryAfter);
-                        break;
-
-                    case 'Refresh token revoked':
-                        if (!empty($type)) {
-                            return $this->network->sendMessageAutoDetection(
-                                $uid,
-                                $this->botlang('cmd.spotify.pleaserelogin'),
-                                $type
-                            );
-                        } else {
-                            return;
-                        }
-                        break;
-
-                    default:
-                        var_dump($e->getMessage());
-                        if (!empty($type)) {
-                            return $this->network->sendMessageAutoDetection($uid, $e->getMessage(), $type);
-                        } else {
-                            return;
-                        }
-                        break;
-                }
+            if (!empty($type)) {
+                return $this->network->sendMessageAutoDetection(
+                    $uid,
+                    'Error getting Spotify API',
+                    $type
+                );
+            } else {
+                return;
             }
+        }
 
-            if (is_null($currentTrack)) {
+        if (isset($currentTrack['error'])) {
+            Logger::getLogger()->info('[' . $this->data->id . '] --> SPOTIFY ERROR: ' . implode(' ', $currentTrack));
+
+            $spotify['nextCheck'] = time() + 600;
+            DataAPI::set('spotify_' . $uid, $spotify);
+
+            if ($currentTrack['message'] == 'User is not listening') {
                 if (!empty($type)) {
                     return $this->network->sendMessageAutoDetection(
                         $uid,
@@ -641,17 +596,27 @@ class XatBot
                 } else {
                     return;
                 }
+            } else {
+                if (!empty($type)) {
+                    return $this->network->sendMessageAutoDetection(
+                        $uid,
+                        $currentTrack['message'],
+                        $type
+                    );
+                } else {
+                    return;
+                }
             }
-
+        } else {
             $spotify['nextCheck'] = time() + (int)ceil(
-                ($currentTrack->item->duration_ms - $currentTrack->progress_ms) / 1000
+                ($currentTrack['item']['duration_ms'] - $currentTrack['progress_ms']) / 1000
             );
             DataAPI::set('spotify_' . $uid, $spotify);
 
             $artistsArray = [];
-            $artists = $currentTrack->item->artists;
+            $artists = $currentTrack['item']['artists'];
             for ($i = 0; $i < sizeof($artists); $i++) {
-                $artistsArray[] = $artists[$i]->name;
+                $artistsArray[] = $artists[$i]['name'];
             }
 
             if (sizeof($artistsArray) == 1) {
@@ -660,10 +625,11 @@ class XatBot
                 $artist = implode(', ', $artistsArray);
             }
 
-            $song = $currentTrack->item->name;
+            $song = $currentTrack['item']['name'];
+            Logger::getLogger()->info('[' . $this->data->id . '] --> Song: ' . $artist . ' ' . $song . ' ' . $uid);
 
             if (!empty($type)) {
-                if ($currentTrack->is_playing) {
+                if ($currentTrack['is_playing']) {
                     $string = $this->botlang('cmd.spotify.islistening', [$this->users[$uid]->getRegname()]);
                 } else {
                     $string = $this->botlang('cmd.spotify.waslistening', [$this->users[$uid]->getRegname()]);
@@ -675,17 +641,13 @@ class XatBot
                     $uid,
                     '',
                     '',
-                    $currentTrack->item->preview_url,
+                    $currentTrack['item']['preview_url'],
                     '🎵 ' . $artist . ' - ' . $song . $this->users[$uid]->getStatusglow()
                 )
                 ;
             }
         }
 
-        if (!empty($type)) {
-            return $this->network->sendMessageAutoDetection($uid, $this->botlang('cmd.spotify.nospotify'), $type);
-        } else {
-            return;
-        }
+        return;
     }
 }
