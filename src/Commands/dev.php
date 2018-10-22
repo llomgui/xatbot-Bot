@@ -6,6 +6,7 @@ use xatbot\Extensions;
 use xatbot\API\DataAPI;
 use xatbot\Models\Server;
 use xatbot\Bot\XatVariables;
+use xatbot\Bot\XatHangman;
 
 $dev = function (int $who, array $message, int $type) {
 
@@ -16,16 +17,11 @@ $dev = function (int $who, array $message, int $type) {
     $bot = xatbot\API\ActionAPI::getBot();
 
     switch ($message[1]) {
-        case 'test':
-            $buildPacket = [
-                'u' => 412345607,
-                'n' => 'Testing1',
-                'h' => 'Testing1',
-                'a' => 'Testing1',
-                's' => 'Testing'
-            ];
-            $bot->network->write('bs', $buildPacket);
+        case 'hangman':
+            DataAPI::set('hangman_' . $who, new XatHangman($bot, 'arachnid', $who));
+            $bot->network->sendMessageAutoDetection($who, 'new hangman sent!', $type);
             break;
+
         case 'reload':
             Extensions::readExtensions();
             $bot->network->sendMessageAutoDetection($who, 'Extensions reloaded!', $type);

@@ -54,4 +54,15 @@ class Utilities
         $data = explode($end, @$data[1]);
         return @$data[0];
     }
+
+    public static function strposRecursive($haystack, $needle, $offset = 0, &$results = [])
+    {
+        $offset = strpos($haystack, $needle, $offset);
+        if ($offset === false) {
+            return $results;
+        } else {
+            $results[] = $offset;
+            return self::strposRecursive($haystack, $needle, ($offset + 1), $results);
+        }
+    }
 }

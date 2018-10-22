@@ -38,6 +38,10 @@ $onUserLeave = function (int $who) {
         DataAPI::unSetVariable('steam_' . $who);
     }
 
+    if (DataAPI::isSetVariable('boards_' . $who)) {
+        DataAPI::unSetVariable('boards_' . $who);
+    }
+
     if (DataAPI::isSetVariable('botstat_' . $who)) {
         DataAPI::unSetVariable('botstat_' . $who);
     }
@@ -52,6 +56,10 @@ $onUserLeave = function (int $who) {
 
     if (DataAPI::isSetVariable('isAutotemp_' . $who)) {
         DataAPI::unSetVariable('isAutotemp_' . $who);
+    }
+
+    if (DataAPI::isSetVariable('hangman_' . $who)) {
+        DataAPI::unSetVariable('hangman_' . $who);
     }
 
     if (!DataAPI::isSetVariable('moderated_' . $who)) {

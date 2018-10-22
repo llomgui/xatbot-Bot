@@ -121,5 +121,14 @@ $onApp = function (int $who, string $app, array $array) {
             }
 
             break;
+
+        case '60002':
+            if (!DataAPI::isSetVariable('hangman_' . $who)) {
+                return;
+            }
+
+            $hangman = DataAPI::get('hangman_' . $who);
+            $hangman->process($array['t']);
+            break;
     }
 };
