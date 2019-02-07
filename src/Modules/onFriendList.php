@@ -6,7 +6,6 @@ use xatbot\Bot\XatVariables;
 $onFriendList = function (array $array) {
 
     if (!isset($array['v'])) {
-        var_dump($array);
         return;
     }
 
