@@ -246,7 +246,7 @@ $mail = function (int $who, array $message, int $type) {
                 $user = Userinfo::where('regname', $toUser)->first();
             }
 
-            if (sizeof($user) > 0) {
+            if (isset($user) && sizeof($user) > 0) {
                 if ($who != $user->xatid) {
                     $mails = Mail::where(['touser' => $user->xatid, 'read' => false])->get()->toArray();
 
