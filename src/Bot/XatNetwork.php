@@ -246,9 +246,9 @@ class XatNetwork
         } else {
             $powersdisabled = [];
             $powerslist = json_decode($this->data->powersdisabled, true);
-            for ($i = 0; $i < sizeof($powerslist); $i++) {
-                if (array_key_exists($powerslist[$i], XatVariables::getPowers())) {
-                    @$powersdisabled[(int)($powerslist[$i] / 32)] += pow(2, ($powerslist[$i] % 32));
+            foreach ($powerslist as $powerdisabled) {
+                if (array_key_exists($powerdisabled, XatVariables::getPowers())) {
+                    $powersdisabled[(int)($powerdisabled / 32)] += pow(2, ($powerdisabled % 32));
                 }
             }
 
