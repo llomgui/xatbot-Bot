@@ -48,7 +48,8 @@ class XatBot
         $this->linksfilter    = $this->setLinksfilter();
         $this->customcommands = $this->setCustomCommands();
         $this->snitchlist     = $this->setSnitchList();
-        $this->packetsinqueue = [];
+	$this->packetsinqueue = [];
+	$this->users          = [];
         $this->refreshing     = $refreshing;
 
         if ($this->data->premium > time() && $this->data->premiumfreeze == 1) {
@@ -596,6 +597,16 @@ class XatBot
                 } else {
                     return;
                 }
+            } else if ($currentTrack['message'] == 'No refreshToken') {
+               if (!empty($type)) {
+                   return $this->network->sendMessageAutoDetection(
+                       $uid,
+                       'Please relogin via xatbot\'s panel!',
+                       $type
+                   );
+               } else {
+                   return;
+               }
             } else {
                 if (!empty($type)) {
                     return $this->network->sendMessageAutoDetection(
@@ -614,7 +625,7 @@ class XatBot
             DataAPI::set('spotify_' . $uid, $spotify);
 
             $artistsArray = [];
-            $artists = $currentTrack['item']['artists'];
+            $artists = (array)$currentTrack['item']['artists'];
             for ($i = 0; $i < sizeof($artists); $i++) {
                 $artistsArray[] = $artists[$i]['name'];
             }
