@@ -256,7 +256,7 @@ class Server
                     $this->bot        = $Ocean;
                     $Ocean->network->tick();
 
-                    usleep(5000);
+                    usleep(500);
                     try {
                         while (1) {
                             if (!$Ocean->network->socket->isConnected()) {
