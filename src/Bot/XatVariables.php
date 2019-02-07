@@ -103,17 +103,15 @@ abstract class XatVariables
     private static function initVolunteers()
     {
         $volunteers = [
-            ['regname' => 'Andre',   'xatid' => 112633],
-            ['regname' => 'Angelo',  'xatid' => 18500000],
-            ['regname' => 'Brandon', 'xatid' => 1010208],
-            ['regname' => 'Crow',    'xatid' => 4444],
-            ['regname' => 'Cupim',   'xatid' => 10000690],
-            ['regname' => 'Cyan',    'xatid' => 283021491],
-            ['regname' => 'Echo',    'xatid' => 182000000],
-            ['regname' => 'Kyle',    'xatid' => 96321545],
-            ['regname' => 'Mihay',   'xatid' => 1700000],
-            ['regname' => 'Sydno',   'xatid' => 220711],
-            ['regname' => 'Vale',    'xatid' => 32646043]
+            ['regname' => 'Andre', 'xatid' => 112633],
+            ['regname' => 'Angelo', 'xatid' => 18500000],
+            ['regname' => 'Crow', 'xatid' => 4444],
+            ['regname' => 'Cupim', 'xatid' => 11011],
+            ['regname' => 'Echo', 'xatid' => 182000000],
+            ['regname' => 'Junii', 'xatid' => 1522897229],
+            ['regname' => 'LaFleur', 'xatid' => 517650537],
+            ['regname' => 'Mihay', 'xatid' => 1700000],
+            ['regname' => 'Griffith', 'xatid' => 220711]
         ];
 
         self::$volunteers = $volunteers;
@@ -1782,7 +1780,7 @@ abstract class XatVariables
         foreach ($cell[1] as $key => $value) {
             if ($key & 1) {
                 $value = explode(' ', strip_tags($value));// reg id
-                $volunteers[] = ['regname' => $value[1], 'xatid' => trim(str_replace(['(', ')'], '', $value[2]))];
+                $volunteers[] = ['regname' => $value[0], 'xatid' => trim(str_replace(['(', ')'], '', $value[1]))];
             }
         }
         
@@ -1792,112 +1790,6 @@ abstract class XatVariables
     private static function updatePowers()
     {
         $ctx = stream_context_create(['http' => ['timeout' => 2]]);
-        $cpt = 0;
-
-        do {
-            $page = file_get_contents('https://xat.com/web_gear/chat/pow2.php?Ocean=' . time(), false, $ctx);
-            $cpt++;
-            usleep(300000);
-        } while (empty($page) && $cpt < 5);
-
-        if (empty($page)) {
-            return false;
-        } else {
-            $page = json_decode($page, true);
-        }
-
-        $pssa   = null;
-        $topsh  = null;
-
-        for ($i = 0; $i < sizeof($page); $i++) {
-            if ($page[$i][0] == 'pssa') {
-                $pssa = $i;
-            } elseif ($page[$i][0] == 'topsh') {
-                $topsh = $i;
-            }
-        }
-
-        if (empty($pssa) || empty($topsh)) {
-            return false;
-        }
-
-        foreach ($page[$pssa][1] as $power => $id) {
-            self::$powers[$id]['name']       = $power;
-            self::$powers[$id]['minCost']    = 0;
-            self::$powers[$id]['maxCost']    = 0;
-            self::$powers[$id]['isLimited']  = false;
-            self::$powers[$id]['isAllPower'] = false;
-            self::$powers[$id]['isEpic']     = false;
-            self::$powers[$id]['isGroup']    = false;
-            self::$powers[$id]['isGame']     = false;
-            self::$powers[$id]['isNew']      = false;
-            self::$powers[$id]['smilies']    = [$power];
-        }
-
-        foreach ($page[$topsh][1] as $smiley => $id) {
-            self::$powers[$id]['smilies'][] = $smiley;
-        }
-        
-        foreach ($page[7][1] as $name => $value) {
-            if ($name != 'time' && $name != "!") {
-                self::$powers[$value[0]]['pawns'][] = 'h' . $name;
-            }
-        }
-        
-        $id = end($page[6][1]) >= $page[0][1]['id'] ? end($page[6][1]) : $page[0][1]['id'];
-        $id = count(array_keys($page[4][1], $id + 1)) > 0 ? ($id + 1) : $id;
-        $id = count(array_keys($page[4][1], $id + 2)) > 0 ? ($id + 2) : $id;
-        $keys = array_keys(self::$powers);
-        $last = end($keys);
-        
-        if ($id != $last) {
-            $lastName = array_search($id, $page[6][1]) == false ? $id : array_search($id, $page[6][1]);
-            self::$powers[$id]['name']       = $lastName;
-            self::$powers[$id]['minCost']    = 0;
-            self::$powers[$id]['maxCost']    = 0;
-            self::$powers[$id]['storeCost']  = "unknown";
-            self::$powers[$id]['isLimited']  = false;
-            self::$powers[$id]['isAllPower'] = false;
-            self::$powers[$id]['isEpic']     = false;
-            self::$powers[$id]['isGroup']    = false;
-            self::$powers[$id]['isGame']     = false;
-            self::$powers[$id]['isNew']      = false;
-            self::$powers[$id]['smilies']    = array_merge([$lastName], array_keys($page[4][1], $id));
-        }
-
-        $cpt = 0;
-
-        do {
-            $page = file_get_contents('https://xat.com/json/powers.php?Ocean=' . time(), false, $ctx);
-            $cpt++;
-            usleep(300000);
-        } while (empty($page) && $cpt < 5);
-
-        if (empty($page)) {
-            return false;
-        } else {
-            $page = json_decode($page, true);
-        }
-
-        foreach ($page as $id => $power) {
-            if ($id === 0) {
-                continue;
-            }
-
-            if (!in_array($power['s'], self::$powers[$id]['smilies'])) {
-                array_unshift(self::$powers[$id]['smilies'], $power['s']);
-            }
-
-            self::$powers[$id]['name']       = $power['s'];
-            self::$powers[$id]['isNew']      = isset($power['f']) && $power['f'] & 0x1000 ? true : false;
-            self::$powers[$id]['isLimited']  = isset($power['f']) && $power['f'] & 0x2000 ? true : false;
-            self::$powers[$id]['isEpic']     = isset($power['f']) && $power['f'] & 8 ? true : false;
-            self::$powers[$id]['isGame']     = isset($power['f']) && $power['f'] & 0x80 ? true : false;
-            self::$powers[$id]['isGroup']    = isset($power['f']) && $power['f'] & 0x800 ? true : false;
-            self::$powers[$id]['isAllPower'] = isset($power['f']) && $power['f'] & 0x401 ? true : false;
-            self::$powers[$id]['storeCost']  = $power['x'] ?? $power['d'] * 13.5;
-        }
-
         $url = 'https://xatproject.com/fairtrade/api.php?action=powers';
         $cpt = 0;
 
@@ -1910,16 +1802,21 @@ abstract class XatVariables
         if (empty($page)) {
             return false;
         } else {
-            $fairtrade = json_decode($page, true);
-            if (isset($fairtrade['powers'])) {
-                foreach ($fairtrade['powers'] as $id => $power) {
-                    if (!empty($power['min_xats']) && !empty($power['max_xats'])) {
-                        self::$powers[$id]['minCost'] = $power['min_xats'];
-                        self::$powers[$id]['maxCost'] = $power['max_xats'];
-                    } else {
-                        self::$powers[$id]['minCost'] = 0;
-                        self::$powers[$id]['maxCost'] = 0;
-                    }
+            $page = json_decode($page, true);
+            if (isset($page['powers'])) {
+                foreach ($page['powers'] as $id => $power) {
+                    self::$powers[$id]['name'] = $power['name'];
+                    self::$powers[$id]['minCost'] = $power['min_xats'];
+                    self::$powers[$id]['maxCost'] = $power['max_xats'];
+                    self::$powers[$id]['isLimited'] = (bool)$power['limited'];
+                    self::$powers[$id]['isAllPower'] = (bool)$power['is_allp'];
+                    self::$powers[$id]['isEpic'] = (bool)$power['is_epic'];
+                    self::$powers[$id]['isGroup'] = (bool)$power['is_group'];
+                    self::$powers[$id]['isGame'] = (bool)$power['is_game'];
+                    self::$powers[$id]['isHug'] = (bool)$power['is_hug'];
+                    self::$powers[$id]['isNew'] = (max(array_keys($page['powers'])) == $id) ? true : false;
+                    self::$powers[$id]['smilies'] =
+                        (empty($power['smilies'])) ? [$power['name']] : explode(',', $power['smilies']);
                 }
             }
 
