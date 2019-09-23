@@ -1,5 +1,6 @@
 <?php
 
+use xatbot\Utilities;
 use xatbot\Bot\XatUser;
 use xatbot\API\DataAPI;
 use xatbot\Models\Mail;
@@ -53,27 +54,39 @@ $onUserJoined = function (int $who, array $array) {
 
     if (!$user->wasHere() && !DataAPI::isSetVariable('away_' . $who) && !DataAPI::isSetVariable('joined_' . $who)) {
         if (!empty($bot->data->autowelcome)) {
-            $search[] = '{name}';
-            $replace[] = $string = preg_replace(
-                ['/\(glow[^)]+\)/', '/\(hat[^)]+\)/'],
-                ['', ''],
-                $bot->users[$who]->getNick()
-            );
-            $search[] = '{status}';
-            $replace[] = $bot->users[$who]->getStatus();
-            $search[] = '{regname}';
-            $replace[] = $bot->users[$who]->getRegname() ?? $bot->users[$who]->getID();
-            $search[] = '{users}';
-            $replace[] = sizeof($bot->users);
-            $search[] = '{cmdcode}';
-            $replace[] = $bot->data->customcommand;
-            $search[] = '{id}';
-            $replace[] = $bot->users[$who]->getID();
+            $latestPower = XatVariables::getLastPower();
+            $replace = [
+                '{name}' => $bot->users[$who]->getNick(),
+                '{status}' => $bot->users[$who]->getStatus(),
+                '{regname}' => $bot->users[$who]->getRegname() ?? $bot->users[$who]->getID(),
+                '{id}' => $bot->users[$who]->getID(),
+                '{users}' => sizeof($bot->users),
+                '{online}' => sizeof($bot->users),
+                '{cmdcode}' => $bot->data->customcommand,
+                '{command}' => $bot->data->customcommand,
+                '{cc}' => $bot->data->customcommand,
+                '{randomuser}' => Utilities::arrayRandomAssoc($bot->users, true)[0]->getRegname(),
+                '{randomid}' => Utilities::arrayRandomAssoc($bot->users, true)[0]->getID(),
+                '{randomname}' => Utilities::arrayRandomAssoc($bot->users, true)[0]->getNick(),
+                '{randomnumber}' => rand(0, 1000),
+                '{latestpower}' => ucfirst($latestPower['power']['name']),
+                '{latestpowerid}' => $latestPower['id'],
+                '{latestpowerstoreprice}' => $latestPower['power']['storeCost'],
+                '{latestpowertradeprice}' => ($latestPower['power']['minCost']+$latestPower['power']['maxCost'])/2,
+                '{latestpowerstatus}' => ($latestPower['power']['isNew'] ?
+                    ($latestPower['power']['isLimited'] ? 'LIMITED' : 'UNLIMITED') :
+                    'UNRELEASED'),
+            ];
+
+            $string = $bot->data->autowelcome;
+            foreach ($replace as $key => $value) {
+                $string = str_replace($key, $value, $string);
+            }
 
             if ($bot->data->toggleautowelcome == 'pc') {
-                $bot->network->sendPrivateConversation($who, str_replace($search, $replace, $bot->data->autowelcome));
+                $bot->network->sendPrivateConversation($who, $string);
             } elseif ($bot->data->toggleautowelcome == 'pm') {
-                $bot->network->sendPrivateMessage($who, str_replace($search, $replace, $bot->data->autowelcome));
+                $bot->network->sendPrivateMessage($who, $string);
             }
         }
     }

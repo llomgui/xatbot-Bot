@@ -324,7 +324,7 @@ class Server
                                     
                                 case 'a':
                                     if (isset($packet['elements']['h'])) {
-                                        continue;
+                                        continue 2;
                                     }
                                     $hook   = 'onTransfer'; // onTransfer($from, $type, $message, $to, $xats, $days)
                                     $args[] = $packet['elements']['u'];
@@ -412,12 +412,12 @@ class Server
                                         }
 
                                         if (empty($packet['elements']['t'])) {
-                                            continue;
+                                            continue 2;
                                         }
 
                                         if ($packet['elements']['t'] == '/RTypeOn' ||
                                             $packet['elements']['t'] == '/RTypeOff') {
-                                            continue;
+                                            continue 2;
                                         }
 
                                         if (!isset($packet['elements']['s'])) {
@@ -444,7 +444,7 @@ class Server
                                 case 'p':
                                     if ($packet['elements']['t'] == '/RTypeOn' ||
                                         $packet['elements']['t'] == '/RTypeOff') {
-                                        continue;
+                                        continue 2;
                                     }
 
                                     $hook   = (isset($packet['elements']['s'])) ? 'onPC' : 'onPM'; //onP*($who,$message)

@@ -1,5 +1,8 @@
 <?php
 
+use xatbot\Utilities;
+use xatbot\Bot\XatVariables;
+
 $handlecustomcommands = function (int $who, array $message, int $type) {
 
     $bot = xatbot\API\ActionAPI::getBot();
@@ -17,34 +20,36 @@ $handlecustomcommands = function (int $who, array $message, int $type) {
                     }
                 }
 
-                $randomuser = [];
-                foreach ($bot->users as $id => $object) {
-                    if (is_object($object)) {
-                        $randomuser[] = $object;
-                    }
+                $latestPower = XatVariables::getLastPower();
+                $replace = [
+                    '{name}' => $bot->users[$who]->getNick(),
+                    '{status}' => $bot->users[$who]->getStatus(),
+                    '{regname}' => $bot->users[$who]->getRegname() ?? $bot->users[$who]->getID(),
+                    '{id}' => $bot->users[$who]->getID(),
+                    '{users}' => sizeof($bot->users),
+                    '{online}' => sizeof($bot->users),
+                    '{cmdcode}' => $bot->data->customcommand,
+                    '{command}' => $bot->data->customcommand,
+                    '{cc}' => $bot->data->customcommand,
+                    '{randomuser}' => Utilities::arrayRandomAssoc($bot->users, true)[0]->getRegname(),
+                    '{randomid}' => Utilities::arrayRandomAssoc($bot->users, true)[0]->getID(),
+                    '{randomname}' => Utilities::arrayRandomAssoc($bot->users, true)[0]->getNick(),
+                    '{randomnumber}' => rand(0, 1000),
+                    '{latestpower}' => ucfirst($latestPower['power']['name']),
+                    '{latestpowerid}' => $latestPower['id'],
+                    '{latestpowerstoreprice}' => $latestPower['power']['storeCost'],
+                    '{latestpowertradeprice}' => ($latestPower['power']['minCost']+$latestPower['power']['maxCost'])/2,
+                    '{latestpowerstatus}' => ($latestPower['power']['isNew'] ?
+                        ($latestPower['power']['isLimited'] ? 'LIMITED' : 'UNLIMITED') :
+                        'UNRELEASED'),
+                ];
+
+                $string = $cc['response'];
+                foreach ($replace as $key => $value) {
+                    $string = str_replace($key, $value, $string);
                 }
 
-                $search[] = '{randomname}';
-                $replace[] = $randomuser[rand(0, sizeof($randomuser) - 1)]->getNick();
-                $search[] = '{name}';
-                $replace[] = $string = preg_replace(
-                    ['/\(glow[^)]+\)/', '/\(hat[^)]+\)/'],
-                    ['', ''],
-                    $bot->users[$who]->getNick()
-                );
-                $search[] = '{status}';
-                $replace[] = $bot->users[$who]->getStatus();
-                $search[] = '{regname}';
-                $replace[] = $bot->users[$who]->getRegname() ?? $bot->users[$who]->getID();
-                $search[] = '{users}';
-                $replace[] = sizeof($bot->users);
-                $search[] = '{cmdcode}';
-                $replace[] = $bot->data->customcommand;
-                $search[] = '{id}';
-                $replace[] = $bot->users[$who]->getID();
-                
-                $response = str_replace($search, $replace, $cc['response']);
-                return $bot->network->sendMessageAutoDetection($who, $response, $type);
+                return $bot->network->sendMessageAutoDetection($who, $string, $type);
             }
         }
     }

@@ -107,11 +107,11 @@ abstract class XatVariables
             ['regname' => 'Angelo', 'xatid' => 18500000],
             ['regname' => 'Crow', 'xatid' => 4444],
             ['regname' => 'Cupim', 'xatid' => 11011],
-            ['regname' => 'Echo', 'xatid' => 182000000],
-            ['regname' => 'Junii', 'xatid' => 1522897229],
+            ['regname' => 'Echo', 'xatid' => 7170717],
+            ['regname' => 'Junior', 'xatid' => 1522897229],
             ['regname' => 'LaFleur', 'xatid' => 517650537],
             ['regname' => 'Mihay', 'xatid' => 1700000],
-            ['regname' => 'Griffith', 'xatid' => 220711]
+            ['regname' => 'Sydno', 'xatid' => 220711]
         ];
 
         self::$volunteers = $volunteers;
@@ -1757,18 +1757,17 @@ abstract class XatVariables
     
     private static function updateVolunteers()
     {
-        $ctx = stream_context_create(['http' => ['timeout' => 2]]);
-        $cpt = 0;
-
-        do {
-            $page = file_get_contents(
-                'https://xat.wiki/Template:List_of_ticket_volunteers&mobileaction=toggle_view_mobile&t=' . time(),
-                false,
-                $ctx
-            );
-            $cpt++;
-            usleep(300000);
-        } while (empty($page) && $cpt < 5);
+        $curl = \curl_init();
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 120);
+        curl_setopt(
+            $curl,
+            CURLOPT_URL,
+            'https://xat.wiki/Template:List_of_ticket_volunteers&mobileaction=toggle_view_mobile&Ocean=' . time()
+        );
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $page = curl_exec($curl);
+        curl_close($curl);
 
         if (empty($page)) {
             return false;
@@ -1806,8 +1805,9 @@ abstract class XatVariables
             if (isset($page['powers'])) {
                 foreach ($page['powers'] as $id => $power) {
                     self::$powers[$id]['name'] = $power['name'];
-                    self::$powers[$id]['minCost'] = $power['min_xats'];
-                    self::$powers[$id]['maxCost'] = $power['max_xats'];
+                    self::$powers[$id]['minCost'] = $power['min_xats'] ?? 0;
+                    self::$powers[$id]['maxCost'] = $power['max_xats'] ?? 0;
+                    self::$powers[$id]['storeCost'] = 'Unknown';
                     self::$powers[$id]['isLimited'] = (bool)$power['limited'];
                     self::$powers[$id]['isAllPower'] = (bool)$power['is_allp'];
                     self::$powers[$id]['isEpic'] = (bool)$power['is_epic'];
@@ -1820,13 +1820,34 @@ abstract class XatVariables
                 }
             }
 
+            $cpt = 0;
+            do {
+                $page = file_get_contents('https://xat.com/json/powers.php?Ocean=' . time(), false, $ctx);
+                $cpt++;
+                usleep(300000);
+            } while (empty($page) && $cpt < 5);
+
+            if (empty($page)) {
+                return false;
+            } else {
+                $page = json_decode($page, true);
+                foreach ($page as $id => $power) {
+                    if ($id === 0) {
+                        continue;
+                    }
+
+                    self::$powers[$id]['storeCost']  = $power['x'] ?? $power['d'] * 13.5;
+                }
+            }
+
+
             ksort(self::$powers);
         }
     }
 
     public static function updateAd()
     {
-        $curl = curl_init();
+        $curl = \curl_init();
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
         curl_setopt($curl, CURLOPT_TIMEOUT, 120);
         curl_setopt($curl, CURLOPT_URL, 'https://xat.com/json/ad.php?Ocean=' . time());
@@ -1856,6 +1877,14 @@ abstract class XatVariables
     public static function setLoginTime($info)
     {
         self::$loginTime = $info;
+    }
+
+    public static function getLastPower()
+    {
+        $keys = array_keys(self::$powers);
+        $id = end($keys);
+        $power = self::$powers[$id];
+        return ['id' => $id, 'power' => $power];
     }
 
     public static function getLoginPacket()

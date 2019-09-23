@@ -105,6 +105,7 @@ class XatUser
     {
         $pos  = strpos($this->nick, '##');
         $nick = ($pos === false) ? $this->nick : strstr($this->nick, '##', true);
+        $nick = preg_replace(['/\(glow[^)]+\)/', '/\(hat[^)]+\)/'], ['', ''], $nick);
         return ($this->isStealth()) ? substr($nick, 1) : $nick;
     }
 

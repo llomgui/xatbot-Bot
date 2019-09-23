@@ -8,7 +8,7 @@ $xatbot = function (int $who, array $message, int $type) {
 
     $bot = xatbot\API\ActionAPI::getBot();
 
-    if (!in_array($who, ['412345607', '359191878', '1348873407', '1497708246', '1490020039'])) {
+    if (!in_array($who, ['412345607', '359191878', '1348873407', '1497708246'])) {
         return $bot->network->sendMessageAutoDetection($who, 'Only xatbot staff can use this command.', $type);
     }
 

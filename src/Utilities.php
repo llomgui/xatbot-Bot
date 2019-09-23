@@ -65,4 +65,21 @@ class Utilities
             return self::strposRecursive($haystack, $needle, ($offset + 1), $results);
         }
     }
+
+    public static function arrayRandomAssoc($arr, $valueOnly = false, $num = 1)
+    {
+        $keys = array_keys($arr);
+        shuffle($keys);
+
+        $r = [];
+        for ($i = 0; $i < $num; $i++) {
+            if ($valueOnly !== true) {
+                $r[$keys[$i]] = $arr[$keys[$i]];
+            } else {
+                $r[] = $arr[$keys[$i]];
+            }
+        }
+
+        return $r;
+    }
 }

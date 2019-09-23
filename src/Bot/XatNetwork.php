@@ -248,6 +248,7 @@ class XatNetwork
             $powerslist = json_decode($this->data->powersdisabled, true);
             foreach ($powerslist as $powerdisabled) {
                 if (array_key_exists($powerdisabled, XatVariables::getPowers())) {
+                    $powersdisabled[(int)($powerdisabled / 32)] = 0;
                     $powersdisabled[(int)($powerdisabled / 32)] += pow(2, ($powerdisabled % 32));
                 }
             }
@@ -285,6 +286,25 @@ class XatNetwork
 
         $j2['N'] = XatVariables::getRegname();
         $j2['n'] = $this->data->nickname . '##' . $this->data->status;
+
+        $latestPower = XatVariables::getLastPower();
+        $replace = [
+            '{cmdcode}' => $this->data->customcommand,
+            '{command}' => $this->data->customcommand,
+            '{cc}' => $this->data->customcommand,
+            '{latestpower}' => ucfirst($latestPower['power']['name']),
+            '{latestpowerid}' => $latestPower['id'],
+            '{latestpowerstoreprice}' => $latestPower['power']['storeCost'],
+            '{latestpowertradeprice}' => ($latestPower['power']['minCost']+$latestPower['power']['maxCost'])/2,
+            '{latestpowerstatus}' => ($latestPower['power']['isNew'] ?
+                ($latestPower['power']['isLimited'] ? 'LIMITED' : 'UNLIMITED') :
+                'UNRELEASED'),
+        ];
+
+        foreach ($replace as $key => $value) {
+            $j2['n'] = str_replace($key, $value, $j2['n']);
+        }
+
         $j2['a'] = $this->data->avatar . '#' . $this->data->pcback;
         $j2['h'] = $this->data->homepage;
         $j2['v'] = '';
