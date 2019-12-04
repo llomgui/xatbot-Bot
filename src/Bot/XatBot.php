@@ -619,6 +619,10 @@ class XatBot
                 }
             }
         } else {
+            if ($currentTrack['currently_playing_type'] == 'ad') {
+                return;
+            }
+
             $spotify['nextCheck'] = time() + (int)ceil(
                 ($currentTrack['item']['duration_ms'] - $currentTrack['progress_ms']) / 1000
             );
