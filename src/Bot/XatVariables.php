@@ -78,20 +78,10 @@ abstract class XatVariables
                 1, ['']
             ],
             'E0' => [
-                1, [
-                    'fwdelb00-1964376362.us-east-1.elb.amazonaws.com',
-                    'fwdelb01-1365137239.us-east-1.elb.amazonaws.com',
-                    'fwdelb02-53956973.us-east-1.elb.amazonaws.com',
-                    'fwdelb03-1789285345.us-east-1.elb.amazonaws.com'
-                ]
+                1, ['fwdelb01-1365137239.us-east-1.elb.amazonaws.com']
             ],
             'E1' => [
-                1, [
-                    'fwdelb00-1964376362.us-east-1.elb.amazonaws.com',
-                    'fwdelb01-1365137239.us-east-1.elb.amazonaws.com',
-                    'fwdelb02-53956973.us-east-1.elb.amazonaws.com',
-                    'fwdelb03-1789285345.us-east-1.elb.amazonaws.com'
-                ]
+                1, ['fwdelb01-1365137239.us-east-1.elb.amazonaws.com:80:1']
             ],
             'k1n' => 2000000000,
             'k1d' => 14
@@ -108,9 +98,8 @@ abstract class XatVariables
             ['regname' => 'Crow', 'xatid' => 4444],
             ['regname' => 'Cupim', 'xatid' => 11011],
             ['regname' => 'Echo', 'xatid' => 7170717],
-            ['regname' => 'Junior', 'xatid' => 1522897229],
             ['regname' => 'LaFleur', 'xatid' => 517650537],
-            ['regname' => 'Mihay', 'xatid' => 1700000],
+            ['regname' => 'Solange', 'xatid' => 223326780],
             ['regname' => 'Sydno', 'xatid' => 220711]
         ];
 
@@ -1789,7 +1778,7 @@ abstract class XatVariables
     private static function updatePowers()
     {
         $ctx = stream_context_create(['http' => ['timeout' => 2]]);
-        $url = 'https://xatproject.com/fairtrade/api.php?action=powers';
+        $url = 'http://xatproject.com/fairtrade/api.php?action=powers';
         $cpt = 0;
 
         do {
