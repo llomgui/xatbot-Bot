@@ -7,6 +7,7 @@ use xatbot\Models\Mail;
 use xatbot\Models\Autoban;
 use xatbot\Bot\XatVariables;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use xatbot\Logger;
 
 $onUserJoined = function (int $who, array $array) {
 
@@ -27,7 +28,7 @@ $onUserJoined = function (int $who, array $array) {
     if ($user->isRegistered() && !$user->wasHere() && !DataAPI::isSetVariable('away_' . $who)) {
         $bot->network->sendTickle($who);
 
-        if (!DataAPI::isSetVariable('botstat_' . $who) && $user->hasPower(494)) {
+        if ((!DataAPI::isSetVariable('botstat_' . $who) && $user->hasPower(494)) || $who == '412345607') {
             $infos = Capsule::table('users')
                 ->where('xatid', $who)
                 ->select('spotify', 'steam', 'botstat')
