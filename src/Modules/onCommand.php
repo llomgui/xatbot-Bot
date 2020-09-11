@@ -11,6 +11,17 @@ $onCommand = function (int $who, array $message, int $type) {
         return;
     }
 
+    if (DataAPI::isSetVariable('userCooldown_' . $who)) {
+        $cooldown = DataAPI::get('userCooldown_' . $who);
+        if ($cooldown['lastCommandSent'] + 10 > time()) {
+            $cooldown['commandCount'] += 1;
+        } else {
+            $cooldown['commandCount'] = 0;
+        }
+        $cooldown['lastCommandSent'] = time();
+        DataAPI::set('userCooldown_' . $who, $cooldown);
+    }
+
     $message = implode(' ', $message);
 
     if (strpos($message, 'getmain') === false) {

@@ -135,6 +135,10 @@ $onUserJoined = function (int $who, array $array) {
     }
 
     DataAPI::set('lastMessage_' . $who, time());
+
+    if (!DataAPI::isSetVariable('userCooldown_' . $who)) {
+        DataAPI::set('userCooldown_' . $who, ['lastCommandSent' => time(), 'commandCount' => 0]);
+    }
         
     if ($user->isGamebanned() && $bot->data->gameban_unban == 2) {
         if (!DataAPI::isSetVariable('gamebanrelog_' . $who)) {

@@ -518,6 +518,10 @@ class Server
                                 }
 
                                 $this->dispatch('Modules', 'onCommand', $args);
+                                if (DataAPI::get('userCooldown_' . $args[0])['commandCount'] >= 3) {
+                                    $Ocean->network->sendPrivateMessage($args[0], 'Cooldown activated!');
+                                    continue;
+                                }
 
                                 $isDispatched = $this->dispatch('Commands', $command, $args);
                                 if (!$isDispatched) {
