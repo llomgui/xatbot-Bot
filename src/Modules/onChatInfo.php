@@ -16,7 +16,15 @@ $onChatInfo = function (array $array) {
     $bot->chatInfo['bot']          = $array['B'] ?? $bot->network->logininfo['i'];
     $bot->chatInfo['rank']         = isset($array['r']) && isset($rankA[$array['r']]) ? $rankA[$array['r']] : 'Guest';
 
-    if ($bot->chatInfo['bot'] != $bot->network->logininfo['i'] && $bot->data->chatid != 164872174) {
+    $chats_allowed = [
+        164872174,
+        220116374,
+        15363891,
+        160324526,
+        6
+    ];
+
+    if ($bot->chatInfo['bot'] != $bot->network->logininfo['i'] && !in_array($bot->data->chatid, $chats_allowed)) {
         $bot->network->sendMessage('You need to assign (bot) power on your chat with id 10101. Restart me once it\'s done. (bye)');
         $bot->stopped = true;
     }
