@@ -158,7 +158,7 @@ class XatNetwork
             $this->write(
                 'y',
                 [
-                    'r' => '2',
+                    'r' => '8',
                     'v' => '0',
                     'u' => XatVariables::getXatid()
                 ]
