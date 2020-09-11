@@ -97,7 +97,6 @@ abstract class XatVariables
             ['regname' => 'Angelo', 'xatid' => 18500000],
             ['regname' => 'Crow', 'xatid' => 4444],
             ['regname' => 'Cupim', 'xatid' => 11011],
-            ['regname' => 'Echo', 'xatid' => 7170717],
             ['regname' => 'LaFleur', 'xatid' => 517650537],
             ['regname' => 'Solange', 'xatid' => 223326780],
             ['regname' => 'Sydno', 'xatid' => 220711]
@@ -1778,7 +1777,7 @@ abstract class XatVariables
     private static function updatePowers()
     {
         $ctx = stream_context_create(['http' => ['timeout' => 2]]);
-        $url = 'http://xatproject.com/fairtrade/api.php?action=powers';
+        $url = 'https://xatproject.com/fairtrade/api.php?action=powers';
         $cpt = 0;
 
         do {
