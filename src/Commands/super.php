@@ -12,7 +12,7 @@ $super = function (int $who, array $message, int $type) {
     if (empty($message[1])) {
         return $bot->network->sendMessageAutoDetection(
             $who,
-            'Usage !super [anime/summer/halloween/xmas/heart/hobbies] [user]',
+            'Usage !super [anime/summer/halloween/xmas/heart/hobbies/scary/santa/love/egg/kao] [user]',
             $type
         );
     }
@@ -46,64 +46,65 @@ $super = function (int $who, array $message, int $type) {
         $info = $info[0];
         
         $anime = [
-            'anime' => 53,
-            'manga' => 151,
             'ani1' => 253,
-            'cutie' => 295,
-            'coolz' => 298,
-            'blueoni' => 311,
+            'anime' => 53,
             'animegirl' => 392,
             'aprincess' => 399,
             'battle' => 420,
+            'blueoni' => 311,
+            'coolz' => 298,
+            'cutie' => 295,
+            'manga' => 151,
         ];
 
         $summer = [
-            'summer' => 89,
             'beach' => 128,
             'seaside' => 229,
-            'summerflix' => 296,
-            'vacation' => 343,
             'shells' => 345,
-            'summerland' => 398,
-            'summerhug' => 401,
             'splashfx' => 445,
+            'summer' => 89,
+            'summerflix' => 296,
+            'summerhug' => 401,
+            'summerland' => 398,
+            'vacation' => 343,
         ];
 
         $halloween = [
-            'halloween' => 52,
-            'horror' => 92,
-            'carve' => 147,
-            'halloween2' => 257,
-            'trickortreat' => 308,
-            'creepy' => 309,
             'allhallows' => 362,
-            'witch' => 363,
+            'carve' => 147,
+            'creepy' => 309,
             'halloscroll' => 465,
+            'halloween' => 52,
+            'halloween2' => 257,
+            'horror' => 92,
             'muertos' => 518,
+            'trickortreat' => 308,
+            'witch' => 363,
         ];
 
         $xmas = [
-            'snowy' => 56,
-            'christmas' => 57,
-            'winter' => 96,
-            'treefx' => 203,
-            'winterland' => 261,
             'choirhug' => 366,
-            'ornaments' => 368,
-            'tropicalxmas' => 417,
+            'christmas' => 57,
             'christmix' => 418,
-            'sparklefx' => 419,
             'kxmas' => 470,
+            'ornaments' => 368,
+            'snowy' => 56,
+            'sparklefx' => 419,
+            'treefx' => 203,
+            'tropicalxmas' => 417,
+            'winterland' => 261,
+            'winter' => 96,
             'xmasscroll' => 471,
+            'xmastime' => 577,
         ];
 
         $heart = [
+            'amore' => 324,
+            'burningheart' => 193,
             'heart' => 17,
             'heartfx' => 166,
-            'burningheart' => 193,
             'kheart' => 215,
             'sweetheart' => 271,
-            'amore' => 324,
             'valfx' => 325,
             'valentinefx' => 532,
         ];
@@ -114,6 +115,33 @@ $super = function (int $who, array $message, int $type) {
             'tshirt' => 547,
             'swimming' => 550,
             'acting' => 557,
+        ];
+
+        // 148,202,213,254,256,270,354,411,412,446,454,464,565,567
+        $scary = [
+            'spookies' => 567,
+            'fear' => 565,
+        ];
+
+        // 154,155,156,204,262,263,314,315,367,475,571,573
+        $santa = [
+            'neva' => 573,
+            'kris' => 571,
+        ];
+
+        // 62,241,233,242,335,374,425,426,427,482,583
+        $love = [
+            'lovepotion' => 583,
+        ];
+
+        // 222,251,281,332,381,440,544,587
+        $egg = [
+            'yellegg' => 587,
+        ];
+
+        // 72,76,248,249,305,306,358,361,372,385,422,451,456,499,507,520,529,527,542
+        $kao = [
+            'kbacks' => 542,
         ];
 
         $powersToCheck = ${$message[1]};
