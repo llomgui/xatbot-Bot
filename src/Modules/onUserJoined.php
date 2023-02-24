@@ -171,8 +171,9 @@ $onUserJoined = function (int $who, array $array) {
 
     if (sizeof($bot->badwords) > 0) {
         for ($i = 0; $i < sizeof($bot->badwords); $i++) {
-            if (strpos(strtolower($user->getNick()), strtolower($bot->badwords[$i]['badword'])) !== false
-                || strpos(strtolower($user->getStatus()), strtolower($bot->badwords[$i]['badword'])) !== false) {
+            $pattern = '/\b' . preg_quote($bot->badwords[$i]['badword']) . '\b/i';
+            if (preg_match($pattern, strtolower($user->getNick()))
+				|| preg_match($pattern, strtolower($user->getStatus()))) {
                 DataAPI::set(
                     'modproof',
                     'User: ' . ((!is_null($regname)) ? $regname . ' (' . $who . ')' : $who) . ' Nick: ' .
