@@ -146,7 +146,8 @@ $onModeration = function (int $who, string $message) {
   
             if (sizeof($bot->badwords) > 0) {
                 for ($i = 0; $i < sizeof($bot->badwords); $i++) {
-                    if (strpos($message, strtolower($bot->badwords[$i]['badword'])) !== false) {
+                    $pattern = '/\b' . preg_quote($bot->badwords[$i]['badword']) . '\b/i';
+                    if (preg_match($pattern, $message)) {
                         DataAPI::set(
                             'modproof',
                             'User: ' . ((!is_null($regname)) ?
